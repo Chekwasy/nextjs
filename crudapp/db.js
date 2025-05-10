@@ -5,7 +5,7 @@ class DBClient {
   constructor() {
     const host = process.env.DB_HOST || '127.0.0.1';
     const port = process.env.DB_PORT || 27017;
-    const database = process.env.DB_DATABASE || 'fueldey';
+    const database = process.env.DB_DATABASE || 'crudapp';
     const dbURL = `mongodb://${host}:${port}/${database}`;
     this.client = new MongoClient(dbURL, { useUnifiedTopology: true });
 
@@ -28,6 +28,10 @@ class DBClient {
 
   async nbUsers() {
     return this.client.db().collection('users').estimatedDocumentCount();
+  }
+
+  async nbWorkers() {
+    return this.client.db().collection('workers').estimatedDocumentCount();
   }
 
 }
