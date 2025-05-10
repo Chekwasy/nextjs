@@ -11,5 +11,4 @@ export async function GET(request) {
         console.log('err');
     }
 };
-uu();
 
