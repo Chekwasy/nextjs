@@ -33,4 +33,12 @@ class DBClient {
 }
 
 const dbClient = new DBClient();
+
+const uu = async () => { 
+    const gg = await dbClient.client.db().collection('users').findOne({"email": "richardchekwas@gmail.com"});
+    console.log(gg);
+};
+uu();
+
+
 export default dbClient;

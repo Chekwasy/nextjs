@@ -1,14 +1,8 @@
 "use client"
 import Link from 'next/link';
 import React from 'react';
-import dbClient from '../api/db';
 
 const page = () => {
-	const uu = async () => { 
-		const gg = await dbClient.client.db().collection('users').findOne({"email": "richardchekwas@gmail.com"});
-		console.log(gg);
-	};
-	uu();
     const [menuOpen, setMenuOpen] = React.useState(false);
     const [userData, setUserData] = React.useState({
         firstname: '',
