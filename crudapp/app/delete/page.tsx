@@ -7,15 +7,7 @@ const page = () => {
     const [userData, setUserData] = React.useState({
         firstname: '',
         lastname: '',
-        age: '',
-        department: '',
-        address: '',
-        mobile: '',
-        sex: '',
-        nationality: '',
         email: '',
-        dateAdded: '',
-        lastUpdate: '',
       });
       const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });

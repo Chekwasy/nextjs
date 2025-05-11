@@ -5,17 +5,10 @@ import React from 'react';
 const page = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
     const [userData, setUserData] = React.useState({
-        firstname: '',
-        lastname: '',
         age: '',
         department: '',
         address: '',
         mobile: '',
-        sex: '',
-        nationality: '',
-        email: '',
-        dateAdded: '',
-        lastUpdate: '',
       });
       const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });

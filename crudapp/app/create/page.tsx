@@ -14,8 +14,6 @@ const page = () => {
         sex: '',
         nationality: '',
         email: '',
-        dateAdded: '',
-        lastUpdate: '',
       });
       const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });

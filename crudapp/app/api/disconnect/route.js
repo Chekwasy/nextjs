@@ -1,0 +1,19 @@
+import { NextResponse } from 'next/server';
+import redisClient from '../../redis';
+
+
+export async function GET(request) {
+    try {
+        const tok = request.json();
+		if (!tok) { return  NextResponse.json('error', {status: 400});}
+		const usr_id = await redisClient.get(`auth_${tok}`);
+		if (!usr_id) {
+			return  NextResponse.json('error', {status: 400});
+		}
+		await redisClient.del(`auth_${tok}`);
+        return  NextResponse.json('success', {status: 201});
+    } catch {
+        return  NextResponse.json('error', {status: 400});
+    }
+};
+
