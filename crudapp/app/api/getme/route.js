@@ -1,37 +1,29 @@
 import dbClient from '../../db';
 import { NextResponse } from 'next/server';
+import redisClient from '../../redis';
+import { ObjectID } from 'mongodb';
+import { v4 } from 'uuid';
 
 
 export async function GET(request) {
     try {
-        const { tok } = request.json();
-	if (!tok) { NextResponse.json('error', {status: 400}) }
-
-
-    
-	if (!(checkinput(x_tok))) {
-		res.status(401).json({'error': 'Unauthorized'}); return;
-	}
-	const usr_id = await redisClient.get(`auth_${x_tok}`);
-	if (!usr_id) {
-		res.status(401).json({});
-		return;
-	}
+	const { auth_header } = request.json();
+	if (!auth_header) {return NextResponse.json('error', {status: 400})}
+	const encoded_usr_str = (auth_header.split(" "))[1];
+	let decoded_usr_str = '';
+	decoded_usr_str = Buffer.from(encoded_usr_str, 'base64').toString('utf-8');
+	const usr_details = decoded_usr_str.split(':');
+	const pwd = crypto.createHash('sha256').update(usr_details[1]).digest('hex');
+	const email = usr_details[0];
 	const user = await (await dbClient.client.db().collection('users'))
-	.findOne({ "_id": ObjectID(usr_id) });
-	if (!user) { res.status(401).json({}); console.log(4); return;}
-	if (checksub(user.subtime)) {
-		res.status(200).json({ firstname: user.firstname, lastname: user.lastname, phonenumber: user.phonenumber, earnings: user.earnings, staff: user.staff, subtime: user.subtime, count: user.count ? user.count : 0, status: user.status, accountNo: user.accountNo, walletbal: user.walletbal, currency: user.currency, email: user.email,});
-		return;
-	} else {
-		await (await dbClient.client.db().collection('users'))
-		.updateOne({ "userID": user.userID },
-		{ $set: { "status": 'expired' } });
-		res.status(200).json({ firstname: user.firstname, lastname: user.lastname, phonenumber: user.phonenumber, earnings: user.earnings, staff: user.staff, count: user.count ? user.count : 0, subtime: user.subtime, status: 'expired', accountNo: user.accountNo, walletbal: user.walletbal, currency: user.currency, email: user.email,});
-		return;
+	.findOne({ "email": email });
+	if (user && (user.password === pwd)) {
+		const auth_token = v4();
+		redisClient.set(`auth_${auth_token}`, user._id.toString(), 7 * 24 * 60 * 60);
+		return NextResponse.json({token: auth_token}, {status: 201});
 	}
     } catch {
-        console.log('err');
+	return NextResponse.json('error', {status: 400});
     }
 };
 
