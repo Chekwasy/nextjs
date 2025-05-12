@@ -5,18 +5,45 @@ import { useEffect } from 'react';
 
 const page = () => {
 
-    const [pg, setPg] = React.useState('1');
-    const read Function = () => {
+    const [pg, setPg] = React.useState(1);
+    const [items, setItems] = useState([
+      {
+        firstname: '',
+        lastname: '',
+        age: '',
+        department: '',
+        address: '',
+        mobile: '',
+        sex: '',
+        nationality: '',
+        email: '',
+        dateadded: '',
+        lastupdated: '',
+      },
+    ]);
+    const read = () => {
         axios.get('/api/viewworkers', {
           headers: {
         tok: tok,
-        pg: pg,
+        pg: pg.toString(),
         },)
       .then(async (response) => {
+          setItems(response.data.workers);
       })
       .catch(error => {
       });
     };
+    const handlePrevious = () => {
+        if (pg !== 1) {
+            setPg(pg - 1);
+        }
+    };
+    const handleNext = () => {
+        setPg(pg + 1);
+    };
+    useEffect(() => {
+      read();
+    }, [pg]);
     
     useEffect(() => {
       readFunction();
@@ -88,115 +115,70 @@ const page = () => {
 
             </div>
         </nav>
+        {items.map((item) => (
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-4 mt-16">
-            <h2 className="text-xl font-bold mb-4">User Data</h2>
+            <h2 className="text-xl font-bold mb-4">{`${item.firstname} ${item.lastname} User Data`}</h2>
             <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">First Name:</span>
-                        <span className="ml-2 text-black">John</span>
+                        <span className="ml-2 text-black">{item.firstname}</span>
                     </div>
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Last Name:</span>
-                        <span className="ml-2 text-black">Doe</span>
+                        <span className="ml-2 text-black">{item.lastname}</span>
                     </div>
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Age:</span>
-                        <span className="ml-2 text-black">30</span>
+                        <span className="ml-2 text-black">{item.age}</span>
                     </div>
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Department:</span>
-                        <span className="ml-2 text-black">IT</span>
+                        <span className="ml-2 text-black">{item.department}</span>
                     </div>
                 </div>
                 <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Address:</span>
-                        <span className="ml-2 text-black">123 Main St, Anytown, USA</span>
+                        <span className="ml-2 text-black">{item.address}</span>
                     </div>
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Mobile Number:</span>
-                        <span className="ml-2 text-black">(123) 456-7890</span>
+                        <span className="ml-2 text-black">{item.mobile}</span>
                     </div>
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Sex:</span>
-                        <span className="ml-2 text-black">Male</span>
+                        <span className="ml-2 text-black">{item.sex}</span>
                     </div>
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Nationality:</span>
-                        <span className="ml-2 text-black">American</span>
+                        <span className="ml-2 text-black">{item.nationality}</span>
                     </div>
                 </div>
                 <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Email:</span>
-                        <span className="ml-2 text-black">qw@gmail.com</span>
+                        <span className="ml-2 text-black">{item.email}</span>
                     </div>
                     <div className="bg-gray-100 rounded p-4 mb-4">
                         <span className="font-bold text-black">Date Added:</span>
-                        <span className="ml-2 text-black">2022-01-01</span>
+                        <span className="ml-2 text-black">{item.dateadded}</span>
                     </div>
                     <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Last Update:</span>
-                        <span className="ml-2 text-black">2022-01-15</span>
+                        <span className="font-bold text-black">Last Updated:</span>
+                        <span className="ml-2 text-black">{item.lastupdated}</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-4">
-            <h2 className="text-xl font-bold mb-4">User Data</h2>
-            <div className="flex flex-wrap justify-center">
-                <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">First Name:</span>
-                        <span className="ml-2 text-black">John</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Last Name:</span>
-                        <span className="ml-2 text-black">Doe</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Age:</span>
-                        <span className="ml-2 text-black">30</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Department:</span>
-                        <span className="ml-2 text-black">IT</span>
-                    </div>
-                </div>
-                <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Address:</span>
-                        <span className="ml-2 text-black">123 Main St, Anytown, USA</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Mobile Number:</span>
-                        <span className="ml-2 text-black">(123) 456-7890</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Sex:</span>
-                        <span className="ml-2 text-black">Male</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Nationality:</span>
-                        <span className="ml-2 text-black">American</span>
-                    </div>
-                </div>
-                <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Email:</span>
-                        <span className="ml-2 text-black">ch@gmail.com</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Date Added:</span>
-                        <span className="ml-2 text-black">2022-01-01</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Last Update:</span>
-                        <span className="ml-2 text-black">2022-01-15</span>
-                    </div>
-                </div>
-            </div>
+        ))}
+        <div className="flex justify-center mb-4">
+          <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l" onClick={() => handlePrevious()}>
+            Previous
+          </button>
+          <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r" onClick={() => handleNext()}>
+            Next
+          </button>
         </div>
     </div>
   )
