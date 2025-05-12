@@ -36,7 +36,7 @@ function page() {
         auth_header: `encoded ${encodestr}`,
       })
       .then(async (response) => {
-        Cookies.set('tok', response.data.token, { expires: 7, path: '/', })
+        await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
         setSuccessMessage("Login Successful");
         delayedCode1();
         redirect('/');
