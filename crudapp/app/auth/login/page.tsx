@@ -2,10 +2,10 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 function page() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(null);
@@ -38,7 +38,7 @@ function page() {
       //await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
       setSuccessMessage("Login Successful");
       delayedCode1();
-      navigate("/");
+      router.push("/");
     })
     .catch(error => {
       setErrorMessage("Login Unsuccessful");
