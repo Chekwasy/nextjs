@@ -1,10 +1,11 @@
-import dbClient from '../../db';
+import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
-import redisClient from '../../redis';
+import redisClient from '../../../redis';
 
 export async function GET(request) {
     try {
-        const { tok, pg } = request.json();
+        const tok = request.header.get('tok');
+        const pg = request.header.get('pg');
         if (!tok) { return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
