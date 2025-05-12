@@ -16,14 +16,28 @@ const page = () => {
         nationality: '',
         email: '',
       });
+    const [errorMessage, setErrorMessage] = React.useState(null);
+    const [successMessage, setSuccessMessage] = React.useState(null);
+    async function delayedCode() {
+      await new Promise(resolve => setTimeout(resolve, 10000));
+      setErrorMessage(null);
+      setSuccessMessage(null);
+    };
       const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
       };
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userData);
-        // Add your API call or submission logic here
+        axios.post('/api/addworker', userData)
+      .then(async (response) => {
+        setSuccessMessage('Worker Successfully Added');
+        delayedCode();
+      })
+      .catch(error => {
+        setErrorMessage('Addition Unsuccessful');
+        delayedCode();
+      });
       };
   return (
     <div>
@@ -93,6 +107,22 @@ const page = () => {
         </nav>
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-4 mt-16">
             <h2 className="text-lg font-bold mb-4">Create New User</h2>
+            {errorMessage && (
+              <div
+                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <span className="block sm:inline">{errorMessage}</span>
+              </div>
+            )}
+            {successMessage && (
+              <div
+                className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <span className="block sm:inline">{successMessage}</span>
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
