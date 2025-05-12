@@ -51,17 +51,16 @@ function page() {
       }}>
         <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-1/3">
           <h2 className="text-3xl font-bold text-blue-500 mb-4">Signup</h2>
-          {errorMessage && (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-          role="alert"
-        >
-          <span className="block sm:inline">{errorMessage}</span>
-        </div>
-      )}
-    </div>
-  );
-        }
+          <div>
+            {errorMessage && (
+              <div
+                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <span className="block sm:inline">{errorMessage}</span>
+              </div>
+            )}
+          </div>
           <form>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstname">
