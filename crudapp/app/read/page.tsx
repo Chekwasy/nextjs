@@ -1,13 +1,15 @@
 "use client"
 import Link from 'next/link';
 import React from 'react';
-import { useEffect } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const page = () => {
 
     const [pg, setPg] = React.useState(1);
-    const [items, setItems] = useState([
+    const [items, setItems] = React.useState([
       {
+        id: 1,
         firstname: '',
         lastname: '',
         age: '',
@@ -24,10 +26,10 @@ const page = () => {
     const read = () => {
         axios.get('/api/viewworkers', {
           headers: {
-        tok: tok,
+        tok: Cookies.get('tok'),
         pg: pg.toString(),
-        },)
-      .then(async (response) => {
+        }})
+      .then(async (response: Response) => {
           setItems(response.data.workers);
       })
       .catch(error => {
@@ -41,12 +43,12 @@ const page = () => {
     const handleNext = () => {
         setPg(pg + 1);
     };
-    useEffect(() => {
+    React.useEffect(() => {
       read();
     }, [pg]);
     
-    useEffect(() => {
-      readFunction();
+    React.useEffect(() => {
+      read();
     }, []);
     const [menuOpen, setMenuOpen] = React.useState(false);
   return (
@@ -115,62 +117,61 @@ const page = () => {
 
             </div>
         </nav>
-        {items.map((item) => (
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-4 mt-16">
+        {items.map((item) => (<div key={item.email} className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-4 mt-16">
             <h2 className="text-xl font-bold mb-4">{`${item.firstname} ${item.lastname} User Data`}</h2>
-            <div className="flex flex-wrap justify-center">
-                <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">First Name:</span>
-                        <span className="ml-2 text-black">{item.firstname}</span>
+                <div className="flex flex-wrap justify-center">
+                    <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">First Name:</span>
+                            <span className="ml-2 text-black">{item.firstname}</span>
+                        </div>
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Last Name:</span>
+                            <span className="ml-2 text-black">{item.lastname}</span>
+                        </div>
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Age:</span>
+                            <span className="ml-2 text-black">{item.age}</span>
+                        </div>
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Department:</span>
+                            <span className="ml-2 text-black">{item.department}</span>
+                        </div>
                     </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Last Name:</span>
-                        <span className="ml-2 text-black">{item.lastname}</span>
+                    <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Address:</span>
+                            <span className="ml-2 text-black">{item.address}</span>
+                        </div>
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Mobile Number:</span>
+                            <span className="ml-2 text-black">{item.mobile}</span>
+                        </div>
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Sex:</span>
+                            <span className="ml-2 text-black">{item.sex}</span>
+                        </div>
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Nationality:</span>
+                            <span className="ml-2 text-black">{item.nationality}</span>
+                        </div>
                     </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Age:</span>
-                        <span className="ml-2 text-black">{item.age}</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Department:</span>
-                        <span className="ml-2 text-black">{item.department}</span>
-                    </div>
-                </div>
-                <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Address:</span>
-                        <span className="ml-2 text-black">{item.address}</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Mobile Number:</span>
-                        <span className="ml-2 text-black">{item.mobile}</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Sex:</span>
-                        <span className="ml-2 text-black">{item.sex}</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Nationality:</span>
-                        <span className="ml-2 text-black">{item.nationality}</span>
-                    </div>
-                </div>
-                <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Email:</span>
-                        <span className="ml-2 text-black">{item.email}</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Date Added:</span>
-                        <span className="ml-2 text-black">{item.dateadded}</span>
-                    </div>
-                    <div className="bg-gray-100 rounded p-4 mb-4">
-                        <span className="font-bold text-black">Last Updated:</span>
-                        <span className="ml-2 text-black">{item.lastupdated}</span>
+                    <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Email:</span>
+                            <span className="ml-2 text-black">{item.email}</span>
+                        </div>
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Date Added:</span>
+                            <span className="ml-2 text-black">{item.dateadded}</span>
+                        </div>
+                        <div className="bg-gray-100 rounded p-4 mb-4">
+                            <span className="font-bold text-black">Last Updated:</span>
+                            <span className="ml-2 text-black">{item.lastupdated}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         ))}
         <div className="flex justify-center mb-4">
           <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l" onClick={() => handlePrevious()}>
