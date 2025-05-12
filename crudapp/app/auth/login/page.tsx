@@ -1,6 +1,34 @@
-import React from 'react'
+"use client"
+import React from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { redirect } from 'next/navigation';
 
 function page() {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Add your API call or submission logic here
+    const encodestr = btoa(email + ':' + password);
+      axios.post('/connect', {
+        auth_header: `encoded ${encodestr}`,
+      })
+      .then(async (response) => {
+        Cookies.set('tok', response.data.token, { expires: 7, path: '/', })
+        redirect('/');
+      })
+      .catch(error => {
+      });
+  };
   return (
     <div>
       <div className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
@@ -9,7 +37,7 @@ function page() {
       }}>
         <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-1/3">
           <h2 className="text-3xl font-bold text-blue-500 mb-4">Admin Login</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
@@ -19,6 +47,9 @@ function page() {
                 id="email"
                 type="text"
                 placeholder="Email"
+                name="email"
+                value={email}
+                onChange={handleEmailChange}
               />
             </div>
             <div className="mb-4">
@@ -30,6 +61,9 @@ function page() {
                 id="password"
                 type="password"
                 placeholder="Password"
+                name="password"
+                value={password}
+                onChange={handlePasswordChange}
               />
             </div>
             <button
