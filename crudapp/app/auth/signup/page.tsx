@@ -7,7 +7,7 @@ function page() {
   const [password, setPassword] = React.useState('');
   const [firstname, setFirstname] = React.useState('');
   const [lastname, setLastname] = React.useState('');
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = React.useState(null);
 
   async function delayedCode() {
   await new Promise(resolve => setTimeout(resolve, 10000));
