@@ -20,9 +20,11 @@ export async function POST(request) {
 	    const userID = makeID();
 	    const email = usr_details[0];
 	    if (!email) {
+		    console.log(1);
 		    return NextResponse.json('error', {status: 401});
 	    }
 	    if (!password) {
+		    console.log(2);
 		    return NextResponse.json('error', {status: 401});
 	    }
 	    const user = await (await dbClient.client.db().collection('users'))
