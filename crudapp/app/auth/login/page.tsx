@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation;
+import { useRouter } from 'next/navigation';
 
 function page() {
   const router = useRouter();
