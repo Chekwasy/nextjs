@@ -4,7 +4,7 @@ import redisClient from '../../../redis';
 
 export async function POST(request) {
     try {
-        const { tok, firstname, lastname, age, department, address, mobile, sex, nationality, email } = request.json();
+        const { tok, firstname, lastname, age, department, address, mobile, sex, nationality, email } = await request.json();
         const dateadded = new Date();
         if (!tok) { return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
