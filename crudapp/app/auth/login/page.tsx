@@ -16,7 +16,7 @@ function page() {
     setErrorMessage(null);
   };
   async function delayedCode1() {
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     setSuccessMessage('Loading...');
   };
 
@@ -35,7 +35,7 @@ function page() {
       auth_header: `encoded ${encodestr}`,
     })
     .then(async (response) => {
-      //await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
+      await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
       setSuccessMessage("Login Successful");
       delayedCode1();
       router.push("/");
