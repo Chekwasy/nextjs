@@ -9,10 +9,12 @@ function page() {
   const [lastname, setLastname] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(null);
+  const [successMessage, setSuccessMessage] = React.useState(null);
 
   async function delayedCode() {
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  await new Promise(resolve => setTimeout(resolve, 20000));
     setErrorMessage(null);
+    setSuccessMessage(null);
   }
 
   const handleEmailChange = (e) => {
@@ -41,7 +43,7 @@ function page() {
         lastname: lastname,
       })
       .then(async (response) => {
-        setErrorMessage('Login GGg');
+        setSuccessMessage('Signup Successful);
         delayedCode();
       })
       .catch(error => {
@@ -68,6 +70,14 @@ function page() {
               </div>
             )}
           </div>
+          {successMessage && (
+            <div
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <span className="block sm:inline">{successMessage}</span>
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstname">
