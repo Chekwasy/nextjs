@@ -19,7 +19,7 @@ function page() {
     
     // Add your API call or submission logic here
     const encodestr = btoa(email + ':' + password);
-      axios.post('/connect', {
+      axios.post('/api/connect', {
         auth_header: `encoded ${encodestr}`,
       })
       .then(async (response) => {
