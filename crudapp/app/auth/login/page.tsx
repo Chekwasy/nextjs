@@ -17,7 +17,7 @@ function page() {
   };
   async function delayedCode1() {
     await new Promise(resolve => setTimeout(resolve, 5000));
-    setSuccessMessage(null);
+    setSuccessMessage('Loading...');
   };
 
   const handleEmailChange = (e) => {
