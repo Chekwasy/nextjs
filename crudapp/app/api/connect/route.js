@@ -10,7 +10,7 @@ import crypto from 'crypto';
 export async function POST(request) {
     try {
 	const { auth_header } = request.json();
-	if (!auth_header) {return NextResponse.json('error', {status: 400})}
+	if (!auth_header) {console.log(1); return NextResponse.json('error', {status: 400})}
 	const encoded_usr_str = (auth_header.split(" "))[1];
 	let decoded_usr_str = '';
 	decoded_usr_str = Buffer.from(encoded_usr_str, 'base64').toString('utf-8');
@@ -25,6 +25,7 @@ export async function POST(request) {
 		return NextResponse.json({token: auth_token}, {status: 201});
 	}
     } catch {
+	console.log(2);
 	return NextResponse.json('error', {status: 400});
     }
 };
