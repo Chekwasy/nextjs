@@ -34,6 +34,18 @@ const page = () => {
         axios.post('/api/addworker', userData)
       .then(async (response) => {
         setSuccessMessage('Worker Successfully Added');
+        setuserData({
+        firstname: '',
+        lastname: '',
+        age: '',
+        department: '',
+        address: '',
+        mobile: '',
+        sex: '',
+        nationality: '',
+        email: '',
+        tok: Cookies.get('tok'),
+        });
         delayedCode();
       })
       .catch(error => {
