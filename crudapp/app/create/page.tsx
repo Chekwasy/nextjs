@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import React from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const page = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
@@ -15,6 +16,7 @@ const page = () => {
         sex: '',
         nationality: '',
         email: '',
+        tok: Cookies.get('tok'),
       });
     const [errorMessage, setErrorMessage] = React.useState(null);
     const [successMessage, setSuccessMessage] = React.useState(null);
