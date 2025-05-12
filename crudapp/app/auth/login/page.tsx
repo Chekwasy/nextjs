@@ -25,7 +25,7 @@ function page() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleLSubmit = (e) => {
     e.preventDefault();
     
     // Add your API call or submission logic here
@@ -37,7 +37,7 @@ function page() {
       //await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
       setSuccessMessage("Login Successful");
       delayedCode1();
-      redirect('/');
+      //redirect('/');
     })
     .catch(error => {
       setErrorMessage("Login Unsuccessful");
@@ -68,7 +68,7 @@ function page() {
               <span className="block sm:inline">{successMessage}</span>
             </div>
           )}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleLSubmit}>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
@@ -100,7 +100,7 @@ function page() {
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
-              onClick={handleSubmit}
+              onClick={handleLSubmit}
             >
               Login
             </button>
