@@ -1,6 +1,6 @@
-import dbClient from '../../db';
+import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
-import redisClient from '../../redis';
+import redisClient from '../../../redis';
 import { v4 } from 'uuid';
 import crypto from 'crypto';
 
