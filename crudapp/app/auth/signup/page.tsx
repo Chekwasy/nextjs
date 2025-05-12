@@ -31,7 +31,7 @@ function page() {
     
     // Add your API call or submission logic here
     const encodestr = btoa(email + ':' + password);
-      axios.get('/api/puser', {
+      axios.post('/api/puser', {
         emailpwd: `encoded ${encodestr}`,
         firstname: firstname, 
         lastname: lastname,
