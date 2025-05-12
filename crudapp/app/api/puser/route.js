@@ -1,4 +1,4 @@
-import dbClient from '../../db';
+import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { v4 } from 'uuid';
