@@ -11,7 +11,7 @@ const makeID = () => {
 
 export async function POST(request) {
     try {
-        const { emailpwd } = await request.json();
+        const { emailpwd, firstname, lastname } = await request.json();
     	const encoded_usr_str = (emailpwd.split(" "))[1];
 	    let decoded_usr_str = '';
 		decoded_usr_str = Buffer.from(encoded_usr_str, 'base64').toString('utf-8');
@@ -31,7 +31,7 @@ export async function POST(request) {
 		    return NextResponse.json('user exists', {status: 404});
 	    }
 	    const result = await (await dbClient.client.db().collection('users'))
-	    .insertOne({userID: userID, email: email, password: password,});
+	    .insertOne({userID: userID, email: email, password: password, firstname: firstname, lastname: lastname });
 	    if (result) {
             return NextResponse.json({'success': email}, {status: 201});
         }
