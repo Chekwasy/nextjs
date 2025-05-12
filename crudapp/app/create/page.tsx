@@ -3,8 +3,10 @@ import Link from 'next/link';
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+    const router = useRouter();
     const [menuOpen, setMenuOpen] = React.useState(false);
     const [userData, setUserData] = React.useState({
         firstname: '',
@@ -21,7 +23,7 @@ const page = () => {
     const [errorMessage, setErrorMessage] = React.useState(null);
     const [successMessage, setSuccessMessage] = React.useState(null);
     async function delayedCode() {
-      await new Promise(resolve => setTimeout(resolve, 10000));
+      await new Promise(resolve => setTimeout(resolve, 3000));
       setErrorMessage(null);
       setSuccessMessage(null);
     };
@@ -34,19 +36,8 @@ const page = () => {
         axios.post('/api/addworker', userData)
       .then(async (response) => {
         setSuccessMessage('Worker Successfully Added');
-        setuserData({
-        firstname: '',
-        lastname: '',
-        age: '',
-        department: '',
-        address: '',
-        mobile: '',
-        sex: '',
-        nationality: '',
-        email: '',
-        tok: Cookies.get('tok'),
-        });
         delayedCode();
+        router.reload();
       })
       .catch(error => {
         setErrorMessage('Addition Unsuccessful');
