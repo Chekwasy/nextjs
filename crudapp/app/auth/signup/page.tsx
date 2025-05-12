@@ -7,6 +7,7 @@ function page() {
   const [password, setPassword] = React.useState('');
   const [firstname, setFirstname] = React.useState('');
   const [lastname, setLastname] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState(null);
 
   async function delayedCode() {
@@ -26,11 +27,14 @@ function page() {
   const handleLastnameChange = (e) => {
     setLastname(e.target.value);
   };
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Add your API call or submission logic here
-    const encodestr = btoa(email + ':' + password);
+    if (password === confirmPassword) {
+      const encodestr = btoa(email + ':' + password);
       axios.post('/api/puser', {
         emailpwd: `encoded ${encodestr}`,
         firstname: firstname, 
@@ -38,11 +42,13 @@ function page() {
       })
       .then(async (response) => {
         setErrorMessage('Login GGg');
+        delayedCode();
       })
       .catch(error => {
         setErrorMessage('Login Unsuccessful');
         delayedCode();
       });
+    } else { setErrorMessage('Password not match'); delayedCode();}
   };
   return (
     <div>
@@ -72,6 +78,9 @@ function page() {
                 id="firstname"
                 type="text"
                 placeholder="Firstname"
+                name="firstname"
+                value={firstname}
+                onChange={handleFirstnameChange}
               />
             </div>
             <div className="mb-4">
@@ -83,6 +92,9 @@ function page() {
                 id="lastname"
                 type="text"
                 placeholder="Lastname"
+                name="lastname"
+                value={lastname}
+                onChange={handleLastnameChange}
               />
             </div>
             <div className="mb-4">
@@ -94,6 +106,9 @@ function page() {
                 id="email"
                 type="email"
                 placeholder="Email"
+                name="email"
+                value={email}
+                onChange={handleEmailChange}
               />
             </div>
             <div className="mb-4">
@@ -105,6 +120,9 @@ function page() {
                 id="password"
                 type="password"
                 placeholder="Password"
+                name="password"
+                value={password}
+                onChange={handlePasswordChange}
               />
             </div>
             <div className="mb-4">
@@ -116,6 +134,9 @@ function page() {
                 id="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
               />
             </div>
             <button
