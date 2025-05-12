@@ -43,7 +43,7 @@ function page() {
         lastname: lastname,
       })
       .then(async (response) => {
-        setSuccessMessage('Signup Successful);
+        setSuccessMessage('Signup Successful');
         delayedCode();
       })
       .catch(error => {
