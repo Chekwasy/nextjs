@@ -20,7 +20,7 @@ export async function POST(request) {
 	    const userID = makeID();
 	    const email = usr_details[0];
 	    if (!email) {
-		    console.log(1, emailpwd, firstname, lastname);
+		    console.log(1, emailpwd, 1, firstname, 1, lastname, await request.json());
 		    return NextResponse.json('error', {status: 401});
 	    }
 	    if (!password) {
