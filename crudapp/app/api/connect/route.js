@@ -7,7 +7,7 @@ import crypto from 'crypto';
 
 
 
-export async function GET(request) {
+export async function POST(request) {
     try {
 	const { auth_header } = request.json();
 	if (!auth_header) {return NextResponse.json('error', {status: 400})}
