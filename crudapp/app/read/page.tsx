@@ -1,8 +1,26 @@
 "use client"
 import Link from 'next/link';
 import React from 'react';
+import { useEffect } from 'react';
 
 const page = () => {
+
+    const [pg, setPg] = React.useState('1');
+    const read Function = () => {
+        axios.get('/api/viewworkers', {
+          headers: {
+        tok: tok,
+        pg: pg,
+        },)
+      .then(async (response) => {
+      })
+      .catch(error => {
+      });
+    };
+    
+    useEffect(() => {
+      readFunction();
+    }, []);
     const [menuOpen, setMenuOpen] = React.useState(false);
   return (
     <div>
