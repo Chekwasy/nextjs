@@ -1,6 +1,8 @@
 "use client"
 import Link from 'next/link';
 import React from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const page = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
@@ -8,15 +10,35 @@ const page = () => {
         firstname: '',
         lastname: '',
         email: '',
+        tok: Cookies.get('tok'),
       });
+    const [errorMessage, setErrorMessage] = React.useState(null);
+    const [successMessage, setSuccessMessage] = React.useState(null);
       const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
       };
-    
+    async function delayedCode() {
+      await new Promise(resolve => setTimeout(resolve, 10000));
+      setErrorMessage(null);
+      setSuccessMessage(null);
+    };
       const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userData);
-        // Add your API call or submission logic here
+        axios.delete('/api/deleteworker', userData)
+      .then(async (response) => {
+        setSuccessMessage('Worker Successfully Deleted');
+        setUserData({
+        firstname: '',
+        lastname: '',
+        email: '',
+        tok: Cookies.get('tok'),
+        });
+        delayedCode();
+      })
+      .catch(error => {
+        setErrorMessage('Delete Unsuccessful');
+        delayedCode();
+      });
       };
   return (
     <div>
@@ -86,6 +108,22 @@ const page = () => {
         </nav>
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-4 mt-16">
             <h2 className="text-lg font-bold mb-4">Delete User</h2>
+            {errorMessage && (
+              <div
+                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <span className="block sm:inline">{errorMessage}</span>
+              </div>
+            )}
+            {successMessage && (
+              <div
+                className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <span className="block sm:inline">{successMessage}</span>
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-wrap -mx-3 mb-2">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
