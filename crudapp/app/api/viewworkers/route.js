@@ -21,7 +21,7 @@ export async function GET(request) {
         if (!workers) { console.log(3); return NextResponse.json('error', {status: 400});}
         return  NextResponse.json({workers: workers}, {status: 201});
     } catch {
-        console.log(4); return NextResponse.json('error', {status: 400});
+        console.log(4, request.header); return NextResponse.json('error', {status: 400});
     }
 };
 
