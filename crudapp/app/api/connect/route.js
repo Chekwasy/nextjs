@@ -21,7 +21,7 @@ export async function POST(request) {
 	.findOne({ "email": email });
 	if (user && (user.password === pwd)) {
 		const auth_token = v4();
-		redisClient.set(`auth_${auth_token}`, user._id.toString(), 7 * 24 * 60 * 60);
+		redisClient.set(`auth_${auth_token}`, user.userID, 7 * 24 * 60 * 60);
 		return NextResponse.json({token: auth_token}, {status: 201});
 	}
     } catch {
