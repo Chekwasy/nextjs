@@ -59,7 +59,7 @@ export default function Home() {
     </ul>
     <div className='flex items-center space-x-4'>
       <div className='text-gray-300'>{userEmail}</div>
-      <div className='w-10 h-10 rounded-full bg-gray-300 overflow-hidden'>
+      <div onClick={() => checkLogged()} className='w-10 h-10 rounded-full bg-gray-300 overflow-hidden'>
         <img src={'/images/landing-background.svg'} alt='Profile Picture' />
       </div>
     </div>
