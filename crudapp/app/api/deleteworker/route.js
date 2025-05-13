@@ -6,6 +6,7 @@ export async function DELETE(request) {
     let dd = await request;
     try {
         dd = dd.headers.get('userdata');
+        console.log(66, dd.json());
         const { tok, email, firstname, lastname } = dd;
         if (!tok) { console.log(1, dd); return NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
