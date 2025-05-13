@@ -6,16 +6,17 @@ import redisClient from '../../../redis';
 export async function GET(request) {
     try {
         const tok = await request.headers.get("tok");
-	    if (!tok) { return  NextResponse.json('error', {status: 400});}
+	    if (!tok) { console.log(1); return  NextResponse.json('error', {status: 400});}
     	const usr_id = await redisClient.get(`auth_${tok}`);
 	    if (!usr_id) {
-		    return  NextResponse.json('error', {status: 400});
+		    return  NextResponse.json('error', {status: 401});
 	    }
 	    const user = await (await dbClient.client.db().collection('users'))
     	.findOne({ "_id": ObjectID(usr_id) });
 	    if (!user) { return  NextResponse.json('error', {status: 401});}
         return  NextResponse.json({email: user.email}, {status: 201});
     } catch {
+	console.log(4);
         return  NextResponse.json('error', {status: 400});
     }
 };
