@@ -21,7 +21,7 @@ export default function Home() {
       .catch(error => {
       });
   };
-  useEffect(() => {
+  React.useEffect(() => {
   checkLogged();
 }, []);
   return (
