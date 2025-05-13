@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 
 export async function GET(request) {
-    const dd = await request.json();
+    const dd = await request;
     try {
         const tok = await request.header.get('tok');
         const pg = await request.header.get('pg');
