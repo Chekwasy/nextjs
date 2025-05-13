@@ -21,6 +21,9 @@ export default function Home() {
       .catch(error => {
       });
   };
+  useEffect(() => {
+  checkLogged();
+}, []);
   return (
     <div className="bg-cover bg-center h-screen w-screen"
       style={{
