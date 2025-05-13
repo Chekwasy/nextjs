@@ -4,6 +4,7 @@ import redisClient from '../../../redis';
 import { ObjectID } from 'mongodb';
 
 export async function PUT(request) {
+    const dd = await request.json();
     try {
         const dd = await request.json();
         const { tok, age, department, address, mobile,} = await request.json();
@@ -19,7 +20,7 @@ export async function PUT(request) {
         if (!user) { console.log(3); return  NextResponse.json('error', {status: 400});}
         return  NextResponse.json('success', {status: 201});
     } catch {
-        console.log(4);
+        console.log(4, dd);
         return  NextResponse.json('error', {status: 400});
     }
 };
