@@ -13,9 +13,10 @@ export async function GET(request) {
 	    if (!usr_id) {
 		    return  NextResponse.json('error', {status: 401});
 	    }
-	console.log(441);
+	console.log(441, usr_id);
 	    const user = await (await dbClient.client.db().collection('users'))
     	.findOne({ "_id": ObjectID(usr_id) });
+	console.log(77771);
 	    if (!user) { return  NextResponse.json('error', {status: 401});}
         return  NextResponse.json({email: user.email}, {status: 201});
     } catch {
