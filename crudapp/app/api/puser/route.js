@@ -21,12 +21,10 @@ export async function POST(request) {
 	const userID = makeID();
 	const email = usr_details[0];
 	if (!email) {
-		console.log(1, emailpwd, 1, firstname, 1, lastname, dd);
 		return NextResponse.json('error', {status: 401});
 	    
 	}
 	if (!password) {
-		console.log(2);
 		return NextResponse.json('error', {status: 401});
 	}
 	const user = await (await dbClient.client.db().collection('users'))
@@ -40,7 +38,6 @@ export async function POST(request) {
             return NextResponse.json({'success': email}, {status: 201});
         }
     } catch {
-        console.log('err');
         return NextResponse.json('error', {status: 401});
     }
 };
