@@ -3,9 +3,10 @@ import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 
 export async function GET(request) {
+    const dd = await request.json();
     try {
-        const tok = request.header.get('tok');
-        const pg = request.header.get('pg');
+        const tok = await request.header.get('tok');
+        const pg = await request.header.get('pg');
         if (!tok) { console.log(1); return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
