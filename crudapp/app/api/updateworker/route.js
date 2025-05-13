@@ -4,9 +4,8 @@ import redisClient from '../../../redis';
 import { ObjectID } from 'mongodb';
 
 export async function PUT(request) {
-    const dd = await request.json();
     try {
-        const { tok, age, department, address, mobile,} = await request.json();
+        const { tok, age, department, address, mobile } = await request.json();
         const lastupdate = new Date();
         if (!tok) { return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
@@ -20,6 +19,7 @@ export async function PUT(request) {
         if (!user) { return  NextResponse.json('error', {status: 400});}
         return  NextResponse.json('success', {status: 201});
     } catch {
+        console.log(4);
         return  NextResponse.json('error', {status: 400});
     }
 };
