@@ -24,7 +24,10 @@ const page = () => {
     };
       const handleSubmit = (e) => {
         e.preventDefault();
-        axios.delete('/api/deleteworker', userData)
+        axios.delete('/api/deleteworker', {
+          headers: {
+        userdata: userData,
+        }})
       .then(async (response) => {
         setSuccessMessage('Worker Successfully Deleted');
         setUserData({
