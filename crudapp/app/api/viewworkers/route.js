@@ -10,7 +10,7 @@ export async function GET(request) {
         if (!tok) { return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
-            return NextResponse.json('error', {status: 400});
+            return NextResponse.json('error', {status: 401});
         }
         const pageSize = 2; 
         const page = parseInt(pg);
