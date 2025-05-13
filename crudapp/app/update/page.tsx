@@ -11,6 +11,7 @@ const page = () => {
         department: '',
         address: '',
         mobile: '',
+        tok: Cookies.get('tok'),
       });
     const [errorMessage, setErrorMessage] = React.useState(null);
     const [successMessage, setSuccessMessage] = React.useState(null);
