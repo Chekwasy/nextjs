@@ -9,7 +9,7 @@ export async function POST(request) {
         if (!tok) { return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
-            return  NextResponse.json('error', {status: 400});
+            return  NextResponse.json('error', {status: 401});
         }
         const user = await dbClient.client.db().collection('workers')
         .insertOne({firstname: firstname, lastname: lastname, age: age, department: department,
