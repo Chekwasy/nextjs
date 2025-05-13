@@ -26,7 +26,10 @@ const page = () => {
         e.preventDefault();
         axios.delete('/api/deleteworker', {
           headers: {
-        userdata: userData,
+        "tok": Cookies.get('tok'),
+        "email": userData.email,
+        "firstname": userData.firstname,
+        "lastname": userData.lastname,
         }})
       .then(async (response) => {
         setSuccessMessage('Worker Successfully Deleted');
