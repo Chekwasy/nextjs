@@ -10,6 +10,7 @@ const page = () => {
         age: '',
         department: '',
         address: '',
+        email: '',
         mobile: '',
         tok: Cookies.get('tok'),
       });
@@ -34,6 +35,7 @@ const page = () => {
         department: '',
         address: '',
         mobile: '',
+        email: '',
         tok: Cookies.get('tok'),
         });
         delayedCode();
@@ -129,6 +131,23 @@ const page = () => {
             )}
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-wrap -mx-3 mb-2">
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label
+                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        htmlFor="email"
+                        >
+                        Email
+                        </label>
+                        <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="email"
+                        type="text"
+                        name="email"
+                        value={userData.email}
+                        placeholder='Enter email to apply update'
+                        onChange={handleChange}
+                        />
+                    </div>
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label
                         className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
