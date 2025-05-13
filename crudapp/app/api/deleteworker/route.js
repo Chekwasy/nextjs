@@ -4,7 +4,8 @@ import redisClient from '../../../redis';
 
 export async function DELETE(request) {
     try {
-        const { tok, email, firstname, lastname } = await request.json();
+        const dd = await request.json();
+        const { tok, email, firstname, lastname } = dd;
         console.log("8888888hg");
         if (!tok) { console.log("hdhdhg"); return NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
@@ -18,7 +19,7 @@ export async function DELETE(request) {
         if (!user) { console.log("44444hg"); return NextResponse.json('error', {status: 400});}
         return  NextResponse.json('success', {status: 201});
     } catch {
-        console.log("9999999hg");
+        console.log("9999999hg", dd);
         return  NextResponse.json('error', {status: 400});
     }
 };
