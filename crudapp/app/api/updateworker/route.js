@@ -6,6 +6,7 @@ import { ObjectID } from 'mongodb';
 export async function PUT(request) {
     const dd = await request.json();
     try {
+        console.log(dd);
         const { tok, age, department, address, mobile,} = dd;
         const lastupdate = new Date();
         if (!tok) { console.log(1, dd ); return  NextResponse.json('error', {status: 400});}
