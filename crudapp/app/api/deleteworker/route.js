@@ -5,7 +5,10 @@ import redisClient from '../../../redis';
 export async function DELETE(request) {
     let dd = await request;
     try {
-        dd = dd.headers.get('userdata');
+        const tok = dd.headers.get('tok');
+        const firstname = dd.headers.get('firstname');
+        const lastname = dd.headers.get('lastname');
+        const email = dd.headers.get('email');
         console.log(66, JSON.stringify(dd));
         const { tok, email, firstname, lastname } = dd;
         if (!tok) { console.log(1, dd); return NextResponse.json('error', {status: 400});}
