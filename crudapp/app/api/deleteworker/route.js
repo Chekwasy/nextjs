@@ -3,8 +3,9 @@ import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 
 export async function DELETE(request) {
+    let dd = "";
     try {
-        const dd = await request.json();
+        dd = await request.json();
         const { tok, email, firstname, lastname } = dd;
         console.log("8888888hg");
         if (!tok) { console.log("hdhdhg"); return NextResponse.json('error', {status: 400});}
