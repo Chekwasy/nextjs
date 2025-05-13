@@ -32,7 +32,7 @@ const page = () => {
       .then(async (response: Response) => {
           const dd = response.data.workers;
           if (dd.length !== 0) {
-          setItems();
+          setItems(dd);
           } else {
               if (pg > 1) {
               setPg(pg - 1);
