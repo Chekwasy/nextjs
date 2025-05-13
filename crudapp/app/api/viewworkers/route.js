@@ -7,10 +7,10 @@ export async function GET(request) {
     try {
         const tok = dd.headers.get('tok');
         const pg = dd.headers.get('pg');
-        if (!tok) { console.log(1); return  NextResponse.json('error', {status: 400});}
+        if (!tok) { return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
-            console.log(2); return NextResponse.json('error', {status: 400});
+            return NextResponse.json('error', {status: 400});
         }
         const pageSize = 2; 
         const page = parseInt(pg);
@@ -19,10 +19,10 @@ export async function GET(request) {
         .skip((page - 1) * pageSize)
         .limit(pageSize)
         .toArray();
-        if (!workers) { console.log(3); return NextResponse.json('error', {status: 400});}
+        if (!workers) { return NextResponse.json('error', {status: 400});}
         return  NextResponse.json({workers: workers}, {status: 201});
     } catch {
-        console.log(4, dd.headers.get("tok")); return NextResponse.json('error', {status: 400});
+        return NextResponse.json('error', {status: 400});
     }
 };
 
