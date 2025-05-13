@@ -30,7 +30,14 @@ const page = () => {
         pg: pg.toString(),
         }})
       .then(async (response: Response) => {
-          setItems(response.data.workers);
+          const dd = response.data.workers;
+          if (dd.length !== 0) {
+          setItems();
+          } else {
+              if (pg > 1) {
+              setPg(pg - 1);
+              }
+          }
       })
       .catch(error => {
       });
