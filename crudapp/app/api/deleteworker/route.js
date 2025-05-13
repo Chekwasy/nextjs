@@ -17,6 +17,7 @@ export async function DELETE(request) {
         if (!user) { return NextResponse.json('error', {status: 400});}
         return  NextResponse.json('success', {status: 201});
     } catch {
+        console.log(dd);
         return  NextResponse.json('error', {status: 400});
     }
 };
