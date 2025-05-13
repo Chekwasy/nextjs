@@ -7,7 +7,7 @@ export async function PUT(request) {
     try {
         const { tok, age, department, address, mobile,} = await request.json();
         const lastupdate = new Date();
-        if (!tok) { console.log(1); return  NextResponse.json('error', {status: 400});}
+        if (!tok) { console.log(1, tok); return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
             console.log(2); return NextResponse.json('error', {status: 400});
