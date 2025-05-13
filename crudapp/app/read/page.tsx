@@ -20,7 +20,7 @@ const page = () => {
         nationality: '',
         email: '',
         dateadded: '',
-        lastupdated: '',
+        lastupdate: '',
       },
     ]);
     const read = () => {
@@ -166,8 +166,8 @@ const page = () => {
                             <span className="ml-2 text-black">{item.dateadded}</span>
                         </div>
                         <div className="bg-gray-100 rounded p-4 mb-4">
-                            <span className="font-bold text-black">Last Updated:</span>
-                            <span className="ml-2 text-black">{item.lastupdated}</span>
+                            <span className="font-bold text-black">Last Update:</span>
+                            <span className="ml-2 text-black">{item.lastupdate}</span>
                         </div>
                     </div>
                 </div>
