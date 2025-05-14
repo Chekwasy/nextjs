@@ -11,6 +11,8 @@ export default function Home() {
   const [userEmail, setUserEmail] = React.useState('');
   const [logged, setLogged] = React.useState(false);
   const [loggedMsg, setLoggedMsg] = React.useState(false);
+  const [successMsg, setSuccessMsg] = React.useState(false);
+  const [failMsg, setFailMsg] = React.useState(false);
   const checkLogged = () => {
     axios.get('/api/getme', {
       headers: {
@@ -26,6 +28,8 @@ export default function Home() {
   async function delayedCode() {
     await new Promise(resolve => setTimeout(resolve, 3000));
     setLoggedMsg(false);
+    setSuccessMsg(false);
+    setFailMsg(false);
   };
   const handleLogout = () => {
     axios.get('/api/disconnect', {
@@ -44,6 +48,45 @@ export default function Home() {
   React.useEffect(() => {
     checkLogged();
   }, []);
+
+
+  //upload part
+  const handleImageUpload = async (event) => {
+    if (event.target.files.length !== 0) {
+      
+      // Get selc image file
+      const imageFile = event.target.files[0];
+
+      const name = 'profilepic';
+      const tok = Cookies.get('tok');
+      const type = 'image';
+      const isPublic = true;
+
+      // Create a new FormData object
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      formData.append('name', name);
+      formData.append('tok', tok);
+      formData.append('type', type);
+      formData.append('isPublic', isPublic);
+
+      // Send the image and data to the backend
+      await axios.post('/api/picpush', formData, {
+          headers: {
+        '    Content-Type': 'multipart/form-data'
+          }
+        })
+        .then((response) => {
+          setSuccessMsg(true);
+          delayedCode();
+        })
+        .catch((error) => {
+          setFailMsg(true);
+          delayedCode();
+        });
+    }
+  };
+  
   return (
     <div className="bg-cover bg-center h-screen w-screen"
       style={{
@@ -55,9 +98,14 @@ export default function Home() {
           <Link href={'/'} className='md:flex-shrink-0 flex items-top'>
             <div className='text-lg font-bold text-white'>CrudApp</div>
           </Link>
+          <div className='flex items-center space-x-4'>
+            <div onClick={() => checkLogged()} className='w-10 h-10 rounded-full bg-gray-300 overflow-hidden'>
+              <Image src={'/images/landing-background.svg'} alt='Profile Picture' layout='fixed' width={40} height={40} objectFit='cover' className='rounded-full' />
+            </div>
+          </div>
           { logged && (<div className='flex items-center space-x-4'>
             <div className='text-gray-300'>{userEmail}</div>
-            <div onClick={() => checkLogged()} className='w-10 h-10 rounded-full bg-gray-300 overflow-hidden'>
+            <div onClick={() => handleImageUpload()} className='w-10 h-10 rounded-full bg-gray-300 overflow-hidden'>
               <Image src={'/images/landing-background.svg'} alt='Profile Picture' layout='fixed' width={40} height={40} objectFit='cover' className='rounded-full' />
             </div>
           </div>)}
@@ -149,6 +197,18 @@ export default function Home() {
         </div>
       </div>
       )}
+      {successMsg && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-green-100">
+          <<div className="bg-white p-4 rounded-md shadow-md">
+        <p className="text-lg font-medium">Profile picture stored successfully</p>
+        </div>
+      </div>)}
+        {failMsg && (
+          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-red-100">
+            <div className="bg-white p-4 rounded-md shadow-md">
+              <p className="text-lg font-medium">Action unsuccessful</p>
+            </div>
+        </div>)}
       <div className='flex flex-col justify-start h-screen'>
         <div className='bg-gray-100 rounded-lg shadow-lg p-8 w-1/2 ml-4 mt-30'>
           <h1 className='text-3xl font-bold text-gray-800 mb-4'>Add Worker Details</h1>
