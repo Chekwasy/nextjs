@@ -55,7 +55,7 @@ export default function Home() {
           <Link href={'/'} className='md:flex-shrink-0 flex items-top'>
             <div className='text-lg font-bold text-white'>CrudApp</div>
           </Link>
-          { !logged && (<div className='flex items-center space-x-4'>
+          { logged && (<div className='flex items-center space-x-4'>
             <div className='text-gray-300'>{userEmail}</div>
             <div onClick={() => checkLogged()} className='w-10 h-10 rounded-full bg-gray-300 overflow-hidden'>
               <Image src={'/images/landing-background.svg'} alt='Profile Picture' layout='fixed' width={40} height={40} objectFit='cover' className='rounded-full' />

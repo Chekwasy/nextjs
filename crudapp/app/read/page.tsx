@@ -105,7 +105,7 @@ const page = () => {
                 { logged && (<div className='flex items-center space-x-4'>
                     <div className='text-gray-300'>{userEmail}</div>
                     <div onClick={() => checkLogged()} className='w-10 h-10 rounded-full bg-gray-300 overflow-hidden'>
-                    <Image src={'/images/landing-background.svg'} alt='Profile Picture' layout='fill' objectFit='cover' />
+                        <Image src={'/images/landing-background.svg'} alt='Profile Picture' layout='fixed' width={40} height={40} objectFit='cover' className='rounded-full' />
                     </div>
                 </div>)}
                 <ul className='md:flex hidden items-center space-x-4'>
