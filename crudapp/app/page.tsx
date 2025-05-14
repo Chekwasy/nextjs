@@ -10,6 +10,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [logged, setLogged] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
+  const [loggedMsg, setLoggedMsg] = React.useState('');
   const checkLogged = () => {
     axios.get('/api/getme', {
       headers: {
@@ -18,6 +19,23 @@ export default function Home() {
     .then(async (response: Response) => {
         setUserEmail(response.data.email);
         setLogged(true);
+    })
+    .catch(error => {
+    });
+  };
+  async function delayedCode() {
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    setLoggedMsg(false);
+  };
+  const handleLogout = () => {
+    axios.get('/api/disconnect', {
+      headers: {
+        tok: Cookies.get('tok'),
+    }})
+    .then(async (response: Response) => {
+        setUserEmail('');
+        setLogged(false);
+        setLoggedMsg(true);
     })
     .catch(error => {
     });
@@ -62,6 +80,9 @@ export default function Home() {
               <Link href={'/delete'}>
                 <div className='text-gray-300 hover:text-white flex items-center'>Delete</div>
               </Link>
+            </li>
+            <li>
+              <div onClick={() => handleLogout()} className='text-gray-300 hover:text-white flex items-center'>Logout</div>
             </li>
           </ul>
 
@@ -113,15 +134,25 @@ export default function Home() {
                   </div>
                 </Link>
               </li>
+              <li>
+                <div onClick={() => handleLogout()} className='text-gray-300 hover:text-white flex items-center'>Logout</div>
+              </li>
             </ul>
           )}
         </div>
       </nav>
+      {loggedMsg && (<div className='fixed top-0 left-0 w-full h-full flex items-center justify-center'>
+        <div className='bg-white rounded-lg shadow-lg p-8 w-1/2 text-center'>
+          <h1 className='text-2xl font-bold text-gray-800 mb-4'>Logged Out Successfully!</h1>
+          <p className='text-gray-700 text-lg mb-4'>You have been logged out of the system.</p>
+        </div>
+      </div>
+      )}
       <div className='flex flex-col justify-start h-screen'>
         <div className='bg-gray-100 rounded-lg shadow-lg p-8 w-1/2 ml-4 mt-30'>
           <h1 className='text-3xl font-bold text-gray-800 mb-4'>Add Worker Details</h1>
           <p className='text-gray-700 text-lg mb-4'>
-            {`Welcome to our worker management system. To get started, please click on the "Add Worker" button below.`}
+            {`Welcome to our worker management system. To get started, please click on the create button top right or via the menu.`}
           </p>
           <p className='text-gray-700 text-lg mb-4'>
             {`If you already have an account, please login to access our system. If not, please signup to create a new account.`}
