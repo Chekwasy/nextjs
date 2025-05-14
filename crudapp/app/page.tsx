@@ -118,7 +118,7 @@ export default function Home() {
         </div>
       </nav>
       <div className='flex flex-col justify-start h-screen'>
-        <div className='bg-gray-100 rounded-lg shadow-lg p-8 w-1/2 ml-4 mt-12'>
+        <div className='bg-gray-100 rounded-lg shadow-lg p-8 w-1/2 ml-4 mt-30'>
           <h1 className='text-3xl font-bold text-gray-800 mb-4'>Add Worker Details</h1>
           <p className='text-gray-700 text-lg mb-4'>
             {`Welcome to our worker management system. To get started, please click on the "Add Worker" button below.`}
