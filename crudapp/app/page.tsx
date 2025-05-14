@@ -10,7 +10,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [logged, setLogged] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
-  const [loggedMsg, setLoggedMsg] = React.useState(true);
+  const [loggedMsg, setLoggedMsg] = React.useState(false);
   const checkLogged = () => {
     axios.get('/api/getme', {
       headers: {
