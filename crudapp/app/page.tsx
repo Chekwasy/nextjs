@@ -10,7 +10,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [logged, setLogged] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
-  const [loggedMsg, setLoggedMsg] = React.useState('');
+  const [loggedMsg, setLoggedMsg] = React.useState(true);
   const checkLogged = () => {
     axios.get('/api/getme', {
       headers: {
@@ -36,6 +36,7 @@ export default function Home() {
         setUserEmail('');
         setLogged(false);
         setLoggedMsg(true);
+        delayedCode();
     })
     .catch(error => {
     });
@@ -81,9 +82,9 @@ export default function Home() {
                 <div className='text-gray-300 hover:text-white flex items-center'>Delete</div>
               </Link>
             </li>
-            <li>
+            {logged && (<li>
               <div onClick={() => handleLogout()} className='text-gray-300 hover:text-red-700 cursor-pointer flex items-center'>Logout</div>
-            </li>
+            </li>)}
           </ul>
 
           {!menuOpen && (
@@ -134,9 +135,9 @@ export default function Home() {
                   </div>
                 </Link>
               </li>
-              <li>
+              {logged && (<li>
                 <div onClick={() => handleLogout()} className='text-gray-100 hover:text-red-700 cursor-pointer flex items-center'>Logout</div>
-              </li>
+              </li>)}
             </ul>
           )}
         </div>
