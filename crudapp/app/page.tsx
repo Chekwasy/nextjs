@@ -82,7 +82,7 @@ export default function Home() {
               </Link>
             </li>
             <li>
-              <div onClick={() => handleLogout()} className='text-gray-300 hover:text-white flex items-center'>Logout</div>
+              <div onClick={() => handleLogout()} className='text-gray-300 hover:text-red-700 cursor-pointer flex items-center'>Logout</div>
             </li>
           </ul>
 
@@ -135,7 +135,7 @@ export default function Home() {
                 </Link>
               </li>
               <li>
-                <div onClick={() => handleLogout()} className='text-gray-300 hover:text-white flex items-center'>Logout</div>
+                <div onClick={() => handleLogout()} className='text-gray-100 hover:text-red-700 cursor-pointer flex items-center'>Logout</div>
               </li>
             </ul>
           )}
