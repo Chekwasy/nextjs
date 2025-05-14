@@ -143,7 +143,7 @@ export default function Home() {
         </div>
       </nav>
       {loggedMsg && (<div className='fixed top-0 left-0 w-full h-full flex items-center justify-center'>
-        <div className='bg-white rounded-lg shadow-lg p-8 w-1/2 text-center'>
+        <div className='bg-gray-300 rounded-lg shadow-lg p-8 w-1/2 text-center'>
           <h1 className='text-2xl font-bold text-gray-800 mb-4'>Logged Out Successfully!</h1>
           <p className='text-gray-700 text-lg mb-4'>You have been logged out of the system.</p>
         </div>
