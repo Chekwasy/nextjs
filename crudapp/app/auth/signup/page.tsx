@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import axios from 'axios';
+import Link from 'next/link';
 
 function page() {
   const [email, setEmail] = React.useState('');
@@ -149,6 +150,9 @@ function page() {
                 onChange={handleConfirmPasswordChange}
               />
             </div>
+            <Link href={'/auth/login'}>
+                <div className='text-gray-300 hover:text-white flex items-center'>Login</div>
+            </Link>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
