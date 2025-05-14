@@ -72,10 +72,10 @@ export default function Home() {
 
       // Send the image and data to the backend
       await axios.post('/api/picpush', formData, {
-          headers: {
-        '    Content-Type': 'multipart/form-data'
-          }
-        })
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
         .then((response) => {
           setSuccessMsg(true);
           delayedCode();
