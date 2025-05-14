@@ -197,18 +197,18 @@ export default function Home() {
         </div>
       </div>
       )}
-      {successMsg && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-green-100">
-          <<div className="bg-white p-4 rounded-md shadow-md">
-        <p className="text-lg font-medium">Profile picture stored successfully</p>
+      {successMsg && (<div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-green-100">
+        <<div className="bg-white p-4 rounded-md shadow-md">
+          <p className="text-lg font-medium">Profile picture stored successfully</p>
         </div>
-      </div>)}
-        {failMsg && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-red-100">
-            <div className="bg-white p-4 rounded-md shadow-md">
-              <p className="text-lg font-medium">Action unsuccessful</p>
-            </div>
-        </div>)}
+      </div>
+      )}
+      {failMsg && (<div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-red-100">
+        <div className="bg-white p-4 rounded-md shadow-md">
+          <p className="text-lg font-medium">Action unsuccessful</p>
+        </div>
+      </div>
+      )}
       <div className='flex flex-col justify-start h-screen'>
         <div className='bg-gray-100 rounded-lg shadow-lg p-8 w-1/2 ml-4 mt-30'>
           <h1 className='text-3xl font-bold text-gray-800 mb-4'>Add Worker Details</h1>
