@@ -228,7 +228,7 @@ export default function Home() {
       )}
       {failMsg && (<div className='fixed top-0 left-0 w-full h-full flex items-center justify-center'>
         <div className='bg-red-200 rounded-lg shadow-lg p-8 w-1/2 text-center'>
-          <p className='text-gray-700 text-lg mb-4'>Profile picture upload successful.</p>
+          <p className='text-gray-700 text-lg mb-4'>Upload unsuccessful</p>
         </div>
       </div>
       )}
