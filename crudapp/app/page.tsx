@@ -109,7 +109,7 @@ export default function Home() {
               className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
             >
               <Image
-                src="/images/upload-image-icon.png"
+                src="/images/landing-background.svg"
                 alt="Upload Image"
                 layout="fixed"
                 width={40}
