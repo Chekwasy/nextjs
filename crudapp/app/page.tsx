@@ -198,7 +198,7 @@ export default function Home() {
       </div>
       )}
       {successMsg && (<div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-green-100">
-        <<div className="bg-white p-4 rounded-md shadow-md">
+        <div className="bg-white p-4 rounded-md shadow-md">
           <p className="text-lg font-medium">Profile picture stored successfully</p>
         </div>
       </div>
