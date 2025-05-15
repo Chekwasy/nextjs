@@ -222,13 +222,14 @@ export default function Home() {
       )}
       {successMsg && (<div className='fixed top-0 left-0 w-full h-full flex items-center justify-center'>
         <div className='bg-green-200 rounded-lg shadow-lg p-8 w-1/2 text-center'>
-          <p className='text-gray-700 text-lg mb-4'>Profile picture upload successful.</p>
+          <h1 className='text-2xl font-bold text-gray-800 mb-4'>Upload Successful!</h1>
         </div>
       </div>
       )}
       {failMsg && (<div className='fixed top-0 left-0 w-full h-full flex items-center justify-center'>
         <div className='bg-red-200 rounded-lg shadow-lg p-8 w-1/2 text-center'>
-          <p className='text-gray-700 text-lg mb-4'>Upload unsuccessful</p>
+          <h1 className='text-2xl font-bold text-gray-800 mb-4'>Upload Unsuccessful!</h1>
+          <p className='text-gray-700 text-lg mb-4'>Use Image less than 1MB</p>
         </div>
       </div>
       )}
