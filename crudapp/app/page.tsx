@@ -220,15 +220,15 @@ export default function Home() {
         </div>
       </div>
       )}
-      {successMsg && (<div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-green-100">
-        <div className="bg-white p-4 rounded-md shadow-md">
-          <p className="text-lg font-medium">Profile picture stored successfully</p>
+      {successMsg && (<div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
+        <div className="bg-green-100 p-4 rounded-md shadow-md">
+          <p className="text-lg font-medium text-white">Profile picture stored successfully</p>
         </div>
       </div>
       )}
-      {failMsg && (<div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center bg-red-100">
-        <div className="bg-white p-4 rounded-md shadow-md">
-          <p className="text-lg font-medium">Action unsuccessful</p>
+      {failMsg && (<div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
+        <div className="bg-red-100 p-4 rounded-md shadow-md">
+          <p className="text-lg font-medium text-white">Action unsuccessful</p>
         </div>
       </div>
       )}
