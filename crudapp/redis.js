@@ -21,7 +21,7 @@ class RedisClient {
                         await client.ping();
                         this.clientConnected = true;
                         return client;
-                } catch (err) {
+                } catch () {
                         this.clientConnected =false;
                         return cli;
                 }
