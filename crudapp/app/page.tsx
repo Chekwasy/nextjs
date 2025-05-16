@@ -18,7 +18,7 @@ export default function Home() {
       headers: {
         tok: Cookies.get('tok'),
     }})
-    .then(async (response: Response) => {
+    .then(async (response) => {
         const dd = response;
         setUserEmail(dd.data.email);
         setLogged(true);
@@ -40,10 +40,10 @@ export default function Home() {
     }})
     .then(async (response) => {
       console.log(response.data);
-        setUserEmail('');
-        setLogged(false);
-        setLoggedMsg(true);
-        delayedCode();
+      setUserEmail('');
+      setLogged(false);
+      setLoggedMsg(true);
+      delayedCode();
     })
     .catch(error => {
       console.log(error.message);
@@ -72,7 +72,6 @@ export default function Home() {
       formData.append('name', name);
       formData.append('tok', tok);
       formData.append('type', type);
-      formData.append('isPublic', isPublic);
 
       // Send the image and data to the backend
       await axios.post('/api/picpush', formData, {

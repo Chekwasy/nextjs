@@ -11,7 +11,7 @@ export async function POST(request) {
     try {
 	    const mkDirAsync = promisify(mkdir);
 	    const writeFileAsync = promisify(writeFile);
-      const { tok, image, name, type, isPublic } = await request.json();
+      const { tok, image, name, type, } = await request.json();
       const dateadded = new Date();
       const parentId = '0';
       if (!tok) { return  NextResponse.json('error', {status: 400});}
@@ -31,7 +31,7 @@ export async function POST(request) {
         name: name,
         fileID: uuidv4(),
         type: type,
-        isPublic: isPublic,
+        isPublic: true,
         parentId: parentId,
         dateadded: dateadded,
       };

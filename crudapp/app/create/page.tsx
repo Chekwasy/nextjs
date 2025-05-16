@@ -19,8 +19,8 @@ const Page = () => {
         email: '',
         tok: Cookies.get('tok'),
       });
-    const [errorMessage, setErrorMessage] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [logged, setLogged] = useState(false);
       const [loggedMsg, setLoggedMsg] = useState(false);
@@ -62,8 +62,8 @@ const Page = () => {
       }, []);
     async function delayedCode() {
       await new Promise(resolve => setTimeout(resolve, 10000));
-      setErrorMessage(null);
-      setSuccessMessage(null);
+      setErrorMessage('');
+      setSuccessMessage('');
     };
       const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -90,7 +90,7 @@ const Page = () => {
         delayedCode();
       })
       .catch(error => {
-          console.log(error.message);
+        console.log(error.message);
         setErrorMessage('Addition Unsuccessful');
         delayedCode();
       });
@@ -198,7 +198,7 @@ const Page = () => {
         )}
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-4 mt-16">
             <h2 className="text-lg font-bold mb-4">Create New User</h2>
-            {errorMessage && (
+            {errorMessage.length && (
               <div
                 className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                 role="alert"
@@ -206,7 +206,7 @@ const Page = () => {
                 <span className="block sm:inline">{errorMessage}</span>
               </div>
             )}
-            {successMessage && (
+            {successMessage.length && (
               <div
                 className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
                 role="alert"
