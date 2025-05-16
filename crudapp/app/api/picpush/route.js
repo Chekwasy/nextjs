@@ -3,11 +3,14 @@ import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 import { tmpdir } from 'os';
 import { join as joinPath } from 'path';
-import { mkdir } from 'fs';
+import { mkdir, writeFile } from 'fs';
+import { v4 as uuidv4 } from 'uuid';
+import Queue from 'bull/lib/queue';
 
 export async function POST(request) {
     try {
 	const mkDirAsync = promisify(mkdir);
+	const writeFileAsync = promisify(writeFile);
         const { tok, image, name, type, isPublic } = await request.json();
         const dateadded = new Date();
       const parentId = '0';
@@ -26,11 +29,25 @@ export async function POST(request) {
       const newFile = {
       userID: userID,
       name: name,
+      fileID: uuidv4(),
       type: type,
       isPublic: isPublic,
       parentId: parentId,
     };
-        
+await mkDirAsync(baseDir, { recursive: true });
+if (type === 'image') {
+      const localPath = joinPath(baseDir, uuidv4());
+      await writeFileAsync(localPath, Buffer.from(image, 'base64'));
+      newFile.localPath = localPath;
+}
+const insertInfo = await dbClient.client.db().collection('files')
+	.insertOne(newFile);
+if (!insertInfo) { return  NextResponse.json('error', {status: 400});}
+if (type === 'image') {
+	//create worker to resize image
+      const tokenQueue = newQueue(`Image thumbnail [${userID}-${insertInfo.fileID}]`);
+      tokenQueue.add({ userID, fileID });
+}
     } catch {
         return  NextResponse.json('error', {status: 400});
     }
