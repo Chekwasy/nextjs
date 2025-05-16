@@ -1,33 +1,34 @@
 "use client"
 import Link from 'next/link';
-import {} from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 
-const page = () => {
-    const [menuOpen, setMenuOpen] = React.useState(false);
-    const [userData, setUserData] = React.useState({
+const Page = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [userData, setUserData] = useState({
         firstname: '',
         lastname: '',
         email: '',
         tok: Cookies.get('tok'),
       });
-    const [errorMessage, setErrorMessage] = React.useState(null);
-    const [successMessage, setSuccessMessage] = React.useState(null);
-    const [logged, setLogged] = React.useState(false);
-    const [userEmail, setUserEmail] = React.useState('');
-      const [loggedMsg, setLoggedMsg] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [logged, setLogged] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
+      const [loggedMsg, setLoggedMsg] = useState(false);
       const checkLogged = () => {
         axios.get('/api/getme', {
           headers: {
             tok: Cookies.get('tok'),
         }})
-        .then(async (response: Response) => {
+        .then(async (response) => {
             setUserEmail(response.data.email);
             setLogged(true);
         })
         .catch(error => {
+          console.log(error.message);
         });
       };
       async function delayedCode2() {
@@ -39,16 +40,18 @@ const page = () => {
           headers: {
             tok: Cookies.get('tok'),
         }})
-        .then(async (response: Response) => {
+        .then(async (response) => {
+            console.log(response.data);
             setUserEmail('');
             setLogged(false);
             setLoggedMsg(true);
             delayedCode2();
         })
         .catch(error => {
+          console.log(error.message);
         });
       };
-      React.useEffect(() => {
+      useEffect(() => {
         checkLogged();
       }, []);
       const handleChange = (e) => {
@@ -69,6 +72,7 @@ const page = () => {
         "lastname": userData.lastname,
         }})
       .then(async (response) => {
+        console.log(response.data);
         setSuccessMessage('Worker Successfully Deleted');
         setUserData({
         firstname: '',
@@ -79,6 +83,7 @@ const page = () => {
         delayedCode();
       })
       .catch(error => {
+        console.log(error.message);
         setErrorMessage('Delete Unsuccessful');
         delayedCode();
       });
@@ -267,4 +272,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
