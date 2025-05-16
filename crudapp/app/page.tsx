@@ -24,6 +24,7 @@ export default function Home() {
         setLogged(true);
     })
     .catch(error => {
+      console.log(error.message);
     });
   };
   async function delayedCode() {
@@ -37,7 +38,8 @@ export default function Home() {
       headers: {
         tok: Cookies.get('tok'),
     }})
-    .then(async (response: Response) => {
+    .then(async (response) => {
+      console.log(response.data);
         setUserEmail('');
         setLogged(false);
         setLoggedMsg(true);
@@ -78,10 +80,12 @@ export default function Home() {
         }
       })
         .then((response) => {
+          console.log(response.data);
           setSuccessMsg(true);
           delayedCode();
         })
         .catch((error) => {
+          console.log(error.message);
           setFailMsg(true);
           delayedCode();
         });
