@@ -1,18 +1,18 @@
 "use client"
 import Link from 'next/link';
 import Image from 'next/image';
-import React from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = React.useState(false);
-  const [userEmail, setUserEmail] = React.useState('');
-  const [logged, setLogged] = React.useState(false);
-  const [loggedMsg, setLoggedMsg] = React.useState(false);
-  const [successMsg, setSuccessMsg] = React.useState(false);
-  const [failMsg, setFailMsg] = React.useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [logged, setLogged] = useState(false);
+  const [loggedMsg, setLoggedMsg] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
+  const [failMsg, setFailMsg] = useState(false);
   const checkLogged = () => {
     axios.get('/api/getme', {
       headers: {
@@ -49,13 +49,13 @@ export default function Home() {
       console.log(error.message);
     });
   };
-  React.useEffect(() => {
+  useEffect(() => {
     checkLogged();
   }, []);
 
 
   //upload part
-  const handleImageUpload = async (event) => {
+  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files.length !== 0) {
       
       // Get selc image file

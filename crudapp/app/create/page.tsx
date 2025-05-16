@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import { useEffect, useState} from 'react';
+import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
@@ -65,11 +65,11 @@ const Page = () => {
       setErrorMessage('');
       setSuccessMessage('');
     };
-      const handleChange = (e) => {
+      const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         axios.post('/api/addworker', userData)
       .then(async (response) => {
@@ -372,7 +372,6 @@ const Page = () => {
                 <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
-                onClick={handleSubmit}
                 >
                 Submit
                 </button>

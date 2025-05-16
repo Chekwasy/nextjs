@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
@@ -61,11 +61,11 @@ const Page = () => {
       setErrorMessage('');
       setSuccessMessage('');
     };
-      const handleChange = (e) => {
+      const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         axios.put('/api/updateworker', userData)
       .then(async (response) => {

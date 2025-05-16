@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 
@@ -18,22 +18,22 @@ function Page() {
     setSuccessMessage('');
   }
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const handleFirstnameChange = (e) => {
+  const handleFirstnameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFirstname(e.target.value);
   };
-  const handleLastnameChange = (e) => {
+  const handleLastnameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLastname(e.target.value);
   };
-  const handleConfirmPasswordChange = (e) => {
+  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (password === confirmPassword) {
@@ -158,7 +158,6 @@ function Page() {
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
               type="submit"
-              onClick={handleSubmit}
             >
               Signup
             </button>

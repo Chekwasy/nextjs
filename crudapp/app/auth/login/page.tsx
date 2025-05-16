@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
@@ -21,13 +21,13 @@ function Page() {
     setSuccessMessage('Loading...');
   };
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const handleLSubmit = (e) => {
+  const handleLSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     // Add your API call or submission logic here
@@ -106,7 +106,6 @@ function Page() {
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
               type="submit"
-              onClick={handleLSubmit}
             >
               Login
             </button>
