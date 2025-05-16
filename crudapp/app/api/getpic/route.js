@@ -98,7 +98,6 @@ export async function GET(request) {
       });
     }
 
-    const realpathAsync = promisify(realpath);
     const absoluteFilePath = await realpathAsync(filePath);
     const mimeType = mime.lookup(filePath);
 
