@@ -1,13 +1,12 @@
 "use client"
 import Link from 'next/link';
 import React from '../page';
-import { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 
 const page = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = React.useState(false);
     const [userData, setUserData] = React.useState({
         firstname: '',
         lastname: '',
