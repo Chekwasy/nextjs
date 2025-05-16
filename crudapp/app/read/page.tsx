@@ -32,7 +32,7 @@ const Page = () => {
           headers: {
             tok: Cookies.get('tok'),
         }})
-        .then(async (response: Response) => {
+        .then(async (response) => {
             setUserEmail(response.data.email);
             setLogged(true);
         })
@@ -49,7 +49,7 @@ const Page = () => {
           headers: {
             tok: Cookies.get('tok'),
         }})
-        .then(async (response: Response) => {
+        .then(async (response) => {
             console.log(response.data);
             setUserEmail('');
             setLogged(false);
@@ -77,7 +77,7 @@ const Page = () => {
         tok: Cookies.get('tok'),
         pg: pg.toString(),
         }})
-      .then(async (response: Response) => {
+      .then(async (response) => {
           const dd = response.data.workers;
           if (dd.length !== 0) {
           setItems(dd);
@@ -91,7 +91,7 @@ const Page = () => {
           console.log(error.message);
       });
     }, [pg]);
-    const [menuOpen, setMenuOpen] = React.useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div>
         <nav className='bg-gray-800 py-4 fixed top-0 left-0 w-full z-10'>

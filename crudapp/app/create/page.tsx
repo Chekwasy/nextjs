@@ -29,7 +29,7 @@ const Page = () => {
           headers: {
             tok: Cookies.get('tok'),
         }})
-        .then(async (response: Response) => {
+        .then(async (response) => {
             setUserEmail(response.data.email);
             setLogged(true);
         })
@@ -46,7 +46,7 @@ const Page = () => {
           headers: {
             tok: Cookies.get('tok'),
         }})
-        .then(async (response: Response) => {
+        .then(async (response) => {
             console.log(response.data);
             setUserEmail('');
             setLogged(false);
