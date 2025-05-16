@@ -3,9 +3,11 @@ import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 import { tmpdir } from 'os';
 import { join as joinPath } from 'path';
+import { mkdir } from 'fs';
 
 export async function POST(request) {
     try {
+	const mkDirAsync = promisify(mkdir);
         const { tok, image, name, type, isPublic } = await request.json();
         const dateadded = new Date();
       const parentId = '0';
