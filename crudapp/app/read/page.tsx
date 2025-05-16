@@ -63,8 +63,16 @@ const Page = () => {
       useEffect(() => {
         checkLogged();
       }, []);
-    const read = () => {
-        axios.get('/api/viewworkers', {
+    const handlePrevious = () => {
+        if (pg !== 1) {
+            setPg(pg - 1);
+        }
+    };
+    const handleNext = () => {
+        setPg(pg + 1);
+    };
+    useEffect(() => {
+      axios.get('/api/viewworkers', {
           headers: {
         tok: Cookies.get('tok'),
         pg: pg.toString(),
@@ -82,18 +90,7 @@ const Page = () => {
       .catch(error => {
           console.log(error.message);
       });
-    };
-    const handlePrevious = () => {
-        if (pg !== 1) {
-            setPg(pg - 1);
-        }
-    };
-    const handleNext = () => {
-        setPg(pg + 1);
-    };
-    useEffect(() => {
-      read();
-    }, [pg, read]);
+    }, [pg]);
     const [menuOpen, setMenuOpen] = React.useState(false);
   return (
     <div>
