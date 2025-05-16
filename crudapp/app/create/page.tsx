@@ -1,13 +1,13 @@
 "use client"
 import Link from 'next/link';
-import React from '../page';
+import { UseEffect, useState} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 
-const page = () => {
-    const [menuOpen, setMenuOpen] = React.useState(false);
-    const [userData, setUserData] = React.useState({
+const Page = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [userData, setUserData] = useState({
         firstname: '',
         lastname: '',
         age: '',
@@ -19,11 +19,11 @@ const page = () => {
         email: '',
         tok: Cookies.get('tok'),
       });
-    const [errorMessage, setErrorMessage] = React.useState(null);
-    const [successMessage, setSuccessMessage] = React.useState(null);
-    const [userEmail, setUserEmail] = React.useState('');
-    const [logged, setLogged] = React.useState(false);
-      const [loggedMsg, setLoggedMsg] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [userEmail, setUserEmail] = useState('');
+    const [logged, setLogged] = useState(false);
+      const [loggedMsg, setLoggedMsg] = useState(false);
       const checkLogged = () => {
         axios.get('/api/getme', {
           headers: {
@@ -34,6 +34,7 @@ const page = () => {
             setLogged(true);
         })
         .catch(error => {
+            console.log(error.message);
         });
       };
       async function delayedCode2() {
@@ -46,15 +47,17 @@ const page = () => {
             tok: Cookies.get('tok'),
         }})
         .then(async (response: Response) => {
+            console.log(response.data);
             setUserEmail('');
             setLogged(false);
             setLoggedMsg(true);
             delayedCode2();
         })
         .catch(error => {
+            console.log(error.message);
         });
       };
-      React.useEffect(() => {
+      useEffect(() => {
         checkLogged();
       }, []);
     async function delayedCode() {
@@ -70,6 +73,7 @@ const page = () => {
         e.preventDefault();
         axios.post('/api/addworker', userData)
       .then(async (response) => {
+          console.log(response.data);
         setSuccessMessage('Worker Successfully Added');
         setUserData({
         firstname: '',
@@ -86,6 +90,7 @@ const page = () => {
         delayedCode();
       })
       .catch(error => {
+          console.log(error.message);
         setErrorMessage('Addition Unsuccessful');
         delayedCode();
       });
