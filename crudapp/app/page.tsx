@@ -46,6 +46,7 @@ export default function Home() {
         delayedCode();
     })
     .catch(error => {
+      console.log(error.message);
     });
   };
   React.useEffect(() => {
