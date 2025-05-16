@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import React from 'react';
+import {} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
