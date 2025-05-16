@@ -94,10 +94,6 @@ const Page = () => {
     useEffect(() => {
       read();
     }, [pg]);
-    
-    useEffect(() => {
-      read();
-    }, []);
     const [menuOpen, setMenuOpen] = React.useState(false);
   return (
     <div>
