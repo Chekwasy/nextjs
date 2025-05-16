@@ -45,9 +45,11 @@ const insertInfo = await dbClient.client.db().collection('files')
 if (!insertInfo) { return  NextResponse.json('error', {status: 400});}
 if (type === 'image') {
 	//create worker to resize image
-      const tokenQueue = newQueue(`Image thumbnail [${userID}-${insertInfo.fileID}]`);
-      tokenQueue.add({ userID, fileID });
+      const fileQueue = new Queue('thumbnail generation');
+	const jobName = `Image thumbnail [${userID}-${insertInfo.fileID}]`;
+      fileQueue.add({ userID, insertInfo.fileID, name: jobName });
 }
+return  NextResponse.json('success', {status: 200});
     } catch {
         return  NextResponse.json('error', {status: 400});
     }
