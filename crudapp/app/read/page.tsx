@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import { useEffect, useCallback, useState} from 'react';
+import { useEffect, useState} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
@@ -63,7 +63,7 @@ const Page = () => {
       useEffect(() => {
         checkLogged();
       }, []);
-    const read = useCallback(() => {
+    const read = () => {
         axios.get('/api/viewworkers', {
           headers: {
         tok: Cookies.get('tok'),
@@ -82,7 +82,7 @@ const Page = () => {
       .catch(error => {
           console.log(error.message);
       });
-    }, []);
+    };
     const handlePrevious = () => {
         if (pg !== 1) {
             setPg(pg - 1);
@@ -93,7 +93,7 @@ const Page = () => {
     };
     useEffect(() => {
       read();
-    }, [pg]);
+    }, [pg, read]);
     const [menuOpen, setMenuOpen] = React.useState(false);
   return (
     <div>
