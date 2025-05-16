@@ -19,7 +19,8 @@ export default function Home() {
         tok: Cookies.get('tok'),
     }})
     .then(async (response: Response) => {
-        setUserEmail(response.data.email);
+        const dd = response;
+        setUserEmail(dd.data.email);
         setLogged(true);
     })
     .catch(error => {
