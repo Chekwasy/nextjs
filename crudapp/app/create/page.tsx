@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import React from 'react';
+import React from '../page';
 import { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
