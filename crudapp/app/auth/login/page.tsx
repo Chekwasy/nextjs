@@ -1,16 +1,16 @@
 "use client"
-import React from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-function page() {
+function Page() {
   const router = useRouter();
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState(null);
-  const [successMessage, setSuccessMessage] = React.useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   async function delayedCode() {
     await new Promise(resolve => setTimeout(resolve, 20000));
@@ -42,6 +42,7 @@ function page() {
       router.push("/");
     })
     .catch(error => {
+      console.log(error.message);
       setErrorMessage("Login Unsuccessful");
       delayedCode();
     });
@@ -116,4 +117,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

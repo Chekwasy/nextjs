@@ -1,16 +1,16 @@
 "use client"
-import React from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 
-function page() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [firstname, setFirstname] = React.useState('');
-  const [lastname, setLastname] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState(null);
-  const [successMessage, setSuccessMessage] = React.useState(null);
+function Page() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   async function delayedCode() {
   await new Promise(resolve => setTimeout(resolve, 20000));
@@ -44,10 +44,12 @@ function page() {
         lastname: lastname,
       })
       .then(async (response) => {
+        console.log(response.data);
         setSuccessMessage('Signup Successful');
         delayedCode();
       })
       .catch(error => {
+        console.log(error.message);
         setErrorMessage('Login Unsuccessful');
         delayedCode();
       });
@@ -167,4 +169,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

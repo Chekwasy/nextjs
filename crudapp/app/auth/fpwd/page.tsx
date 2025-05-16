@@ -1,6 +1,6 @@
-import React from 'react'
+"use client"
 
-function page() {
+function Page() {
   return (
     <div>
       <div className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
@@ -56,4 +56,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
