@@ -1,6 +1,5 @@
 import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
-import { ObjectID } from 'mongodb';
 import redisClient from '../../../redis';
 
 export async function GET(request) {
