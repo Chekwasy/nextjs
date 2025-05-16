@@ -56,13 +56,13 @@ export default function Home() {
 
   //upload part
   const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files.length !== 0) {
+    if (event.target.files !== null && event.target.files.length !== 0) {
       
       // Get selc image file
       const imageFile = event.target.files[0];
 
       const name = 'profilepic';
-      const tok = Cookies.get('tok');
+      const tok = Cookies.get('tok') || '';
       const type = 'image';
 
       // Create a new FormData object
@@ -109,7 +109,7 @@ export default function Home() {
           </div>
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => document.getElementById('image-upload').click()}
+              onClick={() => { const imgUpload = document.getElementById('image-upload'); if (imgUpload) {imgUpload.click()}}}
               className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
             >
               <Image
