@@ -1,14 +1,14 @@
 "use client"
 import Link from 'next/link';
-import React from 'react';
+import { useEffect, useState} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 
-const page = () => {
+const Page = () => {
 
-    const [pg, setPg] = React.useState(1);
-    const [items, setItems] = React.useState([
+    const [pg, setPg] = useState(1);
+    const [items, setItems] = useState([
       {
         id: 1,
         firstname: '',
@@ -24,9 +24,9 @@ const page = () => {
         lastupdate: '',
       },
     ]);
-    const [logged, setLogged] = React.useState(false);
-      const [loggedMsg, setLoggedMsg] = React.useState(false);
-      const [userEmail, setUserEmail] = React.useState('');
+    const [logged, setLogged] = useState(false);
+      const [loggedMsg, setLoggedMsg] = useState(false);
+      const [userEmail, setUserEmail] = useState('');
       const checkLogged = () => {
         axios.get('/api/getme', {
           headers: {
@@ -37,6 +37,7 @@ const page = () => {
             setLogged(true);
         })
         .catch(error => {
+            console.log(error.message);
         });
       };
       async function delayedCode2() {
@@ -49,15 +50,17 @@ const page = () => {
             tok: Cookies.get('tok'),
         }})
         .then(async (response: Response) => {
+            console.log(response.data);
             setUserEmail('');
             setLogged(false);
             setLoggedMsg(true);
             delayedCode2();
         })
         .catch(error => {
+            console.log(error.message);
         });
       };
-      React.useEffect(() => {
+      useEffect(() => {
         checkLogged();
       }, []);
     const read = () => {
@@ -77,6 +80,7 @@ const page = () => {
           }
       })
       .catch(error => {
+          console.log(error.message);
       });
     };
     const handlePrevious = () => {
@@ -87,11 +91,11 @@ const page = () => {
     const handleNext = () => {
         setPg(pg + 1);
     };
-    React.useEffect(() => {
+    useEffect(() => {
       read();
     }, [pg]);
     
-    React.useEffect(() => {
+    useEffect(() => {
       read();
     }, []);
     const [menuOpen, setMenuOpen] = React.useState(false);
@@ -264,4 +268,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
