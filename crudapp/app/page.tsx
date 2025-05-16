@@ -64,7 +64,6 @@ export default function Home() {
       const name = 'profilepic';
       const tok = Cookies.get('tok');
       const type = 'image';
-      const isPublic = true;
 
       // Create a new FormData object
       const formData = new FormData();
