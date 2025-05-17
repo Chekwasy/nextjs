@@ -18,7 +18,7 @@ export async function POST(request) {
       return NextResponse.json('error', { status: 400 });
     }
 
-    if (type !== 'image') {
+    if (type.split('/')[0] !== 'image') {
       return NextResponse.json('error', { status: 400 });
     }
 
@@ -53,8 +53,8 @@ export async function POST(request) {
 
     await mkDirAsync(baseDir, { recursive: true });
 
-    if (type === 'image') {
-      const localPath = joinPath(baseDir, uuidv4());
+    if (type.split('/')[0] === 'image') {
+      const localPath = joinPath(baseDir, `${uuidv4()}.${type.split('/')[1]}`);
       await writeFileAsync(localPath, Buffer.from(image, 'base64'));
       newFile.localPath = localPath;
     }
