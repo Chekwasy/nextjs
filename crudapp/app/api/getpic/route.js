@@ -1,5 +1,6 @@
 import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
+import { promisify } from 'util';
 import redisClient from '../../../redis';
 import { tmpdir } from 'os';
 import { join as joinPath } from 'path';
@@ -89,6 +90,7 @@ export async function GET(request) {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
+      const imageBuffer = 
       return NextResponse.next({
         status: 200,
         headers: {
