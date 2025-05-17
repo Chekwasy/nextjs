@@ -68,7 +68,7 @@ export default function Home() {
 
     const name = 'profilepic';
     const tok = Cookies.get('tok') || '';
-    const type = 'image';
+    const type = imageFile.type; // Get the image type from the file object
 
     // Read the file as a data URL
     const fileReader = new FileReader();
@@ -84,7 +84,7 @@ export default function Home() {
         image: base64EncodedImage,
         name,
         tok,
-        type,
+        type, // Send the image type to the backend
       })
       .then((response) => {
         console.log(response.data);
@@ -97,7 +97,6 @@ export default function Home() {
         delayedCode();
       });
     };
-
     fileReader.readAsDataURL(imageFile);
   }
 };
