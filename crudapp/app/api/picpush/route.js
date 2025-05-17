@@ -15,15 +15,20 @@ export async function POST(request) {
       const { tok, image, name, type, } = await request.json();
       const dateadded = new Date();
       const parentId = '0';
+	console.log(1);
       if (!tok) { return  NextResponse.json('error', {status: 400});}
+	    console.log(2);
       if (type !== 'image') { return  NextResponse.json('error', {status: 400});}
       const usr_id = await redisClient.get(`auth_${tok}`);
+	    console.log(3);
       if (!usr_id) {
         return  NextResponse.json('error', {status: 401});
       }
+	    console.log(4);
       const user = await dbClient.client.db().collection('users')
     	.findOne({ "userID": usr_id });
 	    if (!user) { return  NextResponse.json('error', {status: 401});}
+	    console.log(5);
       const userID = user.userID;
       //The crudapp profile pic images can env based
       const baseDir = joinPath(tmpdir(), '/crudapp/profilepicimages');
@@ -53,6 +58,6 @@ export async function POST(request) {
       }
       return  NextResponse.json('success', {status: 200});
     } catch {
-      return  NextResponse.json('error', {status: 400});
+      return  NextResponse.json('error', {status: 404});
     }
 };
