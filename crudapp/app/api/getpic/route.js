@@ -28,7 +28,7 @@ export async function GET(request) {
       return NextResponse(dbody, {
         status: 200,
         headers: {
-          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
         },
       });
     }
@@ -42,7 +42,7 @@ export async function GET(request) {
       return NextResponse(dbody, {
         status: 200,
         headers: {
-          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
         },
       });
     }
@@ -58,7 +58,7 @@ export async function GET(request) {
       return NextResponse(dbody, {
         status: 200,
         headers: {
-          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
         },
       });
     }
@@ -81,7 +81,7 @@ export async function GET(request) {
       return NextResponse(dbody, {
         status: 200,
         headers: {
-          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
         },
       });
       }
@@ -93,7 +93,7 @@ export async function GET(request) {
       return NextResponse(dbody, {
         status: 200,
         headers: {
-          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
         },
       });
     }
