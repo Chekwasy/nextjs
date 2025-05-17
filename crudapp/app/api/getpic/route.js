@@ -37,6 +37,7 @@ export async function GET(request) {
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
       const dbody = await readFileSync(absoluteFilePath);
+      console.log(55);
       return new NextResponse(dbody, {
         status: 200,
         headers: {
