@@ -7,50 +7,62 @@ import { join as joinPath } from 'path';
 import { mkdir, writeFile } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
+const mkDirAsync = promisify(mkdir);
+const writeFileAsync = promisify(writeFile);
+
 export async function POST(request) {
-    try {
-	    const mkDirAsync = promisify(mkdir);
-	    const writeFileAsync = promisify(writeFile);
-      const { tok, image, name, type, } = await request.json();
-      const dateadded = new Date();
-      const parentId = '0';
-	console.log(1);
-      if (!tok) { return  NextResponse.json('error', {status: 400});}
-	    console.log(2);
-      if (type !== 'image') { return  NextResponse.json('error', {status: 400});}
-      const usr_id = await redisClient.get(`auth_${tok}`);
-	    console.log(3);
-      if (!usr_id) {
-        return  NextResponse.json('error', {status: 401});
-      }
-	    console.log(4);
-      const user = await dbClient.client.db().collection('users')
-    	.findOne({ "userID": usr_id });
-	    if (!user) { return  NextResponse.json('error', {status: 401});}
-	    console.log(5);
-      const userID = user.userID;
-      //The crudapp profile pic images can env based
-      const baseDir = joinPath(tmpdir(), '/crudapp/profilepicimages');
-      const newFile = {
-        userID: userID,
-        name: name,
-        fileID: uuidv4(),
-        type: type,
-        isPublic: true,
-        parentId: parentId,
-        dateadded: dateadded,
-      };
-      await mkDirAsync(baseDir, { recursive: true });
-      if (type === 'image') {
-        const localPath = joinPath(baseDir, uuidv4());
-        await writeFileAsync(localPath, Buffer.from(image, 'base64'));
-        newFile.localPath = localPath;
-      }
-      const insertInfo = await dbClient.client.db().collection('files')
-	    .insertOne(newFile);
-      if (!insertInfo) { return  NextResponse.json('error', {status: 400});}
-      return  NextResponse.json('success', {status: 200});
-    } catch {
-      return  NextResponse.json('error', {status: 404});
+  try {
+    const { tok, image, name, type } = await request.json();
+
+    if (!tok) {
+      return NextResponse.json('error', { status: 400 });
     }
-};
+
+    if (type !== 'image') {
+      return NextResponse.json('error', { status: 400 });
+    }
+
+    const usr_id = await redisClient.get(`auth_${tok}`);
+
+    if (!usr_id) {
+      return NextResponse.json('error', { status: 401 });
+    }
+
+    const user = await dbClient.client.db().collection('users').findOne({ userID: usr_id });
+
+    if (!user) {
+      return NextResponse.json('error', { status: 401 });
+    }
+
+    const userID = user.userID;
+    const baseDir = joinPath(tmpdir(), '/crudapp/profilepicimages');
+    const newFile = {
+      userID,
+      name,
+      fileID: uuidv4(),
+      type,
+      isPublic: true,
+      parentId: '0',
+      dateadded: new Date(),
+    };
+
+    await mkDirAsync(baseDir, { recursive: true });
+
+    if (type === 'image') {
+      const localPath = joinPath(baseDir, uuidv4());
+      await writeFileAsync(localPath, Buffer.from(image, 'base64'));
+      newFile.localPath = localPath;
+    }
+
+    const insertInfo = await dbClient.client.db().collection('files').insertOne(newFile);
+
+    if (!insertInfo) {
+      return NextResponse.json('error', { status: 400 });
+    }
+
+    return NextResponse.json('success', { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json('error', { status: 404 });
+  }
+}
