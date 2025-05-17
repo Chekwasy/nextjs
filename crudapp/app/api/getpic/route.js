@@ -19,7 +19,7 @@ export async function GET(request) {
     const baseDir1 = joinPath(tmpdir(), '/crudapp/profilepicimages');
     const mkDirAsync = promisify(mkdir);
     const realpathAsync = promisify(realpath);
-    const defaultPath = joinPath(baseDir1, 'default');
+    const defaultPath = joinPath(baseDir1, 'default.jpg');
     if (!tok) {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
