@@ -19,13 +19,13 @@ export async function GET(request) {
     const realpathAsync = promisify(realpath);
     const defaultPath = joinPath(baseDir1, 'default.jpg');
     if (!tok) {
-      return NextResponse.json({ error: 'Error' }, { status: 400 });
+      return NextResponse.json({ error: 'Error1' }, { status: 400 });
     }
 
     const userID = await redisClient.get(`auth_${tok}`);
 
     if (!userID) {
-      return NextResponse.json({ error: 'Error' }, { status: 400 });
+      return NextResponse.json({ error: 'Error2' }, { status: 400 });
     }
 
     const file = await dbClient.client.db().collection('files').findOne({ userID: userID });
@@ -51,10 +51,10 @@ export async function GET(request) {
       const fileInfo = await statAsync(filePath);
 
       if (!fileInfo.isFile()) {
-        return NextResponse.json({ error: 'Error' }, { status: 400 });
+        return NextResponse.json({ error: 'Error3' }, { status: 400 });
       }
     } else {
-      return NextResponse.json({ error: 'Error' }, { status: 400 });
+      return NextResponse.json({ error: 'Error4' }, { status: 400 });
     }
 
     const absoluteFilePath = await realpathAsync(filePath);
