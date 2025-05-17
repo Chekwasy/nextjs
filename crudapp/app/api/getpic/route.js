@@ -25,7 +25,7 @@ export async function GET(request) {
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
       const dbody = await readFileSync(absoluteFilePath);
-      return NextResponse(dbody, {
+      return new NextResponse(dbody, {
         status: 200,
         headers: {
           'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
@@ -40,7 +40,7 @@ export async function GET(request) {
       const absoluteFilePath = await realpathAsync(defaultPath);
       const dbody = await readFileSync(absoluteFilePath);
       const mimeType1 = mime.lookup(defaultPath);
-      return NextResponse(dbody, {
+      return new NextResponse(dbody, {
         status: 200,
         headers: {
           'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
@@ -56,7 +56,7 @@ export async function GET(request) {
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
       const dbody = await readFileSync(absoluteFilePath);
-      return NextResponse(dbody, {
+      return new NextResponse(dbody, {
         status: 200,
         headers: {
           'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
@@ -79,7 +79,7 @@ export async function GET(request) {
         const absoluteFilePath = await realpathAsync(defaultPath);
         const mimeType1 = mime.lookup(defaultPath);
         const dbody = await readFileSync(absoluteFilePath);
-      return NextResponse(dbody, {
+      return new NextResponse(dbody, {
         status: 200,
         headers: {
           'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
@@ -91,7 +91,7 @@ export async function GET(request) {
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
       const dbody = await readFileSync(absoluteFilePath);
-      return NextResponse(dbody, {
+      return new NextResponse(dbody, {
         status: 200,
         headers: {
           'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
@@ -103,7 +103,7 @@ export async function GET(request) {
     const mimeType = mime.lookup(filePath);
 
     const dbody = await readFileSync(absoluteFilePath);
-      return NextResponse(dbody, {
+      return new NextResponse(dbody, {
         status: 200,
         headers: {
           'Content-Type': mimeType || 'text/plain; charset=utf-8',
