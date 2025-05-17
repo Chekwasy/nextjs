@@ -14,7 +14,6 @@ import mime from 'mime-types';
 export async function GET(request) {
   try {
     const tok = request.cookies.get('tok') || request.headers.get('tok');
-    console.log(tok);
     const size = '100';
     const baseDir1 = joinPath(tmpdir(), '/crudapp/profilepicimages');
     const mkDirAsync = promisify(mkdir);
