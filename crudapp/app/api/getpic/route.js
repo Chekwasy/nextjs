@@ -4,6 +4,7 @@ import { promisify } from 'util';
 import redisClient from '../../../redis';
 import { tmpdir } from 'os';
 import { join as joinPath } from 'path';
+import { contentType } from 'mime';
 import {
   mkdir, stat, existsSync, realpath, readFileSync,
 } from 'fs';
