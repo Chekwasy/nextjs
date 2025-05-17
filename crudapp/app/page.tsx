@@ -56,40 +56,48 @@ export default function Home() {
 
   //upload part
   const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files !== null && event.target.files.length !== 0) {
-      
-      // Get selc image file
-      const imageFile = event.target.files[0];
+  if (event.target.files !== null && event.target.files.length !== 0) {
+    const imageFile = event.target.files[0];
 
-      const name = 'profilepic';
-      const tok = Cookies.get('tok') || '';
-      const type = 'image';
-
-      // Create a new FormData object
-      const formData = new FormData();
-      formData.append('image', imageFile);
-      formData.append('name', name);
-      formData.append('tok', tok);
-      formData.append('type', type);
-
-      // Send the image and data to the backend
-      await axios.post('/api/picpush', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-        .then((response) => {
-          console.log(response.data);
-          setSuccessMsg(true);
-          delayedCode();
-        })
-        .catch((error) => {
-          console.log(error.message);
-          setFailMsg(true);
-          delayedCode();
-        });
+    // Check if the selected file is an image
+    if (!imageFile.type.startsWith('image/')) {
+      setFailMsg(true);
+      delayedCode();
+      return;
     }
-  };
+
+    const name = 'profilepic';
+    const tok = Cookies.get('tok') || '';
+    const type = 'image';
+
+    // Read the file as a data URL
+    const fileReader = new FileReader();
+    fileReader.onload = async (e) => {
+      const imageDataUrl = e.target.result as string;
+      const base64EncodedImage = imageDataUrl.split(',')[1];
+
+      try {
+        // Send the image data to the backend
+        const response = await axios.post('/api/picpush', {
+          image: base64EncodedImage,
+          name,
+          tok,
+          type,
+        });
+
+        console.log(response.data);
+        setSuccessMsg(true);
+        delayedCode();
+      } catch (error) {
+        console.log(error.message);
+        setFailMsg(true);
+        delayedCode();
+      }
+    };
+
+    fileReader.readAsDataURL(imageFile);
+  }
+};
   
   return (
     <div className="bg-cover bg-center h-screen w-screen"
