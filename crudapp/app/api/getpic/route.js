@@ -60,7 +60,7 @@ export async function GET(request) {
     const absoluteFilePath = await realpathAsync(filePath);
     const mimeType = mime.lookup(filePath);
 
-    const dbody = await readFileSync(absoluteFilePath);
+    const dbody = await readFileSync(absoluteFilePath, 'utf8');
     const binaryData = Buffer.from(dbody, 'base64');
     return new NextResponse(binaryData, {
       status: 200,
