@@ -4,7 +4,6 @@ import { promisify } from 'util';
 import redisClient from '../../../redis';
 import { tmpdir } from 'os';
 import { join as joinPath } from 'path';
-import { contentType } from 'mime';
 import {
   mkdir, stat, existsSync, realpath, readFileSync,
 } from 'fs';
@@ -28,7 +27,7 @@ export async function GET(request) {
       return NextResponse.next({
       status: 200,
       headers: {
-        'Content-Type': contentType(mimeType1) || 'text/plain; charset=utf-8',
+        'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
       },
       body: await readFileSync(absoluteFilePath),
     });
@@ -43,7 +42,7 @@ export async function GET(request) {
       return NextResponse.next({
       status: 200,
       headers: {
-        'Content-Type': contentType(mimeType1) || 'text/plain; charset=utf-8',
+        'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
       },
       body: await readFileSync(absoluteFilePath),
     });
@@ -59,7 +58,7 @@ export async function GET(request) {
       return NextResponse.next({
       status: 200,
       headers: {
-        'Content-Type': contentType(mimeType1) || 'text/plain; charset=utf-8',
+        'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
       },
       body: await readFileSync(absoluteFilePath),
     });
@@ -82,7 +81,7 @@ export async function GET(request) {
         return NextResponse.next({
           status: 200,
           headers: {
-            'Content-Type': contentType(mimeType1) || 'text/plain; charset=utf-8',
+            'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
           },
           body: await readFileSync(absoluteFilePath),
         });
@@ -94,7 +93,7 @@ export async function GET(request) {
       return NextResponse.next({
         status: 200,
         headers: {
-          'Content-Type': contentType(mimeType1) || 'text/plain; charset=utf-8',
+          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
         },
         body: await readFileSync(absoluteFilePath),
       });
@@ -106,7 +105,7 @@ export async function GET(request) {
     return NextResponse.next({
       status: 200,
       headers: {
-        'Content-Type': contentType(mimeType) || 'text/plain; charset=utf-8',
+        'Content-Type': mimeType || 'text/plain; charset=utf-8',
       },
       body: await readFileSync(absoluteFilePath),
     });
