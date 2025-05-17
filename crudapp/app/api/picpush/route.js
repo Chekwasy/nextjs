@@ -36,7 +36,19 @@ export async function POST(request) {
     const filer = await dbClient.client.db().collection('files').findOne({ userID: usr_id });
 
     if (filer) {
-      return NextResponse.json('error', { status: 200 });
+      if (type.split('/')[0] === 'image') {
+        const localPath = joinPath(baseDir, `${uuidv4()}.${type.split('/')[1]}`);
+        await writeFileAsync(localPath, Buffer.from(image, 'base64'));
+        const filee = await (await dbClient.client.db().collection('files'))
+        .updateOne({ userID: usr_id }, 
+          { $set: { localPath: localPath } });
+
+      if (!filee) {
+        return NextResponse.json('error', { status: 400 });
+      }
+      return NextResponse.json('success', { status: 200 });
+      }
+      return NextResponse.json('error', { status: 401 });
     }
 
     const userID = user.userID;
