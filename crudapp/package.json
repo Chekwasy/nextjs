@@ -12,6 +12,7 @@
     "axios": "^1.9.0",
     "bull": "^3.27.0",
     "crypto": "^1.0.1",
+    "formidable": "^3.5.4",
     "js-cookie": "^3.0.5",
     "mime-types": "^3.0.1",
     "mongodb": "^6.16.0",
