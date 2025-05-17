@@ -13,7 +13,7 @@ const writeFileAsync = promisify(writeFile);
 
 export async function POST(request) {
   try {
-    const form = new formidable.IncomingForm();
+    const form = new formidable.Form();
     form.uploadDir = tmpdir();
     form.keepExtensions = true;
     form.multipart = true;
