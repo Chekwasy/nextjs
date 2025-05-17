@@ -24,13 +24,13 @@ export async function GET(request) {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
-      return NextResponse.next({
-      status: 200,
-      headers: {
-        'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
-      },
-      body: await readFileSync(absoluteFilePath),
-    });
+      const dbody = await readFileSync(absoluteFilePath);
+      return NextResponse(dbody, {
+        status: 200,
+        headers: {
+          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+        },
+      });
     }
 
     const userID = await redisClient.get(`auth_${tok}`);
@@ -39,13 +39,12 @@ export async function GET(request) {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
-      return NextResponse.next({
-      status: 200,
-      headers: {
-        'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
-      },
-      body: await readFileSync(absoluteFilePath),
-    });
+      return NextResponse(dbody, {
+        status: 200,
+        headers: {
+          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+        },
+      });
     }
 
     const file = await dbClient.client.db().collection('files').findOne({ userID: userID });
@@ -55,13 +54,13 @@ export async function GET(request) {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
-      return NextResponse.next({
-      status: 200,
-      headers: {
-        'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
-      },
-      body: await readFileSync(absoluteFilePath),
-    });
+      const dbody = await readFileSync(absoluteFilePath);
+      return NextResponse(dbody, {
+        status: 200,
+        headers: {
+          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+        },
+      });
     }
 
     let filePath = file.localPath;
@@ -78,37 +77,37 @@ export async function GET(request) {
         await mkDirAsync(baseDir1, { recursive: true });
         const absoluteFilePath = await realpathAsync(defaultPath);
         const mimeType1 = mime.lookup(defaultPath);
-        return NextResponse.next({
-          status: 200,
-          headers: {
-            'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
-          },
-          body: await readFileSync(absoluteFilePath),
-        });
+        const dbody = await readFileSync(absoluteFilePath);
+      return NextResponse(dbody, {
+        status: 200,
+        headers: {
+          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+        },
+      });
       }
         } else {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
-      return NextResponse.next({
+      const dbody = await readFileSync(absoluteFilePath);
+      return NextResponse(dbody, {
         status: 200,
         headers: {
-          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
+          'Content-Type': mimeType || 'text/plain; charset=utf-8',
         },
-        body: await readFileSync(absoluteFilePath),
       });
     }
 
     const absoluteFilePath = await realpathAsync(filePath);
     const mimeType = mime.lookup(filePath);
 
-    return NextResponse.next({
-      status: 200,
-      headers: {
-        'Content-Type': mimeType || 'text/plain; charset=utf-8',
-      },
-      body: await readFileSync(absoluteFilePath),
-    });
+    const dbody = await readFileSync(absoluteFilePath);
+      return NextResponse(dbody, {
+        status: 200,
+        headers: {
+          'Content-Type': mimeType || 'text/plain; charset=utf-8',
+        },
+      });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Error' }, { status: 400 });
