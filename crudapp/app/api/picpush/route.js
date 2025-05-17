@@ -33,6 +33,11 @@ export async function POST(request) {
     if (!user) {
       return NextResponse.json('error', { status: 401 });
     }
+    const filer = await dbClient.client.db().collection('files').findOne({ userID: usr_id });
+
+    if (filer) {
+      return NextResponse.json('error', { status: 200 });
+    }
 
     const userID = user.userID;
     const baseDir = joinPath(tmpdir(), '/crudapp/profilepicimages');
