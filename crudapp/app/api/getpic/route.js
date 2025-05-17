@@ -19,31 +19,13 @@ export async function GET(request) {
     const realpathAsync = promisify(realpath);
     const defaultPath = joinPath(baseDir1, 'default.jpg');
     if (!tok) {
-      await mkDirAsync(baseDir1, { recursive: true });
-      const absoluteFilePath = await realpathAsync(defaultPath);
-      const mimeType1 = mime.lookup(defaultPath);
-      const dbody = await readFileSync(absoluteFilePath);
-      return new NextResponse(dbody, {
-        status: 200,
-        headers: {
-          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
-        },
-      });
+      return NextResponse.json({ error: 'Error' }, { status: 400 });
     }
 
     const userID = await redisClient.get(`auth_${tok}`);
 
     if (!userID) {
-      await mkDirAsync(baseDir1, { recursive: true });
-      const absoluteFilePath = await realpathAsync(defaultPath);
-      const dbody = await readFileSync(absoluteFilePath);
-      const mimeType1 = mime.lookup(defaultPath);
-      return new NextResponse(dbody, {
-        status: 200,
-        headers: {
-          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
-        },
-      });
+      return NextResponse.json({ error: 'Error' }, { status: 400 });
     }
 
     const file = await dbClient.client.db().collection('files').findOne({ userID: userID });
@@ -69,40 +51,22 @@ export async function GET(request) {
       const fileInfo = await statAsync(filePath);
 
       if (!fileInfo.isFile()) {
-        await mkDirAsync(baseDir1, { recursive: true });
-        const absoluteFilePath = await realpathAsync(defaultPath);
-        const mimeType1 = mime.lookup(defaultPath);
-        const dbody = await readFileSync(absoluteFilePath);
-      return new NextResponse(dbody, {
-        status: 200,
-        headers: {
-          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
-        },
-      });
+        return NextResponse.json({ error: 'Error' }, { status: 400 });
       }
-        } else {
-      await mkDirAsync(baseDir1, { recursive: true });
-      const absoluteFilePath = await realpathAsync(defaultPath);
-      const mimeType1 = mime.lookup(defaultPath);
-      const dbody = await readFileSync(absoluteFilePath);
-      return new NextResponse(dbody, {
-        status: 200,
-        headers: {
-          'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
-        },
-      });
+    } else {
+      return NextResponse.json({ error: 'Error' }, { status: 400 });
     }
 
     const absoluteFilePath = await realpathAsync(filePath);
     const mimeType = mime.lookup(filePath);
 
     const dbody = await readFileSync(absoluteFilePath);
-      return new NextResponse(dbody, {
-        status: 200,
-        headers: {
-          'Content-Type': mimeType || 'text/plain; charset=utf-8',
-        },
-      });
+    return new NextResponse(dbody, {
+      status: 200,
+      headers: {
+        'Content-Type': mimeType || 'text/plain; charset=utf-8',
+      },
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Error' }, { status: 400 });
