@@ -90,7 +90,6 @@ export async function GET(request) {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
       const mimeType1 = mime.lookup(defaultPath);
-      const imageBuffer = 
       return NextResponse.next({
         status: 200,
         headers: {
