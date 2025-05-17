@@ -64,7 +64,7 @@ function Page() {
         <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-1/3">
           <h2 className="text-3xl font-bold text-blue-500 mb-4">Signup</h2>
           <div>
-            {errorMessage.length && (
+            {(errorMessage.length !== 0) && (
               <div
                 className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                 role="alert"
@@ -73,7 +73,7 @@ function Page() {
               </div>
             )}
           </div>
-          {successMessage.length && (
+          {(successMessage.length !== 0) && (
             <div
               className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
               role="alert"
