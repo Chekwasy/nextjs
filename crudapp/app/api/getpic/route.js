@@ -38,6 +38,7 @@ export async function GET(request) {
     if (!userID) {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
+      const dbody = await readFileSync(absoluteFilePath);
       const mimeType1 = mime.lookup(defaultPath);
       return NextResponse(dbody, {
         status: 200,
