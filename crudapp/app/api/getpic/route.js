@@ -22,8 +22,8 @@ export async function GET(request) {
       return NextResponse.json({ error: 'Error1' }, { status: 400 });
     }
 
-    console.log(tok);
-    const userID = await redisClient.get(`auth_${tok}`);
+    console.log(tok.value);
+    const userID = await redisClient.get(`auth_${tok.value}`);
 
     if (!userID) {
       return NextResponse.json({ error: 'Error2' }, { status: 400 });
