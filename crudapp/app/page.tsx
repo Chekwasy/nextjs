@@ -72,27 +72,30 @@ export default function Home() {
 
     // Read the file as a data URL
     const fileReader = new FileReader();
-    fileReader.onload = async (e) => {
-      const imageDataUrl = e.target.result as string;
-      const base64EncodedImage = imageDataUrl.split(',')[1];
+    fileReader.onload = async (e: ProgressEvent<FileReader>) => {
+      let base64EncodedImage;
+      if ((e.target as FileReader).result !== null) {
+        const imageDataUrl = (e.target as FileReader).result as string;
+        base64EncodedImage = imageDataUrl.split(',')[1];
+      }
 
-      try {
-        // Send the image data to the backend
-        const response = await axios.post('/api/picpush', {
-          image: base64EncodedImage,
-          name,
-          tok,
-          type,
-        });
-
+      // Send the image data to the backend
+      await axios.post('/api/picpush', {
+        image: base64EncodedImage,
+        name,
+        tok,
+        type,
+      })
+      .then((response) => {
         console.log(response.data);
         setSuccessMsg(true);
         delayedCode();
-      } catch (error) {
+      })
+      .catch(error => {
         console.log(error.message);
         setFailMsg(true);
         delayedCode();
-      }
+      });
     };
 
     fileReader.readAsDataURL(imageFile);
