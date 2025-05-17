@@ -6,7 +6,6 @@ import { tmpdir } from 'os';
 import { join as joinPath } from 'path';
 import { mkdir, writeFile } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
-import Queue from 'bull/lib/queue';
 
 export async function POST(request) {
     try {
@@ -50,12 +49,6 @@ export async function POST(request) {
       const insertInfo = await dbClient.client.db().collection('files')
 	    .insertOne(newFile);
       if (!insertInfo) { return  NextResponse.json('error', {status: 400});}
-      if (type === 'image') {
-        //create worker to resize image
-        const fileQueue = new Queue('thumbnail generation');
-        const jobName = `Image thumbnail [${userID}-${insertInfo.fileID}]`;
-        fileQueue.add({ userID: userID, fileID: newFile.fileID, name: jobName });
-      }
       return  NextResponse.json('success', {status: 200});
     } catch {
       return  NextResponse.json('error', {status: 404});
