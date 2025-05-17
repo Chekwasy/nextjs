@@ -28,7 +28,7 @@ export async function GET(request) {
 
     const file = await dbClient.client.db().collection('files').findOne({ userID: userID });
 
-    //Handle the default profile pic
+    // Handle the default profile pic
     if (!file) {
       await mkDirAsync(baseDir1, { recursive: true });
       const absoluteFilePath = await realpathAsync(defaultPath);
@@ -39,11 +39,13 @@ export async function GET(request) {
         status: 200,
         headers: {
           'Content-Type': mimeType1 || 'text/plain; charset=utf-8',
+          'Cache-Control': 'no-cache, max-age=0',
         },
       });
     }
 
     let filePath = file.localPath;
+    console.log(`File path: ${filePath}`);
 
     if (existsSync(filePath)) {
       const statAsync = promisify(stat);
@@ -64,6 +66,7 @@ export async function GET(request) {
       status: 200,
       headers: {
         'Content-Type': mimeType || 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-cache, max-age=0',
       },
     });
   } catch (error) {
