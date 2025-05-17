@@ -13,6 +13,7 @@ export default function Home() {
   const [loggedMsg, setLoggedMsg] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
   const [failMsg, setFailMsg] = useState(false);
+  const [picUpdated, setPicUpdated] = useState(Date.now());
   const checkLogged = () => {
     axios.get('/api/getme', {
       headers: {
@@ -56,6 +57,7 @@ export default function Home() {
 
   //upload part
   const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    setPicUpdated(Date.now());
   if (event.target.files !== null && event.target.files.length !== 0) {
     const imageFile = event.target.files[0];
 
@@ -125,6 +127,7 @@ export default function Home() {
                 height={40}
                 objectFit="cover"
                 className="rounded-full"
+                key={picUpdated}
               />
             </button>
           </div>
