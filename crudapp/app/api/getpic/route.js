@@ -4,12 +4,8 @@ import { promisify } from 'util';
 import redisClient from '../../../redis';
 import { tmpdir } from 'os';
 import { join as joinPath } from 'path';
-import {
-  mkdir, stat, existsSync, realpath, readFileSync,
-} from 'fs';
+import { mkdir, stat, existsSync, realpath, readFileSync, } from 'fs';
 import mime from 'mime-types';
-
-
 
 export async function GET(request) {
   try {
@@ -18,6 +14,7 @@ export async function GET(request) {
     const mkDirAsync = promisify(mkdir);
     const realpathAsync = promisify(realpath);
     const defaultPath = joinPath(baseDir1, 'default.jpg');
+
     if (!tok) {
       return NextResponse.json({ error: 'Error1' }, { status: 400 });
     }
@@ -61,10 +58,9 @@ export async function GET(request) {
 
     const absoluteFilePath = await realpathAsync(filePath);
     const mimeType = mime.lookup(filePath);
+    const dbody = await readFileSync(absoluteFilePath);
 
-    const dbody = await readFileSync(absoluteFilePath, 'utf8');
-    const binaryData = Buffer.from(dbody, 'base64');
-    return new NextResponse(binaryData, {
+    return new NextResponse(dbody, {
       status: 200,
       headers: {
         'Content-Type': mimeType || 'text/plain; charset=utf-8',
