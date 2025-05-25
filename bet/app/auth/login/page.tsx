@@ -6,32 +6,37 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 function Page() {
+  // For switching to home after authentication
   const router = useRouter();
+  //Store email value
   const [email, setEmail] = useState('');
+  //store password value
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  //to set message to display 
+  const [setMsg, setSetMsg] = useState('This for popup message!');
+  //control message open or close
+  const [isOpen, setIsOpen] = useState(false);
+  //Check password correct 
+  const [cpwd, setCpwd] = useState(false);
+  //Check email correct
+  const [cemail, setCemail] = useState(false);
 
-  async function delayedCode() {
-    await new Promise(resolve => setTimeout(resolve, 20000));
-    setErrorMessage('');
-  };
-  async function delayedCode1() {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setSuccessMessage('Loading...');
-  };
-
+  //Sets and check what was typed for email
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
+  //Sets and check what was typed for password 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
+  //Handles submission of Login form
   const handleLSubmit = (e: FormEvent<HTMLFormElement>) => {
+    //prevent form default submission 
     e.preventDefault();
     
-    // Add your API call or submission logic here
+    //Change password and email to a base64 string
     const encodestr = btoa(email + ':' + password);
+    //Api call to connect 
     axios.post('/api/connect', {
       auth_header: `encoded ${encodestr}`,
     })
