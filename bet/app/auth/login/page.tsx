@@ -5,6 +5,11 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+//function to check ASCII value usage
+const isASCII = (str) => {
+    return /^[\x00-\x7F]*$/.test(str);
+};
+
 function Page() {
   // For switching to home after authentication
   const router = useRouter();
@@ -19,11 +24,18 @@ function Page() {
   //Check password correct 
   const [cpwd, setCpwd] = useState(false);
   //Check email correct
-  const [cemail, setCemail] = useState(false);
+  const [cemail, setCemail] = useState(true);
 
   //Sets and check what was typed for email
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    const nwval = e.target.value;
+    setEmail(nwval);
+    //validates email entered
+    if (!nwval.includes('@') || !nwval.includes('.') || !(isASCII(nwval)) || (nwval.includes(':'))) {
+      setCemail(false);
+    } else {
+      setCemail(true);
+    }
   };
   //Sets and check what was typed for password 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +90,7 @@ function Page() {
           )}
           <form onSubmit={handleLSubmit}>
             <div className="mb-4">
+              <span className="block sm:inline">{`Do not use these symbols ' " : + `}</span>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
               </label>
