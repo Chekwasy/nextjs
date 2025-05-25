@@ -31,7 +31,7 @@ function Page() {
     const nwval = e.target.value;
     setEmail(nwval);
     //validates email entered
-    if (!nwval.includes('@') || !nwval.includes('.') || !(isASCII(nwval)) || (nwval.includes(':'))) {
+    if (!(nwval.length > 5) || !nwval.includes('@') || !nwval.includes('.') || !(isASCII(nwval)) || (nwval.includes(':'))) {
       setCemail(false);
     } else {
       setCemail(true);
@@ -39,7 +39,18 @@ function Page() {
   };
   //Sets and check what was typed for password 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+    const nwval = e.target.value;
+    setPassword(nwval);
+    //Validates password entered
+    if (!(nwval.length > 5) || !(isASCII(nwval)) || 
+        (nwval.includes(':')) || (nwval.includes('+')) || 
+        (nwval.includes('.')) || (nwval.includes(`'`)) || 
+        (nwval.includes(`"`)) || (nwval.includes('\\')) || 
+        (nwval.includes('`'))) {
+        setCpwd(false);
+    } else {
+        setCpwd(true);
+    }
   };
   //Handles submission of Login form
   const handleLSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -90,7 +101,7 @@ function Page() {
           )}
           <form onSubmit={handleLSubmit}>
             <div className="mb-4">
-              <span className="block sm:inline">{`Do not use these symbols ' " : + `}</span>
+              <span className="block sm:inline">{'Do not use these symbols \' " : + \\ `'}</span>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
               </label>
