@@ -91,7 +91,7 @@ const handleClose = () => {
       <div className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
       >
         <div className="bg-gray-500 rounded-lg shadow-lg p-8 xs:w-full sm:w-1/2 md:w-2/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
-          <h2 className="text-3xl font-bold text-blue-500 mb-4">Admin Login</h2>
+          <h2 className="text-3xl font-bold text-green-500 mb-4">Login</h2>
           {isOpen && (
             <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
               <div className="popup-content bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
@@ -113,12 +113,13 @@ const handleClose = () => {
                 Email
               </label>
               <input
-                className="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className={`appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none ${cemail ? 'border-gray-200' : 'border-red-500'}`}
                 id="email"
                 type="text"
                 placeholder="Email"
                 name="email"
                 value={email}
+                required
                 onChange={handleEmailChange}
               />
             </div>
@@ -127,12 +128,13 @@ const handleClose = () => {
                 Password
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className={`appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none ${cemail ? 'border-gray-200' : 'border-red-500'}`}
                 id="password"
                 type="password"
                 placeholder="Password"
                 name="password"
                 value={password}
+                required
                 onChange={handlePasswordChange}
               />
             </div>
@@ -140,7 +142,7 @@ const handleClose = () => {
                 <div className='text-gray-300 hover:text-white flex items-center'>Signup</div>
             </Link>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
+              className="bg-green-500 hover:bg-green-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
               type="submit"
             >
               Login
