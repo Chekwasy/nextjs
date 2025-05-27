@@ -20,9 +20,9 @@ function Page() {
   //to set message to display 
   const [setMsg, setSetMsg] = useState('This for popup message!');
   //control message open or close
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   //Check password correct 
-  const [cpwd, setCpwd] = useState(false);
+  const [cpwd, setCpwd] = useState(true);
   //Check email correct
   const [cemail, setCemail] = useState(true);
 
@@ -108,7 +108,7 @@ const handleClose = () => {
           )}
           <form onSubmit={handleLSubmit}>
             <div className="mb-4">
-              <span className="block sm:inline">{'Do not use these symbols \' " : + \\ `'}</span>
+              <span className="block text-gray-500 text-sm font-bold mb-2">{'Do not use these symbols \' " : + \\ `'}</span>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
               </label>
