@@ -15,7 +15,7 @@ function Page() {
   //store password value
   const [password, setPassword] = useState('');
   //to set message to display 
-  const [setMsg, setSetMsg] = useState('This for popup message!');
+  const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
   //Check password correct 
@@ -85,14 +85,14 @@ const checkpwd = (strr) => {
     })
     .then(async (response) => {
       await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
-      setSuccessMessage("Login Successful");
-      delayedCode1();
+      setMsg("Login Successful");
+      setIsOpen(true);
       router.push("/");
     })
     .catch(error => {
       console.log(error.message);
-      setErrorMessage("Login Unsuccessful");
-      delayedCode();
+      setMsg("Login Unsuccessful");
+      setIsOpen(true);
     });
   };
   return (
