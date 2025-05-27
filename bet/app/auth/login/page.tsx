@@ -6,9 +6,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 //function to check ASCII value usage
-const isASCII = (str) => {
-    return /^[\x00-\x7F]*$/.test(str);
-};
 
 function Page() {
   // For switching to home after authentication
@@ -30,6 +27,18 @@ function Page() {
 const handleClose = () => {
     setIsOpen(false);
   };
+//Checks pwd and email characters
+const checkpwd = (strr) => {
+	const len = strr.length;
+	if (len > 50 || len === 0) {
+		return false;
+	}
+	const otherChx = `~!@#%&_{}[].;<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`;
+	if (!otherChx.includes(strr[-1])) {
+		return false;
+    }
+	return true;
+};
 
 //Handle overlay click to close message popup
   const handleOverlayClick = (e) => {
@@ -42,7 +51,7 @@ const handleClose = () => {
     const nwval = e.target.value;
     setEmail(nwval);
     //validates email entered
-    if (!(nwval.length > 5) || !nwval.includes('@') || !nwval.includes('.') || !(isASCII(nwval)) || (nwval.includes(':'))) {
+    if (!(nwval.length > 5) || !checkpwd(nwval))) {
       setCemail(false);
     } else {
       setCemail(true);
@@ -51,13 +60,11 @@ const handleClose = () => {
   //Sets and check what was typed for password 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
+    const otherChx = `~!@#%&_{}[].;<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`;
     setPassword(nwval);
     //Validates password entered
-    if (!(nwval.length > 5) || !(isASCII(nwval)) || 
-        (nwval.includes(':')) || (nwval.includes('+')) || 
-        (nwval.includes('.')) || (nwval.includes(`'`)) || 
-        (nwval.includes(`"`)) || (nwval.includes('\\')) || 
-        (nwval.includes('`'))) {
+    if (!(nwval.length > 5) || 
+        !checkpwd(nwval)) {
         setCpwd(false);
     } else {
         setCpwd(true);
@@ -108,7 +115,7 @@ const handleClose = () => {
           )}
           <form onSubmit={handleLSubmit}>
             <div className="mb-4">
-              <span className="block text-gray-300 text-sm font-bold mb-2">{'Do not use these symbols \' " : + \\ `'}</span>
+              <span className="block text-gray-300 text-sm font-bold mb-2">{'Allowed symbols ~!@#%&_{}[].;<>'}</span>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
               </label>
