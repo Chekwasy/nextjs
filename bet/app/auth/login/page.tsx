@@ -76,25 +76,26 @@ const checkpwd = (strr) => {
   const handleLSubmit = (e: FormEvent<HTMLFormElement>) => {
     //prevent form default submission 
     e.preventDefault();
-    
-    //Change password and email to a base64 string
-    const encodestr = btoa(email + ':' + password);
-    //Api call to connect 
-    axios.post('/api/connect', {
-      auth_header: `encoded ${encodestr}`,
-    })
-    .then(async (response) => {
-      await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
-      setMsg("Login Successful");
-      setIsOpen(true);
-      router.push("/");
-    })
-    .catch(error => {
-      console.log(error.message);
-      setMsg("Login Unsuccessful");
-      setIsOpen(true);
-    });
-  };
+    if (cemail && cpwd && email !== '' && password!== '') {
+	//Change password and email to a base64 string
+    	const encodestr = btoa(email + ':' + password);
+    	//Api call to connect 
+    	axios.post('/api/connect', {
+    	  auth_header: `encoded ${encodestr}`,
+   	 })
+   	 .then(async (response) => {
+    	  await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
+    	  setMsg("Login Successful");
+   	   setIsOpen(true);
+   	   router.push("/");
+  	  })
+   	 .catch(error => {
+   	   console.log(error.message);
+   	   setMsg("Login Unsuccessful");
+     	 setIsOpen(true);
+   	 });
+    }
+};
   return (
     <div>
       <div className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
