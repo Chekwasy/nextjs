@@ -108,7 +108,7 @@ const handleClose = () => {
           )}
           <form onSubmit={handleLSubmit}>
             <div className="mb-4">
-              <span className="block text-gray-500 text-sm font-bold mb-2">{'Do not use these symbols \' " : + \\ `'}</span>
+              <span className="block text-gray-300 text-sm font-bold mb-2">{'Do not use these symbols \' " : + \\ `'}</span>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                 Email
               </label>
