@@ -51,7 +51,7 @@ const checkpwd = (strr) => {
     const nwval = e.target.value;
     setEmail(nwval);
     //validates email entered
-    if (!(nwval.length > 5) || !checkpwd(nwval)) {
+    if (!(nwval.length > 5) || checkpwd(nwval)) {
       setCemail(false);
     } else {
       setCemail(true);
@@ -64,7 +64,7 @@ const checkpwd = (strr) => {
     setPassword(nwval);
     //Validates password entered
     if (!(nwval.length > 5) || 
-        !checkpwd(nwval)) {
+        checkpwd(nwval)) {
         setCpwd(false);
     } else {
         setCpwd(true);
