@@ -128,7 +128,7 @@ const handleClose = () => {
                 Password
               </label>
               <input
-                className={`appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none ${cemail ? 'border-gray-200' : 'border-red-500'}`}
+                className={`appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none ${cpwd ? 'border-gray-200' : 'border-red-500'}`}
                 id="password"
                 type="password"
                 placeholder="Password"
