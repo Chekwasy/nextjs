@@ -90,7 +90,7 @@ const handleClose = () => {
     <div>
       <div className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
       >
-        <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-1/3 md:w-1/2 sm:w-3/4 xs:w-full">
+        <div className="bg-gray-500 rounded-lg shadow-lg p-8 xs:w-full sm:w-1/2 md:w-2/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
           <h2 className="text-3xl font-bold text-blue-500 mb-4">Admin Login</h2>
           {isOpen && (
         <div
