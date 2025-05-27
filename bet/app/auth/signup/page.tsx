@@ -15,7 +15,7 @@ function Page() {
   //Store confirmation password 
   const [confirmPassword, setConfirmPassword] = useState('');
   //to set message to display 
-  const [setMsg, setSetMsg] = useState('This for popup message!');
+  const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
   //Check password correct 
