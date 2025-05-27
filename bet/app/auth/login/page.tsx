@@ -20,7 +20,7 @@ function Page() {
   //to set message to display 
   const [setMsg, setSetMsg] = useState('This for popup message!');
   //control message open or close
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   //Check password correct 
   const [cpwd, setCpwd] = useState(false);
   //Check email correct
@@ -89,10 +89,8 @@ const handleClose = () => {
   return (
     <div>
       <div className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
-      style={{
-        backgroundImage: 'url(/images/landing-background.svg)'
-      }}>
-        <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-1/3">
+      >
+        <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-1/3 md:w-1/2 sm:w-3/4 xs:w-full">
           <h2 className="text-3xl font-bold text-blue-500 mb-4">Admin Login</h2>
           {isOpen && (
         <div
