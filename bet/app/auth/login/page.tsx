@@ -30,13 +30,15 @@ const handleClose = () => {
 //Checks pwd and email characters
 const checkpwd = (strr) => {
 	const len = strr.length;
-	if (len > 50 || len === 0) {
+	if (len > 50) {
 		return false;
 	}
 	const otherChx = `~!@#%&_{}[].;<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`;
-	if (!otherChx.includes(strr[-1])) {
-		return false;
-    }
+	for (let i = 0; i < len; i++) {
+		if (!(otherChx.includes(strr[i]))) {
+			return false;
+		}
+	}
 	return true;
 };
 
