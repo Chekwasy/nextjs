@@ -141,28 +141,26 @@ function Page() {
       style={{
         backgroundImage: 'url(/images/landing-background.svg)'
       }}>
-        <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-1/3">
-          <h2 className="text-3xl font-bold text-blue-500 mb-4">Signup</h2>
+        <div className="bg-gray-500 rounded-lg shadow-lg p-8 xs:w-full sm:w-1/2 md:w-2/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
+          <h2 className="text-3xl font-bold text-green-500 mb-4">Signup to TryBet</h2>
           <div>
-            {(errorMessage.length !== 0) && (
-              <div
-                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                role="alert"
-              >
-                <span className="block sm:inline">{errorMessage}</span>
+            {isOpen && (
+            <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
+              <div className="popup-content bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
+                <div className="flex justify-end">
+                  <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <h2 className="text-lg font-bold mb-4">{setMsg}</h2>
               </div>
-            )}
-          </div>
-          {(successMessage.length !== 0) && (
-            <div
-              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
-              role="alert"
-            >
-              <span className="block sm:inline">{successMessage}</span>
             </div>
           )}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
+              <span className="block text-gray-300 text-sm font-bold mb-2">{'Allowed symbols ~!@#%&_{}[].;<>'}</span>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstname">
                 Firstname
               </label>
@@ -173,7 +171,8 @@ function Page() {
                 placeholder="Firstname"
                 name="firstname"
                 value={firstname}
-                onChange={handleFirstnameChange}
+		required 
+		onChange={handleFirstnameChange}
               />
             </div>
             <div className="mb-4">
@@ -186,7 +185,8 @@ function Page() {
                 type="text"
                 placeholder="Lastname"
                 name="lastname"
-                value={lastname}
+		required 
+		value={lastname}
                 onChange={handleLastnameChange}
               />
             </div>
@@ -200,7 +200,8 @@ function Page() {
                 type="email"
                 placeholder="Email"
                 name="email"
-                value={email}
+		required 
+		value={email}
                 onChange={handleEmailChange}
               />
             </div>
@@ -214,7 +215,8 @@ function Page() {
                 type="password"
                 placeholder="Password"
                 name="password"
-                value={password}
+		required 
+		value={password}
                 onChange={handlePasswordChange}
               />
             </div>
@@ -228,15 +230,16 @@ function Page() {
                 type="password"
                 placeholder="Confirm Password"
                 name="confirmPassword"
-                value={confirmPassword}
+		required 
+		value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
               />
             </div>
             <Link href={'/auth/login'}>
-                <div className='text-gray-300 hover:text-white flex items-center'>Login</div>
+                <div className='text-blue-500 hover:text-white flex items-center'>Login</div>
             </Link>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
+              className="bg-green-500 hover:bg-green-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
               type="submit"
             >
               Signup
