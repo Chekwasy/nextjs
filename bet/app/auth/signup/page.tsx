@@ -113,7 +113,12 @@ function Page() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    if (password === confirmPassword) {
+    if (password === confirmPassword && 
+	cemail && cpwd && cpwd2 && cfirstname && 
+	clastname && email !== '' && password !== '' && 
+	confirmPassword !== '' && firstname !== '' &&
+	lastname !== ''
+       ) {
       const encodestr = btoa(email + ':' + password);
       axios.post('/api/puser', {
         emailpwd: `encoded ${encodestr}`,
@@ -121,16 +126,14 @@ function Page() {
         lastname: lastname,
       })
       .then(async (response) => {
-        console.log(response.data);
-        setSuccessMessage('Signup Successful');
-        delayedCode();
+        setMsg(response.data);
+        setIsOpen(true);
       })
       .catch(error => {
-        console.log(error.message);
-        setErrorMessage('Login Unsuccessful');
-        delayedCode();
+        setMsg(error.message);
+        setIsOpen(true);
       });
-    } else { setErrorMessage('Password not match'); delayedCode();}
+    } else { setMsg('Submission error. Check input data'); setIsOpen(true);}
   };
   return (
     <div>
