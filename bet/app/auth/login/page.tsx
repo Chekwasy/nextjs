@@ -151,7 +151,7 @@ const checkpwd = (strr) => {
               />
             </div>
             <Link href={'/auth/signup'}>
-                <div className='text-gray-300 hover:text-white flex items-center'>Signup</div>
+                <div className='text-blue-500 hover:text-white flex items-center'>Signup</div>
             </Link>
             <button
               className="bg-green-500 hover:bg-green-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
