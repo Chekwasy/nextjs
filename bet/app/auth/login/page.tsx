@@ -85,17 +85,19 @@ const checkpwd = (strr) => {
    	 })
    	 .then(async (response) => {
     	  await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
-    	  setMsg("Login Successful");
+    	  setMsg(response.data.message);
    	   setIsOpen(true);
    	   router.push("/");
   	  })
    	 .catch(error => {
-   	   console.log(error.message);
-   	   setMsg("Login Unsuccessful");
-     	 setIsOpen(true);
+   	   setMsg(error.message);
+   	   setIsOpen(true);
    	 });
+    } else {
+	    setMsg('Submission error. Check input data');
+	    setIsOpen(true);
     }
-};
+  };
   return (
     <div>
       <div className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
