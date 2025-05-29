@@ -1,5 +1,5 @@
 "use client"
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, MouseEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
@@ -28,7 +28,7 @@ const handleClose = () => {
     setIsOpen(false);
   };
 //Checks pwd and email characters
-const checkpwd = (strr) => {
+const checkpwd = (strr : string) => {
 	const len = strr.length;
 	if (len > 50) {
 		return false;
@@ -43,8 +43,8 @@ const checkpwd = (strr) => {
 };
 
 //Handle overlay click to close message popup
-  const handleOverlayClick = (e) => {
-    if (e.target.classList.contains('popup-overlay')) {
+  const handleOverlayClick = (e: MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
       handleClose();
     }
   };
@@ -62,7 +62,6 @@ const checkpwd = (strr) => {
   //Sets and check what was typed for password 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
-    const otherChx = `~!@#%&_{}[].;<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`;
     setPassword(nwval);
     //Validates password entered
     if (!(nwval.length > 5) || 
@@ -114,7 +113,7 @@ const checkpwd = (strr) => {
                     </svg>
                   </button>
                 </div>
-                <h2 className="text-lg font-bold mb-4">{setMsg}</h2>
+                <h2 className="text-lg font-bold mb-4">{msg}</h2>
               </div>
             </div>
           )}
