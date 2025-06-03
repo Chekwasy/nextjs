@@ -1,5 +1,5 @@
 "use client"
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, MouseEvent } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 
@@ -23,18 +23,18 @@ function Page() {
   //Check email correct
   const [cemail, setCemail] = useState(true);
   //Check confirm password 
-  const [cpwd2, setCpwd2] = useState('');
+  const [cpwd2, setCpwd2] = useState(true);
   //Check firstname 
-  const [cfirstname, setCfirstname] = useState('');
+  const [cfirstname, setCfirstname] = useState(true);
   //Check lastname
-  const [clastname, setClastname] = useState('');
+  const [clastname, setClastname] = useState(true);
 
   //handle close message popup
   const handleClose = () => {
       setIsOpen(false);
   };
   //Checks pwd and email characters
-  const checkpwd = (strr) => {
+  const checkpwd = (strr : string) => {
 	  const len = strr.length;
 	  if (len > 50) {
 		  return false;
@@ -48,8 +48,8 @@ function Page() {
 	  return true;
   };
   //Handle overlay click to close message popup
-  const handleOverlayClick = (e) => {
-    if (e.target.classList.contains('popup-overlay')) {
+  const handleOverlayClick = (e: MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
       handleClose();
     }
   };
@@ -150,7 +150,7 @@ function Page() {
                     </svg>
                   </button>
                 </div>
-                <h2 className="text-lg font-bold mb-4">{setMsg}</h2>
+                <h2 className="text-lg font-bold mb-4">{msg}</h2>
               </div>
             </div>
           )}
