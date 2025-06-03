@@ -109,39 +109,41 @@ export default function Home() {
           <Link href={'/'} className='md:flex-shrink-0 flex items-top'>
             <div className='text-lg font-bold text-white'>TryBet</div>
           </Link>
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => { const imgUpload = document.getElementById('image-upload'); if (imgUpload) {imgUpload.click()}}}
-              className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
-            >
-              <Image
-                src="/api/getpic"
-                alt="Upload Image"
-                layout="fixed"
-                width={40}
-                height={40}
-                objectFit="cover"
-                className="rounded-full"
-                key={picUpdated}
-              />
-            </button>
-          </div>
-          <input
-            id="image-upload"
-            type="file"
-            onChange={handleImageUpload}
-            accept="image/*"
-            style={{ display: 'none' }}
-          />
           <ul className='md:flex hidden items-center space-x-4'>
             <li>
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => { const imgUpload = document.getElementById('image-upload'); if (imgUpload) {imgUpload.click()}}}
+                  className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
+                >
+                  <Image
+                    src="/api/getpic"
+                    alt="Upload Image"
+                    layout="fixed"
+                    width={40}
+                    height={40}
+                    objectFit="cover"
+                    className="rounded-full"
+                    key={picUpdated}
+                  />
+                </button>
+              </div>
+              <input
+                id="image-upload"
+                type="file"
+                onChange={handleImageUpload}
+                accept="image/*"
+                style={{ display: 'none' }}
+              />
+            </li>
+            <li>
               <Link href={'/create'}>
-                <div className='text-gray-300 hover:text-white flex items-center'>
+                <div className='text-gray-700 hover:text-white flex items-center'>
                 <Image
                   src="/icons/games.png"
                   alt="Games"
-                  width={20}
-                  height={20}
+                  width={40}
+                  height={40}
                 />
                 </div>
               </Link>
