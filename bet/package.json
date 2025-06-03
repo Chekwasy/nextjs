@@ -9,10 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
     "@types/js-cookie": "^3.0.6",
->>>>>>> refs/remotes/origin/main
     "axios": "^1.9.0",
     "js-cookie": "^3.0.5",
     "next": "15.3.2",
