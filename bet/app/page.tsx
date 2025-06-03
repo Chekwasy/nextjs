@@ -137,11 +137,11 @@ export default function Home() {
               />
             </li>
             <li>
-              <Link href={'/create'}>
+              <Link href={'/'}>
                 <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
                 <Image
-                  src="/icons/games.png"
-                  alt="Games"
+                  src="/icons/home.png"
+                  alt="Home"
                   width={30}
                   height={30}
                 />
@@ -149,18 +149,51 @@ export default function Home() {
               </Link>
             </li>
             <li>
-              <Link href={'/read'}>
-                <div className='text-gray-300 hover:text-white flex items-center'>Read</div>
+              <Link href={'/games'}>
+                <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+                  <Image
+                    src="/icons/games.png"
+                    alt="Games"
+                    width={30}
+                    height={30}
+                  />
+                </div>
               </Link>
             </li>
             <li>
-              <Link href={'/update'}>
-                <div className='text-gray-300 hover:text-white flex items-center'>Update</div>
+              <Link href={'/profile'}>
+              <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+                  <Image
+                    src="/icons/profile.png"
+                    alt="Profile"
+                    width={30}
+                    height={30}
+                  />
+                </div>
               </Link>
             </li>
             <li>
-              <Link href={'/delete'}>
-                <div className='text-gray-300 hover:text-white flex items-center'>Delete</div>
+              <Link href={'/about'}>
+              <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+                  <Image
+                    src="/icons/about.png"
+                    alt="About"
+                    width={30}
+                    height={30}
+                  />
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link href={'/logout'}>
+              <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+                  <Image
+                    src="/icons/logout.png"
+                    alt="Logout"
+                    width={30}
+                    height={30}
+                  />
+                </div>
               </Link>
             </li>
             {logged && (<li>
@@ -173,19 +206,29 @@ export default function Home() {
               className='md:hidden text-gray-200 flex items-center justify-center w-8 h-8 hover:text-white'
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              Menu
+              <Image
+                src="/icons/menu.png"
+                alt="Menu"
+                width={30}
+                height={30}
+              />
             </button>
           )}
           {menuOpen && (
             <ul
-              className='md:hidden flex flex-col items-center justify-center bg-gray-400 text-gray-300 absolute top-full right-0 w-48 py-2 border border-gray-700 z-20'
+              className='md:hidden flex flex-col items-center justify-center bg-green-200 text-gray-800 absolute top-full right-0 w-48 py-2 border border-gray-800 z-20'
             >
-              <li className='px-4 py-2 hover:bg-gray-700'>
+              <li className='px-4 py-2 hover:bg-green-500'>
                 <button
                   className='md:hidden flex items-center justify-center w-8 h-8 hover:text-white'
                   onClick={() => setMenuOpen(!menuOpen)}
                 >
-                  X
+                  <Image
+                    src="/icons/close.png"
+                    alt="Close"
+                    width={30}
+                    height={30}
+                  />
                 </button>
               </li>
               <li className='px-4 py-2 hover:bg-gray-700'>
