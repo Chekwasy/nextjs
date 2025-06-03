@@ -104,7 +104,7 @@ export default function Home() {
   return (
     <div className="bg-cover bg-center h-screen w-screen"
       >
-      <nav className='bg-green-800 py-4 fixed top-0 left-0 w-full z-10'>
+      <nav className='bg-green-700 py-4 fixed top-0 left-0 w-full z-10'>
         <div className='container mx-auto px-4 flex justify-between'>
           <Link href={'/'} className='md:flex-shrink-0 flex items-top'>
             <div className='text-lg font-bold text-white'>TryBet</div>
@@ -138,12 +138,12 @@ export default function Home() {
             </li>
             <li>
               <Link href={'/create'}>
-                <div className='text-gray-700 hover:text-white flex items-center'>
+                <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
                 <Image
                   src="/icons/games.png"
                   alt="Games"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={30}
                 />
                 </div>
               </Link>
