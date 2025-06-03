@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, ChangeEvent } from 'react';
@@ -5,6 +6,101 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [logged, setLogged] = useState(false);
+  const [loggedMsg, setLoggedMsg] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
+  const [failMsg, setFailMsg] = useState(false);
+  const [picUpdated, setPicUpdated] = useState(Date.now());
+  const checkLogged = () => {
+    axios.get('/api/getme', {
+      headers: {
+        tok: Cookies.get('tok'),
+    }})
+    .then(async (response) => {
+        const dd = response;
+        setUserEmail(dd.data.email);
+        setLogged(true);
+    })
+    .catch(error => {
+      console.log(error.message);
+    });
+  };
+  async function delayedCode() {
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    setLoggedMsg(false);
+    setSuccessMsg(false);
+    setFailMsg(false);
+  };
+  const handleLogout = () => {
+    axios.get('/api/disconnect', {
+      headers: {
+        tok: Cookies.get('tok'),
+    }})
+    .then(async (response) => {
+      console.log(response.data);
+      setUserEmail('');
+      setLogged(false);
+      setLoggedMsg(true);
+      delayedCode();
+    })
+    .catch(error => {
+      console.log(error.message);
+    });
+  };
+  useEffect(() => {
+    checkLogged();
+  }, []);
+
+
+  //upload part
+  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    setPicUpdated(Date.now());
+  if (event.target.files !== null && event.target.files.length !== 0) {
+    const imageFile = event.target.files[0];
+
+    // Check if the selected file is an image
+    if (!imageFile.type.startsWith('image/')) {
+      setFailMsg(true);
+      delayedCode();
+      return;
+    }
+
+    const name = 'profilepic';
+    const tok = Cookies.get('tok') || '';
+    const type = imageFile.type; // Get the image type from the file object
+
+    // Read the file as a data URL
+    const fileReader = new FileReader();
+    fileReader.onload = async (e: ProgressEvent<FileReader>) => {
+      let base64EncodedImage;
+      if ((e.target as FileReader).result !== null) {
+        const imageDataUrl = (e.target as FileReader).result as string;
+        base64EncodedImage = imageDataUrl.split(',')[1];
+      }
+
+      // Send the image data to the backend
+      await axios.post('/api/picpush', {
+        image: base64EncodedImage,
+        name,
+        tok,
+        type, // Send the image type to the backend
+      })
+      .then((response) => {
+        console.log(response.data);
+        setSuccessMsg(true);
+        delayedCode();
+      })
+      .catch(error => {
+        console.log(error.message);
+        setFailMsg(true);
+        delayedCode();
+      });
+    };
+    fileReader.readAsDataURL(imageFile);
+  }
+};
   return (
     <div className="bg-cover bg-center h-screen w-screen"
       >
@@ -37,13 +133,17 @@ export default function Home() {
             accept="image/*"
             style={{ display: 'none' }}
           />
-          { logged && (<div className='flex items-center space-x-4'>
-            <div className='text-gray-300'>{userEmail}</div>
-          </div>)}
           <ul className='md:flex hidden items-center space-x-4'>
             <li>
               <Link href={'/create'}>
-                <div className='text-gray-300 hover:text-white flex items-center'>Create</div>
+                <div className='text-gray-300 hover:text-white flex items-center'>
+                <Image
+                  src="/icons/games.png"
+                  alt="Games"
+                  width={20}
+                  height={20}
+                />
+                </div>
               </Link>
             </li>
             <li>
