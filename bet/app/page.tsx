@@ -142,44 +142,44 @@ export default function Home() {
                 <Image
                   src="/icons/home.png"
                   alt="Home"
-                  width={30}
-                  height={30}
+                  width={35}
+                  height={35}
                 />
                 </div>
               </Link>
             </li>
             <li>
               <Link href={'/games'}>
-                <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
                   <Image
                     src="/icons/games.png"
                     alt="Games"
-                    width={30}
-                    height={30}
+                    width={35}
+                    height={35}
                   />
                 </div>
               </Link>
             </li>
             <li>
               <Link href={'/profile'}>
-              <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+              <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
                   <Image
                     src="/icons/profile.png"
                     alt="Profile"
-                    width={30}
-                    height={30}
+                    width={35}
+                    height={35}
                   />
                 </div>
               </Link>
             </li>
             <li>
               <Link href={'/about'}>
-              <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+              <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
                   <Image
                     src="/icons/about.png"
                     alt="About"
-                    width={30}
-                    height={30}
+                    width={35}
+                    height={35}
                   />
                 </div>
               </Link>
@@ -190,8 +190,8 @@ export default function Home() {
                   <Image
                     src="/icons/logout.png"
                     alt="Logout"
-                    width={30}
-                    height={30}
+                    width={35}
+                    height={35}
                   />
                 </div>
               </Link>
