@@ -138,7 +138,10 @@ export default function Home() {
             </li>
             <li>
               <Link href={'/'}>
-                <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+                <div className='bg-green-200 invisible text-sm px-2 py-1 group-hover:visible transition-opacity duration-200 rounded text-gray-700 flex items-center'>
+                  Home
+                </div>
+                <div className='bg-green-900 group hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
                 <Image
                   src="/icons/home.png"
                   alt="Home"
@@ -184,9 +187,8 @@ export default function Home() {
                 </div>
               </Link>
             </li>
-            <li>
-              <Link href={'/logout'}>
-              <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
+            {logged && (<li>
+              <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
                   <Image
                     src="/icons/logout.png"
                     alt="Logout"
@@ -194,10 +196,6 @@ export default function Home() {
                     height={35}
                   />
                 </div>
-              </Link>
-            </li>
-            {logged && (<li>
-              <div onClick={() => handleLogout()} className='text-gray-300 hover:text-red-700 cursor-pointer flex items-center'>Logout</div>
             </li>)}
           </ul>
 
@@ -232,35 +230,50 @@ export default function Home() {
                 </button>
               </li>
               <li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/create'}>
-                  <div className='text-gray-100 hover:text-white flex items-center'>
-                    Create
+                <Link href={'/games'}>
+                  <div className='text-gray-900 hover:text-white flex items-center'>
+                    <Image
+                    src="/icons/games.png"
+                    alt="Games"
+                    width={30}
+                    height={30}
+                  />
                   </div>
                 </Link>
               </li>
               <li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/read'}>
+                <Link href={'/profile'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
-                    Read
+                    <Image
+                    src="/icons/profile.png"
+                    alt="Profile"
+                    width={30}
+                    height={30}
+                  />
                   </div>
                 </Link>
               </li>
               <li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/update'}>
+                <Link href={'/about'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
-                    Update
-                  </div>
-                </Link>
-              </li>
-              <li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/delete'}>
-                  <div className='text-gray-100 hover:text-white flex items-center'>
-                    Delete
+                    <Image
+                    src="/icons/about.png"
+                    alt="About"
+                    width={30}
+                    height={30}
+                  />
                   </div>
                 </Link>
               </li>
               {logged && (<li>
-                <div onClick={() => handleLogout()} className='text-gray-100 hover:text-red-700 cursor-pointer flex items-center'>Logout</div>
+                <div onClick={() => handleLogout()} className='text-gray-100 hover:text-red-700 cursor-pointer flex items-center'>
+                  <Image
+                    src="/icons/logout.png"
+                    alt="Logout"
+                    width={30}
+                    height={30}
+                  />
+                </div>
               </li>)}
             </ul>
           )}
