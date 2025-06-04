@@ -141,7 +141,7 @@ export default function Home() {
                 <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
                     <Image src="/icons/home.svg" alt="Home" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-10 ml-6">
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
                       <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Home </span>
                     </div>
                   </div>
@@ -153,7 +153,7 @@ export default function Home() {
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
                     <Image src="/icons/games.svg" alt="Games" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-10 ml-6">
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
                       <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Games </span>
                     </div>
                   </div>
@@ -165,7 +165,7 @@ export default function Home() {
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
                     <Image src="/icons/profile.svg" alt="Profile" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-10 ml-6">
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
                       <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Profile </span>
                     </div>
                   </div>
@@ -177,7 +177,7 @@ export default function Home() {
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
                     <Image src="/icons/about.svg" alt="About" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-10 ml-6">
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
                       <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Info </span>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ export default function Home() {
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
                     <Image src="/icons/logout.svg" alt="Logout" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-10 ml-6">
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
                       <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Logout </span>
                     </div>
                   </div>
