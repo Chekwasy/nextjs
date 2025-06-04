@@ -139,8 +139,8 @@ export default function Home() {
             {logged && (<li>
               <Link href={'/bal'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
-                  <div className="group">
-                    {2000}
+                  <div className="group text-gray-800 ">
+                    {'N2000'}
                   </div>
                 </div>
               </Link>
@@ -151,7 +151,7 @@ export default function Home() {
                   <div className="group">
                     <Image src="/icons/reload.svg" alt="Reload" width={35} height={35} />
                     <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
-                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Reload Bal </span>
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Reset </span>
                     </div>
                   </div>
                 </div>
