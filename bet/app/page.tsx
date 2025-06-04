@@ -140,7 +140,7 @@ export default function Home() {
               <Link href={'/'}>
                 <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <Image src="/icons/home.png" alt="Home" width={35} height={35} />
-                  <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-6 ml-6 z-10">
+                  <div className="absolute group-hover:visible transition-opacity duration-200 -mt-6 ml-6 z-10">
                     <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded">
                       Home
                     </span>
