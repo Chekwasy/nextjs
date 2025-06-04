@@ -140,7 +140,7 @@ export default function Home() {
               <Link href={'/'}>
                 <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
-                    <Image src="/icons/home.png" alt="Home" width={35} height={35} />
+                    <Image src="/icons/home.svg" alt="Home" width={35} height={35} />
                     <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-6 ml-6">
                       <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Home </span>
                     </div>
@@ -150,49 +150,51 @@ export default function Home() {
             </li>
             <li>
               <Link href={'/games'}>
-                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
-                  <Image
-                    src="/icons/games.png"
-                    alt="Games"
-                    width={35}
-                    height={35}
-                  />
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/games.svg" alt="Games" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-6 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Games </span>
+                    </div>
+                  </div>
                 </div>
               </Link>
             </li>
             <li>
               <Link href={'/profile'}>
-              <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
-                  <Image
-                    src="/icons/profile.png"
-                    alt="Profile"
-                    width={35}
-                    height={35}
-                  />
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/profile.svg" alt="Profile" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-6 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Profile </span>
+                    </div>
+                  </div>
                 </div>
               </Link>
             </li>
             <li>
               <Link href={'/about'}>
-              <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
-                  <Image
-                    src="/icons/about.png"
-                    alt="About"
-                    width={35}
-                    height={35}
-                  />
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/about.svg" alt="About" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-6 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Info </span>
+                    </div>
+                  </div>
                 </div>
               </Link>
             </li>
             {logged && (<li>
-              <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
-                  <Image
-                    src="/icons/logout.png"
-                    alt="Logout"
-                    width={35}
-                    height={35}
-                  />
+              <Link href={'/logout'}>
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/logout.svg" alt="Logout" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-6 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Logout </span>
+                    </div>
+                  </div>
                 </div>
+              </Link>
             </li>)}
           </ul>
 
@@ -202,7 +204,7 @@ export default function Home() {
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <Image
-                src="/icons/menu.png"
+                src="/icons/menu.svg"
                 alt="Menu"
                 width={30}
                 height={30}
@@ -219,7 +221,7 @@ export default function Home() {
                   onClick={() => setMenuOpen(!menuOpen)}
                 >
                   <Image
-                    src="/icons/close.png"
+                    src="/icons/close.svg"
                     alt="Close"
                     width={30}
                     height={30}
@@ -230,7 +232,7 @@ export default function Home() {
                 <Link href={'/games'}>
                   <div className='text-gray-900 hover:text-white flex items-center'>
                     <Image
-                    src="/icons/games.png"
+                    src="/icons/games.svg"
                     alt="Games"
                     width={30}
                     height={30}
@@ -242,7 +244,7 @@ export default function Home() {
                 <Link href={'/profile'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
                     <Image
-                    src="/icons/profile.png"
+                    src="/icons/profile.svg"
                     alt="Profile"
                     width={30}
                     height={30}
@@ -254,7 +256,7 @@ export default function Home() {
                 <Link href={'/about'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
                     <Image
-                    src="/icons/about.png"
+                    src="/icons/about.svg"
                     alt="About"
                     width={30}
                     height={30}
@@ -265,7 +267,7 @@ export default function Home() {
               {logged && (<li>
                 <div onClick={() => handleLogout()} className='text-gray-100 hover:text-red-700 cursor-pointer flex items-center'>
                   <Image
-                    src="/icons/logout.png"
+                    src="/icons/logout.svg"
                     alt="Logout"
                     width={30}
                     height={30}
