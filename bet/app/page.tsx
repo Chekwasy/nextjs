@@ -138,16 +138,13 @@ export default function Home() {
             </li>
             <li>
               <Link href={'/'}>
-                <div className='bg-green-200 invisible text-sm px-2 py-1 group-hover:visible transition-opacity duration-200 rounded text-gray-700 flex items-center'>
-                  Home
-                </div>
-                <div className='bg-green-900 group hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center '>
-                <Image
-                  src="/icons/home.png"
-                  alt="Home"
-                  width={35}
-                  height={35}
-                />
+                <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <Image src="/icons/home.png" alt="Home" width={35} height={35} />
+                  <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-6 ml-6">
+                    <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded">
+                      Home
+                    </span>
+                  </div>
                 </div>
               </Link>
             </li>
