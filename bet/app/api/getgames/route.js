@@ -3,38 +3,54 @@ import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 import axios from 'axios';
 
+//scraps matches details from a source and align
+// them well and save in db. this is does for 7 
+// days of the week on a first request of the day
 export async function GET(request) {
     const dd = await request;
+    const redisDate = await redisClient.get(`gamedate`);
+    //get today's date
     let today = new Date();
-	for (let i = 0; i < 7; i++) {
-			const nex = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
-			let options = {'timeZone': 'WAT'};
-			let dateLst = nex.toLocaleDateString(options).split('/');
-			if (dateLst[0].length === 1) {dateLst[0] = '0' + dateLst[0];}
-			if (dateLst[1].length === 1) {dateLst[1] = '0' + dateLst[1];}
-			let date_ = dateLst[2] + dateLst[0] + dateLst[1];
-			console.log(date_);
-			let getDate = await (await dbClient.client.db().collection('dates'))
-        	.findOne({ "date": date_ });
-			if (!getDate) {
-				console.log(date_);
-				let response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
-				let gamesJson = response.data;
-				let insertDate = await (await dbClient.client.db().collection('dates'))
-				.insertOne({"date": date_, "games": gamesJson
-				});
-				let gamesId = insertDate.insertedId.toString();
-				console.log(gamesId);
-				// save default odds for all events
-				let gjLen = gamesJson.Stages.length;
-				let oddLst = [];
-				let eventDit = {};
-				for (let i = 0; i < gjLen; i++) {
-					let evtLen = gamesJson.Stages[i].Events.length;
-					if (evtLen > 0) {
-						for (let j = 0; j < evtLen; j++) {
-							if (gamesJson.Stages[i].Events[j]) {
-								let EidLstDit = {};
+    //runs a loop of 7days to get data of each day for matches
+    for (let i = 0; i < 7; i++) {
+	//Thr particular day
+	const nex = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
+	//uses West African Time
+	let options = {'timeZone': 'WAT'};
+	//Breaks date data to a list [2024, 04, 02]
+	let dateLst = nex.toLocaleDateString(options).split('/');
+	//Adds a 0 for dates that has one digit
+	if (dateLst[0].length === 1) {dateLst[0] = '0' + dateLst[0];}
+	if (dateLst[1].length === 1) {dateLst[1] = '0' + dateLst[1];}
+	let date_ = dateLst[2] + dateLst[0] + dateLst[1];
+	console.log(date_);
+	//Sets in redis a date string to help regenerate
+	// data in 10hrs interval on a first request 
+	if (i === 0) {
+		redisClient.set(`gamedate`, date_, 2 * 60 * 60);
+	}
+	//runs only if no date data in redis and 
+	if (redisDate === null) {
+		console.log(date_);
+		//scrap the matches data
+		let response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
+		let gamesJson = response.data;
+		//puts all main heading to a list
+		const titleCountry = gamesJson.Stages.map(stage => stage.Cnm);
+		let insertDate = await (await dbClient.client.db().collection('dates'))
+		.insertOne({"date": date_, "games": gamesJson, "titleCountry": titleCountry
+		});
+		let gamesId = insertDate.insertedId.toString();
+		// save default odds for all events
+		let gjLen = gamesJson.Stages.length;
+		let oddLst = [];
+		let eventDit = {};
+		for (let i = 0; i < gjLen; i++) {
+			let evtLen = gamesJson.Stages[i].Events.length;
+			if (evtLen > 0) {
+				for (let j = 0; j < evtLen; j++) {
+				if (gamesJson.Stages[i].Events[j]) {
+					let EidLstDit = {};
 								eventDit[gamesJson.Stages[i].Events[j].Eid] = [];
 								EidLstDit['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 								EidLstDit['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
