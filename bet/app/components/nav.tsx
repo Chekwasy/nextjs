@@ -1,31 +1,14 @@
 "use client"
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [logged, setLogged] = useState(true);
-  const [loggedMsg, setLoggedMsg] = useState(false);
-  const [successMsg, setSuccessMsg] = useState(false);
-  const [failMsg, setFailMsg] = useState(false);
   const [picUpdated, setPicUpdated] = useState(Date.now());
-  const checkLogged = () => {
-    axios.get('/api/getme', {
-      headers: {
-        tok: Cookies.get('tok'),
-    }})
-    .then(async (response) => {
-        const dd = response;
-        setUserEmail(dd.data.email);
-        setLogged(true);
-    })
-    .catch(error => {
-      console.log(error.message);
-    });
-  };
   const handleLogout = () => {
     axios.get('/api/disconnect', {
       headers: {
@@ -33,17 +16,12 @@ export default function Nav() {
     }})
     .then(async (response) => {
       console.log(response.data);
-      setUserEmail('');
       setLogged(false);
-      setLoggedMsg(true);
     })
     .catch(error => {
       console.log(error.message);
     });
   };
-  useEffect(() => {
-    checkLogged();
-  }, []);
 
 
   //upload part
@@ -54,8 +32,6 @@ export default function Nav() {
 
     // Check if the selected file is an image
     if (!imageFile.type.startsWith('image/')) {
-      setFailMsg(true);
-      delayedCode();
       return;
     }
 
@@ -81,11 +57,9 @@ export default function Nav() {
       })
       .then((response) => {
         console.log(response.data);
-        setSuccessMsg(true);
       })
       .catch(error => {
         console.log(error.message);
-        setFailMsg(true);
       });
     };
     fileReader.readAsDataURL(imageFile);

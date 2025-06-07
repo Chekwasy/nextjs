@@ -1,6 +1,5 @@
 import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
-import redisClient from '../../../redis';
 import axios from 'axios';
 
 //scraps matches details from a source and align
@@ -59,7 +58,7 @@ export async function GET(request) {
 		eventDit = {};
 	}
 	//Save data to db
-	let insertDate = await (await dbClient.client.db().collection('dates'))
+	await (await dbClient.client.db().collection('dates'))
 	.insertOne({"date": date_, "games": oddLst
 	});
 	return NextResponse.json({date: date_, games: oddLst}, {status: 201});
