@@ -40,7 +40,7 @@ export async function GET(request: Request, context: {params: {date: string}}) {
 		eventDit["events"] = [];
 		for (let j = 0; j < evtLen; j++) {
 			if (gamesJson.Stages[i].Events[j].Eps === 'NS') {
-				let Edt = {};
+				const Edt = {};
 				Edt["id"] = j.toString();
 				Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 				Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
