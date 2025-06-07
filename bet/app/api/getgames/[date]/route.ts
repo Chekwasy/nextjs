@@ -6,35 +6,34 @@ import axios from 'axios';
 // them well and save in db. this is does for 7 
 // days of the week on a first request of the day
 export async function GET(request: Request, context: {params: {date: string}}) {
-    const dd = await request;
     let givenDate = int(+context.params.date);
     if (givenDate > 7) {
 	    givenDate = 0;
     }
     try {
 	//get today's date
-	let today = new Date();
+	const today = new Date();
 	const i = givenDate;
 	//The particular day
 	const nex = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
 	//uses West African Time
-	let options = {'timeZone': 'WAT'};
+	const options = {'timeZone': 'WAT'};
 	//Breaks date data to a list [2024, 04, 02]
-	let dateLst = nex.toLocaleDateString(options).split('/');
+	const dateLst = nex.toLocaleDateString(options).split('/');
 	//Adds a 0 for dates that has one digit
 	if (dateLst[0].length === 1) {dateLst[0] = '0' + dateLst[0];}
 	if (dateLst[1].length === 1) {dateLst[1] = '0' + dateLst[1];}
-	let date_ = dateLst[2] + dateLst[0] + dateLst[1];
+	const date_ = dateLst[2] + dateLst[0] + dateLst[1];
 	console.log(date_);
 	//scrap the matches data
-	let response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
-	let gamesJson = response.data;
+	const response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
+	const gamesJson = response.data;
 	// extract details for all events that is active 
-	let gjLen = gamesJson.Stages.length;
-	let oddLst = [];
+	const gjLen = gamesJson.Stages.length;
+	const oddLst = [];
 	let eventDit = {};
 	for (let i = 0; i < gjLen; i++) {
-		let evtLen = gamesJson.Stages[i].Events.length;
+		const evtLen = gamesJson.Stages[i].Events.length;
 		eventDit["id"] = i.toString();
 		eventDit["titleCountry"] = gamesJson.Stages[i].Cnm;
 		eventDit["subtitle"] = gamesJson.Stages[i].Snm;
