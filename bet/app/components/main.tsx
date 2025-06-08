@@ -3,7 +3,7 @@
 
 export default function Main() {
   return (
-    <div className="relative bg-white rounded-b-lg border-4 border-lightgreen">
+    <div className="relative bg-white rounded-b-lg border-4 border-green-300">
   <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
     <h2 className="font-bold text-lg">Heading</h2>
     <button className="lg:hidden" aria-label="Open sidebar">
