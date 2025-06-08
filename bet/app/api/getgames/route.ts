@@ -8,7 +8,7 @@ import type { NextApiRequest} from 'next';
 // days of the week on a first request of the day
 export async function GET(request: NextApiRequest) {
     const dd = await request;
-    let givenDate = parseInt(request.query.date);
+    let givenDate = parseInt(dd.query.date);
     if (givenDate > 7) {
 	    givenDate = 0;
     }
