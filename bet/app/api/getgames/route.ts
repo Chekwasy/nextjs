@@ -7,7 +7,9 @@ import axios from 'axios';
 // days of the week on a first request of the day
 export async function GET(request: Request) {
     const dd = await request;
-    let givenDate = parseInt(dd.query.date);
+    const url = new URL(dd.url);
+    const date = url.searchParams.get('date');
+    let givenDate = parseInt(date!);
     if (givenDate > 7) {
 	    givenDate = 0;
     }
