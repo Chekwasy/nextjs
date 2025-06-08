@@ -59,7 +59,15 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 		eventDit["events"] = [];
 		for (let j = 0; j < evtLen; j++) {
 			if (gamesJson.Stages[i].Events[j].Eps === 'NS') {
-				const Edt = {};
+				const Edt: { 
+    id: string, 
+    hometeam: string, 
+    awayteam: string, 
+    homeodd: string, 
+    awayodd: string, 
+    drawodd: string, 
+    Esd: string 
+				} = {};
 				Edt["id"] = j.toString();
 				Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 				Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
@@ -73,7 +81,25 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 		if (eventDit.events.length > 0) {
 			oddLst.push(eventDit);
 		}
-		eventDit = {};
+		eventDit: { 
+  id: string, 
+  titleCountry: string, 
+  subtitle: string, 
+  events: [{ 
+    id: string, 
+    hometeam: string, 
+    awayteam: string, 
+    homeodd: string, 
+    awayodd: string, 
+    drawodd: string, 
+    Esd: string 
+  }][] 
+} = {
+  id: '',
+  titleCountry: '',
+  subtitle: '',
+  events: []
+};
 	}
 	//Save data to db
 	await (await dbClient.client.db().collection('dates'))
