@@ -33,24 +33,24 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 	const gjLen = gamesJson.Stages.length;
 	const oddLst = [];
 	let eventDit: { 
-  id: string, 
-  titleCountry: string, 
-  subtitle: string, 
-  events: [{ 
-    id: string, 
-    hometeam: string, 
-    awayteam: string, 
-    homeodd: string, 
-    awayodd: string, 
-    drawodd: string, 
-    Esd: string 
-  }][] 
-} = {
-  id: '',
-  titleCountry: '',
-  subtitle: '',
-  events: []
-};
+ 	 id: string, 
+ 	 titleCountry: string, 
+ 	 subtitle: string, 
+ 	 events: [{ 
+  	  id: string, 
+  	  hometeam: string, 
+   	 awayteam: string, 
+   	 homeodd: string, 
+  	  awayodd: string, 
+ 	   drawodd: string, 
+   	 Esd: string 
+  	}][] 
+	} = {
+  	id: '',
+  	titleCountry: '',
+	  subtitle: '',
+ 	 events: []
+	};
 	for (let i = 0; i < gjLen; i++) {
 		const evtLen = gamesJson.Stages[i].Events.length;
 		eventDit["id"] = i.toString();
@@ -60,13 +60,13 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 		for (let j = 0; j < evtLen; j++) {
 			if (gamesJson.Stages[i].Events[j].Eps === 'NS') {
 				const Edt: { 
-    id: string, 
-    hometeam: string, 
-    awayteam: string, 
-    homeodd: string, 
-    awayodd: string, 
-    drawodd: string, 
-    Esd: string 
+    				id: string, 
+    				hometeam: string, 
+   				 awayteam: string, 
+    				homeodd: string, 
+    				awayodd: string, 
+   				 drawodd: string, 
+   				 Esd: string 
 				} = {};
 				Edt["id"] = j.toString();
 				Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
@@ -81,25 +81,20 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 		if (eventDit.events.length > 0) {
 			oddLst.push(eventDit);
 		}
-		eventDit: { 
-  id: string, 
-  titleCountry: string, 
-  subtitle: string, 
-  events: [{ 
-    id: string, 
-    hometeam: string, 
-    awayteam: string, 
-    homeodd: string, 
-    awayodd: string, 
-    drawodd: string, 
-    Esd: string 
-  }][] 
-} = {
-  id: '',
-  titleCountry: '',
-  subtitle: '',
-  events: []
-};
+		eventDit = {} as { 
+  		id: string, 
+  		titleCountry: string, 
+  		subtitle: string, 
+ 		 events: [{ 
+  		  id: string, 
+  		  hometeam: string, 
+ 		   awayteam: string, 
+ 		   homeodd: string, 
+ 		   awayodd: string, 
+ 		   drawodd: string, 
+ 		   Esd: string 
+		  }][] 
+		};
 	}
 	//Save data to db
 	await (await dbClient.client.db().collection('dates'))
