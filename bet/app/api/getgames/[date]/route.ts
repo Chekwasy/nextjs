@@ -32,7 +32,7 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 	// extract details for all events that is active 
 	const gjLen = gamesJson.Stages.length;
 	const oddLst = [];
-	let eventDit: { id: string, titleCountry: string, subtitle: string, events: object[] } = {};
+	let eventDit: { id: string, titleCountry: string, subtitle: string, events: [{id: string, hometeam: string, awayteam: string, homeodd: string, awayodd: string, drawodd: string, Esd: string} = {};
 	for (let i = 0; i < gjLen; i++) {
 		const evtLen = gamesJson.Stages[i].Events.length;
 		eventDit["id"] = i.toString();
@@ -45,9 +45,9 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 				Edt["id"] = j.toString();
 				Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 				Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
-				Edt['homeodd'] = 1.7;
-				Edt['awayodd'] = 1.8;
-				Edt['drawodd'] = 3.1;
+				Edt['homeodd'] = '1.7';
+				Edt['awayodd'] = '1.8';
+				Edt['drawodd'] = '3.1';
 				Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 				eventDit['events'].push(Edt);
 			}
