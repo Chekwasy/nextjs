@@ -67,7 +67,15 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
     				awayodd: string, 
    				 drawodd: string, 
    				 Esd: string 
-				} = {};
+				} = {
+  				id: '',
+ 				 hometeam: '',
+ 				 awayteam: '',
+  				homeodd: '',
+  				awayodd: '',
+ 				 drawodd: '',
+ 				 Esd: ''
+				};
 				Edt["id"] = j.toString();
 				Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 				Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
