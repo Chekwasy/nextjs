@@ -93,7 +93,7 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
   		id: string, 
   		titleCountry: string, 
   		subtitle: string, 
- 		 events: [{ 
+ 		 events: { 
   		  id: string, 
   		  hometeam: string, 
  		   awayteam: string, 
@@ -101,7 +101,7 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
  		   awayodd: string, 
  		   drawodd: string, 
  		   Esd: string 
-		  }][] 
+		  }[] 
 		};
 	}
 	//Save data to db
