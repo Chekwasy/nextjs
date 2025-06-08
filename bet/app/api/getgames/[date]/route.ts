@@ -6,8 +6,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 //scraps matches details from a source and align
 // them well and save in db. this is does for 7 
 // days of the week on a first request of the day
-export async function GET(request: NextApiRequest, response: NextApiResponse, { params }: { params: { date: string } }) {
-    let givenDate = parseInt(params.date);
+export async function GET(request: NextApiRequest, response: NextApiResponse) {
+    const dd = await request;
+    let givenDate = parseInt(request.query.date);
     if (givenDate > 7) {
 	    givenDate = 0;
     }
