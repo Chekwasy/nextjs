@@ -5,7 +5,7 @@ import axios from 'axios';
 //scraps matches details from a source and align
 // them well and save in db. this is does for 7 
 // days of the week on a first request of the day
-export async function GET(request: Request, context: {params: {date: string}},) {
+export async function GET(request: Request, { params }: { params: { date: string } }) {
     let givenDate = parseInt(+context.params.date);
     if (givenDate > 7) {
 	    givenDate = 0;
