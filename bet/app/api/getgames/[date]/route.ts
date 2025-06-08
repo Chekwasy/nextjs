@@ -44,7 +44,7 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
     awayodd: string, 
     drawodd: string, 
     Esd: string 
-  }] 
+  }][] 
 } = {
   id: '',
   titleCountry: '',
