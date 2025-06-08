@@ -1,11 +1,12 @@
 import dbClient from '../../../../db';
 import { NextResponse } from 'next/server';
 import axios from 'axios';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 //scraps matches details from a source and align
 // them well and save in db. this is does for 7 
 // days of the week on a first request of the day
-export async function GET(request: Request, { params }: { params: { date: string } }) {
+export async function GET(request: NextApiRequest, response: NextApiResponse, { params }: { params: { date: string } }) {
     let givenDate = parseInt(params.date);
     if (givenDate > 7) {
 	    givenDate = 0;
