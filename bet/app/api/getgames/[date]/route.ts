@@ -32,7 +32,7 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 	// extract details for all events that is active 
 	const gjLen = gamesJson.Stages.length;
 	const oddLst = [];
-	let eventDit = {};
+	let eventDit: { id: string, titleCountry: string, subtitle: string, events: any[] } = {};
 	for (let i = 0; i < gjLen; i++) {
 		const evtLen = gamesJson.Stages[i].Events.length;
 		eventDit["id"] = i.toString();
