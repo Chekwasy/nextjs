@@ -18,7 +18,7 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 	//The particular day
 	const nex = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
 	//uses West African Time
-	const options = {'timeZone': 'WAT'};
+	const options = {timeZone: 'WAT'};
 	//Breaks date data to a list [2024, 04, 02]
 	const dateLst = nex.toLocaleDateString(options).split('/');
 	//Adds a 0 for dates that has one digit
