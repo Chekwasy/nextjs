@@ -32,7 +32,25 @@ export async function GET(request: NextApiRequest, response: NextApiResponse, { 
 	// extract details for all events that is active 
 	const gjLen = gamesJson.Stages.length;
 	const oddLst = [];
-	let eventDit: { id: string, titleCountry: string, subtitle: string, events: [{id: string, hometeam: string, awayteam: string, homeodd: string, awayodd: string, drawodd: string, Esd: string}]} = {};
+	let eventDit: { 
+  id: string, 
+  titleCountry: string, 
+  subtitle: string, 
+  events: [{ 
+    id: string, 
+    hometeam: string, 
+    awayteam: string, 
+    homeodd: string, 
+    awayodd: string, 
+    drawodd: string, 
+    Esd: string 
+  }] 
+} = {
+  id: '',
+  titleCountry: '',
+  subtitle: '',
+  events: []
+};
 	for (let i = 0; i < gjLen; i++) {
 		const evtLen = gamesJson.Stages[i].Events.length;
 		eventDit["id"] = i.toString();
