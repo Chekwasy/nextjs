@@ -1,4 +1,4 @@
-import dbClient from '../../../../db';
+import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
