@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 export default function Main() {
@@ -42,7 +42,7 @@ export default function Main() {
     .catch(error => {
       console.log(error.message);
     });
-  }, []);
+  }, [datee]);
   const handleDateSelect = (date, indent) => {
     setDatee(date);
     setDateeIndent(indent);
