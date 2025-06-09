@@ -97,7 +97,11 @@ export default function Main() {
         </button>
       </div>
       <div className="p-4 mt-12">
-       
+       <div>
+  {games.map((game, index) => (
+    <div key={index}>{game}</div>
+  ))}
+</div>
       </div>
       {/* Sidebar */}
       <div className={`fixed top-16 right-0 h-screen w-96 bg-white shadow-lg transform transition duration-300 ease-in-out lg:hidden ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`} id="sidebar">
