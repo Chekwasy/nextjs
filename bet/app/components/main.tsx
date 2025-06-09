@@ -4,10 +4,13 @@ import React, { useEffect } from 'react';
 
 export default function Main() {
   useEffect(() => {
-  document.querySelector('button[aria-label="Open sidebar"]').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.toggle('translate-x-full');
-    document.getElementById('overlay').classList.toggle('hidden');
-  });
+  const button = document.querySelector('button[aria-label="Open sidebar"]');
+  if (button) {
+    button.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('translate-x-full');
+      document.getElementById('overlay').classList.toggle('hidden');
+    });
+  }
 }, []);
   return (
     <div className="relative bg-white rounded-b-lg border-4 border-green-300">
