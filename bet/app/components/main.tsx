@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 export default function Main() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-}, []);
   return (
     <div className="relative bg-white rounded-b-lg border-4 border-green-300 mt-16 lg:border-2 lg:w-4/5 mx-auto">
       {/* Your code here */}
