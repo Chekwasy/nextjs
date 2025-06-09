@@ -37,7 +37,7 @@ export default function Main() {
     .then(async (response) => {
       const dd = response;
       setGames(dd.data.games);
-	    setDateelist(dd.data.dates);
+	    setDateelist(dateelist);
     })
     .catch(error => {
       console.log(error.message);
