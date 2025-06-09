@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function Main() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [games, setGames] = useState({
+  const [games, setGames] = useState([{
   	id: '',
   	titleCountry: '',
 	  subtitle: '',
@@ -18,7 +18,7 @@ export default function Main() {
  				 drawodd: '',
  				 Esd: ''
    }]
-  });
+  }]);
   const [dateelist, setDateelist] = useState([
     { date: '2024-03-01', indent: 0 },
     { date: '2024-03-02', indent: 1 },
