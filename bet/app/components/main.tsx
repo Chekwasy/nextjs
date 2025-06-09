@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import axios from 'axios';
 
 
@@ -37,8 +38,7 @@ export default function Main() {
     .then(async (response) => {
       const dd = response;
       setGames(dd.data.games);
-      console.log(dd.data.dates)
-	    setDateelist(dateelist);
+	    setDateelist(dd.data.dates);
     })
     .catch(error => {
       console.log(error.message);
@@ -71,7 +71,7 @@ export default function Main() {
         <h2 className="font-bold text-lg">1 X 2</h2>
         <div>
       <div className="flex justify-center">
-        <button onClick={handlePrevious}>Previous</button>
+        <button onClick={handlePrevious}><Image src="/icons/back.svg" alt="back" width={30} height={30} /></button>
         <div className="relative">
           <button onClick={() => setShowList(!showList)}>{datee}</button>
           {showList && (
@@ -84,7 +84,7 @@ export default function Main() {
             </ul>
           )}
         </div>
-        <button onClick={handleNext}>Next</button>
+        <button onClick={handleNext}><Image src="/icons/front.svg" alt="Next" width={30} height={30} /></button>
       </div>
     </div>
         <button className="lg:hidden" aria-label="Open sidebar" onClick={() => setSidebarOpen(!sidebarOpen)}>
@@ -96,7 +96,7 @@ export default function Main() {
       <div className="p-4 mt-12">
        <div>
         {games.map((game, index) => (
-        <div key={index}>{game.titleCountry}</div>
+        <div key={index}><h3>{game.subtitle}</h3>{game.titleCountry}</div>
       ))}
     </div>
       </div>
