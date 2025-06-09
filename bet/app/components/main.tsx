@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 export default function Main() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [datee, setDatee] = useState('0');
   const [games, setGames] = useState({
   	id: '',
   	titleCountry: '',
