@@ -40,7 +40,7 @@ export default function Main() {
       const dd = response.data;
       setGames(dd.games);
       setEg(dd.datee);
-	    setDateelist(dateelist);
+	    setDateelist(dd.datee);
     })
     .catch(error => {
       console.log(error.message);
