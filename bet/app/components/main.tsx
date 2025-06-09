@@ -46,7 +46,7 @@ export default function Main() {
   };
   useEffect(() => {
     load();
-  },);
+  }, [dateeIndent]);
   const handleDateSelect = (date: string, indent: number) => {
     setDatee(date);
     setDateeIndent(indent);
