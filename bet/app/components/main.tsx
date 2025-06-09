@@ -75,13 +75,13 @@ export default function Main() {
         <div className="relative">
           <button onClick={() => setShowList(!showList)}>{datee}</button>
           {showList && (
-            <div className="absolute bg-white shadow-lg p-4 w-28">
+            <ul className="absolute bg-white shadow-lg p-4 w-48">
               {dateelist.map((item) => (
-                <div key={item.date} onClick={() => handleDateSelect(item.date, item.indent)}>
+                <li key={item.date} onClick={() => handleDateSelect(item.date, item.indent)}>
                   {item.date}
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </div>
         <button onClick={handleNext}>Next</button>
