@@ -45,7 +45,7 @@ export default function Main() {
     });
   }, [datee, dateeIndent]);
   const handleDateSelect = (date: string, indent: number) => {
-    setDateelist(date);
+    setDatee(date);
     setDateeIndent(indent);
     setShowList(false);
   };
