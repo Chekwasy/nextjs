@@ -113,7 +113,7 @@ export default function Main() {
           </button>
         </div>
         <div className="p-4 mt-12">
-          {eg}
+          {eg[0].date}
         </div>
       </div>
       {/* Overlay */}
