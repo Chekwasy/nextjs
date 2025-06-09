@@ -32,7 +32,7 @@ export default function Main() {
   ]);
   const [datee, setDatee] = useState(dateelist[0].date);
   const [dateeIndent, setDateeIndent] = useState(0);
-  const [eg, setEg] = useState('');
+  const [eg, setEg] = useState([{date: ''}]);
   const [showList, setShowList] = useState(false);
   useEffect(() => {
     axios.get(`api/getgames?date=${dateeIndent}`)
