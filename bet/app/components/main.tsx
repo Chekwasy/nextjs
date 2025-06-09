@@ -37,6 +37,7 @@ export default function Main() {
     .then(async (response) => {
       const dd = response;
       setGames(dd.data.games);
+      console.log(dd.data.dates)
 	    setDateelist(dateelist);
     })
     .catch(error => {
@@ -52,28 +53,28 @@ export default function Main() {
     setShowList(false);
   };
 
-  // const handleNext = () => {
-  //   const currentIndex = dateelist.findIndex((item) => item.date === datee);
-  //   if (currentIndex < dateelist.length - 1) {
-  //     setDatee(dateelist[currentIndex + 1].date);
-  //     setDateeIndent(dateelist[currentIndex + 1].indent);
-  //   }
-  // };
+  const handleNext = () => {
+    const currentIndex = dateelist.findIndex((item) => item.date === datee);
+    if (currentIndex < dateelist.length - 1) {
+      setDatee(dateelist[currentIndex + 1].date);
+      setDateeIndent(dateelist[currentIndex + 1].indent);
+    }
+  };
 
-  // const handlePrevious = () => {
-  //   const currentIndex = dateelist.findIndex((item) => item.date === datee);
-  //   if (currentIndex > 0) {
-  //     setDatee(dateelist[currentIndex - 1].date);
-  //     setDateeIndent(dateelist[currentIndex - 1].indent);
-  //   }
-  // };
+  const handlePrevious = () => {
+    const currentIndex = dateelist.findIndex((item) => item.date === datee);
+    if (currentIndex > 0) {
+      setDatee(dateelist[currentIndex - 1].date);
+      setDateeIndent(dateelist[currentIndex - 1].indent);
+    }
+  };
   return (
     <div className="relative bg-white rounded-b-lg border-4 border-green-300 mt-16 lg:border-2 lg:w-4/5 mx-auto">
       <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
         <h2 className="font-bold text-lg">1 X 2</h2>
         <div>
       <div className="flex justify-center">
-        {/* <button onClick={handlePrevious}>Previous</button> */}
+        <button onClick={handlePrevious}>Previous</button>
         <div className="relative">
           <button onClick={() => setShowList(!showList)}>{datee}</button>
           {showList && (
@@ -86,7 +87,7 @@ export default function Main() {
             </ul>
           )}
         </div>
-        {/* <button onClick={handleNext}>Next</button> */}
+        <button onClick={handleNext}>Next</button>
       </div>
     </div>
         <button className="lg:hidden" aria-label="Open sidebar" onClick={() => setSidebarOpen(!sidebarOpen)}>
@@ -109,7 +110,7 @@ export default function Main() {
           </button>
         </div>
         <div className="p-4 mt-12">
-          {games[0].id ? 'hhhh' : 'dfdgrggf'}
+          {games[0].titleCountry}
         </div>
       </div>
       {/* Overlay */}
