@@ -9,15 +9,15 @@ export default function Main() {
   	id: '',
   	titleCountry: '',
 	  subtitle: '',
- 	 events: [{
-  				id: '',
- 				 hometeam: '',
- 				 awayteam: '',
-  				homeodd: '',
-  				awayodd: '',
- 				 drawodd: '',
- 				 Esd: ''
-   }]
+    events: [{
+  	  id: '',
+ 			hometeam: '',
+ 			awayteam: '',
+  		homeodd: '',
+  		awayodd: '',
+ 			drawodd: '',
+ 			Esd: '',
+    }]
   }]);
   const [dateelist, setDateelist] = useState([
     { date: '2024-03-01', indent: 0 },
@@ -29,21 +29,23 @@ export default function Main() {
     { date: '2024-03-07', indent: 6 },
     { date: '2024-03-08', indent: 7 },
   ]);
-
   const [datee, setDatee] = useState(dateelist[0].date);
   const [dateeIndent, setDateeIndent] = useState(0);
   const [showList, setShowList] = useState(false);
-  useEffect(() => {
-    axios.get(`api/getgames?date=${dateeIndent}`)
+  const load = async () => {
+    await axios.get(`api/getgames?date=${dateeIndent}`)
     .then(async (response) => {
-        const dd = response;
-        setGames(dd.data.games);
-	setDateelist(dd.data.dates);
+      const dd = response;
+      setGames(dd.data.games);
+	    setDateelist(dd.data.dates);
     })
     .catch(error => {
       console.log(error.message);
     });
-  }, []);
+  };
+  useEffect(() => {
+    load();
+  },);
   const handleDateSelect = (date: string, indent: number) => {
     setDatee(date);
     setDateeIndent(indent);
@@ -107,7 +109,7 @@ export default function Main() {
           </button>
         </div>
         <div className="p-4 mt-12">
-          {games[0].id}
+          {games[0].id ? 'hhhh' : 'dfdgrggf'}
         </div>
       </div>
       {/* Overlay */}
