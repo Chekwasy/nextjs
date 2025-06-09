@@ -32,7 +32,11 @@ export default function Main() {
         </div>
       </div>
       {/* Overlay */}
-      <div className="fixed top-0 left-0 h-screen w-screen bg-transparent lg:hidden" id="overlay" onClick={() => document.getElementById('sidebar').classList.remove('translate-x-full')}></div>
+      <div
+  className="fixed top-0 left-0 h-screen w-screen bg-transparent lg:hidden"
+  id="overlay"
+  onClick={() => document.getElementById('sidebar')?.classList.remove('translate-x-full')}
+></div>
     </div>
   );
 }
