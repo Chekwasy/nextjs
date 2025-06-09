@@ -32,13 +32,15 @@ export default function Main() {
   ]);
   const [datee, setDatee] = useState(dateelist[0].date);
   const [dateeIndent, setDateeIndent] = useState(0);
+  const [eg, setEg] = useState('');
   const [showList, setShowList] = useState(false);
   useEffect(() => {
     axios.get(`api/getgames?date=${dateeIndent}`)
     .then(async (response) => {
       const dd = response;
       setGames(dd.data.games);
-	    setDateelist(dd.data.dates);
+      setEg(dd.data.dates);
+	    setDateelist(dateelist);
     })
     .catch(error => {
       console.log(error.message);
@@ -111,7 +113,7 @@ export default function Main() {
           </button>
         </div>
         <div className="p-4 mt-12">
-          {games[0].titleCountry}
+          {eg}
         </div>
       </div>
       {/* Overlay */}
