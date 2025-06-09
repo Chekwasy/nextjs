@@ -107,7 +107,7 @@ export default function Main() {
           </button>
         </div>
         <div className="p-4 mt-12">
-          {games}
+          {games[0].id}
         </div>
       </div>
       {/* Overlay */}
