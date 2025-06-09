@@ -34,7 +34,7 @@ export default function Main() {
   const [dateeIndent, setDateeIndent] = useState(dateelist[0].indent);
   const [showList, setShowList] = useState(false);
   useEffect(() => {
-    axios.get(`api/getgames?date=${dateeIndent.toString()}`)
+    axios.get(`api/getgames?date=${dateelist[0].indent.toString()}`)
     .then(async (response) => {
         const dd = response;
         setGames(dd.data.games);
