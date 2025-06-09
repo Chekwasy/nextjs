@@ -39,6 +39,7 @@ const load = async () => {
     .then(async (response) => {
       const dd = response.data;
       setGames(dd.games);
+	setEg(dd.datee);
 	    setDateelist(dd.datee);
     })
     .catch(error => {
