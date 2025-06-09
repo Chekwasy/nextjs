@@ -32,8 +32,8 @@ export default function Main() {
   const [datee, setDatee] = useState(dateelist[0].date);
   const [dateeIndent, setDateeIndent] = useState(0);
   const [showList, setShowList] = useState(false);
-  const load = async () => {
-    await axios.get(`api/getgames?date=${dateeIndent}`)
+  useEffect(() => {
+    axios.get(`api/getgames?date=${dateeIndent}`)
     .then(async (response) => {
       const dd = response;
       setGames(dd.data.games);
@@ -43,9 +43,6 @@ export default function Main() {
     .catch(error => {
       console.log(error.message);
     });
-  };
-  useEffect(() => {
-    load();
   }, [dateeIndent]);
   const handleDateSelect = (date: string, indent: number) => {
     setDatee(date);
@@ -98,10 +95,10 @@ export default function Main() {
       </div>
       <div className="p-4 mt-12">
        <div>
-  {games.map((game, index) => (
-    <div key={index}>{game}</div>
-  ))}
-</div>
+        {games.map((game, index) => (
+        <div key={index}>{game.titleCountry}</div>
+      ))}
+    </div>
       </div>
       {/* Sidebar */}
       <div className={`fixed top-16 right-0 h-screen w-96 bg-white shadow-lg transform transition duration-300 ease-in-out lg:hidden ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`} id="sidebar">
