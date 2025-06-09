@@ -110,7 +110,17 @@ export async function GET(request: Request) {
 	await (await dbClient.client.db().collection('dates'))
 	.insertOne({"date": date_, "games": oddLst
 	});
-	return NextResponse.json({date: date_, games: oddLst}, {status: 201});
+  	const dates : {date: string; indent: number;}[] = [];
+ 	 const todayy = new Date();
+
+ 	 for (let i = 0; i <= 7; i++) {
+  	  const date = new Date(todayy);
+  	  date.setDate(date.getDate() + i);
+  	  const dateString = date.toISOString().split('T')[0];
+
+ 	   dates.push({ date: dateString, indent: i });
+	  }
+	return NextResponse.json({date: date_, datee: dates, games: oddLst}, {status: 201});
     } catch {
 	    return NextResponse.json('error fetching data', {status: 400});
     }
