@@ -7,8 +7,8 @@ export default function Main() {
   const button = document.querySelector('button[aria-label="Open sidebar"]');
   if (button) {
     button.addEventListener('click', () => {
-      document.getElementById('sidebar').classList.toggle('translate-x-full');
-      document.getElementById('overlay').classList.toggle('hidden');
+      document.getElementById('sidebar')?.classList.toggle('translate-x-full');
+      document.getElementById('overlay')?.classList.toggle('hidden');
     });
   }
 }, []);
