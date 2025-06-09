@@ -31,10 +31,10 @@ export default function Main() {
   ]);
 
   const [datee, setDatee] = useState(dateelist[0].date);
-  const [dateeIndent, setDateeIndent] = useState(dateelist[0].indent);
+  const [dateeIndent, setDateeIndent] = useState(0);
   const [showList, setShowList] = useState(false);
   useEffect(() => {
-    axios.get(`api/getgames?date=${dateelist[0].indent.toString()}`)
+    axios.get(`api/getgames?date=${dateeIndent}`)
     .then(async (response) => {
         const dd = response;
         setGames(dd.data.games);
@@ -43,7 +43,7 @@ export default function Main() {
     .catch(error => {
       console.log(error.message);
     });
-  }, [datee, dateeIndent]);
+  }, []);
   const handleDateSelect = (date: string, indent: number) => {
     setDatee(date);
     setDateeIndent(indent);
