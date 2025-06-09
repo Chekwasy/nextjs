@@ -37,10 +37,10 @@ export default function Main() {
   useEffect(() => {
     axios.get(`api/getgames?date=${dateeIndent}`)
     .then(async (response) => {
-      const dd = response;
-      setGames(dd.data.games);
-      setEg(dd.data.dates);
-	    setDateelist(dateelist);
+      const dd = response.data;
+      setGames(dd.games);
+      setEg(dd.datee);
+	    setDateelist(dd.datee);
     })
     .catch(error => {
       console.log(error.message);
