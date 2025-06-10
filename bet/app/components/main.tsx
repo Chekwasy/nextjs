@@ -81,13 +81,13 @@ const load = async () => {
         <div className="relative">
           <button onClick={() => setShowList(!showList)}>{datee}</button>
           {showList && (
-            <ul className="absolute bg-white shadow-lg p-4 w-35 text-gray-800 rounded-lg">
-              {dateelist.map((item) => (
-                <li key={item.date} onClick={() => handleDateSelect(item.date, item.indent)} className="py-2 px-4 border border-green-500 rounded-md hover:bg-green-100">
-                  {item.date}
-                </li>
-              ))}
-            </ul>
+            <ul className="absolute bg-white shadow-lg p-4 w-35 text-gray-800 rounded-lg left-0">
+  {dateelist.map((item) => (
+    <li key={item.date} onClick={() => handleDateSelect(item.date, item.indent)} className="py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-700 mb-2">
+      {item.date}
+    </li>
+  ))}
+</ul>
           )}
         </div>
         <button onClick={handleNext}><Image src="/icons/front.svg" alt="Next" width={30} height={30} /></button>
