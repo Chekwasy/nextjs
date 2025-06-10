@@ -41,6 +41,7 @@ const load = async () => {
       setGames(dd.games);
 	setEg(dd.datee);
 	    setDateelist(dd.datee);
+	    setDatee(dd.datee[dateeIndent].date)
     })
     .catch(error => {
       console.log(error.message);
