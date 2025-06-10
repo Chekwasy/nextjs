@@ -21,14 +21,14 @@ export default function Main() {
     }]
   }]);
   const [dateelist, setDateelist] = useState([
-    { date: '2024-03-01', indent: 0 },
-    { date: '2024-03-02', indent: 1 },
-    { date: '2024-03-03', indent: 2 },
-    { date: '2024-03-04', indent: 3 },
-    { date: '2024-03-05', indent: 4 },
-    { date: '2024-03-06', indent: 5 },
-    { date: '2024-03-07', indent: 6 },
-    { date: '2024-03-08', indent: 7 },
+    { date: '', indent: 0 },
+    { date: '', indent: 1 },
+    { date: '', indent: 2 },
+    { date: '', indent: 3 },
+    { date: '', indent: 4 },
+    { date: '', indent: 5 },
+    { date: '', indent: 6 },
+    { date: '', indent: 7 },
   ]);
   const [datee, setDatee] = useState(dateelist[0].date);
   const [dateeIndent, setDateeIndent] = useState(0);
@@ -81,7 +81,7 @@ const load = async () => {
         <div className="relative">
           <button onClick={() => setShowList(!showList)}>{datee}</button>
           {showList && (
-            <ul className="absolute bg-white shadow-lg p-4 w-35 text-gray-800 rounded-lg left-0 ml-[-10px]">
+            <ul className="absolute bg-white shadow-lg p-4 w-40 text-gray-800 rounded-lg left-0 ml-[-16px]">
   {dateelist.map((item) => (
     <li key={item.date} onClick={() => handleDateSelect(item.date, item.indent)} className="py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-700 mb-2">
       {item.date}
