@@ -76,7 +76,7 @@ const load = async () => {
       <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
         <h2 className="font-bold text-lg">1 X 2</h2>
         <div>
-      <div className="flex justify-center">
+      <div className="flex justify-center lg:justify-start">
         <button onClick={handlePrevious}><Image src="/icons/back.svg" alt="back" width={30} height={30} /></button>
         <div className="relative">
           <button onClick={() => setShowList(!showList)}>{datee}</button>
@@ -110,7 +110,7 @@ const load = async () => {
       <div className={`absolute top-0 right-0 h-screen w-96 bg-white shadow-lg lg:block ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '65px' }}>
         <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
           <h2 className="font-bold text-lg">Sidebar Heading</h2>
-          <button aria-label="Close sidebar" onClick={() => setSidebarOpen(false)}>
+          <button className="lg:hidden" aria-label="Close sidebar" onClick={() => setSidebarOpen(false)}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
