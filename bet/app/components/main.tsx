@@ -109,22 +109,18 @@ const load = async () => {
         <p className="text-gray-600">{game.titleCountry}</p>
         <div className="mt-4">
           {game.events.map((match) => (
-            <div key={match.id} className="flex justify-between items-center mb-2">
-              <div className="flex-1">
-                <p className="text-lg">{match.hometeam}</p>
-              </div>
-              <div className="px-2">VS</div>
-              <div className="flex-1">
-                <p className="text-lg">{match.awayteam}</p>
-              </div>
-              <div className="text-lg">
+            <div key={match.id} className="flex flex-wrap justify-between items-center mb-2">
+              <div className="w-1/3 text-lg text-center">{match.hometeam}</div>
+              <div className="w-1/3 text-lg text-center">VS</div>
+              <div className="w-1/3 text-lg text-center">{match.awayteam}</div>
+              <div className="w-full text-lg text-center mt-2">
                 {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
               </div>
-              <div className="flex justify-end">
+              <div className="w-full flex justify-around mt-2">
                 <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                   {match.homeodd}
                 </button>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                   {match.drawodd}
                 </button>
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
