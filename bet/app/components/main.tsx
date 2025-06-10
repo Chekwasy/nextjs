@@ -107,7 +107,7 @@ const load = async () => {
     </div>
       </div>
       {/* Sidebar */}
-      <div className={`fixed top-16 right-0 h-screen w-96 bg-white shadow-lg transform transition duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`} id="sidebar">
+      <div className={`absolute top-0 right-0 h-screen w-96 bg-white shadow-lg lg:block ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '120px' }}>
         <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
           <h2 className="font-bold text-lg">Sidebar Heading</h2>
           <button aria-label="Close sidebar" onClick={() => setSidebarOpen(false)}>
