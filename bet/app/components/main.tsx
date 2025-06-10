@@ -102,12 +102,42 @@ const load = async () => {
         </button>
       </div>
       <div className="p-4 mt-12">
-       <div>
-        {games.map((game, index) => (
-        <div key={index}><h3>{game.subtitle}</h3>{game.titleCountry}</div>
-      ))}
-    </div>
+  <div className="grid gap-4">
+    {games.map((game, index) => (
+      <div key={index} className="bg-white rounded-lg shadow-md p-4">
+        <h3 className="text-lg font-bold mb-2">{game.subtitle}</h3>
+        <p className="text-gray-600">{game.titleCountry}</p>
+        <div className="mt-4">
+          {game.events.map((match) => (
+            <div key={match.id} className="flex justify-between items-center mb-2">
+              <div className="flex-1">
+                <p className="text-lg">{match.hometeam}</p>
+              </div>
+              <div className="px-2">VS</div>
+              <div className="flex-1">
+                <p className="text-lg">{match.awayteam}</p>
+              </div>
+              <div className="text-lg">
+                {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
+              </div>
+              <div className="flex justify-end">
+                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                  {match.homeodd}
+                </button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
+                  {match.drawodd}
+                </button>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                  {match.awayodd}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+    ))}
+  </div>
+</div>
       {/* Sidebar */}
       <div className={`absolute top-0 right-0 h-screen w-96 bg-white shadow-lg border-4 rounded-lg border-green-300 lg:block ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '65px' }}>
         <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
