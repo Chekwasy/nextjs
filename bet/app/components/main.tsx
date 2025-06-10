@@ -81,7 +81,7 @@ const load = async () => {
         <div className="relative">
           <button onClick={() => setShowList(!showList)}>{datee}</button>
           {showList && (
-            <ul className="absolute bg-white shadow-lg p-4 w-48">
+            <ul className="absolute bg-white shadow-lg p-4 w-28 text-gray-800">
               {dateelist.map((item) => (
                 <li key={item.date} onClick={() => handleDateSelect(item.date, item.indent)}>
                   {item.date}
