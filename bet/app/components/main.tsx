@@ -35,7 +35,7 @@ export default function Main() {
   const [eg, setEg] = useState([{date: ''}]);
   const [showList, setShowList] = useState(false);
 const load = async () => {
-	axios.get(`api/getgames?date=${dateelist[0].indent}`)
+	axios.get(`api/getgames?date=${dateeIndent}`)
     .then(async (response) => {
       const dd = response.data;
       setGames(dd.games);
