@@ -54,6 +54,7 @@ const load = async () => {
     setDatee(date);
     setDateeIndent(indent);
     setShowList(false);
+      load();
   };
 
   const handleNext = () => {
@@ -61,6 +62,7 @@ const load = async () => {
     if (currentIndex < dateelist.length - 1) {
       setDatee(dateelist[currentIndex + 1].date);
       setDateeIndent(dateelist[currentIndex + 1].indent);
+      load();
     }
   };
 
@@ -69,6 +71,7 @@ const load = async () => {
     if (currentIndex > 0) {
       setDatee(dateelist[currentIndex - 1].date);
       setDateeIndent(dateelist[currentIndex - 1].indent);
+	load();
     }
   };
   return (
