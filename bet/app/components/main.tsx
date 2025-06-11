@@ -138,7 +138,7 @@ const load = async () => {
   </div>
 </div>
       {/* Sidebar */}
-      <div className={`absolute top-0 right-0 h-screen w-96 bg-white shadow-lg border-4 rounded-lg border-green-300`} id="sidebar" style={{ top: '65px' }}>
+      <div className={`absolute top-0 right-0 h-screen w-96 bg-white shadow-lg border-4 rounded-lg border-green-300 ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '65px' }}>
         <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
           <h2 className="font-bold text-lg">Sidebar Heading</h2>
           <button aria-label="Close sidebar" onClick={() => setSidebarOpen(false)}>
@@ -152,7 +152,7 @@ const load = async () => {
         </div>
       </div>
       {/* Overlay */}
-      <div className={`fixed top-16 left-0 h-screen w-screen bg-transparent `} id="overlay" onClick={() => setSidebarOpen(false)}></div>
+      <div className={`fixed top-16 left-0 h-screen w-screen bg-transparent ${sidebarOpen ? 'block' : 'hidden'}`} id="overlay" onClick={() => setSidebarOpen(false)}></div>
     </div>
   );
 }
