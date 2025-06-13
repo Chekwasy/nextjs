@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 export default function Main() {
+  const storeItems = useSelector((state) => state);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [games, setGames] = useState([{
   	id: '',
@@ -49,6 +51,7 @@ const load = async () => {
 };
   useEffect(() => {
     load();
+    console.log(storeItems);
   }, [dateeIndent]);
   const handleDateSelect = (date: string, indent: number) => {
     setDatee(date);
