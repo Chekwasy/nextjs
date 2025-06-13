@@ -70,6 +70,17 @@ const load = async () => {
     setDatee(date);
     setDateeIndent(indent);
     setShowList(false);
+    const aa: { 
+      logged: boolean; 
+      played: number[]; 
+      me: { email: string } 
+    } = { 
+      logged: true, 
+      played: [88, 99], 
+      me: { email: 'hhh' } 
+    };
+    dispatch(mainStateReducer(aa));
+    console.log(storeItems);
   };
 
   const handleNext = () => {
