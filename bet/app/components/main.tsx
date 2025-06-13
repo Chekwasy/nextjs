@@ -7,8 +7,8 @@ import { mainStateReducer } from '@/store/slices/mainslice';
 
 
 export default function Main() {
-  const storeItems = useSelector((state) => state);
   const dispatch = useDispatch();
+  const storeItems = useSelector((state) => state);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [games, setGames] = useState([{
   	id: '',
