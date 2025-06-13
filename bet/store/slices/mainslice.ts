@@ -4,7 +4,11 @@ const mainSlice = createSlice({
     name: "mainState",
     initialState: { logged: false, played: [], me: {} },
     reducers: {
-        mainStateReducer: (state) => state,
+        mainStateReducer: (state, action) => {
+            state.logged = action.payload.logged;
+            state.played = action.payload.played;
+            state.me = action.payload.me;
+        }
     }
 });
 
