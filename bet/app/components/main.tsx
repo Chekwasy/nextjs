@@ -7,22 +7,24 @@ import { mainStateReducer } from '@/store/slices/mainslice';
 
 
 export default function Main() {
+//usedispatch to be able to write to store
   const dispatch = useDispatch();
+//useSelector to extract what is in the store
   const storeItems = useSelector((state) => state);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [games, setGames] = useState([{
-  	id: '',
-  	titleCountry: '',
+	  id: '',
+	  titleCountry: '',
 	  subtitle: '',
-    events: [{
-  	  id: '',
- 			hometeam: '',
- 			awayteam: '',
-  		homeodd: '',
-  		awayodd: '',
- 			drawodd: '',
- 			Esd: '',
-    }]
+	  events: [{
+		  id: '',
+		  hometeam: '',
+		  awayteam: '',
+		  homeodd: '',
+		  awayodd: '',
+		  drawodd: '',
+		  Esd: '',
+	  }]
   }]);
   const [dateelist, setDateelist] = useState([
     { date: '', indent: 0 },
