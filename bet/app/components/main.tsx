@@ -11,6 +11,7 @@ export default function Main() {
   const dispatch = useDispatch();
 //useSelector to extract what is in the store
   const storeItems = useSelector((state) => state);
+//control to sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [games, setGames] = useState([{
 	  id: '',
