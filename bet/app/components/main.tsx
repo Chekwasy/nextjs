@@ -13,6 +13,7 @@ export default function Main() {
   const storeItems = useSelector((state) => state);
 //control to sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
+//state to hold games from api
   const [games, setGames] = useState([{
 	  id: '',
 	  titleCountry: '',
@@ -27,6 +28,7 @@ export default function Main() {
 		  Esd: '',
 	  }]
   }]);
+//state to hold dates from api
   const [dateelist, setDateelist] = useState([
     { date: '', indent: 0 },
     { date: '', indent: 1 },
@@ -37,7 +39,9 @@ export default function Main() {
     { date: '', indent: 6 },
     { date: '', indent: 7 },
   ]);
+//date string
   const [datee, setDatee] = useState(dateelist[0].date);
+//date indent
   const [dateeIndent, setDateeIndent] = useState(0);
   const [eg, setEg] = useState([{date: ''}]);
   const [showList, setShowList] = useState(false);
