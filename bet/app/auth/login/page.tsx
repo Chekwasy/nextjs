@@ -23,26 +23,26 @@ function Page() {
   //Check email correct
   const [cemail, setCemail] = useState(true);
 
-//handle close message popup
-const handleClose = () => {
-    setIsOpen(false);
+  //handle close message popup
+  const handleClose = () => {
+      setIsOpen(false);
+    };
+  //Checks pwd and email characters
+  const checkpwd = (strr : string) => {
+    const len = strr.length;
+    if (len > 50) {
+      return false;
+    }
+    const otherChx = `~!@#%&_{}[].;<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`;
+    for (let i = 0; i < len; i++) {
+      if (!(otherChx.includes(strr[i]))) {
+        return false;
+      }
+    }
+    return true;
   };
-//Checks pwd and email characters
-const checkpwd = (strr : string) => {
-	const len = strr.length;
-	if (len > 50) {
-		return false;
-	}
-	const otherChx = `~!@#%&_{}[].;<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`;
-	for (let i = 0; i < len; i++) {
-		if (!(otherChx.includes(strr[i]))) {
-			return false;
-		}
-	}
-	return true;
-};
 
-//Handle overlay click to close message popup
+  //Handle overlay click to close message popup
   const handleOverlayClick = (e: MouseEvent) => {
     if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
       handleClose();
