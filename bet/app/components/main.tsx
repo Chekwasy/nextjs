@@ -16,7 +16,7 @@ interface StoreState {
       mTime: string;
       hometeam: string;
       awayteam: string;
-      homeodd: string;
+      odd: string;
       selection: string;
       mStatus: string;
       mResult: string;
@@ -39,7 +39,7 @@ export default function Main() {
   //usedispatch to be able to write to store
   const dispatch = useDispatch();
   //useSelector to extract what is in the store
-  const storeItems: StoreState = useSelector((state) => state);
+  const storeItems: StoreState = useSelector((state) => state) as StoreState;
   //control to sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [msg, setMsg] = useState('This for popup message!');
@@ -153,7 +153,7 @@ export default function Main() {
       mTime: string;
       hometeam: string;
       awayteam: string;
-      homeodd: string;
+      odd: string;
       selection: string;
       mStatus: string;
       mResult: string;
@@ -168,18 +168,58 @@ export default function Main() {
       mTime: '',
       hometeam: '',
       awayteam: '',
-      homeodd: '',
+      odd: '',
       selection: '',
       mStatus: '',
       mResult: '',
       mOutcome: '',
       mScore: '',
     };
-    let spyd = storeItems.played;
-    spyd.push(pyd);
-    dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+    const spyd = storeItems.played;
+    const index = spyd.findIndex((item) => item.id === m.id);
+    if (index !== -1) {
+      //handles when there is a match
+      spyd.splice(index, 1);
+      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      axios.post('/api/postsavedgames', {
+        savedGames: spyd,
+      })
+      .then(async (response) => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+    } else {
+      // Handle the case when no match is found
+      pyd.id = m.id;
+      pyd.gId = gID;
+      pyd.gSubtitle = gS;
+      pyd.gTCountry = gT;
+      pyd.hometeam = m.hometeam;
+      pyd.awayteam = m.awayteam;
+      pyd.odd = m.homeodd;
+      pyd.mktT = '1x2';
+      pyd.mTime = m.Esd;
+      pyd.selection = 'Home';
+      pyd.mStatus = 'Not Started';
+      pyd.mResult = 'NR';
+      pyd.mOutcome = 'Pending';
+      pyd.mScore = '- : -';
+      spyd.push(pyd);
+      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      axios.post('/api/postsavedgames', {
+        savedGames: spyd,
+      })
+      .then(async (response) => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+    }
   };
-  //handle home odd selection
+  //handle draw odd selection
   const handleDos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
     const pyd: {
       id: string;
@@ -190,7 +230,7 @@ export default function Main() {
       mTime: string;
       hometeam: string;
       awayteam: string;
-      homeodd: string;
+      odd: string;
       selection: string;
       mStatus: string;
       mResult: string;
@@ -205,13 +245,56 @@ export default function Main() {
       mTime: '',
       hometeam: '',
       awayteam: '',
-      homeodd: '',
+      odd: '',
       selection: '',
       mStatus: '',
       mResult: '',
       mOutcome: '',
       mScore: '',
     };
+    const spyd = storeItems.played;
+    const index = spyd.findIndex((item) => item.id === m.id);
+    if (index !== -1) {
+      //handles when there is a match
+      spyd.splice(index, 1);
+      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      axios.post('/api/postsavedgames', {
+        savedGames: spyd,
+      })
+      .then(async (response) => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+    } else {
+      // Handle the case when no match is found
+      pyd.id = m.id;
+      pyd.gId = gID;
+      pyd.gSubtitle = gS;
+      pyd.gTCountry = gT;
+      pyd.hometeam = m.hometeam;
+      pyd.awayteam = m.awayteam;
+      pyd.odd = m.drawodd;
+      pyd.mktT = '1x2';
+      pyd.mTime = m.Esd;
+      pyd.selection = 'Draw';
+      pyd.mStatus = 'Not Started';
+      pyd.mResult = 'NR';
+      pyd.mOutcome = 'Pending';
+      pyd.mScore = '- : -';
+      spyd.push(pyd);
+      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      axios.post('/api/postsavedgames', {
+        savedGames: spyd,
+      })
+      .then(async (response) => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+    }
   };
   //handle home odd selection
   const handleAos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
@@ -224,7 +307,7 @@ export default function Main() {
       mTime: string;
       hometeam: string;
       awayteam: string;
-      homeodd: string;
+      odd: string;
       selection: string;
       mStatus: string;
       mResult: string;
@@ -239,13 +322,56 @@ export default function Main() {
       mTime: '',
       hometeam: '',
       awayteam: '',
-      homeodd: '',
+      odd: '',
       selection: '',
       mStatus: '',
       mResult: '',
       mOutcome: '',
       mScore: '',
     };
+    const spyd = storeItems.played;
+    const index = spyd.findIndex((item) => item.id === m.id);
+    if (index !== -1) {
+      //handles when there is a match
+      spyd.splice(index, 1);
+      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      axios.post('/api/postsavedgames', {
+        savedGames: spyd,
+      })
+      .then(async (response) => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+    } else {
+      // Handle the case when no match is found
+      pyd.id = m.id;
+      pyd.gId = gID;
+      pyd.gSubtitle = gS;
+      pyd.gTCountry = gT;
+      pyd.hometeam = m.hometeam;
+      pyd.awayteam = m.awayteam;
+      pyd.odd = m.awayodd;
+      pyd.mktT = '1x2';
+      pyd.mTime = m.Esd;
+      pyd.selection = 'Away';
+      pyd.mStatus = 'Not Started';
+      pyd.mResult = 'NR';
+      pyd.mOutcome = 'Pending';
+      pyd.mScore = '- : -';
+      spyd.push(pyd);
+      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      axios.post('/api/postsavedgames', {
+        savedGames: spyd,
+      })
+      .then(async (response) => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+    }
   };
   return (
     <div className="relative bg-white rounded-b-lg border-4 border-green-300 mt-16 lg:border-2 lg:w-4/5 mx-auto">

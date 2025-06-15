@@ -11,7 +11,7 @@ interface StoreState {
       mTime: string;
       hometeam: string;
       awayteam: string;
-      homeodd: string;
+      odd: string;
       selection: string;
       mStatus: string;
       mResult: string;
