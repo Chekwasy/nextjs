@@ -173,6 +173,8 @@ export default function Main() {
       //handles when there is a match
       spyd.splice(index, 1);
       dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+setMsg(JSON.stringify(storeItems));
+setIsOpen(true);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -184,7 +186,7 @@ export default function Main() {
       });
     } else {
       // Handle the case when no match is found
-      pyd.id = m.id;
+      pyd.id = m.hometeam + 'home';
       pyd.gId = gID;
       pyd.gSubtitle = gS;
       pyd.gTCountry = gT;
@@ -200,6 +202,8 @@ export default function Main() {
       pyd.mScore = '- : -';
       spyd.push(pyd);
       dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+	setMsg(JSON.stringify(storeItems));
+setIsOpen(true);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -265,7 +269,7 @@ export default function Main() {
       });
     } else {
       // Handle the case when no match is found
-      pyd.id = m.id;
+      pyd.id = m.hometeam + 'draw';
       pyd.gId = gID;
       pyd.gSubtitle = gS;
       pyd.gTCountry = gT;
@@ -346,7 +350,7 @@ const pyd: {
       });
     } else {
       // Handle the case when no match is found
-      pyd.id = m.id;
+      pyd.id = m.hometeam + 'away';
       pyd.gId = gID;
       pyd.gSubtitle = gS;
       pyd.gTCountry = gT;
