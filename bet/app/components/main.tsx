@@ -136,8 +136,6 @@ export default function Main() {
       ...prevStates,
       [m.hometeam + 'home']: !prevStates[m.hometeam + 'home'],
     }));
-setMsg(JSON.stringify(buttonStates));
-setIsOpen(true);
     const pyd: {
       id: string;
       gId: string;
@@ -219,8 +217,6 @@ setIsOpen(true);
       ...prevStates,
       [m.hometeam + 'draw']: !prevStates[m.hometeam + 'draw'],
     }));
-setMsg(JSON.stringify(buttonStates));
-setIsOpen(true);
     const pyd: {
       id: string;
       gId: string;
@@ -302,8 +298,6 @@ setIsOpen(true);
       ...prevStates,
       [m.hometeam + 'away']: !prevStates[m.hometeam + 'away'],
     }));
-setMsg(JSON.stringify(buttonStates));
-setIsOpen(true);
 const pyd: {
       id: string;
       gId: string;
@@ -453,7 +447,7 @@ const pyd: {
             </svg>
           </button>
         </div>
-        <div className="p-4 mt-12">
+        <div className="p-4 text-gray-700 mt-12">
           {storeItems.played && storeItems.played.map((item) => (
             <div key={item.id} className="bg-white shadow-md rounded-lg p-4">
               <div className='flex justify-between'>
