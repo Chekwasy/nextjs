@@ -167,7 +167,7 @@ export default function Main() {
       mOutcome: '',
       mScore: '',
     };
-    const spyd = storeItems.mainSlice.played;
+    const spyd = [...storeItems.mainSlice.played];
     const index = spyd.findIndex((item) => item.id === m.id);
     if (index !== -1) {
       //handles when there is a match
@@ -248,7 +248,7 @@ export default function Main() {
       mOutcome: '',
       mScore: '',
     };
-    const spyd = storeItems.mainSlice.played;
+    const spyd = [...storeItems.mainSlice.played];
     const index = spyd.findIndex((item) => item.id === m.id);
     if (index !== -1) {
       //handles when there is a match
@@ -329,7 +329,7 @@ const pyd: {
       mOutcome: '',
       mScore: '',
     };
-    const spyd = storeItems.mainSlice.played;
+    const spyd = [...storeItems.mainSlice.played];
     const index = spyd.findIndex((item) => item.id === m.id);
     if (index !== -1) {
       //handles when there is a match
