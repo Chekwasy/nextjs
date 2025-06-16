@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
 
-interface StoreState {
+interface StoreState { mainSlice: {
   logged: boolean;
   played: {
     id: string;
@@ -32,14 +32,14 @@ interface StoreState {
     accbal: string;
     currency: string;
   }
-}
+}}
 
 
 export default function Main() {
   //usedispatch to be able to write to store
   const dispatch = useDispatch();
   //useSelector to extract what is in the store
-  const storeItems: StoreState = useSelector((state) => state).mainSlice as StoreState;
+  const storeItems: StoreState = useSelector((state) => state) as StoreState;
   //control to sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [msg, setMsg] = useState('This for popup message!');
@@ -167,12 +167,12 @@ export default function Main() {
       mOutcome: '',
       mScore: '',
     };
-    const spyd = storeItems.played;
+    const spyd = storeItems.mainSlice.played;
     const index = spyd.findIndex((item) => item.id === m.id);
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -199,7 +199,7 @@ export default function Main() {
       pyd.mOutcome = 'Pending';
       pyd.mScore = '- : -';
       spyd.push(pyd);
-      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -248,12 +248,12 @@ export default function Main() {
       mOutcome: '',
       mScore: '',
     };
-    const spyd = storeItems.played;
+    const spyd = storeItems.mainSlice.played;
     const index = spyd.findIndex((item) => item.id === m.id);
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -280,7 +280,7 @@ export default function Main() {
       pyd.mOutcome = 'Pending';
       pyd.mScore = '- : -';
       spyd.push(pyd);
-      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -329,12 +329,12 @@ const pyd: {
       mOutcome: '',
       mScore: '',
     };
-    const spyd = storeItems.played;
+    const spyd = storeItems.mainSlice.played;
     const index = spyd.findIndex((item) => item.id === m.id);
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -361,7 +361,7 @@ const pyd: {
       pyd.mOutcome = 'Pending';
       pyd.mScore = '- : -';
       spyd.push(pyd);
-      dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -448,7 +448,7 @@ const pyd: {
           </button>
         </div>
         <div className="p-4 text-gray-700 mt-12">
-          {storeItems.played && storeItems.played.map((item) => (
+          {storeItems.mainSlice.played && storeItems.mainSlice.played.map((item) => (
             <div key={item.id} className="bg-white shadow-md rounded-lg p-4">
               <div className='flex justify-between'>
                 <h4 className='w-1/2'>{item.gSubtitle}</h4>
