@@ -131,10 +131,10 @@ export default function Main() {
     }
   };
   //handle home odd selection
-  const handleHos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
+  const handleHos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string, idx: string) => {
     setButtonStates((prevStates) => ({
       ...prevStates,
-      [m.id + 'home']: !prevStates[m.id + 'home'],
+      [idx + 'home']: !prevStates[idx + 'home'],
     }));
 setMsg(JSON.stringify(buttonStates));
 setIsOpen(true);
@@ -214,10 +214,10 @@ setIsOpen(true);
     }
   };
   //handle draw odd selection
-  const handleDos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
+  const handleDos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string, idx: string) => {
     setButtonStates((prevStates) => ({
       ...prevStates,
-      [m.id + 'draw']: !prevStates[m.id + 'draw'],
+      [idx + 'draw']: !prevStates[idx + 'draw'],
     }));
 setMsg(JSON.stringify(buttonStates));
 setIsOpen(true);
@@ -297,10 +297,10 @@ setIsOpen(true);
     }
   };
   //handle home odd selection
-  const handleAos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
+  const handleAos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string, idx: string) => {
     setButtonStates((prevStates) => ({
       ...prevStates,
-      [m.id + 'away']: !prevStates[m.id + 'away'],
+      [idx + 'away']: !prevStates[idx + 'away'],
     }));
 setMsg(JSON.stringify(buttonStates));
 setIsOpen(true);
@@ -414,8 +414,8 @@ const pyd: {
               <h3 className="text-lg font-bold mb-2">{game.subtitle}</h3>
               <p className="text-gray-600">{game.titleCountry}</p>
               <div className="mt-4">
-                {game.events.map((match) => (
-                  <div key={match.id} className="flex flex-col items-center mb-4 border-b border-gray-200 pb-4">
+                {game.events.map((match, idx) => (
+                  <div key={idx} className="flex flex-col items-center mb-4 border-b border-gray-200 pb-4">
                     <div className="flex justify-between w-full">
                       <div className="w-1/2 flex flex-col items-center">
                         <div className="text-lg text-center">{match.hometeam}</div>
@@ -425,13 +425,13 @@ const pyd: {
                         {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
                       </div>
                       <div className="w-2/5 flex justify-around">
-                        <button onClick={() => handleHos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.id + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleHos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.homeodd}
                         </button>
-                        <button onClick={() => handleDos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.id + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleDos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.drawodd}
                         </button>
-                        <button onClick={() => handleAos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.id + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleAos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx.id + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.awayodd}
                         </button>
                       </div>
@@ -474,7 +474,7 @@ const pyd: {
       <div className={`fixed top-16 left-0 h-screen w-screen bg-transparent ${sidebarOpen ? 'block' : 'hidden'}`} id="overlay" onClick={() => setSidebarOpen(false)}></div>
       {isOpen && (
         <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
-          <div className="popup-content bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
+          <div className="popup-content bg-gray-200 rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
             <div className="flex justify-end">
               <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
