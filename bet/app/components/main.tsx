@@ -130,11 +130,11 @@ export default function Main() {
       setDateeIndent(dateelist[currentIndex - 1].indent);
     }
   };
-  //handle home odd selection
-  const handleHos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
+  //handle home draw and away odd selection
+  const handleHDA = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, sel: string, odd: string, gID: string, gS: string, gT: string) => {
     setButtonStates((prevStates) => ({
       ...prevStates,
-      [m.hometeam + 'home']: !prevStates[m.hometeam + 'home'],
+      [m.hometeam + sel]: !prevStates[m.hometeam + sel],
     }));
     const pyd: {
       id: string;
@@ -184,16 +184,16 @@ export default function Main() {
       });
     } else {
       // Handle the case when no match is found
-      pyd.id = m.hometeam + 'home';
+      pyd.id = m.hometeam + sel;
       pyd.gId = gID;
       pyd.gSubtitle = gS;
       pyd.gTCountry = gT;
       pyd.hometeam = m.hometeam;
       pyd.awayteam = m.awayteam;
-      pyd.odd = m.homeodd;
+      pyd.odd = odd;
       pyd.mktT = '1x2';
       pyd.mTime = m.Esd;
-      pyd.selection = 'Home';
+      pyd.selection = sel;
       pyd.mStatus = 'Not Started';
       pyd.mResult = 'NR';
       pyd.mOutcome = 'Pending';
@@ -211,156 +211,32 @@ export default function Main() {
       });
     }
   };
-  //handle draw odd selection
-  const handleDos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
+  //handle remove played from sidebar
+  const handleHDAR = (itm: {
+    id: string;
+    gId: string;
+    gSubtitle: string;
+    gTCountry: string;
+    mktT: string;
+    mTime: string;
+    hometeam: string;
+    awayteam: string;
+    odd: string;
+    selection: string;
+    mStatus: string;
+    mResult: string;
+    mOutcome: string;
+    mScore: string;
+  }) => {
     setButtonStates((prevStates) => ({
       ...prevStates,
-      [m.hometeam + 'draw']: !prevStates[m.hometeam + 'draw'],
+      [itm.id]: !prevStates[itm.id],
     }));
-    const pyd: {
-      id: string;
-      gId: string;
-      gSubtitle: string;
-      gTCountry: string;
-      mktT: string;
-      mTime: string;
-      hometeam: string;
-      awayteam: string;
-      odd: string;
-      selection: string;
-      mStatus: string;
-      mResult: string;
-      mOutcome: string;
-      mScore: string;
-    } = {
-      id: '',
-      gId: '',
-      gSubtitle: '',
-      gTCountry: '',
-      mktT: '',
-      mTime: '',
-      hometeam: '',
-      awayteam: '',
-      odd: '',
-      selection: '',
-      mStatus: '',
-      mResult: '',
-      mOutcome: '',
-      mScore: '',
-    };
     const spyd = [...storeItems.mainSlice.played];
-    const index = spyd.findIndex((item) => item.id === m.id);
+    const index = spyd.findIndex((item) => item.id === itm.id);
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-      axios.post('/api/postsavedgames', {
-        savedGames: spyd,
-      })
-      .then(async (response) => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
-    } else {
-      // Handle the case when no match is found
-      pyd.id = m.hometeam + 'draw';
-      pyd.gId = gID;
-      pyd.gSubtitle = gS;
-      pyd.gTCountry = gT;
-      pyd.hometeam = m.hometeam;
-      pyd.awayteam = m.awayteam;
-      pyd.odd = m.drawodd;
-      pyd.mktT = '1x2';
-      pyd.mTime = m.Esd;
-      pyd.selection = 'Draw';
-      pyd.mStatus = 'Not Started';
-      pyd.mResult = 'NR';
-      pyd.mOutcome = 'Pending';
-      pyd.mScore = '- : -';
-      spyd.push(pyd);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-      axios.post('/api/postsavedgames', {
-        savedGames: spyd,
-      })
-      .then(async (response) => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
-    }
-  };
-  //handle home odd selection
-  const handleAos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
-    setButtonStates((prevStates) => ({
-      ...prevStates,
-      [m.hometeam + 'away']: !prevStates[m.hometeam + 'away'],
-    }));
-const pyd: {
-      id: string;
-      gId: string;
-      gSubtitle: string;
-      gTCountry: string;
-      mktT: string;
-      mTime: string;
-      hometeam: string;
-      awayteam: string;
-      odd: string;
-      selection: string;
-      mStatus: string;
-      mResult: string;
-      mOutcome: string;
-      mScore: string;
-    } = {
-      id: '',
-      gId: '',
-      gSubtitle: '',
-      gTCountry: '',
-      mktT: '',
-      mTime: '',
-      hometeam: '',
-      awayteam: '',
-      odd: '',
-      selection: '',
-      mStatus: '',
-      mResult: '',
-      mOutcome: '',
-      mScore: '',
-    };
-    const spyd = [...storeItems.mainSlice.played];
-    const index = spyd.findIndex((item) => item.id === m.id);
-    if (index !== -1) {
-      //handles when there is a match
-      spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-      axios.post('/api/postsavedgames', {
-        savedGames: spyd,
-      })
-      .then(async (response) => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
-    } else {
-      // Handle the case when no match is found
-      pyd.id = m.hometeam + 'away';
-      pyd.gId = gID;
-      pyd.gSubtitle = gS;
-      pyd.gTCountry = gT;
-      pyd.hometeam = m.hometeam;
-      pyd.awayteam = m.awayteam;
-      pyd.odd = m.awayodd;
-      pyd.mktT = '1x2';
-      pyd.mTime = m.Esd;
-      pyd.selection = 'Away';
-      pyd.mStatus = 'Not Started';
-      pyd.mResult = 'NR';
-      pyd.mOutcome = 'Pending';
-      pyd.mScore = '- : -';
-      spyd.push(pyd);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
@@ -399,6 +275,7 @@ const pyd: {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
+          <div>{storeItems.mainSlice.played.length === 0 ? '' : storeItems.mainSlice.played.length}</div>
         </button>
       </div>
       <div className="p-4 mt-12">
@@ -419,13 +296,13 @@ const pyd: {
                         {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
                       </div>
                       <div className="w-2/5 flex justify-around">
-                        <button onClick={() => handleHos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.homeodd}
                         </button>
-                        <button onClick={() => handleDos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.drawodd}
                         </button>
-                        <button onClick={() => handleAos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.awayodd}
                         </button>
                       </div>
@@ -451,8 +328,13 @@ const pyd: {
           {storeItems.mainSlice.played && storeItems.mainSlice.played.map((item) => (
             <div key={item.id} className="bg-white shadow-md rounded-lg p-4">
               <div className='flex justify-between'>
-                <h4 className='w-1/2'>{item.gSubtitle}</h4>
-                <h4 className='w-1/2'>{item.mktT}</h4>
+                <h4 className='w-1/3'>{item.gSubtitle}</h4>
+                <h4 className='w-1/3'>{item.mktT}</h4>
+                <div className='flex items-center w-1/3'><Image onClick={() => handleHDAR(item)} src="/icons/close.svg"
+                  alt="Close"
+                  width={30}
+                  height={30}
+                /></div>
               </div>
               <h3 className="font-bold text-lg">{item.hometeam} vs {item.awayteam}</h3>
               <div className='flex justify-between'>
