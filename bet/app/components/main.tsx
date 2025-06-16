@@ -448,7 +448,7 @@ export default function Main() {
           </button>
         </div>
         <div className="p-4 mt-12">
-          {storeItems.played.map((item) => (
+          {storeItems.played && storeItems.played.map((item) => (
             <div key={item.id} className="bg-white shadow-md rounded-lg p-4">
               <div className='flex justify-between'>
                 <h4 className='w-1/2'>{item.gSubtitle}</h4>
