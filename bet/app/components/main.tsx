@@ -45,6 +45,7 @@ export default function Main() {
   const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
+  const [buttonStates, setButtonStates] = useState<Record<string, boolean>>({});
   //state to hold games from api
   const [games, setGames] = useState([{
 	  id: '',
@@ -75,7 +76,6 @@ export default function Main() {
   const [datee, setDatee] = useState(dateelist[0].date);
   //date indent
   const [dateeIndent, setDateeIndent] = useState(0);
-  const [eg, setEg] = useState([{date: ''}]);
   //show list of dates
   const [showList, setShowList] = useState(false);
   //load the games data from backend
@@ -84,7 +84,6 @@ export default function Main() {
     .then(async (response) => {
       const dd = response.data;
       setGames(dd.games);
-      setEg(dd.datee);
 	    setDateelist(dd.datee);
 	    setDatee(dd.datee[dateeIndent].date)
     })
@@ -114,17 +113,6 @@ export default function Main() {
     setDatee(date);
     setDateeIndent(indent);
     setShowList(false);
-    const aa: { 
-      logged: boolean; 
-      played: number[]; 
-      me: { email: string } 
-    } = { 
-      logged: true, 
-      played: [88, 99], 
-      me: { email: 'hhh' } 
-    };
-    dispatch(mainStateReducer(aa));
-    console.log(storeItems);
   };
   //handles next date
   const handleNext = () => {
@@ -144,6 +132,10 @@ export default function Main() {
   };
   //handle home odd selection
   const handleHos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
+    setButtonStates((prevStates) => ({
+      ...prevStates,
+      [m.id + 'home']: !prevStates[m.id + 'home'],
+    }));
     const pyd: {
       id: string;
       gId: string;
@@ -221,6 +213,10 @@ export default function Main() {
   };
   //handle draw odd selection
   const handleDos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
+    setButtonStates((prevStates) => ({
+      ...prevStates,
+      [m.id + 'draw']: !prevStates[m.id + 'draw'],
+    }));
     const pyd: {
       id: string;
       gId: string;
@@ -298,6 +294,10 @@ export default function Main() {
   };
   //handle home odd selection
   const handleAos = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, gID: string, gS: string, gT: string) => {
+    setButtonStates((prevStates) => ({
+      ...prevStates,
+      [m.id + 'away']: !prevStates[m.id + 'away'],
+    }));
     const pyd: {
       id: string;
       gId: string;
@@ -419,13 +419,13 @@ export default function Main() {
                         {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
                       </div>
                       <div className="w-2/5 flex justify-around">
-                        <button onClick={() => handleHos(match, game.id, game.titleCountry, game.subtitle)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        <button onClick={() => handleHos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.id + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.homeodd}
                         </button>
-                        <button onClick={() => handleDos(match, game.id, game.titleCountry, game.subtitle)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <button onClick={() => handleDos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.id + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.drawodd}
                         </button>
-                        <button onClick={() => handleAos(match, game.id, game.titleCountry, game.subtitle)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        <button onClick={() => handleAos(match, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.id + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.awayodd}
                         </button>
                       </div>
@@ -448,7 +448,20 @@ export default function Main() {
           </button>
         </div>
         <div className="p-4 mt-12">
-          {eg[0].date}
+          {storeItems.played.map((item) => (
+            <div key={item.id} className="bg-white shadow-md rounded-lg p-4">
+              <div className='flex justify-between'>
+                <h4 className='w-1/2'>{item.gSubtitle}</h4>
+                <h4 className='w-1/2'>{item.mktT}</h4>
+              </div>
+              <h3 className="font-bold text-lg">{item.hometeam} vs {item.awayteam}</h3>
+              <div className='flex justify-between'>
+                <p className='w-1/3'>{item.mTime}</p>
+                <p className='w-1/3'>{item.selection}</p>
+                <h4 className='w-1/3 font-bold'>{item.odd}</h4>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       {/* Overlay */}
