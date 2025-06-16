@@ -136,6 +136,8 @@ export default function Main() {
       ...prevStates,
       [m.id + 'home']: !prevStates[m.id + 'home'],
     }));
+setMsg(JSON.stringify(ButtonStates));
+setIsOpen(true);
     const pyd: {
       id: string;
       gId: string;
@@ -217,6 +219,8 @@ export default function Main() {
       ...prevStates,
       [m.id + 'draw']: !prevStates[m.id + 'draw'],
     }));
+setMsg(JSON.stringify(ButtonStates));
+setIsOpen(true);
     const pyd: {
       id: string;
       gId: string;
@@ -298,7 +302,9 @@ export default function Main() {
       ...prevStates,
       [m.id + 'away']: !prevStates[m.id + 'away'],
     }));
-    const pyd: {
+setMsg(JSON.stringify(ButtonStates));
+setIsOpen(true);
+const pyd: {
       id: string;
       gId: string;
       gSubtitle: string;
