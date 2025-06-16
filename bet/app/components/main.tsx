@@ -425,13 +425,13 @@ const pyd: {
                         {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
                       </div>
                       <div className="w-2/5 flex justify-around">
-                        <button onClick={() => handleHos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleHos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx.toString() + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.homeodd}
                         </button>
-                        <button onClick={() => handleDos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleDos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx.toString() + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.drawodd}
                         </button>
-                        <button onClick={() => handleAos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx.id + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleAos(match, game.id, game.titleCountry, game.subtitle, idx.toString())} className={`${buttonStates[idx.toString() + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.awayodd}
                         </button>
                       </div>
