@@ -136,7 +136,7 @@ export default function Main() {
       ...prevStates,
       [m.id + 'home']: !prevStates[m.id + 'home'],
     }));
-setMsg(JSON.stringify(ButtonStates));
+setMsg(JSON.stringify(buttonStates));
 setIsOpen(true);
     const pyd: {
       id: string;
@@ -219,7 +219,7 @@ setIsOpen(true);
       ...prevStates,
       [m.id + 'draw']: !prevStates[m.id + 'draw'],
     }));
-setMsg(JSON.stringify(ButtonStates));
+setMsg(JSON.stringify(buttonStates));
 setIsOpen(true);
     const pyd: {
       id: string;
@@ -302,7 +302,7 @@ setIsOpen(true);
       ...prevStates,
       [m.id + 'away']: !prevStates[m.id + 'away'],
     }));
-setMsg(JSON.stringify(ButtonStates));
+setMsg(JSON.stringify(buttonStates));
 setIsOpen(true);
 const pyd: {
       id: string;
