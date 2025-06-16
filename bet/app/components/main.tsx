@@ -168,6 +168,8 @@ export default function Main() {
       mScore: '',
     };
     const spyd = storeItems.played;
+	setMsg(JSON.stringify(spyd));
+setIsOpen(true);
     const index = spyd.findIndex((item) => item.id === m.id);
     if (index !== -1) {
       //handles when there is a match
