@@ -39,7 +39,7 @@ export default function Main() {
   //usedispatch to be able to write to store
   const dispatch = useDispatch();
   //useSelector to extract what is in the store
-  const storeItems: StoreState = useSelector((state) => state) as StoreState;
+  const storeItems: StoreState = useSelector((state) => state).mainSlice as StoreState;
   //control to sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [msg, setMsg] = useState('This for popup message!');
@@ -168,15 +168,11 @@ export default function Main() {
       mScore: '',
     };
     const spyd = storeItems.played;
-	setMsg(JSON.stringify(storeItems));
-setIsOpen(true);
     const index = spyd.findIndex((item) => item.id === m.id);
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
       dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
-setMsg(JSON.stringify(storeItems));
-setIsOpen(true);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -204,8 +200,6 @@ setIsOpen(true);
       pyd.mScore = '- : -';
       spyd.push(pyd);
       dispatch(mainStateReducer({logged: storeItems.logged, played: spyd, me: storeItems.me}));
-	setMsg(JSON.stringify(storeItems));
-setIsOpen(true);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
