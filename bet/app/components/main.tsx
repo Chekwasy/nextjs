@@ -168,7 +168,9 @@ export default function Main() {
       mScore: '',
     };
     const spyd = [...storeItems.mainSlice.played];
-    const index = spyd.findIndex((item) => item.id === m.id);
+setMsg(`${JSON.stringify(spyd)}uuuu`);
+setIsOpen(true);
+    const index = spyd.findIndex((item) => item.id === m.hometeam + sel);
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
