@@ -168,15 +168,11 @@ export default function Main() {
       mScore: '',
     };
     const spyd = [...storeItems.mainSlice.played];
-setMsg(`${JSON.stringify(spyd)}uuuu`);
-setIsOpen(true);
     const index = spyd.findIndex((item) => item.id === m.hometeam + sel);
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	    setMsg(`${JSON.stringify(storeItems.mainSlice.played.map(obj => obj.id))}, gggg`);
-setIsOpen(true);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -204,8 +200,6 @@ setIsOpen(true);
       pyd.mScore = '- : -';
       spyd.push(pyd);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	    setMsg(JSON.stringify(storeItems.mainSlice.played.map(obj => obj.id)));
-setIsOpen(true);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
