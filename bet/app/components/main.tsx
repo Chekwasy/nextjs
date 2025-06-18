@@ -131,7 +131,7 @@ export default function Main() {
     }
   };
   //handle home draw and away odd selection
-  const handleHDA = (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, sel: string, odd: string, gID: string, gS: string, gT: string) => {
+  const handleHDA = async (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, sel: string, odd: string, gID: string, gS: string, gT: string) => {
     setButtonStates((prevStates) => ({
       ...prevStates,
       [m.hometeam + sel]: !prevStates[m.hometeam + sel],
@@ -174,7 +174,7 @@ export default function Main() {
       spyd.splice(index, 1);
 	    setMsg(`${JSON.stringify(storeItems.mainSlice.played.map(obj => obj.id))}, gggg`);
 setIsOpen(true);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+      await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -203,7 +203,7 @@ setIsOpen(true);
       spyd.push(pyd);
 	setMsg(JSON.stringify(storeItems.mainSlice.played.map(obj => obj.id)));
 setIsOpen(true);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+      await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
