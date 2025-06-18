@@ -346,8 +346,6 @@ export default function Main() {
           ))}
         </div>
       </div>
-      {/* Overlay */}
-      <div className={`fixed top-16 left-0 h-screen w-screen bg-transparent ${sidebarOpen ? 'block' : 'hidden'}`} id="overlay" onClick={() => setSidebarOpen(false)}></div>
       {isOpen && (
         <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
           <div className="popup-content bg-gray-200 rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
