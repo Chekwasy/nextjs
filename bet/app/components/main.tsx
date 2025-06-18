@@ -172,9 +172,9 @@ export default function Main() {
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
+      await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
 	    setMsg(`${JSON.stringify(storeItems.mainSlice.played.map(obj => obj.id))}, gggg`);
 setIsOpen(true);
-      await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -201,9 +201,9 @@ setIsOpen(true);
       pyd.mOutcome = 'Pending';
       pyd.mScore = '- : -';
       spyd.push(pyd);
-	setMsg(JSON.stringify(storeItems.mainSlice.played.map(obj => obj.id)));
-setIsOpen(true);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	    setMsg(JSON.stringify(storeItems.mainSlice.played.map(obj => obj.id)));
+setIsOpen(true);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
