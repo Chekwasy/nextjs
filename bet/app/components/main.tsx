@@ -272,7 +272,7 @@ export default function Main() {
           </div>
         </div>
         <button aria-label="Open sidebar" onClick={() => setSidebarOpen(!sidebarOpen)} className="flex flex-row items-center">
-          <div className="rounded-full w-4 h-4 mt-0 mb-0 bg-red-700 text-white">{storeItems.mainSlice.played.length === 0 ? '' : storeItems.mainSlice.played.length}</div>
+		{storeItems.mainSlice.played.length > 0 && (<div className="rounded-full w-5 h-5 text-sm mt-0 mb-0 bg-red-700 text-white">{storeItems.mainSlice.played.length === 0 ? '' : storeItems.mainSlice.played.length}</div>)}
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
