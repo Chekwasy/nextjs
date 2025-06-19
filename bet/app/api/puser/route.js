@@ -14,7 +14,7 @@ export async function GET(request) {
 	    const user = await dbClient.client.db().collection('users')
     	.findOne({ "userID": usr_id });
 	    if (!user) { return  NextResponse.json('error', {status: 401});}
-        return  NextResponse.json({email: user.email}, {status: 201});
+        return  NextResponse.json({email: user.email, message: "Signup Successful"}, {status: 201});
     } catch {
         return  NextResponse.json('error', {status: 400});
     }
