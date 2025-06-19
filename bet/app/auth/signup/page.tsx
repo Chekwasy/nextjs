@@ -126,7 +126,7 @@ function Page() {
         lastname: lastname,
       })
       .then(async (response) => {
-        setMsg(response.data);
+        setMsg(response.data.message);
         setIsOpen(true);
       })
       .catch(error => {
