@@ -345,7 +345,7 @@ export default function Main() {
             </div>
           ))}
         </div>
-	<div className="w-55px grid grid-cols-4 gap-1">
+	<div className="w-55px mx-auto items-center grid grid-cols-4 gap-1">
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">1</button>
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">2</button>
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">3</button>
