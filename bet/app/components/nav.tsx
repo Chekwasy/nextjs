@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, ChangeEvent, MouseEvent } from 'react';
+import { useState, useEffect, ChangeEvent, MouseEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
