@@ -315,7 +315,7 @@ export default function Main() {
         </div>
       </div>
       {/* Sidebar */}
-      <div className={`absolute items-center top-0 right-0 min-h-screen w-96 bg-white shadow-lg border-4 rounded-lg border-green-300 ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '65px' }}>
+      <div className={`absolute items-center top-0 right-0 min-h-screen w-100 bg-white shadow-lg border-4 rounded-lg border-green-300 ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '65px' }}>
         <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
           <h2 className="font-bold text-lg">Bookings</h2>
           <button aria-label="Close sidebar" onClick={() => setSidebarOpen(false)}>
@@ -345,7 +345,7 @@ export default function Main() {
             </div>
           ))}
         </div>
-	<div className="w-55px mx-auto items-center grid grid-cols-4 gap-1">
+	<div className=" mx-auto items-center grid grid-cols-4 gap-1">
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">1</button>
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">2</button>
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">3</button>
