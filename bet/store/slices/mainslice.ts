@@ -19,7 +19,7 @@ interface StoreState {
       mScore: string;
   }[];
   me: {
-    uID: string;
+    userID: string;
     fname: string;
     lname: string;
     email: string;
