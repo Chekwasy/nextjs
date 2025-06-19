@@ -346,26 +346,23 @@ export default function Main() {
           ))}
         </div>
 	<div className="w-55px grid grid-cols-5 gap-1">
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">1</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">2</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">3</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">4</button>
-  <button className="h-5 w-10 bg-red-500 text-white hover:bg-red-700 rounded">Clear</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">5</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">6</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">7</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">8</button>
-  <button className="h-10 w-20 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded">Done</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">9</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">0</button>
-  <button className="h-5 w-10 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">.</button>
-  <button className="h-5 w-10 bg-red-500 text-white hover:bg-red-700 rounded">Del</button>
-  <button className="h-10 w-20 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded">Done</button>
-  <button className="h-5 w-10 bg-green-500 text-white hover:bg-green-700 rounded">10</button>
-  <button className="h-5 w-10 bg-green-500 text-white hover:bg-green-700 rounded">100</button>
-  <button className="h-5 w-10 bg-green-500 text-white hover:bg-green-700 rounded">500</button>
-  <button className="h-5 w-10 bg-green-500 text-white hover:bg-green-700 rounded">1000</button>
-  <button className="h-10 w-20 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded">Done</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">1</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">2</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">3</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">4</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">5</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">6</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">7</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">8</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">9</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">.</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">0</button>
+  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded">Del</button>
+  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded">10</button>
+  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded">100</button>
+  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded">1000</button>
+  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded">Clear</button>
+  <button className="h-10 w-40 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded">Done</button>
 </div>
       </div>
       {isOpen && (
