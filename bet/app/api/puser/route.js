@@ -41,10 +41,3 @@ export async function POST(request) {
         return NextResponse.json('error', {status: 401});
     }
 };
-userID: string;
-    fname: string;
-    lname: string;
-    email: string;
-    mobile: string;
-    accbal: string;
-    currency: string;
