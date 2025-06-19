@@ -33,7 +33,7 @@ export async function POST(request) {
 		return NextResponse.json('user exists', {status: 404});
 	}
 	const result = await (await dbClient.client.db().collection('users'))
-	.insertOne({userID: userID, email: email, password: password, firstname: firstname, lastname: lastname });
+	.insertOne({userID: userID, email: email, password: password, fname: firstname, lname: lastname, mobile: "", accbal: 10000, currency: "N"});
 	if (result) {
             return NextResponse.json({'success': email, message: "Signup Successful"}, {status: 201});
         }
@@ -41,3 +41,10 @@ export async function POST(request) {
         return NextResponse.json('error', {status: 401});
     }
 };
+userID: string;
+    fname: string;
+    lname: string;
+    email: string;
+    mobile: string;
+    accbal: string;
+    currency: string;
