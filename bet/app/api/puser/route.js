@@ -1,21 +1,43 @@
 import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
-import redisClient from '../../../redis';
+import crypto from 'crypto';
+import { v4 } from 'uuid';
 
-export async function GET(request) {
-	const dd = await request;
-	try {
-        const tok = dd.headers.get("tok");
-	    if (!tok) { return  NextResponse.json('error', {status: 400});}
-    	const usr_id = await redisClient.get(`auth_${tok}`);
-	    if (!usr_id) {
-		    return  NextResponse.json('error', {status: 401});
-	    }
-	    const user = await dbClient.client.db().collection('users')
-    	.findOne({ "userID": usr_id });
-	    if (!user) { return  NextResponse.json('error', {status: 401});}
-        return  NextResponse.json({email: user.email, message: "Signup Successful"}, {status: 201});
+
+const makeID = () => {
+	return v4();
+};
+
+
+export async function POST(request) {
+    try {
+	const dd = await request.json();
+        const { emailpwd, firstname, lastname } = dd;
+	const encoded_usr_str = (emailpwd.split(" "))[1];
+	let decoded_usr_str = '';
+	decoded_usr_str = Buffer.from(encoded_usr_str, 'base64').toString('utf-8');
+    	const usr_details = decoded_usr_str.split(':');
+	const password = crypto.createHash('sha256').update(usr_details[1]).digest('hex');
+	const userID = makeID();
+	const email = usr_details[0];
+	if (!email) {
+		return NextResponse.json('error', {status: 401});
+	    
+	}
+	if (!password) {
+		return NextResponse.json('error', {status: 401});
+	}
+	const user = await (await dbClient.client.db().collection('users'))
+	.findOne({ "email": email });
+	if (user) {
+		return NextResponse.json('user exists', {status: 404});
+	}
+	const result = await (await dbClient.client.db().collection('users'))
+	.insertOne({userID: userID, email: email, password: password, firstname: firstname, lastname: lastname });
+	if (result) {
+            return NextResponse.json({'success': email, message: "Signup Successful"}, {status: 201});
+        }
     } catch {
-        return  NextResponse.json('error', {status: 400});
+        return NextResponse.json('error', {status: 401});
     }
 };
