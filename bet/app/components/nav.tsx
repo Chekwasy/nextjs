@@ -1,27 +1,95 @@
 "use client"
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, MouseEvent } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { mainStateReducer } from '@/store/slices/mainslice';
+
+interface StoreState { mainSlice: {
+  logged: boolean;
+  played: {
+    id: string;
+      gId: string;
+      gSubtitle: string;
+      gTCountry: string;
+      mktT: string;
+      mTime: string;
+      hometeam: string;
+      awayteam: string;
+      odd: string;
+      selection: string;
+      mStatus: string;
+      mResult: string;
+      mOutcome: string;
+      mScore: string;
+  }[];
+  me: {
+    uID: string;
+    fname: string;
+    lname: string;
+    email: string;
+    mobile: string;
+    accbal: string;
+    currency: string;
+  }
+}}
+
 
 export default function Nav() {
+  //usedispatch to be able to write to store
+  const dispatch = useDispatch();
+  //useSelector to extract what is in the store
+  const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [logged, setLogged] = useState(true);
+  //to set message to display 
+  const [msg, setMsg] = useState('This for popup message!');
+  //control message open or close
+  const [isOpen, setIsOpen] = useState(false);
   const [picUpdated, setPicUpdated] = useState(Date.now());
+  
+  //handle close message popup
+  const handleClose = () => {
+      setIsOpen(false);
+  };
+  //Handle overlay click to close message popup
+  const handleOverlayClick = (e: MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
+      handleClose();
+    }
+  };
   const handleLogout = () => {
     axios.get('/api/disconnect', {
       headers: {
-        tok: Cookies.get('tok'),
+        tok: Cookies.get('trybet_tok'),
+    }})
+    .then((response) => {
+      dispatch(mainStateReducer({logged: false, played: storeItems.mainSlice.played, me: storeItems.mainSlice.me}));
+      setMsg(response.data.message);
+      setIsOpen(true);
+    })
+    .catch(error => {
+      setMsg(error.message);
+      setIsOpen(true);
+    });
+  };
+  const checkLogged = () => {
+    axios.get('/api/getme', {
+      headers: {
+        tok: Cookies.get('trybet_tok'),
     }})
     .then(async (response) => {
-      console.log(response.data);
-      setLogged(false);
+        const dd = response;
+        dispatch(mainStateReducer({logged: dd.data.logged, played: storeItems.mainSlice.played, me: storeItems.mainSlice.me}));
     })
     .catch(error => {
       console.log(error.message);
     });
   };
+  useEffect(() => {
+    checkLogged();
+  }, []);
 
 
   //upload part
@@ -36,7 +104,7 @@ export default function Nav() {
     }
 
     const name = 'profilepic';
-    const tok = Cookies.get('tok') || '';
+    const tok = Cookies.get('trybet_tok') || '';
     const type = imageFile.type; // Get the image type from the file object
 
     // Read the file as a data URL
@@ -56,7 +124,7 @@ export default function Nav() {
         type, // Send the image type to the backend
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.message);
       })
       .catch(error => {
         console.log(error.message);
@@ -98,7 +166,7 @@ export default function Nav() {
                 style={{ display: 'none' }}
               />
             </li>
-            {logged && (<li>
+            {storeItems && storeItems.mainSlice.logged && (<li>
               <Link href={'/bal'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group text-gray-800 ">
@@ -107,7 +175,7 @@ export default function Nav() {
                 </div>
               </Link>
             </li>)}
-            {logged && (<li>
+            {storeItems && storeItems.mainSlice.logged && (<li>
               <Link href={'/reload'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
@@ -167,10 +235,10 @@ export default function Nav() {
                 </div>
               </Link>
             </li>
-            {logged && (<li>
+            {storeItems && storeItems.mainSlice.logged && (<li>
               <Link href={'/logout'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
-                  <div className="group">
+                  <div className="group" OnClick={() => handleLogout()}>
                     <Image src="/icons/logout.svg" alt="Logout" width={35} height={35} />
                     <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
                       <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Logout </span>
@@ -247,7 +315,7 @@ export default function Nav() {
                   </div>
                 </Link>
               </li>
-              {logged && (<li>
+              {storeItems && storeItems.mainSlice.logged && (<li>
                 <div onClick={() => handleLogout()} className='text-gray-100 hover:text-red-700 cursor-pointer flex items-center'>
                   <Image
                     src="/icons/logout.svg"
@@ -258,6 +326,20 @@ export default function Nav() {
                 </div>
               </li>)}
             </ul>
+          )}
+          {isOpen && (
+            <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
+              <div className="popup-content bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
+                <div className="flex justify-end">
+                  <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <h2 className="text-lg font-bold mb-4">{msg}</h2>
+              </div>
+            </div>
           )}
         </div>
       </nav>
