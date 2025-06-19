@@ -33,7 +33,7 @@ const storeS: StoreState = {
   logged: false,
   played: [],
   me: {
-    uID: '',
+    userID: '',
     fname: '',
     lname: '',
     email: '',
