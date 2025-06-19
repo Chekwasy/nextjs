@@ -83,7 +83,7 @@ function Page() {
     	  auth_header: `encoded ${encodestr}`,
    	 })
    	 .then(async (response) => {
-    	  await Cookies.set('tok', response.data.token, { expires: 7, path: '/', });
+    	  await Cookies.set('trybet_tok', response.data.token, { expires: 7, path: '/', });
     	  setMsg(response.data.message);
    	   setIsOpen(true);
    	   router.push("/");
