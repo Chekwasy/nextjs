@@ -24,7 +24,7 @@ interface StoreState { mainSlice: {
       mScore: string;
   }[];
   me: {
-    uID: string;
+    userID: string;
     fname: string;
     lname: string;
     email: string;
