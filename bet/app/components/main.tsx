@@ -345,8 +345,8 @@ export default function Main() {
             </div>
           ))}
         </div>
-	<div className="w-full flex flex-col text-white max-w-md mx-auto mt-4 p-4 bg-gray-200 rounded-lg border border-white shadow-md">
-  <div className="mb-4">
+	<div className="w-full flex flex-col text-white max-w-md mx-auto p-4 bg-gray-200 rounded-lg border border-white shadow-md">
+  <div className="mb-1">
     <div className="w-60 h-10 bg-blue-500 rounded-lg border border-white flex items-center justify-center">
       N12,000
     </div>
