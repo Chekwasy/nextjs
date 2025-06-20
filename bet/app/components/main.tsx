@@ -45,6 +45,10 @@ export default function Main() {
   const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
+const [toggleInput, setToggleInput] = useState(false);
+const [betAmt, setBetAmt] = useState('');
+const [potWin, setPotWin] = useState('');
+const [odds, setOdds] = useState('');
   const [buttonStates, setButtonStates] = useState<Record<string, boolean>>({});
   //state to hold games from api
   const [games, setGames] = useState([{
@@ -96,6 +100,71 @@ export default function Main() {
   useEffect(() => {
     load();
   }, [dateeIndent]);
+
+  const calculateOdd = () => {
+  let od = BigInt(1);
+  if (storeItems.mainSlice.played.length > 0) {
+    storeItems.mainSlice.played.forEach((item) => {
+      try {
+        const odd = parseFloat(item.odd);
+        if (isNaN(odd)) {
+          setMsg("Invalid Value. Odds overflow");
+	setIsOpen(true);
+	} else {
+		od = od * BigInt(odd * 100);
+	}
+      } catch (error) {
+        console.error(error);
+	setOdds('');
+      }
+    });
+	setOdds((od / 100n).toString());
+	  setPotWin((parseFloat(odds) * parseFloat(betAmt)).toLocaleString());
+  }
+};
+
+  const handleButton = (button: string) => {
+	  if (button === '1' ||
+	      button === '2' ||
+	      button === '3' ||
+	      button === '4' ||
+	      button === '5' ||
+	      button === '6' ||
+	      button === '7' ||
+	      button === '8' ||
+	      button === '9' ||
+	      button === '0' ||
+	      button === '.') {
+		  if (betAmt === '' && button !== '.' && button !== '0') {
+			  setBetAmt(betAmt + button);
+		  }
+		  else if (betAmt !== '' && button !== '.') {
+			  if (betAmt.includes('.')) {
+				  if (!(/\.\w{2}$/.test(betAmt))) {
+					  setBetAmt(betAmt + button);
+				  }
+			  } else {
+				  setBetAmt(betAmt + button);
+			  }
+		  }
+		  else if (betAmt !== '' && button !== '0') {
+			  if (!(betAmt.includes('.'))) {
+				  setBetAmt(betAmt + button);
+			  }
+		  }
+		  
+	  }
+	  if (button === 'Del') {
+		  const nwAmt = betAmt.slice(0, -1);
+		  setBetAmt(nwAmt);
+	  }
+	  if (button === 'Clear') {
+		  setBetAmt('');
+	  }
+	  if (button === '10' || button === '100' || button === '1000') {
+		  setBetAmt(button);
+	  }
+  };
 
   //Handle overlay click to close message popup
   const handleOverlayClick = (e: MouseEvent) => {
@@ -173,6 +242,7 @@ export default function Main() {
       //handles when there is a match
       spyd.splice(index, 1);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	calculateOdd();
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -200,6 +270,7 @@ export default function Main() {
       pyd.mScore = '- : -';
       spyd.push(pyd);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	calculateOdd();
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -345,40 +416,40 @@ export default function Main() {
             </div>
           ))}
         </div>
-	<div className="w-full flex flex-col text-white max-w-md mx-auto p-4 bg-gray-200 rounded-lg border border-white shadow-md">
+	{ storeItems.mainSlice.played.length > 0 && (<div className="w-full flex flex-col text-white max-w-md mx-auto p-4 bg-gray-200 rounded-lg border border-white shadow-md">
   <div className="mb-1">
-    <div className="w-60 h-10 bg-blue-500 rounded-lg border border-white flex items-center justify-center">
-      N12,000
+    <div className="w-60 h-10 bg-blue-500 rounded-lg border border-white flex items-center justify-center" onClick={() => setToggleInput(!toggleInput)}>
+	    {betAmt}
     </div>
   </div>
   <div className="flex justify-between">
     <div className="w-1/3 h-10 bg-blue-500 rounded-lg border border-white flex items-center justify-center">
-      odds
+	    {odds}
     </div>
     <div className="w-2/3 h-10 bg-blue-500 rounded-lg border border-white flex items-center justify-center">
-      pot win
+	    {`Pot. Win: ${potWin}`}
     </div>
   </div>
-</div>
-	<div className="p-4 grid grid-cols-4 gap-1">
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">1</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">2</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">3</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">4</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">5</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">6</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">7</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">8</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">9</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">.</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded">0</button>
-  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded">Del</button>
-  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded">10</button>
-  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded">100</button>
-  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded">1000</button>
-  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded">Clear</button>
-  <button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded">Done</button>
-</div>
+</div>)}
+	{ storeItems.mainSlice.played.length > 0 && toggleInput && (<div className="p-4 grid grid-cols-4 gap-1">
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('1')}>1</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('2')}>2</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('3')}>3</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('4')}>4</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('5')}>5</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('6')}>6</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('7')}>7</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('8')}>8</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('9')}>9</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('.')}>.</button>
+  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('0')}>0</button>
+  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Del')}>Del</button>
+  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('10')}>10</button>
+  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('100')}>100</button>
+  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>
+  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button>
+  <button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => setToggleInput(!toggleInput)}>Done</button>
+</div>)}
       </div>
       {isOpen && (
         <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
