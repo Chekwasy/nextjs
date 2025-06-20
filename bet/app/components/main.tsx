@@ -46,7 +46,7 @@ export default function Main() {
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
 const [toggleInput, setToggleInput] = useState(false);
-const [betAmt, setBetAmt] = useState('');
+const [betAmt, setBetAmt] = useState('10');
 const [potWin, setPotWin] = useState('');
 const [odds, setOdds] = useState('');
   const [buttonStates, setButtonStates] = useState<Record<string, boolean>>({});
@@ -164,6 +164,7 @@ const [odds, setOdds] = useState('');
 	  if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
 	  }
+	calculateOdd();
   };
 
   //Handle overlay click to close message popup
@@ -309,6 +310,7 @@ const [odds, setOdds] = useState('');
       //handles when there is a match
       spyd.splice(index, 1);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	calculateOdd();
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
