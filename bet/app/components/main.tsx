@@ -118,7 +118,7 @@ const [odds, setOdds] = useState('');
 	setOdds('');
       }
     });
-	setOdds((od / 100n).toString());
+	setOdds(String(od / BigInt(100)));
 	  setPotWin((parseFloat(odds) * parseFloat(betAmt)).toLocaleString());
   }
 };
