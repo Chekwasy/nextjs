@@ -347,15 +347,15 @@ export default function Main() {
         </div>
 	<div className="w-full flex flex-col max-w-md mx-auto mt-4 p-4 bg-gray-200 rounded-lg border border-white shadow-md">
   <div className="mb-4">
-    <div className="w-full bg-blue-500 p-4 rounded-lg border border-white">
+    <div className="w-60 h-10 bg-blue-500 p-4 rounded-lg border border-white">
       <h2 className="text-white text-lg font-bold mb-2">N12,000</h2>
     </div>
   </div>
   <div className="flex justify-between">
-    <div className="w-1/2 bg-blue-500 p-4 rounded-lg border border-white">
-      <h3 className="text-white text-lg font-bold mb-2">Odds</h3>
+    <div className="w-1/3 h-10 bg-blue-500 p-4 rounded-lg border border-white">
+      <h4 className="text-white text-lg font-bold mb-2">Odds</h4>
     </div>
-    <div className="w-1/2 bg-blue-500 p-4 rounded-lg border border-white">
+    <div className="w-2/3 h-10 bg-blue-500 p-4 rounded-lg border border-white">
       <h3 className="text-white text-lg font-bold mb-2">Pot Win</h3>
     </div>
   </div>
