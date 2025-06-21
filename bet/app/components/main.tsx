@@ -105,7 +105,7 @@ export default function Main() {
     }
   };
 
-  const handleButton = (button: string) => {
+  const handleButton = async (button: string) => {
 	  if (button === '1' ||
 	      button === '2' ||
 	      button === '3' ||
@@ -146,7 +146,7 @@ export default function Main() {
 	  if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
 	  }
-	  calculateOdd();
+	  await calculateOdd();
   };
 
   //Handle overlay click to close message popup
@@ -225,6 +225,7 @@ export default function Main() {
       //handles when there is a match
       spyd.splice(index, 1);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	await calculateOdd();
       await axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -234,7 +235,6 @@ export default function Main() {
       .catch(error => {
         console.log(error.message);
       });
-	calculateOdd();
     } else {
       // Handle the case when no match is found
       pyd.id = m.hometeam + sel;
@@ -253,6 +253,7 @@ export default function Main() {
       pyd.mScore = '- : -';
       spyd.push(pyd);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	await calculateOdd();
       await axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -262,7 +263,6 @@ export default function Main() {
       .catch(error => {
         console.log(error.message);
       });
-	calculateOdd();
     }
   };
   //handle remove played from sidebar
@@ -292,6 +292,7 @@ export default function Main() {
       //handles when there is a match
       spyd.splice(index, 1);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	await calculateOdd();
       await axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -301,7 +302,6 @@ export default function Main() {
       .catch(error => {
         console.log(error.message);
       });
-	calculateOdd();
     }
   };
   return (
