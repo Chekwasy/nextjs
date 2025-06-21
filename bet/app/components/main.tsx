@@ -73,14 +73,13 @@ export default function Main() {
     load();
   }, [dateeIndent]);
 
-  const calculateOdd = () => {
+  const calculateOdd = async () => {
+	//await new Promise(resolve => setTimeout(resolve, 500));
     let od = '1';
     if (storeItems.mainSlice.played.length > 0) {
       storeItems.mainSlice.played.forEach((item) => {
         const ln1 = item.odd.length;
         const ln2 = od.length;
-	setMsg(item.odd);
-	setIsOpen(true);
 	if (ln1 >= ln2) {
           od = multiply(item.odd, od);
         } else {
@@ -89,10 +88,10 @@ export default function Main() {
       });
       setOdds(od);
       if (betAmt !== '') {
-        if (odds.length >= betAmt.length) {
-          setPotWin(multiply(odds, betAmt));
+        if (od.length >= betAmt.length) {
+          setPotWin(multiply(od, betAmt));
         } else {
-          setPotWin(multiply(betAmt, odds));
+          setPotWin(multiply(betAmt, od));
         }
 	    } else {
         setPotWin('');
