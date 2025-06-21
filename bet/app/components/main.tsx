@@ -18,7 +18,7 @@ export default function Main() {
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
   const [toggleInput, setToggleInput] = useState(false);
-  const [betAmt, setBetAmt] = useState('10');
+  const [betAmt, setBetAmt] = useState('');
   const [potWin, setPotWin] = useState('');
   const [odds, setOdds] = useState('');
   const [playedA, setPlayedA] = useState<PlayeD[]>([]);
@@ -126,13 +126,17 @@ export default function Main() {
 	      button === '7' ||
 	      button === '8' ||
 	      button === '9' ||
-	      button === '0' ||
-	      button === '.') {
-		  if (betAmt === '' && button !== '.' && button !== '0') {
+	      button === '0') {
+		  if (betAmt === '' && button !== '0') {
+			  setBetAmt(betAmt + button);
+        calculateOdd(playedA, button);
+		  } else if (betAmt !== '' && !betAmt.includes('.')) {
 			  setBetAmt(betAmt + button);
         calculateOdd(playedA, betAmt + button);
-		  }
-		  else if (betAmt !== '' && button !== '.') {
+		  } else if (betAmt !== '' && betAmt.includes('.')) {
+			  setBetAmt(betAmt + button);
+        calculateOdd(playedA, betAmt + button);
+		  } else if (betAmt !== '' && button !== '.') {
 			  if (betAmt.includes('.')) {
 				  if (!(/\.\w{2}$/.test(betAmt))) {
 					  setBetAmt(betAmt + button);
