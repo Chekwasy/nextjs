@@ -89,7 +89,7 @@ export default function Main() {
     mResult: string;
     mOutcome: string;
     mScore: string;
-  }[]) => {
+  }[], btA: string) => {
     let od = '1';
     if (itm.length > 0) {
 	    itm.forEach((item) => {
@@ -102,12 +102,12 @@ export default function Main() {
         }
       });
       setOdds(od);
-      if (betAmt !== '') {
-        if (od.length >= betAmt.length) {
+      if (btA !== '') {
+        if (od.length >= btA.length) {
           const val = multiply(od, betAmt);
           setPotWin(val);
         } else {
-          const val = multiply(betAmt, od);
+          const val = multiply(btA, od);
           setPotWin(val);
         }
       } else {
@@ -130,31 +130,35 @@ export default function Main() {
 	      button === '.') {
 		  if (betAmt === '' && button !== '.' && button !== '0') {
 			  setBetAmt(betAmt + button);
+        calculateOdd(playedA, betAmt + button);
 		  }
 		  else if (betAmt !== '' && button !== '.') {
 			  if (betAmt.includes('.')) {
 				  if (!(/\.\w{2}$/.test(betAmt))) {
 					  setBetAmt(betAmt + button);
+            calculateOdd(playedA, betAmt + button);
 				  }
 			  } else {
 				  setBetAmt(betAmt + button);
+          calculateOdd(playedA, betAmt + button);
 			  }
 		  }
 		  else if (betAmt !== '' && button !== '0') {
 			  if (!(betAmt.includes('.'))) {
 				  setBetAmt(betAmt + button);
+          calculateOdd(playedA, betAmt + button);
 			  }
 		  }
 		  
 	  } else if (button === 'Del') {
 		  const nwAmt = betAmt.slice(0, -1);
-		  if (betAmt !== '') { setBetAmt(nwAmt); }
+		  if (betAmt !== '') { setBetAmt(nwAmt); calculateOdd(playedA, nwAmt); }
 	  } else if (button === 'Clear') {
 		  setBetAmt('');
 	  } else if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
+      calculateOdd(playedA, button);
 	  }
-	  calculateOdd(playedA);
   };
 
   //Handle overlay click to close message popup
@@ -233,7 +237,7 @@ export default function Main() {
       //handles when there is a match
       spyd.splice(index, 1);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	    calculateOdd(spyd);
+	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
@@ -262,7 +266,7 @@ export default function Main() {
       pyd.mScore = '- : -';
       spyd.push(pyd);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	    calculateOdd(spyd);
+	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
@@ -302,7 +306,7 @@ export default function Main() {
       //handles when there is a match
       spyd.splice(index, 1);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	    calculateOdd(spyd);
+	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
