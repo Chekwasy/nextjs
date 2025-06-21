@@ -146,15 +146,12 @@ export default function Main() {
 			  }
 		  }
 		  
-	  }
-	  if (button === 'Del') {
+	  } else if (button === 'Del') {
 		  const nwAmt = betAmt.slice(0, -1);
-		  setBetAmt(nwAmt);
-	  }
-	  if (button === 'Clear') {
+		  if (betAmt !== '') { setBetAmt(nwAmt); }
+	  } else if (button === 'Clear') {
 		  setBetAmt('');
-	  }
-	  if (button === '10' || button === '100' || button === '1000') {
+	  } else if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
 	  }
 	  calculateOdd(playedA);
