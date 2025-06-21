@@ -73,9 +73,24 @@ export default function Main() {
     load();
   }, [dateeIndent]);
 
-  const calculateOdd = async () => {
+  const calculateOdd = async (itm: {
+    id: string;
+    gId: string;
+    gSubtitle: string;
+    gTCountry: string;
+    mktT: string;
+    mTime: string;
+    hometeam: string;
+    awayteam: string;
+    odd: string;
+    selection: string;
+    mStatus: string;
+    mResult: string;
+    mOutcome: string;
+    mScore: string;
+  }[]) => {
     let od = '1';
-    if (storeItems.mainSlice && storeItems.mainSlice.played.length > 0) {
+    if (itm.length > 0) {
 	    setMsg(JSON.stringify(storeItems.mainSlice.played));
 	    setIsOpen(true);
 	storeItems.mainSlice.played.forEach((item) => {
@@ -90,12 +105,12 @@ export default function Main() {
       setOdds(od);
       if (betAmt !== '') {
         if (od.length >= betAmt.length) {
-		const val = multiply(od, betAmt);
+		      const val = multiply(od, betAmt);
           setPotWin(val);
         } else {
-		const val = multiply(betAmt, od);
-		setMsg(`${od}, ${betAmt}, ${val}`);
-		setIsOpen(true);
+		      const val = multiply(betAmt, od);
+		      setMsg(`${od}, ${betAmt}, ${val}`);
+		      setIsOpen(true);
           setPotWin(val);
         }
 	    } else {
@@ -145,7 +160,17 @@ export default function Main() {
 	  if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
 	  }
-	  await calculateOdd();
+	  if (betAmt !== '') {
+      if (odds.length >= betAmt.length) {
+        const val = multiply(odds, betAmt);
+        setPotWin(val);
+      } else {
+        const val = multiply(betAmt, odds);
+        setPotWin(val);
+      }
+	  } else {
+      setPotWin('');
+    }
   };
 
   //Handle overlay click to close message popup
@@ -223,9 +248,9 @@ export default function Main() {
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	await calculateOdd();
-      await axios.post('/api/postsavedgames', {
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	    calculateOdd(spyd);
+      axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
       .then(async (response) => {
@@ -251,9 +276,9 @@ export default function Main() {
       pyd.mOutcome = 'Pending';
       pyd.mScore = '- : -';
       spyd.push(pyd);
-      await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	await calculateOdd();
-      await axios.post('/api/postsavedgames', {
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	    calculateOdd(spyd);
+      axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
       .then(async (response) => {
@@ -290,9 +315,9 @@ export default function Main() {
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	await calculateOdd();
-      await axios.post('/api/postsavedgames', {
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+	    calculateOdd(spyd);
+      axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
       .then(async (response) => {
