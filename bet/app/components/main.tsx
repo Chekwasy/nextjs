@@ -18,7 +18,7 @@ export default function Main() {
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
   const [toggleInput, setToggleInput] = useState(false);
-  const [betAmt, setBetAmt] = useState('');
+  const [betAmt, setBetAmt] = useState('10');
   const [potWin, setPotWin] = useState('');
   const [odds, setOdds] = useState('');
   const [buttonStates, setButtonStates] = useState<Record<string, boolean>>({});
