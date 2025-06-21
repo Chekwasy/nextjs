@@ -79,7 +79,9 @@ export default function Main() {
       storeItems.mainSlice.played.forEach((item) => {
         const ln1 = item.odd.length;
         const ln2 = od.length;
-        if (ln1 >= ln2) {
+	setMsg(ln1);
+	setIsOpen(true);
+	if (ln1 >= ln2) {
           od = multiply(item.odd, od);
         } else {
           od = multiply(od, item.odd);
