@@ -91,12 +91,10 @@ export default function Main() {
   }[]) => {
     let od = '1';
     if (itm.length > 0) {
-	    setMsg(JSON.stringify(storeItems.mainSlice.played));
-	    setIsOpen(true);
-	storeItems.mainSlice.played.forEach((item) => {
+	    itm.forEach((item) => {
         const ln1 = item.odd.length;
         const ln2 = od.length;
-	if (ln1 >= ln2) {
+        if (ln1 >= ln2) {
           od = multiply(item.odd, od);
         } else {
           od = multiply(od, item.odd);
@@ -105,15 +103,13 @@ export default function Main() {
       setOdds(od);
       if (betAmt !== '') {
         if (od.length >= betAmt.length) {
-		      const val = multiply(od, betAmt);
+          const val = multiply(od, betAmt);
           setPotWin(val);
         } else {
-		      const val = multiply(betAmt, od);
-		      setMsg(`${od}, ${betAmt}, ${val}`);
-		      setIsOpen(true);
+          const val = multiply(betAmt, od);
           setPotWin(val);
         }
-	    } else {
+      } else {
         setPotWin('');
       }
     }
