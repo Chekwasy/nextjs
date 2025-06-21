@@ -2,8 +2,8 @@ import { adding } from "./adding";
 
 
 export const multiply = (fst: string, snd: string) => {
-    const str1 = (parseFloat(fst) * 100).toString();
-    const str2 = (parseFloat(snd) * 100).toString();
+    const str1 = parseInt((parseFloat(fst) * 100)).toString();
+    const str2 = parseInt((parseFloat(snd) * 100)).toString();
     const ln1 = str1.length;
     const ln2 = str2.length;
     let mul = '';
