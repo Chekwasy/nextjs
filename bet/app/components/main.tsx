@@ -52,8 +52,11 @@ const multiply = (fst: string, snd: string) => {
 				if (m.toString().length === 1) {
 					mul = m.toString() + mul;
 				} else if (m.toString().length > 1) {
-					mul = m.toString()[1];
+					mul = m.toString()[1] + mul;
 					rem = m.toString()[0];
+				}
+				if (j === 0 && rem !== '') {
+					mul = rem + mul;
 				}
 			}
 		}
