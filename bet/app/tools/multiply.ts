@@ -1,8 +1,15 @@
 import { adding } from "./adding";
 
 export const multiply = (fst: string, snd: string) => {
-    const str1 = parseInt((parseFloat(fst) * 100)).toString();
-    const str2 = parseInt((parseFloat(snd) * 100)).toString();
+    let str1 = '';
+    let str2 = '';
+        if (parseInt((parseFloat(fst) * 100)) >= parseInt((parseFloat(snd) * 100))) {
+                str1 = parseInt((parseFloat(fst) * 100)).toString();
+                str2 = parseInt((parseFloat(snd) * 100)).toString();
+        } else {
+                str2 = parseInt((parseFloat(fst) * 100)).toString();
+                str1 = parseInt((parseFloat(snd) * 100)).toString();
+        }
     const ln1 = str1.length;
     const ln2 = str2.length;
     let mul = '';
