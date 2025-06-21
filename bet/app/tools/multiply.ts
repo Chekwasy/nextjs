@@ -8,7 +8,7 @@ export const multiply = (fst: string, snd: string) => {
     const ln2 = str2.length;
     let mul = '';
     let rem = '';
-    if (ln1 > ln2) {
+    if (ln1 >= ln2) {
             for (let i = ln2 - 1; i >= 0; i--) {
                     for (let j = (ln1 - 1); j >= 0; j--) {
                             let m = parseInt(str2[i]) * parseInt(str1[j]);
