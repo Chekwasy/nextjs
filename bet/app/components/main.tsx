@@ -74,10 +74,11 @@ export default function Main() {
   }, [dateeIndent]);
 
   const calculateOdd = async () => {
-	await new Promise(resolve => setTimeout(resolve, 2000));
     let od = '1';
-    if (storeItems.mainSlice.played.length > 0) {
-      storeItems.mainSlice.played.forEach((item) => {
+    if (storeItems.mainSlice && storeItems.mainSlice.played.length > 0) {
+	    setMsg(JSON.stringify(storeItems.mainSlice.played));
+	    setIsOpen(true);
+	storeItems.mainSlice.played.forEach((item) => {
         const ln1 = item.odd.length;
         const ln2 = od.length;
 	if (ln1 >= ln2) {
@@ -90,8 +91,6 @@ export default function Main() {
       if (betAmt !== '') {
         if (od.length >= betAmt.length) {
 		const val = multiply(od, betAmt);
-		setMsg(`${od}, ${betAmt}, ${val}`);
-		setIsOpen(true);
           setPotWin(val);
         } else {
 		const val = multiply(betAmt, od);
