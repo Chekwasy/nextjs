@@ -40,11 +40,17 @@ const multiply = (fst: string, snd: string) => {
 	const ln1 = str1.length;
 	const ln2 = str2.length;
 	let mul = '';
+	let rem = '';
 	if (ln1 > ln2) {
 		for (let i = ln2 - 1; i < 0; i--) {
 			for (let j = ln1 - 1; j < 0; j--) {
 				const m = parseInt(str2[i]) * parseInt(str1[j]);
-				
+				if (m.toString().length === 1) {
+					mul = m.toString() + mul;
+				} else if (m.toString().length > 1) {
+					mul = m.toString()[1];
+					rem = m.toString()[0];
+				}
 			}
 		}
 	}
