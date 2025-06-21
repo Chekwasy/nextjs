@@ -34,6 +34,22 @@ interface StoreState { mainSlice: {
   }
 }}
 
+const multiply = (fst: string, snd: string) => {
+	const str1 = (parseFloat(fst) * 100).toString();
+	const str2 = (parseFloat(snd) * 100).toString();
+	const ln1 = str1.length;
+	const ln2 = str2.length;
+	let mul = '';
+	if (ln1 > ln2) {
+		for (let i = ln2 - 1; i < 0; i--) {
+			for (let j = ln1 - 1; j < 0; j--) {
+				const m = parseInt(str2[i]) * parseInt(str1[j]);
+				
+			}
+		}
+	}
+};
+
 
 export default function Main() {
   //usedispatch to be able to write to store
