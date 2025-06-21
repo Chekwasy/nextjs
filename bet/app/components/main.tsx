@@ -4,142 +4,8 @@ import Image from 'next/image';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
-
-interface StoreState { mainSlice: {
-  logged: boolean;
-  played: {
-    id: string;
-      gId: string;
-      gSubtitle: string;
-      gTCountry: string;
-      mktT: string;
-      mTime: string;
-      hometeam: string;
-      awayteam: string;
-      odd: string;
-      selection: string;
-      mStatus: string;
-      mResult: string;
-      mOutcome: string;
-      mScore: string;
-  }[];
-  me: {
-    userID: string;
-    fname: string;
-    lname: string;
-    email: string;
-    mobile: string;
-    accbal: string;
-    currency: string;
-  }
-}}
-
-const multiply = (fst, snd) => {
-        const str1 = (parseFloat(fst) * 100).toString();
-        const str2 = (parseFloat(snd) * 100).toString();
-        const ln1 = str1.length;
-        const ln2 = str2.length;
-        let mul = '';
-        let rem = '';
-        if (ln1 > ln2) {
-                for (let i = ln2 - 1; i >= 0; i--) {
-                        for (let j = (ln1 - 1); j >= 0; j--) {
-                                let m = parseInt(str2[i]) * parseInt(str1[j]);
-                                if (rem !== '') {
-                                        m = m + parseInt(rem);
-                                        rem = '';
-                                }
-                                if (m.toString().length === 1) {
-                                        mul = m.toString() + mul;
-                                } else if (m.toString().length > 1) {
-                                        mul = m.toString()[1] + mul;
-                                        rem = m.toString()[0];
-                                }
-                                if (j === 0 && rem !== '') {
-                                        mul = rem + mul;
-					rem = '';
-                                }
-                        }
-                        mul = '_' + mul;
-                }
-        }
-	const addlst = mul.slice(1).split('_');
-	const addln = addlst.length;
-	let zeros = '';
-	let ans = '0';
-	const nwadd = [];
-	if (addln > 1) {
-		for (let i = 0; i < (addln - 1); i++) {
-			zeros = zeros + '0';
-		}
-		for (let i = 0; i < addln; i++) {
-                        nwadd.push(addlst[i] + zeros);
-			zeros = zeros.slice(1);
-                }
-	console.log(nwadd);
-	nwadd.forEach((itm) => {
-		if (ans.length > itm.length) {
-			ans = adding(ans, itm);
-		}
-		if (ans.length < itm.length) {
-			ans = adding(itm, ans);
-		}
-	});
-	let half = (parseFloat('.' + ans.slice(-4)).toFixed(2)).slice(-3);
-	if (half[2] === '0' && half[1] === '0') {
-		half = '';
-	} else if (half[2] === '0') {
-		half = half.slice(0, -1);
-	}
-	return ans.slice(0, -4) + half;
-	}
-	let half = (parseFloat('.' + addlst[0].slice(-4)).toFixed(2)).slice(-3);
-	if (half[2] === '0' && half[1] === '0') {
-		half = '';
-	} else if (half[2] === '0') {
-		half = half.slice(0, -1);
-	}
-	return addlst[0].slice(0, -4) + half;
-};
-const adding = (fst, snd) => {
-        const ln1 = fst.length;
-        const ln2 = snd.length;
-        let snd2 = '';
-        let addval = '';
-        let rem = '';
-        let z = '';
-        if (ln1 > ln2) {
-                const df = ln1 - ln2;
-                for (let i = 0; i < df; i++) {
-                        z = z + '0';
-                }
-                snd2 = z + snd;
-        } else {
-                snd2 = snd;
-        }
-        console.log(fst, snd2);
-        for (let i = ln1 - 1; i >= 0; i--) {
-                let a = 0;
-                a = parseInt(fst[i]) + parseInt(snd2[i]);
-                if (rem !== '') {
-                        a = a + parseInt(rem);
-                        rem = '';
-                }
-                if (a.toString().length === 1) {
-                        addval = a.toString() + addval;
-                }
-                if (a.toString().length > 1) {
-                        addval = a.toString()[1] + addval;
-                        rem = a.toString()[0];
-                }
-                if (i === 0 && rem !== '') {
-                        addval = rem + addval;
-                        rem = '';
-                }
-        }
-        return addval
-};
-
+import { StoreState } from '../tools/s_interface';
+import { multiply } from '../tools/multiply';
 
 export default function Main() {
   //usedispatch to be able to write to store
@@ -151,10 +17,10 @@ export default function Main() {
   const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
-const [toggleInput, setToggleInput] = useState(false);
-const [betAmt, setBetAmt] = useState('10');
-const [potWin, setPotWin] = useState('');
-const [odds, setOdds] = useState('');
+  const [toggleInput, setToggleInput] = useState(false);
+  const [betAmt, setBetAmt] = useState('10');
+  const [potWin, setPotWin] = useState('1');
+  const [odds, setOdds] = useState('1');
   const [buttonStates, setButtonStates] = useState<Record<string, boolean>>({});
   //state to hold games from api
   const [games, setGames] = useState([{
@@ -208,28 +74,29 @@ const [odds, setOdds] = useState('');
   }, [dateeIndent]);
 
   const calculateOdd = () => {
-  let od = BigInt(1);
-  if (storeItems.mainSlice.played.length > 0) {
-    storeItems.mainSlice.played.forEach((item) => {
-      try {
-        const odd = parseFloat(item.odd);
-        if (isNaN(odd)) {
-          setMsg("Invalid Value. Odds overflow");
-	setIsOpen(true);
-	} else {
-		od = od * BigInt(odd * 100);
-	}
-      } catch (error) {
-        console.error(error);
-	setOdds('');
+    let od = '1';
+    if (storeItems.mainSlice.played.length > 0) {
+      storeItems.mainSlice.played.forEach((item) => {
+        const ln1 = item.odd.length;
+        const ln2 = od.length;
+        if (ln1 >= ln2) {
+          od = multiply(item.odd, od);
+        } else {
+          od = multiply(od, item.odd);
+        }
+      });
+      setOdds(od);
+	    if (betAmt !== '') {
+        if (odds.length >= betAmt.length) {
+          setPotWin(multiply(odds, betAmt));
+        } else {
+          setPotWin(multiply(betAmt, odds));
+        }
+	    } else {
+        setPotWin(odds);
       }
-    });
-	setOdds(String(od / BigInt(100)));
-	  if (betAmt !== '') {
-		  setPotWin((parseFloat(odds) * parseFloat(betAmt)).toLocaleString());
-	  }
-  }
-};
+    }
+  };
 
   const handleButton = (button: string) => {
 	  if (button === '1' ||
@@ -272,7 +139,7 @@ const [odds, setOdds] = useState('');
 	  if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
 	  }
-	calculateOdd();
+	  calculateOdd();
   };
 
   //Handle overlay click to close message popup
@@ -351,7 +218,7 @@ const [odds, setOdds] = useState('');
       //handles when there is a match
       spyd.splice(index, 1);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	calculateOdd();
+	    calculateOdd();
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -379,7 +246,7 @@ const [odds, setOdds] = useState('');
       pyd.mScore = '- : -';
       spyd.push(pyd);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	calculateOdd();
+	    calculateOdd();
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -418,7 +285,7 @@ const [odds, setOdds] = useState('');
       //handles when there is a match
       spyd.splice(index, 1);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	calculateOdd();
+	    calculateOdd();
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
