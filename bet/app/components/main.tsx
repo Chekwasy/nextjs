@@ -18,9 +18,9 @@ export default function Main() {
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
   const [toggleInput, setToggleInput] = useState(false);
-  const [betAmt, setBetAmt] = useState('10');
-  const [potWin, setPotWin] = useState('1');
-  const [odds, setOdds] = useState('1');
+  const [betAmt, setBetAmt] = useState('');
+  const [potWin, setPotWin] = useState('');
+  const [odds, setOdds] = useState('');
   const [buttonStates, setButtonStates] = useState<Record<string, boolean>>({});
   //state to hold games from api
   const [games, setGames] = useState([{
@@ -86,14 +86,14 @@ export default function Main() {
         }
       });
       setOdds(od);
-	    if (betAmt !== '') {
+      if (betAmt !== '') {
         if (odds.length >= betAmt.length) {
           setPotWin(multiply(odds, betAmt));
         } else {
           setPotWin(multiply(betAmt, odds));
         }
 	    } else {
-        setPotWin(odds);
+        setPotWin('');
       }
     }
   };
@@ -218,8 +218,7 @@ export default function Main() {
       //handles when there is a match
       spyd.splice(index, 1);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	    calculateOdd();
-      axios.post('/api/postsavedgames', {
+      await axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
       .then(async (response) => {
@@ -228,6 +227,7 @@ export default function Main() {
       .catch(error => {
         console.log(error.message);
       });
+	calculateOdd();
     } else {
       // Handle the case when no match is found
       pyd.id = m.hometeam + sel;
@@ -246,8 +246,7 @@ export default function Main() {
       pyd.mScore = '- : -';
       spyd.push(pyd);
       await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	    calculateOdd();
-      axios.post('/api/postsavedgames', {
+      await axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
       .then(async (response) => {
@@ -256,10 +255,11 @@ export default function Main() {
       .catch(error => {
         console.log(error.message);
       });
+	calculateOdd();
     }
   };
   //handle remove played from sidebar
-  const handleHDAR = (itm: {
+  const handleHDAR = async (itm: {
     id: string;
     gId: string;
     gSubtitle: string;
@@ -284,9 +284,8 @@ export default function Main() {
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
-	    calculateOdd();
-      axios.post('/api/postsavedgames', {
+      await dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+      await axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
       .then(async (response) => {
@@ -295,6 +294,7 @@ export default function Main() {
       .catch(error => {
         console.log(error.message);
       });
+	calculateOdd();
     }
   };
   return (
