@@ -3,7 +3,7 @@ import { adding } from "./adding";
 export const multiply = (fst: string, snd: string) => {
     let str1 = '';
     let str2 = '';
-        if (parseInt((parseFloat(fst) * 100)) >= parseInt((parseFloat(snd) * 100))) {
+        if (parseInt((parseFloat(fst) * 100).toString()) >= parseInt((parseFloat(snd) * 100).toString())) {
                 str1 = parseInt((parseFloat(fst) * 100)).toString();
                 str2 = parseInt((parseFloat(snd) * 100)).toString();
         } else {
