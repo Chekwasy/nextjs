@@ -26,3 +26,20 @@ export interface StoreState { mainSlice: {
     currency: string;
   }
 }}
+
+export interface PlayeD {
+  id: string;
+  gId: string;
+  gSubtitle: string;
+  gTCountry: string;
+  mktT: string;
+  mTime: string;
+  hometeam: string;
+  awayteam: string;
+  odd: string;
+  selection: string;
+  mStatus: string;
+  mResult: string;
+  mOutcome: string;
+  mScore: string;
+}

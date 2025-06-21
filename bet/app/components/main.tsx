@@ -4,7 +4,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
-import { StoreState } from '../tools/s_interface';
+import { StoreState, PlayeD } from '../tools/s_interface';
 import { multiply } from '../tools/multiply';
 
 export default function Main() {
@@ -21,6 +21,7 @@ export default function Main() {
   const [betAmt, setBetAmt] = useState('10');
   const [potWin, setPotWin] = useState('');
   const [odds, setOdds] = useState('');
+  const [playedA, setPlayedA] = useState<PlayeD[]>([]);
   const [buttonStates, setButtonStates] = useState<Record<string, boolean>>({});
   //state to hold games from api
   const [games, setGames] = useState([{
@@ -156,17 +157,7 @@ export default function Main() {
 	  if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
 	  }
-	  if (betAmt !== '') {
-      if (odds.length >= betAmt.length) {
-        const val = multiply(odds, betAmt);
-        setPotWin(val);
-      } else {
-        const val = multiply(betAmt, odds);
-        setPotWin(val);
-      }
-	  } else {
-      setPotWin('');
-    }
+	  calculateOdd(playedA);
   };
 
   //Handle overlay click to close message popup
@@ -246,6 +237,7 @@ export default function Main() {
       spyd.splice(index, 1);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
 	    calculateOdd(spyd);
+      setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -274,6 +266,7 @@ export default function Main() {
       spyd.push(pyd);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
 	    calculateOdd(spyd);
+      setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
@@ -313,6 +306,7 @@ export default function Main() {
       spyd.splice(index, 1);
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
 	    calculateOdd(spyd);
+      setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
