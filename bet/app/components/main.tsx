@@ -59,6 +59,7 @@ const multiply = (fst: string, snd: string) => {
 					mul = rem + mul;
 				}
 			}
+			mul = '_' + mul;
 		}
 	}
 };
