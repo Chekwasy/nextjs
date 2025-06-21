@@ -74,7 +74,7 @@ export default function Main() {
   }, [dateeIndent]);
 
   const calculateOdd = async () => {
-	await new Promise(resolve => setTimeout(resolve, 500));
+	//await new Promise(resolve => setTimeout(resolve, 500));
     let od = '1';
     if (storeItems.mainSlice.played.length > 0) {
       storeItems.mainSlice.played.forEach((item) => {
@@ -89,9 +89,15 @@ export default function Main() {
       setOdds(od);
       if (betAmt !== '') {
         if (od.length >= betAmt.length) {
-          setPotWin(multiply(od, betAmt));
+		const val = multiply(od, betAmt);
+		setMsg(`${od}, ${betAmt}, ${val}`);
+		setIsOpen(true);
+          setPotWin(val);
         } else {
-          setPotWin(multiply(betAmt, od));
+		const val = multiply(betAmt, od);
+		setMsg(`${od}, ${betAmt}, ${val}`);
+		setIsOpen(true);
+          setPotWin(val);
         }
 	    } else {
         setPotWin('');
