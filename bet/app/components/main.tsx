@@ -134,27 +134,14 @@ export default function Main() {
 			  setBetAmt(betAmt + button);
         calculateOdd(playedA, betAmt + button);
 		  } else if (betAmt !== '' && betAmt.includes('.')) {
-			  setBetAmt(betAmt + button);
-        calculateOdd(playedA, betAmt + button);
-		  } else if (betAmt !== '' && button !== '.') {
-			  if (betAmt.includes('.')) {
-				  if (!(/\.\w{2}$/.test(betAmt))) {
-					  setBetAmt(betAmt + button);
-            calculateOdd(playedA, betAmt + button);
-				  }
-			  } else {
-				  setBetAmt(betAmt + button);
+        if (betAmt.split('.')[1].length < 2) {
+          setBetAmt(betAmt + button);
           calculateOdd(playedA, betAmt + button);
-			  }
+        }
 		  }
-		  else if (betAmt !== '' && button !== '0') {
-			  if (!(betAmt.includes('.'))) {
-				  setBetAmt(betAmt + button);
-          calculateOdd(playedA, betAmt + button);
-			  }
-		  }
-		  
-	  } else if (button === 'Del') {
+    } else if (betAmt !== '' && button === '.' && !betAmt.includes('.')) {
+					setBetAmt(betAmt + button);
+		} else if (button === 'Del') {
 		  const nwAmt = betAmt.slice(0, -1);
 		  if (betAmt !== '') { setBetAmt(nwAmt); calculateOdd(playedA, nwAmt); }
 	  } else if (button === 'Clear') {
