@@ -4,8 +4,8 @@ export const multiply = (fst: string, snd: string) => {
     let str1 = '';
     let str2 = '';
         if (parseInt((parseFloat(fst) * 100).toString()) >= parseInt((parseFloat(snd) * 100).toString())) {
-                str1 = parseInt((parseFloat(fst) * 100)).toString();
-                str2 = parseInt((parseFloat(snd) * 100)).toString();
+                str1 = parseInt((parseFloat(fst) * 100).toString()).toString();
+                str2 = parseInt((parseFloat(snd) * 100).toString()).toString();
         } else {
                 str2 = parseInt((parseFloat(fst) * 100).toString()).toString();
                 str1 = parseInt((parseFloat(snd) * 100).toString()).toString();
