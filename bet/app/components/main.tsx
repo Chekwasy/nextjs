@@ -118,7 +118,6 @@ export default function Main() {
 
   const handleButton = async (button: string) => {
     const beT = betAmt;
-    console.log(betAmt, button, "here");
 	  if (button === '1' ||
 	      button === '2' ||
 	      button === '3' ||
@@ -131,25 +130,30 @@ export default function Main() {
 	      button === '0') {
 		  if (beT === '' && button !== '0') {
 			  setBetAmt(button);
+        console.log(beT, button, "here1-9");
         calculateOdd(playedA, button);
 		  } else if (beT !== '' && !beT.includes('.')) {
 			  setBetAmt(beT + button);
+        console.log(beT, button, "here1-9");
         calculateOdd(playedA, beT + button);
 		  } else if (beT !== '' && beT.includes('.')) {
         if (beT.split('.')[1].length < 2) {
           setBetAmt(beT + button);
+          console.log(beT, button, "here1-9");
           calculateOdd(playedA, beT + button);
         }
 		  }
     } else if (beT !== '' && button === '.' && !beT.includes('.')) {
+          console.log(beT, button, "here.");
 					setBetAmt(beT + button);
 		} else if (button === 'Del') {
 		  const nwAmt = beT.slice(0, -1);
-		  if (beT !== '') { setBetAmt(nwAmt); calculateOdd(playedA, nwAmt); }
+		  if (beT !== '') { setBetAmt(nwAmt); console.log(beT, button, "here del"); calculateOdd(playedA, nwAmt); }
 	  } else if (button === 'Clear') {
 		  setBetAmt('');
 	  } else if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
+      console.log(beT, button, "here10 100 ...");
       calculateOdd(playedA, button);
 	  }
   };
