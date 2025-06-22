@@ -104,7 +104,7 @@ export default function Main() {
       setOdds(od);
       if (btA !== '') {
         if (od.length >= btA.length) {
-          const val = multiply(od, betAmt);
+          const val = multiply(od, btA);
           setPotWin(val);
         } else {
           const val = multiply(btA, od);
@@ -130,30 +130,25 @@ export default function Main() {
 	      button === '0') {
 		  if (beT === '' && button !== '0') {
 			  setBetAmt(button);
-        console.log(beT, button, "here1-9");
         calculateOdd(playedA, button);
 		  } else if (beT !== '' && !beT.includes('.')) {
 			  setBetAmt(beT + button);
-        console.log(beT, button, "here1-9");
         calculateOdd(playedA, beT + button);
 		  } else if (beT !== '' && beT.includes('.')) {
         if (beT.split('.')[1].length < 2) {
           setBetAmt(beT + button);
-          console.log(beT, button, "here1-9");
           calculateOdd(playedA, beT + button);
         }
 		  }
     } else if (beT !== '' && button === '.' && !beT.includes('.')) {
-          console.log(beT, button, "here.");
 					setBetAmt(beT + button);
 		} else if (button === 'Del') {
 		  const nwAmt = beT.slice(0, -1);
-		  if (beT !== '') { setBetAmt(nwAmt); console.log(beT, button, "here del"); calculateOdd(playedA, nwAmt); }
+		  if (beT !== '') { setBetAmt(nwAmt); calculateOdd(playedA, nwAmt); }
 	  } else if (button === 'Clear') {
 		  setBetAmt('');
 	  } else if (button === '10' || button === '100' || button === '1000') {
 		  setBetAmt(button);
-      console.log(beT, button, "here10 100 ...");
       calculateOdd(playedA, button);
 	  }
   };
