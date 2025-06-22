@@ -117,6 +117,7 @@ export default function Main() {
   };
 
   const handleButton = async (button: string) => {
+    console.log(betAmt, button);
 	  if (button === '1' ||
 	      button === '2' ||
 	      button === '3' ||
