@@ -117,6 +117,7 @@ export default function Main() {
   };
 
   const handleButton = async (button: string) => {
+    const beT = betAmt;
     console.log(betAmt, button, "here");
 	  if (button === '1' ||
 	      button === '2' ||
@@ -128,23 +129,23 @@ export default function Main() {
 	      button === '8' ||
 	      button === '9' ||
 	      button === '0') {
-		  if (betAmt === '' && button !== '0') {
-			  setBetAmt(betAmt + button);
+		  if (beT === '' && button !== '0') {
+			  setBetAmt(button);
         calculateOdd(playedA, button);
-		  } else if (betAmt !== '' && !betAmt.includes('.')) {
-			  setBetAmt(betAmt + button);
-        calculateOdd(playedA, betAmt + button);
-		  } else if (betAmt !== '' && betAmt.includes('.')) {
-        if (betAmt.split('.')[1].length < 2) {
-          setBetAmt(betAmt + button);
-          calculateOdd(playedA, betAmt + button);
+		  } else if (beT !== '' && !beT.includes('.')) {
+			  setBetAmt(beT + button);
+        calculateOdd(playedA, beT + button);
+		  } else if (beT !== '' && beT.includes('.')) {
+        if (beT.split('.')[1].length < 2) {
+          setBetAmt(beT + button);
+          calculateOdd(playedA, beT + button);
         }
 		  }
-    } else if (betAmt !== '' && button === '.' && !betAmt.includes('.')) {
-					setBetAmt(betAmt + button);
+    } else if (beT !== '' && button === '.' && !beT.includes('.')) {
+					setBetAmt(beT + button);
 		} else if (button === 'Del') {
-		  const nwAmt = betAmt.slice(0, -1);
-		  if (betAmt !== '') { setBetAmt(nwAmt); calculateOdd(playedA, nwAmt); }
+		  const nwAmt = beT.slice(0, -1);
+		  if (beT !== '') { setBetAmt(nwAmt); calculateOdd(playedA, nwAmt); }
 	  } else if (button === 'Clear') {
 		  setBetAmt('');
 	  } else if (button === '10' || button === '100' || button === '1000') {
