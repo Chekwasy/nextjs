@@ -212,7 +212,7 @@ export default function Nav() {
               </Link>
             </li>)}
             {storeItems.mainSlice && !storeItems.mainSlice.logged && (<li>
-              <Link href={'/auth/puser'}>
+              <Link href={'/auth/signup'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
                     <Image src="/icons/signup.svg" alt="Signup" width={35} height={35} />
@@ -224,7 +224,7 @@ export default function Nav() {
               </Link>
             </li>)}
             {storeItems.mainSlice && !storeItems.mainSlice.logged && (<li>
-              <Link href={'/auth/connect'}>
+              <Link href={'/auth/login'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
                     <Image src="/icons/login.svg" alt="Login" width={35} height={35} />
@@ -260,7 +260,7 @@ export default function Nav() {
               </Link>
             </li>
             {storeItems && storeItems.mainSlice.logged && (<li>
-              <Link href={'/logout'}>
+              <Link href={'/auth/disconnect'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group" onClick={() => handleLogout()}>
                     <Image src="/icons/logout.svg" alt="Logout" width={35} height={35} />
@@ -304,7 +304,7 @@ export default function Nav() {
                 </button>
               </li>
               {storeItems.mainSlice && !storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/auth/puser'}>
+                <Link href={'/auth/signup'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
                     <Image
                     src="/icons/signup.svg"
@@ -316,7 +316,7 @@ export default function Nav() {
                 </Link>
               </li>)}
               {storeItems.mainSlice && !storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/connect'}>
+                <Link href={'/auth/login'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
                     <Image
                     src="/icons/login.svg"
