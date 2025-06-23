@@ -187,7 +187,7 @@ export default function Main() {
   };
   //handle home draw and away odd selection
   const handleHDA = async (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, sel: string, odd: string, gID: string, gS: string, gT: string) => {
-    const butState : {string : boolean = {
+    const butState : {string : boolean} = {
       ...storeItems.mainSlice.buttonState,
       [m.hometeam + sel]: !storeItems.mainSlice.buttonState[m.hometeam + sel]
     };
