@@ -260,7 +260,6 @@ export default function Nav() {
               </Link>
             </li>
             {storeItems && storeItems.mainSlice.logged && (<li>
-              <Link href={'/auth/disconnect'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group" onClick={() => handleLogout()}>
                     <Image src="/icons/logout.svg" alt="Logout" width={35} height={35} />
@@ -269,7 +268,6 @@ export default function Nav() {
                     </div>
                   </div>
                 </div>
-              </Link>
             </li>)}
           </ul>
 
