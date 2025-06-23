@@ -26,7 +26,8 @@ interface StoreState {
     mobile: string;
     accbal: string;
     currency: string;
-  }
+  },
+  buttonState: {string: boolean}
 }
 
 const storeS: StoreState = {
@@ -40,7 +41,8 @@ const storeS: StoreState = {
     mobile: '',
     accbal: '',
     currency: '',
-  }
+  },
+  buttonState: {},
 }
 
 
@@ -52,6 +54,7 @@ const mainSlice = createSlice({
             state.logged = action.payload.logged;
             state.played = action.payload.played;
             state.me = action.payload.me;
+            state.buttonState = action.payload.buttonState;
         }
     }
 });
