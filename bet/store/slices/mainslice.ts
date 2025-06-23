@@ -42,7 +42,7 @@ const storeS: StoreState = {
     accbal: '',
     currency: '',
   },
-  buttonState: {'': ''},
+  buttonState: {'': false},
 }
 
 
