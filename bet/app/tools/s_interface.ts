@@ -24,8 +24,8 @@ export interface StoreState { mainSlice: {
     mobile: string;
     accbal: string;
     currency: string;
-  },
-  buttonState: {string: boolean},
+  };
+  buttonState: {[key: string]: boolean};
 }}
 
 export interface PlayeD {
