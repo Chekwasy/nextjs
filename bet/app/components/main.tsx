@@ -287,10 +287,10 @@ export default function Main() {
     mOutcome: string;
     mScore: string;
   }) => {
-    setButtonStates((prevStates) => ({
-      ...prevStates,
-      [itm.id]: !prevStates[itm.id],
-    }));
+    const butState : {string : boolean = {
+      ...storeItems.mainSlice.buttonState,
+      [m.hometeam + sel]: !storeItems.mainSlice.buttonState[m.hometeam + sel]
+    };
     const spyd = [...storeItems.mainSlice.played];
     const index = spyd.findIndex((item) => item.id === itm.id);
     if (index !== -1) {
