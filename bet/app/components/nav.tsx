@@ -89,7 +89,7 @@ export default function Nav() {
   };
   useEffect(() => {
     checkLogged();
-  }, [] as const);
+  });
 
 
   //upload part
