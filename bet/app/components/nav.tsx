@@ -199,7 +199,7 @@ export default function Nav() {
                 </div>
               </Link>
             </li>
-            <li>
+            {storeItems.mainSlice && storeItems.mainSlice.logged (<li>
               <Link href={'/games'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
@@ -210,8 +210,32 @@ export default function Nav() {
                   </div>
                 </div>
               </Link>
-            </li>
-            <li>
+            </li>)}
+            {storeItems.mainSlice && !storeItems.mainSlice.logged (<li>
+              <Link href={'/auth/puser'}>
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/signup.svg" alt="Signup" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Signup </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </li>)}
+            {storeItems.mainSlice && !storeItems.mainSlice.logged (<li>
+              <Link href={'/auth/connect'}>
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/login.svg" alt="Login" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Login </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </li>)}
+            {storeItems.mainSlice && storeItems.mainSlice.logged (<li>
               <Link href={'/profile'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
@@ -222,7 +246,7 @@ export default function Nav() {
                   </div>
                 </div>
               </Link>
-            </li>
+            </li>)}
             <li>
               <Link href={'/about'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
@@ -279,7 +303,31 @@ export default function Nav() {
                   />
                 </button>
               </li>
-              <li className='px-4 py-2 hover:bg-gray-700'>
+              {storeItems.mainSlice && !storeItems.mainSlice.logged (<li className='px-4 py-2 hover:bg-gray-700'>
+                <Link href={'/auth/puser'}>
+                  <div className='text-gray-100 hover:text-white flex items-center'>
+                    <Image
+                    src="/icons/signup.svg"
+                    alt="Signup"
+                    width={30}
+                    height={30}
+                  />
+                  </div>
+                </Link>
+              </li>)}
+              {storeItems.mainSlice && !storeItems.mainSlice.logged (<li className='px-4 py-2 hover:bg-gray-700'>
+                <Link href={'/connect'}>
+                  <div className='text-gray-100 hover:text-white flex items-center'>
+                    <Image
+                    src="/icons/login.svg"
+                    alt="Login"
+                    width={30}
+                    height={30}
+                  />
+                  </div>
+                </Link>
+              </li>)}
+              {storeItems.mainSlice && storeItems.mainSlice.logged (<li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/games'}>
                   <div className='text-gray-900 hover:text-white flex items-center'>
                     <Image
@@ -290,8 +338,8 @@ export default function Nav() {
                   />
                   </div>
                 </Link>
-              </li>
-              <li className='px-4 py-2 hover:bg-gray-700'>
+              </li>)}
+              {storeItems.mainSlice && storeItems.mainSlice.logged (<li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/profile'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
                     <Image
@@ -302,7 +350,7 @@ export default function Nav() {
                   />
                   </div>
                 </Link>
-              </li>
+              </li>)}
               <li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/about'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
