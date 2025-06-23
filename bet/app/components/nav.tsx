@@ -87,9 +87,10 @@ export default function Nav() {
       console.log(error.message);
     });
   };
-  useEffect(() => {
-    checkLogged();
-  });
+  // @ts-ignore
+useEffect(() => {
+  checkLogged();
+}, []);
 
 
   //upload part
