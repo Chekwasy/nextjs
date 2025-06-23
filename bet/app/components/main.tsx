@@ -22,7 +22,6 @@ export default function Main() {
   const [potWin, setPotWin] = useState('');
   const [odds, setOdds] = useState('');
   const [playedA, setPlayedA] = useState<PlayeD[]>([]);
-  const [buttonStates, setButtonStates] = useState<Record<string, boolean>>({});
   //state to hold games from api
   const [games, setGames] = useState([{
 	  id: '',
@@ -188,10 +187,10 @@ export default function Main() {
   };
   //handle home draw and away odd selection
   const handleHDA = async (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, sel: string, odd: string, gID: string, gS: string, gT: string) => {
-    setButtonStates((prevStates) => ({
-      ...prevStates,
-      [m.hometeam + sel]: !prevStates[m.hometeam + sel],
-    }));
+    const butState : {string : boolean = {
+      ...storeItems.mainSlice.buttonState,
+      [m.hometeam + sel]: !storeItems.mainSlice.buttonState[m.hometeam + sel]
+    };
     const pyd: {
       id: string;
       gId: string;
@@ -228,7 +227,7 @@ export default function Main() {
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
@@ -257,7 +256,7 @@ export default function Main() {
       pyd.mOutcome = 'Pending';
       pyd.mScore = '- : -';
       spyd.push(pyd);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
@@ -297,7 +296,7 @@ export default function Main() {
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: storeItems.mainSlice.buttonState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
@@ -358,13 +357,13 @@ export default function Main() {
                         {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
                       </div>
                       <div className="w-2/5 flex justify-around">
-                        <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.homeodd}
                         </button>
-                        <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.drawodd}
                         </button>
-                        <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${buttonStates[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
+                        <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
                           {match.awayodd}
                         </button>
                       </div>
