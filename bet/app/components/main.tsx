@@ -287,7 +287,7 @@ export default function Main() {
     mOutcome: string;
     mScore: string;
   }) => {
-    const butState : {string : boolean = {
+    const butState : {string : boolean} = {
       ...storeItems.mainSlice.buttonState,
       [m.hometeam + sel]: !storeItems.mainSlice.buttonState[m.hometeam + sel]
     };
