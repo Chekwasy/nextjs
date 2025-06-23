@@ -27,7 +27,7 @@ interface StoreState {
     accbal: string;
     currency: string;
   },
-  buttonState: {string: boolean}
+  buttonState: {[key: string]: boolean}
 }
 
 const storeS: StoreState = {
@@ -42,7 +42,7 @@ const storeS: StoreState = {
     accbal: '',
     currency: '',
   },
-  buttonState: {},
+  buttonState: {'': ''},
 }
 
 
