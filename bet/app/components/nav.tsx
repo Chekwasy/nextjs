@@ -43,6 +43,7 @@ export default function Nav() {
   //useSelector to extract what is in the store
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   //to set message to display 
   const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
@@ -74,7 +75,7 @@ export default function Nav() {
       setIsOpen(true);
     });
   };
-  const checkLogged = () => {
+  useEffect(() => {
     axios.get('/api/getme', {
       headers: {
         tok: Cookies.get('trybet_tok'),
@@ -86,11 +87,9 @@ export default function Nav() {
     .catch(error => {
       console.log(error.message);
     });
-  };
-  // @ts-ignore
-useEffect(() => {
-  checkLogged();
-}, []);
+    setLoaded(true);
+  }, [loaded]);
+
 
 
   //upload part
