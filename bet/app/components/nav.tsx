@@ -86,7 +86,7 @@ export default function Nav() {
     .catch(error => {
       console.log(error.message);
     });
-  }, [storeItems.mainSlice.me.accbal]);
+  }, []);
 
 
 
