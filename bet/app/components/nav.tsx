@@ -33,7 +33,8 @@ interface StoreState { mainSlice: {
     mobile: string;
     accbal: string;
     currency: string;
-  }
+  },
+  buttonState: {[key:string] : boolean}
 }}
 
 
