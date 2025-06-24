@@ -40,7 +40,7 @@ const storeS: StoreState = {
     email: '',
     mobile: '',
     accbal: '',
-    currency: '',
+    currency: 'N',
   },
   buttonState: {'': false},
 }
