@@ -65,7 +65,7 @@ export default function Nav() {
         tok: Cookies.get('trybet_tok'),
     }})
     .then((response) => {
-      dispatch(mainStateReducer({logged: false, played: storeItems.mainSlice.played, me: storeItems.mainSlice.me}));
+      dispatch(mainStateReducer({logged: false, played: storeItems.mainSlice.played, me: storeItems.mainSlice.me, buttonState: storeItems.mainSlice.buttonState }));
       setMsg(response.data.message);
       setIsOpen(true);
     })
@@ -81,7 +81,7 @@ export default function Nav() {
     }})
     .then(async (response) => {
         const dd = response;
-        dispatch(mainStateReducer({logged: dd.data.logged, played: storeItems.mainSlice.played, me: storeItems.mainSlice.me}));
+        dispatch(mainStateReducer({logged: dd.data.logged, played: storeItems.mainSlice.played, me: storeItems.mainSlice.me, buttonState: storeItems.mainSlice.buttonState}));
     })
     .catch(error => {
       console.log(error.message);
