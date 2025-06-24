@@ -296,7 +296,7 @@ export default function Main() {
     if (index !== -1) {
       //handles when there is a match
       spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: storeItems.mainSlice.buttonState}));
+      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
