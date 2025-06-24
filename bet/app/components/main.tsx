@@ -311,7 +311,7 @@ export default function Main() {
       });
     }
   };
-  handleBookedBet = () => {
+  const handleBookedBet = () => {
 	  setToggleInput(!toggleInput);
 	  
   };
