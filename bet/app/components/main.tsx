@@ -17,6 +17,7 @@ export default function Main() {
   const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
   const [isOpen, setIsOpen] = useState(false);
+  const [done, setDone] = useState(false);
   const [toggleInput, setToggleInput] = useState(false);
   const [betAmt, setBetAmt] = useState('');
   const [potWin, setPotWin] = useState('');
@@ -310,6 +311,10 @@ export default function Main() {
       });
     }
   };
+  handleBookedBet = () => {
+	  setToggleInput(!toggleInput);
+	  
+  };
   return (
     <div className="relative bg-white rounded-b-lg border-4 border-green-300 mt-16 lg:border-2 lg:w-4/5 mx-auto">
       <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
@@ -408,7 +413,7 @@ export default function Main() {
         </div>
 	{ storeItems.mainSlice.played.length > 0 && (<div className="w-full flex flex-col text-white max-w-md mx-auto p-4 bg-gray-200 rounded-lg border border-white shadow-md">
   <div className="mb-1">
-    <div className="w-85 h-10  cursor-text bg-blue-400 rounded-lg border border-white flex items-center justify-center" onClick={() => setToggleInput(!toggleInput)}>
+    <div className="w-85 h-10  cursor-text bg-blue-400 rounded-lg border border-white flex items-center justify-center" onClick={() => setToggleInput(!toggleInput); setDone(!done);}>
 	    {`Amt: N ${betAmt}`}
     </div>
   </div>
@@ -436,7 +441,8 @@ export default function Main() {
   <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('100')}>100</button>
   <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>
   <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button>
-{storeItems.mainSlice && storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Done</button>)}
+{storeItems.mainSlice && storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => setDone(!done)} >Done</button>)}
+{storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet() >Book Bet</button>)}
 {storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
 </div>)}
       </div>
