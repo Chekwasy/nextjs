@@ -442,7 +442,7 @@ export default function Main() {
   <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>
   <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button>
 {storeItems.mainSlice && storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => setDone(!done)} >Done</button>)}
-{storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet() >Book Bet</button>)}
+{storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet()} >Book Bet</button>)}
 {storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
 </div>)}
       </div>
