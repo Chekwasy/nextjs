@@ -43,7 +43,6 @@ export default function Nav() {
   //useSelector to extract what is in the store
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [loaded, setLoaded] = useState(false);
   //to set message to display 
   const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
@@ -87,8 +86,7 @@ export default function Nav() {
     .catch(error => {
       console.log(error.message);
     });
-    setLoaded(true);
-  }, [loaded]);
+  }, [storeItems.mainSlice.me.accbal]);
 
 
 
@@ -170,7 +168,7 @@ export default function Nav() {
               <Link href={'/bal'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group text-gray-800 ">
-                    {'N2000'}
+                    { `${storeItems.mainSlice.me.currency} ${storeItems.mainSlice.me.accbal.toLocalString()}` }
                   </div>
                 </div>
               </Link>
