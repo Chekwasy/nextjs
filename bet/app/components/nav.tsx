@@ -168,7 +168,7 @@ export default function Nav() {
               <Link href={'/bal'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group text-gray-800 ">
-                    { `${storeItems.mainSlice.me.currency} ${storeItems.mainSlice.me.accbal.toLocalString()}` }
+                    { `${storeItems.mainSlice.me.currency} ${storeItems.mainSlice.me.accbal.toLocaleString()}` }
                   </div>
                 </div>
               </Link>
