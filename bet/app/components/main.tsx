@@ -425,7 +425,7 @@ export default function Main() {
   </div>
 </div>)}
 	{ storeItems.mainSlice.played.length > 0 && toggleInput && (<div className="p-4 grid grid-cols-4 gap-1">
-{!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('1')}>1</button>
+{!done && (<div><button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('1')}>1</button>
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('2')}>2</button>
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('3')}>3</button>
   <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('4')}>4</button>
@@ -440,7 +440,7 @@ export default function Main() {
   <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('10')}>10</button>
   <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('100')}>100</button>
   <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>
-  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button>)}
+  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button></div>)}
 {storeItems.mainSlice && storeItems.mainSlice.logged && !done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => setDone(!done)} >Done</button>)}
 {storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet()} >Book Bet</button>)}
 {storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
