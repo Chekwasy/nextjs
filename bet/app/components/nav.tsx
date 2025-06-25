@@ -82,7 +82,7 @@ export default function Nav() {
     }})
     .then(async (response) => {
         const dd = response;
-        dispatch(mainStateReducer({logged: dd.data.logged, played: storeItems.mainSlice.played, me: dd.data, buttonState: storeItems.mainSlice.buttonState}));
+        dispatch(mainStateReducer({logged: dd.data.logged, played: storeItems.mainSlice.played, me: dd.data.me, buttonState: storeItems.mainSlice.buttonState}));
     })
     .catch(error => {
       console.log(error.message);
