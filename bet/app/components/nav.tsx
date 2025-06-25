@@ -138,6 +138,11 @@ export default function Nav() {
           <Link href={'/'} className='md:flex-shrink-0 flex items-top'>
             <div className='text-lg font-bold text-white'>TryBet</div>
           </Link>
+          <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+              <div className=" md:hidden font-bold text-white ">
+                { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? storeItems.mainSlice.me.accbal.toLocaleString() : ''}` }
+              </div>
+          </div>
           <ul className='md:flex hidden items-center space-x-4'>
             <li>
               <div className="flex items-center space-x-4">
@@ -166,13 +171,11 @@ export default function Nav() {
               />
             </li>
             {storeItems && storeItems.mainSlice.logged && (<li>
-              <Link href={'/bal'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
-                  <div className="group text-gray-800 ">
+                  <div className="group font-bold text-white  ">
                     { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? storeItems.mainSlice.me.accbal.toLocaleString() : ''}` }
                   </div>
                 </div>
-              </Link>
             </li>)}
             {storeItems && storeItems.mainSlice.logged && (<li>
               <Link href={'/reload'}>
