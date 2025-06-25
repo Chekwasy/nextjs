@@ -425,22 +425,22 @@ export default function Main() {
   </div>
 </div>)}
 	{ storeItems.mainSlice.played.length > 0 && toggleInput && (<div className="p-4 grid grid-cols-4 gap-1">
-{!done && (<div><button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('1')}>1</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('2')}>2</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('3')}>3</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('4')}>4</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('5')}>5</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('6')}>6</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('7')}>7</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('8')}>8</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('9')}>9</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('.')}>.</button>
-  <button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('0')}>0</button>
-  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Del')}>Del</button>
-  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('10')}>10</button>
-  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('100')}>100</button>
-  <button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>
-  <button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button></div>)}
+{!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('1')}>1</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('2')}>2</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('3')}>3</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('4')}>4</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('5')}>5</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('6')}>6</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('7')}>7</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('8')}>8</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('9')}>9</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('.')}>.</button>)}
+  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('0')}>0</button>)}
+  {!done && (<button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Del')}>Del</button>)}
+  {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('10')}>10</button>)}
+  {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('100')}>100</button>)}
+  {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>)}
+  {!done && (<button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button>)}
 {storeItems.mainSlice && storeItems.mainSlice.logged && !done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => setDone(!done)} >Done</button>)}
 {storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet()} >Book Bet</button>)}
 {storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
