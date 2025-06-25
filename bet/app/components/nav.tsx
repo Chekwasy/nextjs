@@ -140,7 +140,7 @@ export default function Nav() {
           </Link>
           <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
               <div className=" md:hidden font-bold text-white ">
-                { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? !NAN(parseFloat(storeItems.mainSlice.me.accbal)) && new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal)) : ''}` }
+                { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? !isNaN(parseFloat(storeItems.mainSlice.me.accbal)) && new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal)) : ''}` }
               </div>
           </div>
           <div className='hover:bg-green-200 md:hidden rounded text-gray-700 hover:text-white flex items-center relative'>
@@ -181,7 +181,7 @@ export default function Nav() {
             {storeItems && storeItems.mainSlice.logged && (<li>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group font-bold text-white  ">
-                    { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? !NAN(parseFloat(storeItems.mainSlice.me.accbal)) && new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal)) : ''}` }
+                    { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? !isNaN(parseFloat(storeItems.mainSlice.me.accbal)) && new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal)) : ''}` }
                   </div>
                 </div>
             </li>)}
