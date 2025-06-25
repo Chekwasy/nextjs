@@ -422,7 +422,7 @@ export default function Main() {
     {`Odds: ${odds}`}
   </div>
   <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
-    {`Win: ${typeof parseFloat(potWin) === 'number' && new Intl.NumberFormat().format(potWin)}`}
+    {`Win: ${typeof parseFloat(potWin) === 'number' && new Intl.NumberFormat().format(parseFloat(potWin))}`}
   </div>
 </div>)}
 	{ storeItems.mainSlice.played.length > 0 && toggleInput && (<div className="p-4 grid grid-cols-4 gap-1">
