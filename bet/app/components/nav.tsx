@@ -143,6 +143,14 @@ export default function Nav() {
                 { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal)) : ''}` }
               </div>
           </div>
+          <div className='hover:bg-green-200 md:hidden rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/reload.svg" alt="Reload" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Reset </span>
+                    </div>
+                  </div>
+          </div>
           <ul className='md:flex hidden items-center space-x-4'>
             <li>
               <div className="flex items-center space-x-4">
@@ -173,7 +181,7 @@ export default function Nav() {
             {storeItems && storeItems.mainSlice.logged && (<li>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group font-bold text-white  ">
-                    { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? storeItems.mainSlice.me.accbal.toLocaleString() : ''}` }
+                    { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal)) : ''}` }
                   </div>
                 </div>
             </li>)}
