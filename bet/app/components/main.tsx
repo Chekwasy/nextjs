@@ -313,6 +313,7 @@ export default function Main() {
   };
   const handleBookedBet = () => {
 	  setToggleInput(!toggleInput);
+	  setDone(false);
 	  
   };
   return (
