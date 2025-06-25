@@ -415,14 +415,14 @@ export default function Main() {
 	{ storeItems.mainSlice.played.length > 0 && (<div className="w-full flex flex-col text-white max-w-md mx-auto p-4 bg-gray-200 rounded-lg border border-white shadow-md">
   <div className="mb-1">
     <div className="w-85 h-10  cursor-text bg-blue-400 rounded-lg border border-white flex items-center justify-center" onClick={() => { setToggleInput(!toggleInput); setDone(false);}}>
-	    {`Amt: ${storeItems ? storeItems.mainSlice.me.currency : ''} ${typeof parseFloat(betAmt) === 'number' && new Intl.NumberFormat().format(parseFloat(betAmt))}`}
+	    {`Amt: ${storeItems ? storeItems.mainSlice.me.currency : ''} ${new Intl.NumberFormat().format(parseFloat(betAmt === '' ? '0' : betAmt))}`}
     </div>
   </div>
   <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
     {`Odds: ${odds}`}
   </div>
   <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
-    {`Win: ${typeof parseFloat(potWin) === 'number' && new Intl.NumberFormat().format(parseFloat(potWin))}`}
+    {`Win: ${new Intl.NumberFormat().format(parseFloat(potWin === '' ? '0' : potWin))}`}
   </div>
 </div>)}
 	{ storeItems.mainSlice.played.length > 0 && toggleInput && (<div className="p-4 grid grid-cols-4 gap-1">
