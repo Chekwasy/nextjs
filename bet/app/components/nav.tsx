@@ -140,7 +140,7 @@ export default function Nav() {
           </Link>
           <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
               <div className=" md:hidden font-bold text-white ">
-                { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? storeItems.mainSlice.me.accbal.toLocaleString() : ''}` }
+                { `${storeItems ? storeItems.mainSlice.me.currency : ''} ${storeItems ? new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal)) : ''}` }
               </div>
           </div>
           <ul className='md:flex hidden items-center space-x-4'>
