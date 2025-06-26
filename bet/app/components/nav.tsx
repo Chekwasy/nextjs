@@ -91,7 +91,7 @@ export default function Nav() {
           })
           .catch(error => {
             console.log(error.message);
-            dispatch(mainStateReducer({logged: false, played: storeItems.mainSlice.played, me: storeItems.mainSlice.me, buttonState: storeItems.mainSlice.buttonState }));
+            dispatch(mainStateReducer({logged: dd.data.logged, played: storeItems.mainSlice.played, me: dd.data.me, buttonState: storeItems.mainSlice.buttonState}));
           });
     })
     .catch(error => {
