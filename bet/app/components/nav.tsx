@@ -82,7 +82,17 @@ export default function Nav() {
     }})
     .then(async (response) => {
         const dd = response;
-        dispatch(mainStateReducer({logged: dd.data.logged, played: storeItems.mainSlice.played, me: dd.data.me, buttonState: storeItems.mainSlice.buttonState}));
+        axios.get('/api/getsavedgames', {
+        headers: {
+          tok: Cookies.get('trybet_tok'),
+        }})
+          .then(async (res) => {
+            dispatch(mainStateReducer({logged: dd.data.logged, played: res.data.savedgames, me: dd.data.me, buttonState: res.data.savedbuttons}));
+          })
+          .catch(error => {
+            console.log(error.message);
+            dispatch(mainStateReducer({logged: false, played: storeItems.mainSlice.played, me: storeItems.mainSlice.me, buttonState: storeItems.mainSlice.buttonState }));
+          });
     })
     .catch(error => {
       console.log(error.message);
