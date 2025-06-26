@@ -231,6 +231,29 @@ export default function Main() {
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
+	axios.delete('/api/deleteworker', {
+          headers: {
+        "tok": Cookies.get('tok'),
+        "email": userData.email,
+        "firstname": userData.firstname,
+        "lastname": userData.lastname,
+        }})
+      .then(async (response) => {
+        console.log(response.data);
+        setSuccessMessage('Worker Successfully Deleted');
+        setUserData({
+        firstname: '',
+        lastname: '',
+        email: '',
+        tok: Cookies.get('tok'),
+        });
+        delayedCode();
+      })
+      .catch(error => {
+        console.log(error.message);
+        setErrorMessage('Delete Unsuccessful');
+        delayedCode();
+      });
       axios.post('/api/postsavedgames', {
         savedGames: spyd,
       })
