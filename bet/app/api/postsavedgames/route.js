@@ -23,16 +23,12 @@ export async function POST(request) {
 		}
 		return NextResponse.json('error', {status: 401});
 	} else {
-		const user = await (await dbClient.client.db().collection('workers'))
+		const sa = await (await dbClient.client.db().collection('savedgames))
 		.updateOne({ userID: usr_id }, 
 		{ $set: { savedgames: savedgames, savedbuttons: savedbuttons,} });
-        if (!user) { return NextResponse.json('error', {status: 400});}
-        return  NextResponse.json('success', {status: 201});
-		
-        const user = await (await dbClient.client.db().collection('users'))
-        .deleteOne({ email: email, firstname: firstname, lastname: lastname });
-        if (!user) { return NextResponse.json('error', {status: 400});}
-        return  NextResponse.json('success', {status: 201});
+		if (!sa) { return NextResponse.json('error', {status: 400});}
+		return  NextResponse.json({message: 'Save Successful'}, {status: 201});
+	}
     } catch {
         return  NextResponse.json('error', {status: 400});
     }
