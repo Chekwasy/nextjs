@@ -231,34 +231,14 @@ export default function Main() {
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
-	axios.delete('/api/deleteworker', {
+	axios.post('/api/postsavedgames', {
           headers: {
-        "tok": Cookies.get('tok'),
-        "email": userData.email,
-        "firstname": userData.firstname,
-        "lastname": userData.lastname,
+        "tok": Cookies.get('trybet_tok'),
+        "savedgames": spyd,
+	"savedbuttons": butState,
         }})
       .then(async (response) => {
-        console.log(response.data);
-        setSuccessMessage('Worker Successfully Deleted');
-        setUserData({
-        firstname: '',
-        lastname: '',
-        email: '',
-        tok: Cookies.get('tok'),
-        });
-        delayedCode();
-      })
-      .catch(error => {
-        console.log(error.message);
-        setErrorMessage('Delete Unsuccessful');
-        delayedCode();
-      });
-      axios.post('/api/postsavedgames', {
-        savedGames: spyd,
-      })
-      .then(async (response) => {
-        console.log(response.data);
+        console.log(response.data.message);
       })
       .catch(error => {
         console.log(error.message);
@@ -283,11 +263,14 @@ export default function Main() {
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
-      axios.post('/api/postsavedgames', {
-        savedGames: spyd,
-      })
+	axios.post('/api/postsavedgames', {
+          headers: {
+        "tok": Cookies.get('trybet_tok'),
+        "savedgames": spyd,
+	"savedbuttons": butState,
+        }})
       .then(async (response) => {
-        console.log(response.data);
+        console.log(response.data.message);
       })
       .catch(error => {
         console.log(error.message);
@@ -324,10 +307,13 @@ export default function Main() {
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
-        savedGames: spyd,
-      })
+          headers: {
+        "tok": Cookies.get('trybet_tok'),
+        "savedgames": spyd,
+	"savedbuttons": butState,
+        }})
       .then(async (response) => {
-        console.log(response.data);
+        console.log(response.data.message);
       })
       .catch(error => {
         console.log(error.message);
