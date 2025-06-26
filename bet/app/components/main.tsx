@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
 import { StoreState, PlayeD } from '../tools/s_interface';
 import { multiply } from '../tools/multiply';
+import Cookies from 'js-cookie';
 
 export default function Main() {
   //usedispatch to be able to write to store
