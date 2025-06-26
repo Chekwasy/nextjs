@@ -13,7 +13,15 @@ export async function POST(request) {
         if (!usr_id) {
             return  NextResponse.json('error', {status: 401});
         }
-	    here
+	const usr_game = await dbClient.client.db().collection('savedgames')
+    	.findOne({ "userID": usr_id });
+	    if (!usr_game) {
+		    const result = await (await dbClient.client.db().collection('users'))
+			    .insertOne({userID: userID, email: email, password: password, fname: firstname, lname: lastname, mobile: "", accbal: '10000', currency: "N"});
+			    if (result) {
+          		      return NextResponse.json({'success': email, message: "Signup Successful"}, {status: 201});
+			    }
+	    }
         const user = await (await dbClient.client.db().collection('users'))
         .deleteOne({ email: email, firstname: firstname, lastname: lastname });
         if (!user) { return NextResponse.json('error', {status: 400});}
