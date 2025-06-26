@@ -15,13 +15,20 @@ export async function POST(request) {
         }
 	const usr_game = await dbClient.client.db().collection('savedgames')
     	.findOne({ "userID": usr_id });
-	    if (!usr_game) {
-		    const result = await (await dbClient.client.db().collection('users'))
-			    .insertOne({userID: userID, email: email, password: password, fname: firstname, lname: lastname, mobile: "", accbal: '10000', currency: "N"});
-			    if (result) {
-          		      return NextResponse.json({'success': email, message: "Signup Successful"}, {status: 201});
-			    }
-	    }
+	if (!usr_game) {
+		const result = await (await dbClient.client.db().collection('savedgames'))
+		.insertOne({userID: userID, savedgames: savedgames, savedbuttons: savedbuttons,});
+		if (result) {
+			return NextResponse.json({message: "Save Successful"}, {status: 201});
+		}
+		return NextResponse.json('error', {status: 401});
+	} else {
+		const user = await (await dbClient.client.db().collection('workers'))
+		.updateOne({ userID: usr_id }, 
+		{ $set: { savedgames: savedgames, savedbuttons: savedbuttons,} });
+        if (!user) { return NextResponse.json('error', {status: 400});}
+        return  NextResponse.json('success', {status: 201});
+		
         const user = await (await dbClient.client.db().collection('users'))
         .deleteOne({ email: email, firstname: firstname, lastname: lastname });
         if (!user) { return NextResponse.json('error', {status: 400});}
