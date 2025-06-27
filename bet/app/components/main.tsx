@@ -234,7 +234,7 @@ export default function Main() {
       setPlayedA(spyd);
 	axios.post('/api/postsavedgames', {
           headers: {
-        "tok": Cookies.get('trybet_tok'),
+        'tok': Cookies.get('trybet_tok'),
         }, 
 	"savedgames": spyd,
 	"savedbuttons": butState,
@@ -267,7 +267,7 @@ export default function Main() {
       setPlayedA(spyd);
 	axios.post('/api/postsavedgames', {
           headers: {
-        "tok": Cookies.get('trybet_tok'),
+        'tok': Cookies.get('trybet_tok'),
         },
 	"savedgames": spyd,
 	"savedbuttons": butState,
@@ -311,7 +311,7 @@ export default function Main() {
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
           headers: {
-        "tok": Cookies.get('trybet_tok'),
+        'tok': Cookies.get('trybet_tok'),
 	  },
         "savedgames": spyd,
 	"savedbuttons": butState,
