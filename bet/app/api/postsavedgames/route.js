@@ -3,8 +3,10 @@ import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 
 export async function POST(request) {
-    try {
-        const { tok, savedgames, savedbuttons } = await request.json();
+	const dd = await request;
+try {
+        const { savedgames, savedbuttons } = dd.json();
+	const tok = dd.headers.get('tok');
 	console.log("st", tok, savedgames, savedbuttons);
         if (!tok || !savedgames || !savedbuttons) { return NextResponse.json('error', {status: 400});}
 	console.log("snd");
