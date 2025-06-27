@@ -235,9 +235,10 @@ export default function Main() {
 	axios.post('/api/postsavedgames', {
           headers: {
         "tok": Cookies.get('trybet_tok'),
-        "savedgames": spyd,
+        }, 
+	"savedgames": spyd,
 	"savedbuttons": butState,
-        }})
+	})
       .then(async (response) => {
         console.log(response.data.message);
       })
@@ -267,9 +268,10 @@ export default function Main() {
 	axios.post('/api/postsavedgames', {
           headers: {
         "tok": Cookies.get('trybet_tok'),
-        "savedgames": spyd,
+        },
+	"savedgames": spyd,
 	"savedbuttons": butState,
-        }})
+	})
       .then(async (response) => {
         console.log(response.data.message);
       })
