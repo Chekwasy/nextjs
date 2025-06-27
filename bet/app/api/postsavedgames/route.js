@@ -10,10 +10,12 @@ export async function POST(request) {
 	const savedbuttons = dd.headers.get('savedbuttons');
 	console.log("st");
         if (!tok || !savedgames || !savedbuttons) { return NextResponse.json('error', {status: 400});}
+	console.log("snd");
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
             return  NextResponse.json('error', {status: 401});
         }
+	console.log("thd");
 	const usr_game = await dbClient.client.db().collection('savedgames')
     	.findOne({ "userID": usr_id });
 	if (!usr_game) {
