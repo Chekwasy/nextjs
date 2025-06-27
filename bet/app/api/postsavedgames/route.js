@@ -8,7 +8,7 @@ export async function POST(request) {
         const tok = dd.headers.get('tok');
 	const savedgames = dd.headers.get('savedgames');
 	const savedbuttons = dd.headers.get('savedbuttons');
-	console.log("st");
+	console.log("st", tok, savedgames, savedbuttons);
         if (!tok || !savedgames || !savedbuttons) { return NextResponse.json('error', {status: 400});}
 	console.log("snd");
         const usr_id = await redisClient.get(`auth_${tok}`);
