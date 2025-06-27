@@ -8,6 +8,7 @@ export async function POST(request) {
         const tok = dd.headers.get('tok');
 	const savedgames = dd.headers.get('savedgames');
 	const savedbuttons = dd.headers.get('savedbuttons');
+	console.log("st");
         if (!tok || !savedgames || !savedbuttons) { return NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
@@ -27,6 +28,7 @@ export async function POST(request) {
 		.updateOne({ userID: usr_id }, 
 		{ $set: { savedgames: savedgames, savedbuttons: savedbuttons,} });
 		if (!sa) { return NextResponse.json('error', {status: 400});}
+		console.log("saved");
 		return  NextResponse.json({message: 'Save Successful'}, {status: 201});
 	}
     } catch {
