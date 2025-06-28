@@ -8,9 +8,7 @@ try {
         const savedgames = JSON.parse(dd.headers.get('savedgames'));
 	const savedbuttons = JSON.parse(dd.headers.get('savedbuttons'));
 	const tok = dd.headers.get('tok');
-	console.log("st", tok, savedgames, savedbuttons);
         if (!tok || !savedgames || !savedbuttons) { return NextResponse.json('error', {status: 400});}
-	console.log("snd");
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
             return  NextResponse.json('error', {status: 401});
@@ -19,13 +17,16 @@ try {
 	const usr_game = await dbClient.client.db().collection('savedgames')
     	.findOne({ "userID": usr_id });
 	if (!usr_game) {
+		console.log("gg");
 		const result = await (await dbClient.client.db().collection('savedgames'))
 		.insertOne({userID: userID, savedgames: savedgames, savedbuttons: savedbuttons,});
 		if (result) {
+			console.log("kk");
 			return NextResponse.json({message: "Save Successful"}, {status: 201});
 		}
 		return NextResponse.json('error', {status: 401});
 	} else {
+		console.log("uu");
 		const sa = await (await dbClient.client.db().collection('savedgames'))
 		.updateOne({ userID: usr_id }, 
 		{ $set: { savedgames: savedgames, savedbuttons: savedbuttons,} });
