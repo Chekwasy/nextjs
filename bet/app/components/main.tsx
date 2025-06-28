@@ -239,7 +239,6 @@ export default function Main() {
           headers: {
 		  'tok': Cookies.get('trybet_tok'),
 		  'Content-Type': 'application/json',
-		  'savedgames': spyd,
 	  },
 	})
       .then(async (response) => {
@@ -275,7 +274,6 @@ export default function Main() {
           headers: {
 		  'tok': Cookies.get('trybet_tok'),
 		  'Content-Type': 'application/json',
-		  'savedgames': spyd,
 	  },
 	})
       .then(async (response) => {
@@ -322,7 +320,6 @@ export default function Main() {
           headers: {
 		  'tok': Cookies.get('trybet_tok'),
 		  'Content-Type': 'application/json',
-		  'savedgames': spyd,
 	  },
         })
       .then(async (response) => {
