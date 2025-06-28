@@ -233,7 +233,7 @@ export default function Main() {
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
 	axios.post('/api/postsavedgames', {
-		'savedgames': spyd,
+		'savedgames': JSON.stringify(spyd),
 		'savedbuttons': butState,
 	}, {
           headers: {
@@ -269,7 +269,7 @@ export default function Main() {
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
 	axios.post('/api/postsavedgames', {
-		'savedgames': spyd,
+		'savedgames': JSON.stringify(spyd),
 		'savedbuttons': butState,
 	}, {
           headers: {
@@ -316,7 +316,7 @@ export default function Main() {
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
-		'savedgames': spyd,
+		'savedgames': JSON.stringify(spyd),
 		'savedbuttons': butState,
 	}, {
           headers: {
