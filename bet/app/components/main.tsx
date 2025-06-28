@@ -232,7 +232,7 @@ export default function Main() {
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
-	axios.post('/api/postsavedgames', {
+	axios.post('/api/postsavedgames',{}, {
 		headers: {
 		  'tok': Cookies.get('trybet_tok'),
 		  'Content-Type': 'application/json',
@@ -266,7 +266,7 @@ export default function Main() {
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
-	axios.post('/api/postsavedgames', {
+	axios.post('/api/postsavedgames',{}, {
 		headers: {
 		  'tok': Cookies.get('trybet_tok'),
 		  'Content-Type': 'application/json',
@@ -311,7 +311,7 @@ export default function Main() {
       dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
-      axios.post('/api/postsavedgames', {
+      axios.post('/api/postsavedgames',{}, {
 		headers: {
 		  'tok': Cookies.get('trybet_tok'),
 		  'Content-Type': 'application/json',
