@@ -233,11 +233,13 @@ export default function Main() {
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
 	axios.post('/api/postsavedgames', {
+		"savedgames": spyd,
+		"savedbuttons": butState,
+	}, {
           headers: {
-        'tok': Cookies.get('trybet_tok'),
-        }, 
-	"savedgames": spyd,
-	"savedbuttons": butState,
+		  'tok': Cookies.get('trybet_tok'),
+		  'Content-Type': 'application/json'
+	  },
 	})
       .then(async (response) => {
         console.log(response.data.message);
@@ -266,11 +268,13 @@ export default function Main() {
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
 	axios.post('/api/postsavedgames', {
+		"savedgames": spyd,
+		"savedbuttons": butState,
+	}, {
           headers: {
-        'tok': Cookies.get('trybet_tok'),
-        },
-	"savedgames": spyd,
-	"savedbuttons": butState,
+		  'tok': Cookies.get('trybet_tok'),
+		  'Content-Type': 'application/json'
+	  },
 	})
       .then(async (response) => {
         console.log(response.data.message);
@@ -310,11 +314,13 @@ export default function Main() {
 	    calculateOdd(spyd, betAmt);
       setPlayedA(spyd);
       axios.post('/api/postsavedgames', {
+		"savedgames": spyd,
+		"savedbuttons": butState,
+	}, {
           headers: {
-        'tok': Cookies.get('trybet_tok'),
+		  'tok': Cookies.get('trybet_tok'),
+		  'Content-Type': 'application/json'
 	  },
-        "savedgames": spyd,
-	"savedbuttons": butState,
         })
       .then(async (response) => {
         console.log(response.data.message);
