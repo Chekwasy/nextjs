@@ -19,7 +19,7 @@ try {
 	if (!usr_game) {
 		console.log("gg");
 		const result = await (await dbClient.client.db().collection('savedgames'))
-		.insertOne({userID: userID, savedgames: savedgames, savedbuttons: savedbuttons,});
+		.insertOne({userID: usr_id, savedgames: savedgames, savedbuttons: savedbuttons,});
 		if (result) {
 			console.log("kk");
 			return NextResponse.json({message: "Save Successful"}, {status: 201});
