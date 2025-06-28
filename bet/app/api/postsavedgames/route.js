@@ -7,6 +7,7 @@ export async function POST(request) {
 try {
         const { savedgames, savedbuttons } = dd.json();
 	const tok = dd.headers.get('tok');
+	console.log("shh");
 	console.log("st", tok, savedgames, dd.params.savedgames, dd.get('savedgames'));
         if (!tok || !savedgames || !savedbuttons) { return NextResponse.json('error', {status: 400});}
 	console.log("snd");
