@@ -5,10 +5,10 @@ import redisClient from '../../../redis';
 export async function POST(request) {
 	const dd = await request;
 try {
-        const { savedgames, savedbuttons } = dd.json();
+        const savedgames = JSON.parse(dd.headers.get('savedgames'));
+	const savedbuttons = JSON.parse(dd.headers.get('savedbuttons'));
 	const tok = dd.headers.get('tok');
-	console.log("shh");
-	console.log("st", tok, savedgames, dd.headers.get('savedgames'));
+	console.log("st", tok, savedgames, savedbuttons);
         if (!tok || !savedgames || !savedbuttons) { return NextResponse.json('error', {status: 400});}
 	console.log("snd");
         const usr_id = await redisClient.get(`auth_${tok}`);
