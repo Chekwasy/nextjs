@@ -79,26 +79,40 @@ export async function GET(request: Request) {
  				 drawodd: '',
  				 Esd: ''
 				};
-				Edt["id"] = j.toString();
-				Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
-				Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
-				Edt['homeodd'] = '1.7';
-				Edt['awayodd'] = '1.8';
-				Edt['drawodd'] = '3.1';
-				Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 				if (givenDate === 0) {
 					const hr1 = today.getHours();
 					const mn1 = today.getMinutes();
-					const hr2 = parseInt(Edt['Esd'].substring(8, 10));
-					const mn2 = parseInt(Edt['Esd'].substring(10, 12));
+					const hr2 = parseInt(gamesJson.Stages[i].Events[j].Esd.toString().substring(8, 10));
+					const mn2 = parseInt(gamesJson.Stages[i].Events[j].Esd.toString().substring(10, 12));
 					if (hr2 > hr1) {
+						Edt["id"] = j.toString();
+						Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
+						Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
+						Edt['homeodd'] = '1.7';
+						Edt['awayodd'] = '1.8';
+						Edt['drawodd'] = '3.1';
+						Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 						eventDit['events'].push(Edt);						eventDit['events'].push(Edt);
 					} else if (hr2 === hr1) {
 						if (mn2 > mn1) {
+							Edt["id"] = j.toString();
+							Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
+							Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
+							Edt['homeodd'] = '1.7';
+							Edt['awayodd'] = '1.8';
+							Edt['drawodd'] = '3.1';
+							Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 							eventDit['events'].push(Edt);
 						}
 					}
 				} else {
+					Edt["id"] = j.toString();
+					Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
+					Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
+					Edt['homeodd'] = '1.7';
+					Edt['awayodd'] = '1.8';
+					Edt['drawodd'] = '3.1';
+					Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 					eventDit['events'].push(Edt);
 				}
 			}
