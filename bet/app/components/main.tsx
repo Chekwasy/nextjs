@@ -335,6 +335,19 @@ export default function Main() {
 		const day = response.data.day;
 		const hour = response.data.hour;
 		const minute = response.data.minute;
+		const gmLen = storeItems.mainSlice.played.length;
+		let expire = false;
+		for (let i = 0; i < gmLen; i++) {
+			const dt = storeItems.mainSlice.played[i].mTime;
+			const day2 = parseInt(dt.substring(6, 8));
+			const hour2 = parseInt(dt.substring(8, 10));
+			const minute2 = parseInt(dt.substring(10, 12));
+			if (day2 === day) {
+				if (hour > hour2) {
+					expire = true;
+				}
+			}
+		}
 	})
 	.catch(error => {
 		setMsg(`Network or server error ${error.message}`);
