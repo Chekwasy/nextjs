@@ -330,7 +330,16 @@ export default function Main() {
   const handleBookedBet = () => {
 	  setToggleInput(!toggleInput);
 	  setDone(false);
-	  
+	  axios.get('/api/getdate')
+	.then(async (response) => {
+		const day = response.data.day;
+		const hour = response.data.hour;
+		const minute = response.data.minute;
+	})
+	.catch(error => {
+		setMsg(`Network or server error ${error.message}`);
+		setIsOpen(true);
+	});
   };
   return (
     <div className="relative bg-white rounded-b-lg border-4 border-green-300 mt-16 lg:border-2 lg:w-4/5 mx-auto">
