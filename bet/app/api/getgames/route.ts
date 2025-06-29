@@ -79,6 +79,7 @@ export async function GET(request: Request) {
  				 drawodd: '',
  				 Esd: ''
 				};
+				console.log(givenDate);
 				if (givenDate === 0) {
 					const hr1 = today.getHours();
 					const mn1 = today.getMinutes();
@@ -109,6 +110,7 @@ export async function GET(request: Request) {
 						}
 					}
 				} else {
+					console.log('z');
 					Edt["id"] = j.toString();
 					Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 					Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
