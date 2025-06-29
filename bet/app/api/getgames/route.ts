@@ -79,7 +79,6 @@ export async function GET(request: Request) {
  				 drawodd: '',
  				 Esd: ''
 				};
-				console.log(givenDate);
 				if (givenDate === 0) {
 					const hr1 = today.getHours();
 					const mn1 = today.getMinutes();
@@ -151,7 +150,7 @@ export async function GET(request: Request) {
 
  	   dates.push({ date: dateString, indent: i });
 	  }
-	console.log(oddLst);
+	console.log(JSON.stringify(oddLst));
 	return NextResponse.json({date: date_, datee: dates, games: oddLst}, {status: 201});
     } catch {
 	    return NextResponse.json('error fetching data', {status: 400});
