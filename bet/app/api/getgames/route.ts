@@ -85,6 +85,7 @@ export async function GET(request: Request) {
 					const hr2 = parseInt(gamesJson.Stages[i].Events[j].Esd.toString().substring(8, 10));
 					const mn2 = parseInt(gamesJson.Stages[i].Events[j].Esd.toString().substring(10, 12));
 					if (hr2 > hr1) {
+						console.log(gamesJson.Stages[i].Events[j].T1[0].Nm, 'x');
 						Edt["id"] = j.toString();
 						Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 						Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
@@ -96,6 +97,7 @@ export async function GET(request: Request) {
 					}
 					if (hr2 === hr1) {
 						if (mn2 > mn1) {
+							console.log(gamesJson.Stages[i].Events[j].T1[0].Nm, 'y');
 							Edt["id"] = j.toString();
 							Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 							Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
