@@ -332,33 +332,45 @@ export default function Main() {
 	  setDone(false);
 	  axios.get('/api/getdate')
 	.then(async (response) => {
-		const day = response.data.day;
 		const hour = response.data.hour;
 		const minute = response.data.minute;
 		const gmLen = storeItems.mainSlice.played.length;
 		let expire = false;
 		let found = false;
-		for (let i = 0; i < 8; i++) {
-			const dtchk = dateelist[i].date.substring(9, 11);
-			if (day  === parseInt(dtchk)) {
-				found = true;
-			}
-		}
-		if (!found) {
-			setMsg('Selection have one or more expired game');
-			setIsOpen(true);
-		} else {
-			for (let i = 0; i < gmLen; i++) {
-				const dt = storeItems.mainSlice.played[i].mTime;
-				const day2 = parseInt(dt.substring(6, 8));
-				const hour2 = parseInt(dt.substring(8, 10));
-				const minute2 = parseInt(dt.substring(10, 12));
-				if (day2 === day) {
-					if (hour > hour2) {
-						expire = true;
+		for (let i = 0; i < gmLen; i++) {
+			const dt = storeItems.mainSlice.played[i].mTime;
+			const fdt = dt.substring(0, 4) + '-' + dt.substring(4, 6) + '-' + dt.substring(6, 8);
+			for (let j = 0; j < 8; j++) {
+				const dtchk = dateelist[j].date;
+				
+				if (fdt === dtchk) {
+					if (j === 0) {
+						const hour2 = parseInt(dt.substring(8, 10));
+						const minute2 = parseInt(dt.substring(10, 12));
+						if (hour > hour2) {
+							expire = true;
+							break;
+						} else if (hour === hour2 && minute > minute2) {
+							expire = true;
+							break;
+						}
 					}
+					found = true;
+					break;
 				}
 			}
+			if (expire) {
+				break;
+			}
+			if (!found) {
+				expire = true;
+				break;
+			}
+			found = false;
+		}
+		if (!expire) {
+			setMsg('Good to go');
+			setIsOpen(true);
 		}
 	})
 	.catch(error => {
