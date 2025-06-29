@@ -93,7 +93,8 @@ export async function GET(request: Request) {
 						Edt['drawodd'] = '3.1';
 						Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 						eventDit['events'].push(Edt);						eventDit['events'].push(Edt);
-					} else if (hr2 === hr1) {
+					}
+					if (hr2 === hr1) {
 						if (mn2 > mn1) {
 							Edt["id"] = j.toString();
 							Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
