@@ -12,9 +12,9 @@ export async function GET(request: Request) {
     
     try {
 	let givenDate = parseInt(date!);
-    if (givenDate > 7) {
+	if (givenDate > 7) {
 	    givenDate = 0;
-    }
+	}
 	//get today's date
 	const today = new Date();
 	const i = givenDate;
@@ -86,7 +86,21 @@ export async function GET(request: Request) {
 				Edt['awayodd'] = '1.8';
 				Edt['drawodd'] = '3.1';
 				Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
-				eventDit['events'].push(Edt);
+				if (givenDate === 0) {
+					const hr1 = today.getHours();
+					const mn1 = today.getMinutes();
+					const hr2 = parseInt(Edt['Esd'].substring(8, 10));
+					const mn2 = parseInt(Edt['Esd'].substring(10, 12));
+					if (hr2 > hr1) {
+						eventDit['events'].push(Edt);						eventDit['events'].push(Edt);
+					} else if (hr2 === hr1) {
+						if (mn2 > mn1) {
+							eventDit['events'].push(Edt);
+						}
+					}
+				} else {
+					eventDit['events'].push(Edt);
+				}
 			}
 		}
 		if (eventDit.events.length > 0) {
