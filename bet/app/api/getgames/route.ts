@@ -86,7 +86,6 @@ export async function GET(request: Request) {
 					const hr2 = parseInt(gamesJson.Stages[i].Events[j].Esd.toString().substring(8, 10));
 					const mn2 = parseInt(gamesJson.Stages[i].Events[j].Esd.toString().substring(10, 12));
 					if (hr2 > hr1) {
-						console.log(gamesJson.Stages[i].Events[j].T1[0].Nm, 'x');
 						Edt["id"] = j.toString();
 						Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 						Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
@@ -98,7 +97,6 @@ export async function GET(request: Request) {
 					}
 					if (hr2 === hr1) {
 						if (mn2 > mn1) {
-							console.log(gamesJson.Stages[i].Events[j].T1[0].Nm, 'y');
 							Edt["id"] = j.toString();
 							Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 							Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
@@ -110,7 +108,6 @@ export async function GET(request: Request) {
 						}
 					}
 				} else {
-					console.log('z');
 					Edt["id"] = j.toString();
 					Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 					Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
@@ -154,6 +151,7 @@ export async function GET(request: Request) {
 
  	   dates.push({ date: dateString, indent: i });
 	  }
+	console.log(oddLst);
 	return NextResponse.json({date: date_, datee: dates, games: oddLst}, {status: 201});
     } catch {
 	    return NextResponse.json('error fetching data', {status: 400});
