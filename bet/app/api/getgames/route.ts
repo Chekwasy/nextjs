@@ -9,11 +9,12 @@ export async function GET(request: Request) {
     const dd = await request;
     const url = new URL(dd.url);
     const date = url.searchParams.get('date');
-    let givenDate = parseInt(date!);
+    
+    try {
+	let givenDate = parseInt(date!);
     if (givenDate > 7) {
 	    givenDate = 0;
     }
-    try {
 	//get today's date
 	const today = new Date();
 	const i = givenDate;
