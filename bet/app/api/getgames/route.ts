@@ -92,7 +92,7 @@ export async function GET(request: Request) {
 						Edt['awayodd'] = '1.8';
 						Edt['drawodd'] = '3.1';
 						Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
-						eventDit['events'].push(Edt);						eventDit['events'].push(Edt);
+						eventDit['events'].push(Edt);
 					}
 					if (hr2 === hr1) {
 						if (mn2 > mn1) {
@@ -150,7 +150,6 @@ export async function GET(request: Request) {
 
  	   dates.push({ date: dateString, indent: i });
 	  }
-	console.log(JSON.stringify(oddLst));
 	return NextResponse.json({date: date_, datee: dates, games: oddLst}, {status: 201});
     } catch {
 	    return NextResponse.json('error fetching data', {status: 400});
