@@ -1,42 +1,12 @@
 "use client"
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect, ChangeEvent, MouseEvent } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
-
-interface StoreState { mainSlice: {
-  logged: boolean;
-  played: {
-    id: string;
-      gId: string;
-      gSubtitle: string;
-      gTCountry: string;
-      mktT: string;
-      mTime: string;
-      hometeam: string;
-      awayteam: string;
-      odd: string;
-      selection: string;
-      mStatus: string;
-      mResult: string;
-      mOutcome: string;
-      mScore: string;
-  }[];
-  me: {
-    userID: string;
-    fname: string;
-    lname: string;
-    email: string;
-    mobile: string;
-    accbal: string;
-    currency: string;
-  },
-  buttonState: {[key:string] : boolean}
-}}
-
+import { StoreState } from '../tools/s_interface';
 
 export default function Nav() {
   //usedispatch to be able to write to store
