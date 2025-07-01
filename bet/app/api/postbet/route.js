@@ -13,6 +13,9 @@ export async function POST(request) {
 try {
         const tobet = JSON.parse(dd.headers.get('tobet'));
 	const tok = dd.headers.get('tok');
+	const betamt = dd.headers.get('betamt');
+	const potwin = dd.headers.get('potwin');
+	const odds = dd.headers.get('odds');
         if (!tok || !tobet) { return NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
@@ -28,7 +31,7 @@ try {
 	const dt = `${year}${month}${day}${hour}${minute}${second}`;
 	const gameID = makeID();
 	const result = await (await dbClient.client.db().collection('bets'))
-	.insertOne({userID: usr_id, gameID: gameID, time: dt, bet: tobet,});
+	.insertOne({userID: usr_id, gameID: gameID, time: dt, betamt: betamt, potwin: potwin, odds: odds, bet: tobet,});
 	if (result) {
 		return NextResponse.json({message: "Game Booked Successfully"}, {status: 201});
 	}
