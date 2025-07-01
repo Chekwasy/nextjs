@@ -190,12 +190,12 @@ export default function Nav() {
               </Link>
             </li>
             {storeItems.mainSlice && storeItems.mainSlice.logged && (<li>
-              <Link href={'/games'}>
+              <Link href={'/bets'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
-                    <Image src="/icons/games.svg" alt="Games" width={35} height={35} />
+                    <Image src="/icons/games.svg" alt="Bets" width={35} height={35} />
                     <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
-                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Games </span>
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Bets </span>
                     </div>
                   </div>
                 </div>
@@ -328,11 +328,11 @@ export default function Nav() {
                 </Link>
               </li>)}
               {storeItems.mainSlice && storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/games'}>
+                <Link href={'/bets'}>
                   <div className='text-gray-900 hover:text-white flex items-center'>
                     <Image
                     src="/icons/games.svg"
-                    alt="Games"
+                    alt="Bets"
                     width={30}
                     height={30}
                   />
