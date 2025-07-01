@@ -321,18 +321,18 @@ export default function Nav() {
                   />
                 </button>
               </li>
-              <li>
-              <Link href={'/'}>
-                <div className='bg-green-900 hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
-                  <div className="group">
-                    <Image src="/icons/home.svg" alt="Home" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
-                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Home </span>
-                    </div>
+             <li className='px-4 py-2 hover:bg-gray-700'>
+                <Link href={'/'}>
+                  <div className='text-gray-100 hover:text-white flex items-center'>
+                    <Image
+                    src="/icons/home.svg"
+                    alt="Home"
+                    width={30}
+                    height={30}
+                  />
                   </div>
-                </div>
-              </Link>
-            </li>
+                </Link>
+              </li>
               {storeItems.mainSlice && !storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/auth/signup'}>
                   <div className='text-gray-100 hover:text-white flex items-center'>
