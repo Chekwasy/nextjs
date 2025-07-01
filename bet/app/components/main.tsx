@@ -369,8 +369,21 @@ export default function Main() {
 			found = false;
 		}
 		if (!expire) {
-			setMsg('Good to go');
-			setIsOpen(true);
+			axios.post('/api/postbet',{}, {
+				headers: {
+					'tok': Cookies.get('trybet_tok'),
+					'Content-Type': 'application/json',
+					tobet: JSON.stringify(storeItems.mainSlice.played),
+				},
+			})
+			.then(async (res) => {
+				setMsg(res.data.message);
+				setIsOpen(true);
+			})
+			.catch(error => {
+				setMsg(error.message);
+				setIsOpen(true);
+			});
 		}
 	})
 	.catch(error => {
