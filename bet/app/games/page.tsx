@@ -1,5 +1,6 @@
 "use client"
 import Nav from '@/app/components/nav';
+import Games from '@/app/components/games';
 import { Provider } from 'react-redux';
 import store from '@/store/store';
 
