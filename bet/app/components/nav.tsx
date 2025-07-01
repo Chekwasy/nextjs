@@ -261,7 +261,7 @@ export default function Nav() {
             </li>)}
           </ul>
 
-          {!menuOpen && (
+          
             <button
               className='md:hidden text-gray-200 flex items-center justify-center w-8 h-8 hover:text-white'
               onClick={() => setMenuOpen(!menuOpen)}
@@ -273,7 +273,7 @@ export default function Nav() {
                 height={30}
               />
             </button>
-          )}
+          
           {menuOpen && (
             <ul
               className='md:hidden flex flex-col items-center justify-center bg-green-200 text-gray-800 absolute top-full right-0 w-48 py-2 border border-gray-800 z-20'
