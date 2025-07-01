@@ -28,10 +28,11 @@ try {
 	const hour = now.getHours().toString().padStart(2, '0');
 	const minute = now.getMinutes().toString().padStart(2, '0');
 	const second = now.getSeconds().toString().padStart(2, '0');
-	const dt = `${year}${month}${day}${hour}${minute}${second}`;
+	const dt = `${year}${month}${day}`
+	const tm = `${hour}${minute}${second}`;
 	const gameID = makeID();
 	const result = await (await dbClient.client.db().collection('bets'))
-	.insertOne({userID: usr_id, gameID: gameID, time: dt, betamt: betamt, potwin: potwin, odds: odds, bet: tobet,});
+	.insertOne({userID: usr_id, gameID: gameID, date: dt, time: tm, betamt: betamt, potwin: potwin, odds: odds, bet: tobet,});
 	if (result) {
 		return NextResponse.json({message: "Game Booked Successfully"}, {status: 201});
 	}
