@@ -374,6 +374,9 @@ export default function Main() {
 					'tok': Cookies.get('trybet_tok'),
 					'Content-Type': 'application/json',
 					tobet: JSON.stringify(storeItems.mainSlice.played),
+					betamt: betAmt,
+					potwin: potWin,
+					odds: odds
 				},
 			})
 			.then(async (res) => {
