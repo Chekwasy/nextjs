@@ -44,3 +44,32 @@ export interface PlayeD {
   mOutcome: string;
   mScore: string;
 }
+
+export interface Bet {
+  userID: string;
+  gameID: string;
+  returns: string;
+  result: string;
+  date: string;
+  time: string;
+  betamt: string;
+  status: string;
+  potwin: string;
+  odds: string;
+  bet: {
+  id: string;
+  gId: string;
+  gSubtitle: string;
+  gTCountry: string;
+  mktT: string;
+  mTime: string;
+  hometeam: string;
+  awayteam: string;
+  odd: string;
+  selection: string;
+  mStatus: string;
+  mResult: string;
+  mOutcome: string;
+  mScore: string;
+};
+}
