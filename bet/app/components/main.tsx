@@ -380,6 +380,7 @@ export default function Main() {
 				},
 			})
 			.then(async (res) => {
+				dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: storeItems.mainSlice.played, me: res.data.me, buttonState: storeItems.mainSlice.buttonState}));
 				setMsg(res.data.message);
 				setIsOpen(true);
 			})
