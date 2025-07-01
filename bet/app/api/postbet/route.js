@@ -31,10 +31,30 @@ try {
 	const dt = `${year}${month}${day}`
 	const tm = `${hour}${minute}${second}`;
 	const gameID = makeID();
+	const usr = await dbClient.client.db().collection('users')
+    	.findOne({ "userID": usr_id });
+	if (!usr) { return  NextResponse.json('error', {status: 401});}
+	if (betamt === '' || betamt === '0' || odds === '' || odds === '0') {
+		return NextResponse.json('error', {status: 401});
+	}
+	const nwbetamt = parseFloat(betamt);
+	const accbal = parseFloat(usr.accbal);
+	if ((accbal - nwbetamt) < 0) {
+		return NextResponse.json('error', {status: 401});
+	}
+
+	const sa = await (await dbClient.client.db().collection('users'))
+		.updateOne({ userID: usr_id }, 
+		{ $set: { accbal: (accbal - nwbetamt).toFixed(2)} });
+	if (!sa) { return NextResponse.json('error', {status: 400});}
+	const user = await dbClient.client.db().collection('users')
+    	.findOne({ "userID": usr_id });
+	if (!user) { return  NextResponse.json('error', {status: 401});}
+	
 	const result = await (await dbClient.client.db().collection('bets'))
 	.insertOne({userID: usr_id, gameID: gameID, returns: '0.00', result: 'Pending', date: dt, time: tm, betamt: betamt, status: 'open', potwin: potwin, odds: odds, bet: tobet,});
 	if (result) {
-		return NextResponse.json({message: "Game Booked Successfully"}, {status: 201});
+		return NextResponse.json({message: "Game Booked Successfully", me: {userID: user.userID, fname: user.fname, lname: user.lname, email: user.email, mobile: user.mobile, accbal: user.accbal, currency: user.currency}}, {status: 201});
 	}
 	return NextResponse.json('error', {status: 401});
     } catch {
