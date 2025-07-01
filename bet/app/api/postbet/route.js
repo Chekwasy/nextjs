@@ -32,7 +32,7 @@ try {
 	const tm = `${hour}${minute}${second}`;
 	const gameID = makeID();
 	const result = await (await dbClient.client.db().collection('bets'))
-	.insertOne({userID: usr_id, gameID: gameID, date: dt, time: tm, betamt: betamt, potwin: potwin, odds: odds, bet: tobet,});
+	.insertOne({userID: usr_id, gameID: gameID, date: dt, time: tm, betamt: betamt, status: 'open', potwin: potwin, odds: odds, bet: tobet,});
 	if (result) {
 		return NextResponse.json({message: "Game Booked Successfully"}, {status: 201});
 	}
