@@ -36,7 +36,7 @@ export default function Bets() {
     handleOpenBet();
   }, []);
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center mt-16">
       <div className="md:w-4/5 w-11/12">
         <div className="bg-gray-200 p-4 flex gap-4">
           <div className="bg-white text-gray-700 rounded-lg border-4 border-green-500 hover:border-green-300 p-4 w-1/2" onClick={() => handleOpenBet()}>
