@@ -6,6 +6,7 @@ import { Bet } from '../tools/s_interface';
 
 export default function Bets() {
   const [bet, setBet] = useState<Bet[]>([]);
+  const [betTab, setBetTab] = useState('open');
   const handleOpenBet = () => {
     axios.get('/api/getopengames', {
       headers: {
@@ -14,6 +15,7 @@ export default function Bets() {
     .then(async (response) => {
         const dd = response;
       setBet(dd.data.games);
+      setBetTab('open');
     })
     .catch(error => {
       console.log(error.message);
@@ -27,6 +29,7 @@ export default function Bets() {
     .then(async (response) => {
         const dd = response;
       setBet(dd.data.games);
+      setBetTab('close');
     })
     .catch(error => {
       console.log(error.message);
@@ -39,11 +42,11 @@ export default function Bets() {
     <div className="flex justify-center items-center mt-16">
       <div className="md:w-4/5 w-11/12">
         <div className="bg-gray-400 rounded-lg p-4 flex gap-4">
-          <div className="bg-white text-gray-700 justify-center items-center rounded-lg border-4 border-green-500 hover:border-green-300 p-4 w-1/2" onClick={() => handleOpenBet()}>
-            Open Bet
+          <div className="bg-white text-gray-700 text-center rounded-lg border-4 border-green-500 hover:border-green-300 p-4 w-1/2" onClick={() => handleOpenBet()}>
+            Open Bets
           </div>
-          <div className="bg-white rounded-lg border-4 border-green-500 justify-center items-center hover:border-green-300 p-4 w-1/2" onClick={() => handleCloseBet()} >
-            Closed Bet
+          <div className="bg-white rounded-lg border-4 border-green-500 text-center hover:border-green-300 p-4 w-1/2" onClick={() => handleCloseBet()} >
+            Closed Bets
           </div>
         </div>
       </div>
