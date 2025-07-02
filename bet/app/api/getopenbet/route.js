@@ -11,12 +11,16 @@ export async function GET(request) {
         if (!usr_id) {
             return NextResponse.json('error', {status: 401});
         }
-        const gm = await (await dbClient.client.db().collection('savedgames'))
-	.findOne({ "userID": usr_id });
+        const gm = await (await dbClient.client.db().collection('bets'))
+	.find({ 'userID': usr_id, 'status': 'open' });
 	if (!gm) {
 		return NextResponse.json('error', {status: 404});
 	}
-        return  NextResponse.json({savedgames: gm.savedgames, savedbuttons: gm.savedbuttons}, {status: 201});
+	const gmlen = gm.length;
+	if (gmlen === 0) {
+		return  NextResponse.json({games: [] }, {status: 201});
+	}
+	
     } catch {
         return NextResponse.json('error', {status: 400});
     }
