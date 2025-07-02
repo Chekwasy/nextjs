@@ -24,6 +24,7 @@ export async function GET(request) {
 		let docCopy = {...doc};
 		let nwBet = [];
 		doc.bet.forEach((itm) => {
+			let itmCopy = {...itm};
 			const date_ = itm.mTime.substring(0, 8);
 			const response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
 			const gamesJson = response.data;
@@ -36,7 +37,12 @@ export async function GET(request) {
 					const evtLen = gamesJson.Stages[i].Events.length;
 					for (let j = 0; j < evtLen; j++) {
 						if (gamesJson.Stages[i].Events[j].T1[0].Nm === itm.hometeam) {
-							if (gamesJson.Stages[i].Events[j].Eps === 'NS') {
+							if (gamesJson.Stages[i].Events[j].Eps.includes("'")) {
+								itmCopy.mResult = 'Pending';
+								itmCopy.mOutcome = 'Pending';
+								itmCopy.mScore = `${gamesJson.Stages[i].Events[j].Tr1OR} : ${gamesJson.Stages[i].Events[j].Tr2OR}`;
+								nwBet.push(itmCopy);
+							} else if (gamesJson.Stages[i].Events[j].Eps === 'HT') {
 								
 							}
 							break;
