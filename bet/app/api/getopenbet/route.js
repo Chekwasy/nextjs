@@ -21,12 +21,31 @@ export async function GET(request) {
 		return  NextResponse.json({games: [] }, {status: 201});
 	}
 	gm.forEach((doc) => {
+		let docCopy = {...doc};
+		let nwBet = [];
 		doc.bet.forEach((itm) => {
 			const date_ = itm.mTime.substring(0, 8);
 			const response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
 			const gamesJson = response.data;
 			// extract details
 			const gjLen = gamesJson.Stages.length;
+			for (let i = 0; i < gjLen; i++) {
+				let tc = gamesJson.Stages[i].Cnm;
+				let st = gamesJson.Stages[i].Snm;
+				if (tc === itm.gTCountry && st === item.gSubtitle) {
+					const evtLen = gamesJson.Stages[i].Events.length;
+					for (let j = 0; j < evtLen; j++) {
+						if (gamesJson.Stages[i].Events[j].T1[0].Nm === itm.hometeam) {
+							if (gamesJson.Stages[i].Events[j].Eps === 'NS') {
+								
+							}
+							break;
+						}
+					}
+					break;
+				}
+			}
+			//save the nwBet to the docCopy and update it based on the gameID
 		});
 	});
 	
