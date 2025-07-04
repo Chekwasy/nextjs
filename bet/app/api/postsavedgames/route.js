@@ -23,7 +23,7 @@ try {
 		}
 		return NextResponse.json('error', {status: 401});
 	} else {
-		const sa = await (await dbClient.client.db().collection('savedgames'))
+		const sa = await dbClient.client.db().collection('savedgames')
 		.updateOne({ userID: usr_id }, 
 		{ $set: { savedgames: savedgames, savedbuttons: savedbuttons,} });
 		if (!sa) { return NextResponse.json('error', {status: 400});}

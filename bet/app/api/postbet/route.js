@@ -43,7 +43,7 @@ try {
 		return NextResponse.json('error', {status: 401});
 	}
 
-	const sa = await (await dbClient.client.db().collection('users'))
+	const sa = await dbClient.client.db().collection('users')
 		.updateOne({ userID: usr_id }, 
 		{ $set: { accbal: (accbal - nwbetamt).toFixed(2)} });
 	if (!sa) { return NextResponse.json('error', {status: 400});}

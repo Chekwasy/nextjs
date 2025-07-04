@@ -11,7 +11,7 @@ export async function GET(request) {
         if (!usr_id) {
             return NextResponse.json('error', {status: 401});
         }
-        const gm = await (await dbClient.client.db().collection('bets'))
+        const gm = await dbClient.client.db().collection('bets')
 	.find({ 'userID': usr_id, 'status': 'open' });
 	if (!gm) {
 		return NextResponse.json('error', {status: 404});
@@ -22,7 +22,7 @@ export async function GET(request) {
 	}
 
 	for (let a = 0; a < gmlen; a++) {
-		let docCopy = {...doc};
+		let docCopy = {...gm[a]};
 		let nwBet = [];
 		doc.bet.forEach(async (itm) => {
 			let itmCopy = {...itm};
@@ -106,9 +106,13 @@ export async function GET(request) {
 										itmCopy.mOutcome = 'Void';
 										itmCopy.odd = '1';
 									}
+								} else {
 									const day2 = gamesJson.Stages[i].Events[j].Esd.toString().substring(6, 8);
 									if (day !== day2 && (parseInt(day2) + 1) <= 28 && parseInt(day) > (parseInt(day2) + 1)) {
-										
+										itmCopy.mStatus = 'Canc.';
+										itmCopy.mResult = 'NR';
+										itmCopy.mOutcome = 'Void';
+										itmCopy.odd = '1';
 									}
 								}
 								nwBet.push(itmCopy);
@@ -119,8 +123,14 @@ export async function GET(request) {
 					break;
 				}
 			}
-			//save the nwBet to the docCopy and update it based on the gameID
 		});
+		//go through nwBet and recheck odd total potwin etc
+		
+		//save the nwBet to the docCopy and update it based on the gameID
+		const sa = await dbClient.client.db().collection('savedgames')
+		.updateOne({ gameID: docCopy.gameID }, 
+		{ $set: { savedgames: savedgames, savedbuttons: savedbuttons,} });
+		if (!sa) { return NextResponse.json('error', {status: 400});}
 	}
 	
     } catch {
