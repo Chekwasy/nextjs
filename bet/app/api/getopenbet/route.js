@@ -107,8 +107,8 @@ export async function GET(request) {
 										itmCopy.odd = '1';
 									}
 									const day2 = gamesJson.Stages[i].Events[j].Esd.toString().substring(6, 8);
-									if (day !== day2 && (parseInt(day) + 1) <= 28 && (parseInt(day) + 1) > parseInt(day2)) {
-
+									if (day !== day2 && (parseInt(day2) + 1) <= 28 && parseInt(day) > (parseInt(day2) + 1)) {
+										
 									}
 								}
 								nwBet.push(itmCopy);
