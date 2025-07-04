@@ -2,9 +2,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Bet } from '../tools/s_interface';
+import { Bet, StoreState } from '../tools/s_interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { mainStateReducer } from '@/store/slices/mainslice';
 
 export default function Bets() {
+  //usedispatch to be able to write to store
+    const dispatch = useDispatch();
+  //useSelector to extract what is in the store
+  const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const [bet, setBet] = useState<Bet[]>([]);
   const [betTab, setBetTab] = useState('open');
   const handleOpenBet = () => {
@@ -13,8 +19,13 @@ export default function Bets() {
         tok: Cookies.get('trybet_tok'),
     }})
     .then(async (response) => {
-        const dd = response;
-      setBet(dd.data.games);
+      const dd = response;
+      if (dd.data.openbet.length > 0) {
+        setBet(dd.data.openbet);
+      }
+      if (dd.data.me) {
+        dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: storeItems.mainSlice.played, me: dd.data.me, buttonState: storeItems.mainSlice.buttonState}));
+      }
       setBetTab('open');
     })
     .catch(error => {
@@ -27,8 +38,10 @@ export default function Bets() {
         tok: Cookies.get('trybet_tok'),
     }})
     .then(async (response) => {
-        const dd = response;
-      setBet(dd.data.games);
+      const dd = response;
+      if (dd.data.closebet.length > 0) {
+        setBet(dd.data.closebet);
+      }
       setBetTab('close');
     })
     .catch(error => {

@@ -51,7 +51,7 @@ try {
     	.findOne({ "userID": usr_id });
 	if (!user) { return  NextResponse.json('error', {status: 401});}
 	
-	const result = await (await dbClient.client.db().collection('bets'))
+	const result = await dbClient.client.db().collection('bets')
 	.insertOne({userID: usr_id, gameID: gameID, returns: '0.00', result: 'Pending', date: dt, time: tm, betamt: betamt, status: 'open', potwin: potwin, odds: odds, bet: tobet,});
 	if (result) {
 		return NextResponse.json({message: "Game Booked Successfully", me: {userID: user.userID, fname: user.fname, lname: user.lname, email: user.email, mobile: user.mobile, accbal: user.accbal, currency: user.currency}}, {status: 201});
