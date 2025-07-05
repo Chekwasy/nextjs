@@ -151,6 +151,7 @@ export async function GET(request) {
 			}
 			//go through nwBet and recheck odd total potwin etc
 			const doclen = nwBet.length;
+			console.log("nwBet to be saved", nwBet);
 			console.log("doclen", doclen);
 			let won = true;
 			for (let b = 0; b < doclen; b++) {
@@ -194,7 +195,7 @@ export async function GET(request) {
 		if (!gm2) {
 			return NextResponse.json('error', {status: 404});
 		}
-	 console.log("all good");
+	 console.log("all good", returns, result, betamt, odds, potwin, status);
 		return NextResponse.json({openbet: gm2, me: {userID: usr.userID, fname: usr.fname, lname: usr.lname, email: usr.email, mobile: usr.mobile, accbal: accbal, currency: usr.currency}}, {status: 201});
   //  } catch {
 	//    console.log("problem somme where");
