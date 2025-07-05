@@ -49,7 +49,6 @@ export const multiply = (fst: string, snd: string) => {
                         nwadd.push(addlst[i] + zeros);
 			zeros = zeros.slice(1);
                 }
-	    console.log(nwadd);
 	    nwadd.forEach((itm) => {
 		    if (ans.length >= itm.length) {
 			    ans = adding(ans, itm);
