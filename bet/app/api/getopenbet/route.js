@@ -156,7 +156,7 @@ export async function GET(request) {
 			let won = true;
 			for (let b = 0; b < doclen; b++) {
 				console.log("in won check");
-				odds = multiply(odds, nwBet.odd)
+				odds = multiply(odds, nwBet[b].odd)
 				if (nwBet[b].mOutcome === 'Pending') {
 					won = false;
 				}
