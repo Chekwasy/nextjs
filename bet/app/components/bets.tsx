@@ -72,7 +72,20 @@ export default function Bets() {
   <div>
     {bet.length > 0 &&
       bet.map((item, index) => (
-        <div key={index}>{item.status}</div>
+        <div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
+          <div className="flex flex-col space-y-4">
+            <div className="flex-row space-x-4">
+              <div className="w-3/10 bg-yellow-100 p-4 rounded-lg">{item.status}</div>
+              <div className="w-7/10 bg-blue-100 p-4 rounded-lg flex justify-end">{`${item.date} ${item.time}`}</div>
+            </div>
+            <div className="flex flex-col space-y-4">
+              <div className="bg-purple-100 p-4 rounded-lg">{item.betamt}</div>
+              <div className="bg-purple-100 p-4 rounded-lg">{item.odds}</div>
+              <div className="bg-purple-100 p-4 rounded-lg">{item.potwin}</div>
+              <div className="bg-purple-100 p-4 rounded-lg">{item.returns}</div>
+            </div>
+          </div>
+        </div>
       ))}
   </div>
 </div>
