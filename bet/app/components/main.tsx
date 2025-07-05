@@ -78,8 +78,8 @@ export default function Main() {
   const calculateOdd = async (itm: {
     id: string;
     gId: string;
-    gSubtitle: string;
     gTCountry: string;
+    gSubtitle: string;
     mktT: string;
     mTime: string;
     hometeam: string;
@@ -188,7 +188,7 @@ export default function Main() {
     }
   };
   //handle home draw and away odd selection
-  const handleHDA = async (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, sel: string, odd: string, gID: string, gS: string, gT: string) => {
+  const handleHDA = async (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, sel: string, odd: string, gID: string, gT: string, gS: string) => {
     const butState : {[key: string] : boolean} = {
       ...storeItems.mainSlice.buttonState,
       [m.hometeam + sel]: !storeItems.mainSlice.buttonState[m.hometeam + sel]
@@ -196,8 +196,8 @@ export default function Main() {
     const pyd: {
       id: string;
       gId: string;
-      gSubtitle: string;
       gTCountry: string;
+      gSubtitle: string;
       mktT: string;
       mTime: string;
       hometeam: string;
@@ -211,8 +211,9 @@ export default function Main() {
     } = {
       id: '',
       gId: '',
-      gSubtitle: '',
       gTCountry: '',
+      gSubtitle: '',
+      gId: '',
       mktT: '',
       mTime: '',
       hometeam: '',
@@ -250,8 +251,8 @@ export default function Main() {
       // Handle the case when no match is found
       pyd.id = m.hometeam + sel;
       pyd.gId = gID;
-      pyd.gSubtitle = gS;
       pyd.gTCountry = gT;
+      pyd.gSubtitle = gS;
       pyd.hometeam = m.hometeam;
       pyd.awayteam = m.awayteam;
       pyd.odd = odd;
@@ -286,8 +287,8 @@ export default function Main() {
   const handleHDAR = async (itm: {
     id: string;
     gId: string;
-    gSubtitle: string;
     gTCountry: string;
+    gSubtitle: string;
     mktT: string;
     mTime: string;
     hometeam: string;
