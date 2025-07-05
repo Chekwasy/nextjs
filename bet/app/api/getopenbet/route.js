@@ -25,6 +25,7 @@ export async function GET(request) {
 			return NextResponse.json('error', {status: 404});
 		}
 		const gmlen = gm.length;
+	console.log(gmlen);
 		if (gmlen === 0) {
 			console.log("gm is 0");
 			return  NextResponse.json({openbet: [], me: null }, {status: 201});
