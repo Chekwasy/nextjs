@@ -5,24 +5,28 @@ import { multiply } from '../../tools/multiply';
 
 export async function GET(request) {
     const dd = await request;
-    try {
+    try {console.log(1);
         const tok = dd.headers.get('tok');
-        if (!tok) { return  NextResponse.json('error', {status: 400});}
+        if (!tok) {console.log("no tok"); return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
+		console.log("no usr_ID");
             return NextResponse.json('error', {status: 401});
         }
 		const usr = await dbClient.client.db().collection('users')
 		.findOne({ "userID": usr_id });
-		if (!usr) { return  NextResponse.json('error', {status: 401});}
+		if (!usr) {console.log("no usr"); return  NextResponse.json('error', {status: 401});}
 		let accbal = usr.accbal;
+	 console.log(1);
         const gm = await dbClient.client.db().collection('bets')
 		.find({ 'userID': usr_id, 'status': 'open' });
 		if (!gm) {
+			console.log("no gm");
 			return NextResponse.json('error', {status: 404});
 		}
 		const gmlen = gm.length;
 		if (gmlen === 0) {
+			console.log("gm is 0");
 			return  NextResponse.json({openbet: [], me: null }, {status: 201});
 		}
 
@@ -159,7 +163,7 @@ export async function GET(request) {
 				const sav = await dbClient.client.db().collection('users')
 				.updateOne({ userID: usr_id }, 
 				{ $set: { accbal: accbal} });
-				if (!sav) { return NextResponse.json('error', {status: 400});}
+				if (!sav) {console.log("no sav update"); return NextResponse.json('error', {status: 400});}
 			}
 			if (result === 'Won' || result === 'Lost') {
 				status = 'close';
@@ -169,15 +173,18 @@ export async function GET(request) {
 			const sa = await dbClient.client.db().collection('savedgames')
 			.updateOne({ gameID: docCopy.gameID }, 
 			{ $set: { status: status, potwin: potwin, odds: odds, returns: returns, result: result, bet: nwBet,} });
-			if (!sa) { return NextResponse.json('error', {status: 400});}
+			if (!sa) { console.log("no sa update"); return NextResponse.json('error', {status: 400});}
 		}
 		const gm2 = await dbClient.client.db().collection('bets')
 		.find({ 'userID': usr_id, 'status': 'open' });
 		if (!gm2) {
+			console.log("no gm2");
 			return NextResponse.json('error', {status: 404});
 		}
+	 console.log("all good");
 		return NextResponse.json({openbet: gm2, me: {userID: usr.userID, fname: usr.fname, lname: usr.lname, email: usr.email, mobile: usr.mobile, accbal: accbal, currency: usr.currency}}, {status: 201});
     } catch {
+	    console.log("problem somme where");
         return NextResponse.json('error', {status: 400});
     }
 };
