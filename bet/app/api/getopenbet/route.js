@@ -2,6 +2,7 @@ import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 import { multiply } from '../../tools/multiply';
+import axios from 'axios';
 
 export async function GET(request) {
     const dd = await request;
