@@ -5,7 +5,7 @@ import { multiply } from '../../tools/multiply';
 
 export async function GET(request) {
     const dd = await request;
-    try {console.log(1);
+    console.log(1);
         const tok = dd.headers.get('tok');
         if (!tok) {console.log("no tok"); return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
@@ -183,8 +183,8 @@ export async function GET(request) {
 		}
 	 console.log("all good");
 		return NextResponse.json({openbet: gm2, me: {userID: usr.userID, fname: usr.fname, lname: usr.lname, email: usr.email, mobile: usr.mobile, accbal: accbal, currency: usr.currency}}, {status: 201});
-    } catch {
-	    console.log("problem somme where");
-        return NextResponse.json('error', {status: 400});
-    }
+  //  } catch {
+	//    console.log("problem somme where");
+    //    return NextResponse.json('error', {status: 400});
+  //  }
 };
