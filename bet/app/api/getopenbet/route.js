@@ -51,7 +51,7 @@ export async function GET(request) {
 					let tc = gamesJson.Stages[i].Cnm;
 					let st = gamesJson.Stages[i].Snm;
 					console.log(tc, st);
-					console.log(itm.gTCountry, itm.gSubtitle);
+					console.log((gm[a].bet[c]).gTCountry, (gm[a].bet[c]).gSubtitle);
 					if (tc === (gm[a].bet[c]).gTCountry && st === (gm[a].bet[c]).gSubtitle) {
 						const evtLen = gamesJson.Stages[i].Events.length;
 						for (let j = 0; j < evtLen; j++) {
