@@ -213,7 +213,6 @@ export default function Main() {
       gId: '',
       gTCountry: '',
       gSubtitle: '',
-      gId: '',
       mktT: '',
       mTime: '',
       hometeam: '',
