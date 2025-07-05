@@ -36,8 +36,11 @@ export async function GET(request) {
 			let returns = docCopy.returns;
 			let nwBet = [];
 			const betlen = gm[a].bet;
+			console.log("betlen", betlen);
 			for (let c = 0; c < betlen; c++) {
+				console.log("in c");
 				let itmCopy = {...(gm[a].bet[c])};
+				console.log("gmbet", gm[a].bet[c]);
 				const date_ = (gm[a].bet[c]).mTime.substring(0, 8);
 				const response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
 				const gamesJson = response.data;
