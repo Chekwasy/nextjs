@@ -31,6 +31,7 @@ export async function GET(request) {
 		}
 
 		for (let a = 0; a < gmlen; a++) {
+			console.log("in for a");
 			let docCopy = {...gm[a]};
 			let status = docCopy.status;
 			let potwin = '1';
@@ -40,6 +41,7 @@ export async function GET(request) {
 			let returns = docCopy.returns;
 			let nwBet = [];
 			gm[a].bet.forEach(async (itm) => {
+				console.log("in for each");
 				let itmCopy = {...itm};
 				const date_ = itm.mTime.substring(0, 8);
 				const response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
@@ -47,11 +49,13 @@ export async function GET(request) {
 				// extract details
 				const gjLen = gamesJson.Stages.length;
 				for (let i = 0; i < gjLen; i++) {
+					console.log("in for i");
 					let tc = gamesJson.Stages[i].Cnm;
 					let st = gamesJson.Stages[i].Snm;
 					if (tc === itm.gTCountry && st === itm.gSubtitle) {
 						const evtLen = gamesJson.Stages[i].Events.length;
 						for (let j = 0; j < evtLen; j++) {
+							console.log("in for j");
 							if (gamesJson.Stages[i].Events[j].T1[0].Nm === itm.hometeam) {
 								if (gamesJson.Stages[i].Events[j].Eps.includes("'")) {
 									itmCopy.mStatus = gamesJson.Stages[i].Events[j].Eps;
