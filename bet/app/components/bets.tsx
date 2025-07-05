@@ -53,7 +53,7 @@ export default function Bets() {
   }, []);
   return (
     <div className="flex-col justify-center items-center mt-16">
-  <div className="md:w-4/5 w-11/12">
+  <div className="md:w-4/5 w-11/12 items-center">
     <div className="bg-gray-400 rounded-lg p-4 flex gap-4">
       <div
         className={`${betTab === 'open' ? 'bg-green-200' : 'bg-white'} text-gray-700 text-center rounded-lg border-4 border-green-500 hover:border-green-200 p-4 w-1/2`}
