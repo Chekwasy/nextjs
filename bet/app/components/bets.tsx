@@ -52,7 +52,7 @@ export default function Bets() {
     handleOpenBet();
   }, []);
   return (
-    <div className="flex justify-center items-center mt-16">
+    <div className="flex-col justify-center items-center mt-16">
   <div className="md:w-4/5 w-11/12">
     <div className="bg-gray-400 rounded-lg p-4 flex gap-4">
       <div
@@ -69,7 +69,7 @@ export default function Bets() {
       </div>
     </div>
   </div>
-  <div>
+  <div className="md:w-4/5 w-11/12">
     {bet.length > 0 &&
       bet.map((item, index) => (
         <div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
