@@ -19,7 +19,7 @@ export async function GET(request) {
 		let accbal = usr.accbal;
 	 console.log(1);
         const gm = await dbClient.client.db().collection('bets')
-		.find({ 'userID': usr_id, 'status': 'open' });
+		.find({ 'userID': usr_id, 'status': 'open' }).toArray();
 		if (!gm) {
 			console.log("no gm");
 			return NextResponse.json('error', {status: 404});
@@ -181,7 +181,7 @@ export async function GET(request) {
 			if (!sa) { console.log("no sa update"); return NextResponse.json('error', {status: 400});}
 		}
 		const gm2 = await dbClient.client.db().collection('bets')
-		.find({ 'userID': usr_id, 'status': 'open' });
+		.find({ 'userID': usr_id, 'status': 'open' }).toArray();
 		if (!gm2) {
 			console.log("no gm2");
 			return NextResponse.json('error', {status: 404});
