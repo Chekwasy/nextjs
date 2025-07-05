@@ -182,7 +182,7 @@ export async function GET(request) {
 			if (result === 'Won' || result === 'Lost') {
 				status = 'close';
 			}
-			
+			console.log("all print", returns, result, betamt, odds, potwin, status);
 			//save the nwBet to the docCopy and update it based on the gameID
 			const sa = await dbClient.client.db().collection('savedgames')
 			.updateOne({ gameID: docCopy.gameID }, 
@@ -195,7 +195,7 @@ export async function GET(request) {
 		if (!gm2) {
 			return NextResponse.json('error', {status: 404});
 		}
-	 console.log("all good", returns, result, betamt, odds, potwin, status);
+	 console.log("all good");
 		return NextResponse.json({openbet: gm2, me: {userID: usr.userID, fname: usr.fname, lname: usr.lname, email: usr.email, mobile: usr.mobile, accbal: accbal, currency: usr.currency}}, {status: 201});
   //  } catch {
 	//    console.log("problem somme where");
