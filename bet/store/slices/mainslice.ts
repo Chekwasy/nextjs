@@ -5,8 +5,8 @@ interface StoreState {
   played: {
     id: string;
       gId: string;
-      gSubtitle: string;
       gTCountry: string;
+      gSubtitle: string;
       mktT: string;
       mTime: string;
       hometeam: string;
