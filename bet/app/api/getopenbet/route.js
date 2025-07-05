@@ -6,34 +6,27 @@ import axios from 'axios';
 
 export async function GET(request) {
     const dd = await request;
-    console.log(1);
         const tok = dd.headers.get('tok');
-        if (!tok) {console.log("no tok"); return  NextResponse.json('error', {status: 400});}
+        if (!tok) {return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
-		console.log("no usr_ID");
             return NextResponse.json('error', {status: 401});
         }
 		const usr = await dbClient.client.db().collection('users')
 		.findOne({ "userID": usr_id });
-		if (!usr) {console.log("no usr"); return  NextResponse.json('error', {status: 401});}
+		if (!usr) {return  NextResponse.json('error', {status: 401});}
 		let accbal = usr.accbal;
-	 console.log(1);
         const gm = await dbClient.client.db().collection('bets')
 		.find({ 'userID': usr_id, 'status': 'open' }).toArray();
 		if (!gm) {
-			console.log("no gm");
 			return NextResponse.json('error', {status: 404});
 		}
 		const gmlen = gm.length;
-	console.log(gmlen);
 		if (gmlen === 0) {
-			console.log("gm is 0");
 			return  NextResponse.json({openbet: [], me: null }, {status: 201});
 		}
 
 		for (let a = 0; a < gmlen; a++) {
-			console.log("in for a");
 			let docCopy = {...gm[a]};
 			let status = docCopy.status;
 			let potwin = '1';
@@ -42,10 +35,10 @@ export async function GET(request) {
 			let result = docCopy.result;
 			let returns = docCopy.returns;
 			let nwBet = [];
-			gm[a].bet.forEach(async (itm) => {
-				console.log("in for each");
-				let itmCopy = {...itm};
-				const date_ = itm.mTime.substring(0, 8);
+			const betlen = gm[a].bet;
+			for (let c = 0; c < betlen; c++) {
+				let itmCopy = {...(gm[a].bet[c])};
+				const date_ = (gm[a].bet[c]).mTime.substring(0, 8);
 				const response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
 				const gamesJson = response.data;
 				// extract details
@@ -56,11 +49,10 @@ export async function GET(request) {
 					let st = gamesJson.Stages[i].Snm;
 					console.log(tc, st);
 					console.log(itm.gTCountry, itm.gSubtitle);
-					if (tc === itm.gTCountry && st === itm.gSubtitle) {
+					if (tc === (gm[a].bet[c]).gTCountry && st === (gm[a].bet[c]).gSubtitle) {
 						const evtLen = gamesJson.Stages[i].Events.length;
 						for (let j = 0; j < evtLen; j++) {
-							console.log("in for j");
-							if (gamesJson.Stages[i].Events[j].T1[0].Nm === itm.hometeam) {
+							if (gamesJson.Stages[i].Events[j].T1[0].Nm === (gm[a].bet[c]).hometeam) {
 								if (gamesJson.Stages[i].Events[j].Eps.includes("'")) {
 									itmCopy.mStatus = gamesJson.Stages[i].Events[j].Eps;
 									itmCopy.mResult = 'Pending';
@@ -146,7 +138,7 @@ export async function GET(request) {
 						break;
 					}
 				}
-			});
+			}
 			//go through nwBet and recheck odd total potwin etc
 			const doclen = nwBet.length;
 			let won = true;
@@ -171,7 +163,7 @@ export async function GET(request) {
 				const sav = await dbClient.client.db().collection('users')
 				.updateOne({ userID: usr_id }, 
 				{ $set: { accbal: accbal} });
-				if (!sav) {console.log("no sav update"); return NextResponse.json('error', {status: 400});}
+				if (!sav) {return NextResponse.json('error', {status: 400});}
 			}
 			if (result === 'Won' || result === 'Lost') {
 				status = 'close';
@@ -181,12 +173,11 @@ export async function GET(request) {
 			const sa = await dbClient.client.db().collection('savedgames')
 			.updateOne({ gameID: docCopy.gameID }, 
 			{ $set: { status: status, potwin: potwin, odds: odds, returns: returns, result: result, bet: nwBet,} });
-			if (!sa) { console.log("no sa update"); return NextResponse.json('error', {status: 400});}
+			if (!sa) { return NextResponse.json('error', {status: 400});}
 		}
 		const gm2 = await dbClient.client.db().collection('bets')
 		.find({ 'userID': usr_id, 'status': 'open' }).toArray();
 		if (!gm2) {
-			console.log("no gm2");
 			return NextResponse.json('error', {status: 404});
 		}
 	 console.log("all good");
