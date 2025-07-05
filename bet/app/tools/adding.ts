@@ -14,7 +14,6 @@ export const adding = (fst: string, snd: string) => {
         } else {
                 snd2 = snd;
         }
-        console.log(fst, snd2);
         for (let i = ln1 - 1; i >= 0; i--) {
                 let a = 0;
                 a = parseInt(fst[i]) + parseInt(snd2[i]);
