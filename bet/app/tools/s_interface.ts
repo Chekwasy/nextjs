@@ -3,8 +3,8 @@ export interface StoreState { mainSlice: {
   played: {
     id: string;
       gId: string;
-      gSubtitle: string;
       gTCountry: string;
+      gSubtitle: string;
       mktT: string;
       mTime: string;
       hometeam: string;
@@ -31,8 +31,8 @@ export interface StoreState { mainSlice: {
 export interface PlayeD {
   id: string;
   gId: string;
-  gSubtitle: string;
   gTCountry: string;
+  gSubtitle: string;
   mktT: string;
   mTime: string;
   hometeam: string;
@@ -59,8 +59,8 @@ export interface Bet {
   bet: {
   id: string;
   gId: string;
-  gSubtitle: string;
   gTCountry: string;
+  gSubtitle: string;
   mktT: string;
   mTime: string;
   hometeam: string;
