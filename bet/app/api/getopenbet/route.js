@@ -35,7 +35,7 @@ export async function GET(request) {
 			let result = docCopy.result;
 			let returns = docCopy.returns;
 			let nwBet = [];
-			const betlen = gm[a].bet;
+			const betlen = gm[a].bet.length;
 			console.log("betlen", betlen);
 			for (let c = 0; c < betlen; c++) {
 				console.log("in c");
