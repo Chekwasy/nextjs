@@ -14,7 +14,7 @@ export default function Bets() {
   const [bet, setBet] = useState<Bet[]>([]);
   const [betTab, setBetTab] = useState('open');
   const handleOpenBet = () => {
-    axios.get('/api/getopengames', {
+    axios.get('/api/getopenbet', {
       headers: {
         tok: Cookies.get('trybet_tok'),
     }})
@@ -33,7 +33,7 @@ export default function Bets() {
     });
   };
   const handleCloseBet = () => {
-    axios.get('/api/getclosegames', {
+    axios.get('/api/getclosebet', {
       headers: {
         tok: Cookies.get('trybet_tok'),
     }})
