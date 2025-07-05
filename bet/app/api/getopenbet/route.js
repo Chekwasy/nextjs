@@ -184,7 +184,7 @@ export async function GET(request) {
 			}
 			console.log("all print", returns, result, betamt, odds, potwin, status);
 			//save the nwBet to the docCopy and update it based on the gameID
-			const sa = await dbClient.client.db().collection('savedgames')
+			const sa = await dbClient.client.db().collection('bets')
 			.updateOne({ gameID: docCopy.gameID }, 
 			{ $set: { status: status, potwin: potwin, odds: odds, returns: returns, result: result, bet: nwBet,} });
 			if (!sa) { return NextResponse.json('error', {status: 400});}
