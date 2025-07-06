@@ -12,7 +12,7 @@ export async function GET(request) {
 			return NextResponse.json('error', {status: 401});
 		}
 		const gm = await dbClient.client.db().collection('bets')
-		.find({ 'userID': usr_id, 'status': 'close' });
+		.find({ 'userID': usr_id, 'status': 'close' }).toArray();
 		if (!gm) {
 			return NextResponse.json('error', {status: 404});
 		}
