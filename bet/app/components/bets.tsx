@@ -53,7 +53,7 @@ export default function Bets() {
   }, []);
   return (
     <div className="flex-col justify-center items-center mt-16">
-  <div className="md:w-4/5 w-11/12 items-center">
+  <div className="md:w-4/5 w-11/12 items-center justify-center">
     <div className="bg-gray-400 rounded-lg p-4 flex gap-4">
       <div
         className={`${betTab === 'open' ? 'bg-green-200' : 'bg-white'} text-gray-700 text-center rounded-lg border-4 border-green-500 hover:border-green-200 p-4 w-1/2`}
@@ -72,17 +72,35 @@ export default function Bets() {
   <div className="md:w-4/5 w-11/12">
     {bet.length > 0 &&
       bet.map((item, index) => (
-        <div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
+        <div key={index} className="bg-gray-400 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
           <div className="flex flex-col space-y-4">
             <div className="flex-row space-x-4">
-              <div className="w-3/10 bg-yellow-100 p-4 rounded-lg">{item.status}</div>
-              <div className="w-7/10 bg-blue-100 p-4 rounded-lg flex justify-end">{`${item.date} ${item.time}`}</div>
+              <div className=`${item.result === 'Won' && item.status === 'close' ? 'bg-green-500 text-white' : 'bg-yellow-200' } ${item.result === 'Lost' && item.status === 'close' ? 'bg-red-500 text-white' : '' } w-3/10 p-4 font-bold rounded-lg`>{item.result}</div>
+              <div className="w-6/10 bg-blue-200 p-4 rounded-lg font-bold flex justify-end">{`${item.date} ${item.time}`}</div>
             </div>
             <div className="flex flex-col space-y-4">
-              <div className="bg-purple-100 p-4 rounded-lg">{item.betamt}</div>
-              <div className="bg-purple-100 p-4 rounded-lg">{item.odds}</div>
-              <div className="bg-purple-100 p-4 rounded-lg">{item.potwin}</div>
-              <div className="bg-purple-100 p-4 rounded-lg">{item.returns}</div>
+              <div className="bg-green-200 flex-row p-4 rounded-lg">
+                {`${item.bet[0].hometeam} vs ${item.bet[0].awayteam} ...`}
+              <div/>
+                <div className="bg-green-200 flex-row p-4 rounded-lg">
+                  <div className="p-4 w-3/10">Amount Booked</div>
+                  <div className="p-4 w-6/10 font-bold">{item.betamt}</div>
+                </div>
+
+                <div className="bg-green-200 flex-row p-4 rounded-lg">
+                  <div className="p-4 w-3/10">Odds</div>
+                  <div className="p-4 w-6/10 font-bold">{item.odds}</div>
+                </div>
+
+                <div className="bg-green-200 flex-row p-4 rounded-lg">
+                  <div className="p-4 w-3/10">Expected Winnings</div>
+                  <div className="p-4 w-6/10 font-bold">{item.potwin}</div>
+                </div>
+
+                <div className="bg-green-200 flex-row p-4 rounded-lg">
+                  <div className="p-4 w-3/10">Returns</div>
+                  <div className="p-4 w-6/10 font-bold">{item.returns}</div>
+                </div>
             </div>
           </div>
         </div>
