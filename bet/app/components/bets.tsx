@@ -75,8 +75,8 @@ export default function Bets() {
         <div key={index} className="bg-gray-400 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
           <div className="flex flex-col space-y-4">
             <div className="flex-row space-x-4">
-              <div className=`${item.result === 'Won' && item.status === 'close' ? 'bg-green-500 text-white' : 'bg-yellow-200' } ${item.result === 'Lost' && item.status === 'close' ? 'bg-red-500 text-white' : '' } w-3/10 p-4 font-bold rounded-lg`>{item.result}</div>
-              <div className="w-6/10 bg-blue-200 p-4 rounded-lg font-bold flex justify-end">{`${item.date} ${item.time}`}</div>
+             <div className={`w-3/10 p-4 font-bold rounded-lg ${item.status === 'close' ? (item.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{item.result}</div>
+              <div className="w-6/10 bg-blue-200 p-4 rounded-lg font-bold flex justify-end">{`${item.date.substring(6, 8)} - ${item.date.substring(4, 6)} - ${item.date.substring(0, 4)}    ${item.time}.substring(0, 2) : ${item.time}.substring(2, 4)`}</div>
             </div>
             <div className="flex flex-col space-y-4">
               <div className="bg-green-200 flex-row p-4 rounded-lg">
