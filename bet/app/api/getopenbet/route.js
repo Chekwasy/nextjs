@@ -6,6 +6,7 @@ import axios from 'axios';
 
 export async function GET(request) {
     const dd = await request;
+	try {
         const tok = dd.headers.get('tok');
         if (!tok) {return  NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
@@ -36,36 +37,27 @@ export async function GET(request) {
 			let returns = docCopy.returns;
 			let nwBet = [];
 			const betlen = gm[a].bet.length;
-			console.log("betlen", betlen);
 			for (let c = 0; c < betlen; c++) {
-				console.log("in c");
 				let itmCopy = {...(gm[a].bet[c])};
-				console.log("gmbet", gm[a].bet[c]);
 				const date_ = (gm[a].bet[c]).mTime.substring(0, 8);
 				const response = await axios.get(`https://prod-public-api.livescore.com/v1/api/app/date/soccer/${date_}/1?countryCode=NG&locale=en&MD=1`);
 				const gamesJson = response.data;
 				// extract details
 				const gjLen = gamesJson.Stages.length;
 				for (let i = 0; i < gjLen; i++) {
-					console.log("in for i");
 					let tc = gamesJson.Stages[i].Cnm;
 					let st = gamesJson.Stages[i].Snm;
-					console.log(tc, st);
-					console.log((gm[a].bet[c]).gTCountry, (gm[a].bet[c]).gSubtitle);
 					if (tc === (gm[a].bet[c]).gTCountry && st === (gm[a].bet[c]).gSubtitle) {
 						const evtLen = gamesJson.Stages[i].Events.length;
 						for (let j = 0; j < evtLen; j++) {
 							if (gamesJson.Stages[i].Events[j].T1[0].Nm === (gm[a].bet[c]).hometeam) {
-								console.log("match found");
 								if (gamesJson.Stages[i].Events[j].Eps.includes("'")) {
-									console.log("in comma invert");
 									itmCopy.mStatus = gamesJson.Stages[i].Events[j].Eps;
 									itmCopy.mResult = 'Pending';
 									itmCopy.mOutcome = 'Pending';
 									itmCopy.mScore = `${gamesJson.Stages[i].Events[j].Tr1OR} : ${gamesJson.Stages[i].Events[j].Tr2OR}`;
 									nwBet.push(itmCopy);
 								} else if (gamesJson.Stages[i].Events[j].Eps === 'HT') {
-									console.log("in Ht");
 									itmCopy.mStatus = gamesJson.Stages[i].Events[j].Eps;
 									itmCopy.mResult = 'Pending';
 									itmCopy.mOutcome = 'Pending';
@@ -73,7 +65,6 @@ export async function GET(request) {
 									nwBet.push(itmCopy);
 								} else if (gamesJson.Stages[i].Events[j].Eps === 'FT' || gamesJson.Stages[i].Events[j].Eps === 'AET' || gamesJson.Stages[i].Events[j].Eps === 'AP') {
 									if (itmCopy.mStatus !== 'FT' || itmCopy.mStatus && 'AET' && itmCopy.mStatus !== 'AP') {
-										console.log("In fT");
 										itmCopy.mStatus = 'FT';
 										const homescore = gamesJson.Stages[i].Events[j].Tr1OR;
 										const awayscore = gamesJson.Stages[i].Events[j].Tr2OR;
@@ -112,14 +103,12 @@ export async function GET(request) {
 									}
 									nwBet.push(itmCopy);
 								} else if (gamesJson.Stages[i].Events[j].Eps.includes('.')) {
-									console.log("in dot ");
 									itmCopy.mStatus = gamesJson.Stages[i].Events[j].Eps;
 									itmCopy.mResult = 'Void';
 									itmCopy.mOutcome = 'Won';
 									itmCopy.odd = '1';
 									nwBet.push(itmCopy);
 								} else if (gamesJson.Stages[i].Events[j].Eps === 'NS') {
-									console.log("NS");
 									const now = new Date();
 									const month = (now.getMonth() + 1).toString().padStart(2, '0');
 									const day = now.getDate().toString().padStart(2, '0');
@@ -132,7 +121,6 @@ export async function GET(request) {
 										}
 									} else {
 										const day2 = gamesJson.Stages[i].Events[j].Esd.toString().substring(6, 8);
-										console.log("mth match");
 										if (day !== day2 && (parseInt(day2) + 1) <= 28 && parseInt(day) > (parseInt(day2) + 1)) {
 											itmCopy.mStatus = 'Canc.';
 											itmCopy.mResult = 'Void';
@@ -151,11 +139,8 @@ export async function GET(request) {
 			}
 			//go through nwBet and recheck odd total potwin etc
 			const doclen = nwBet.length;
-			console.log("nwBet to be saved", nwBet);
-			console.log("doclen", doclen);
 			let won = true;
 			for (let b = 0; b < doclen; b++) {
-				console.log("in won check");
 				odds = multiply(odds, nwBet[b].odd)
 				if (nwBet[b].mOutcome === 'Pending') {
 					won = false;
@@ -165,7 +150,6 @@ export async function GET(request) {
 					won = false;
 				}
 				if (nwBet[b].mOutcome === 'Won') {
-					console.log("won made true");
 					won = true;
 				}
 			}
@@ -182,23 +166,20 @@ export async function GET(request) {
 			if (result === 'Won' || result === 'Lost') {
 				status = 'close';
 			}
-			console.log("all print", returns, result, betamt, odds, potwin, status);
 			//save the nwBet to the docCopy and update it based on the gameID
 			const sa = await dbClient.client.db().collection('bets')
 			.updateOne({ gameID: docCopy.gameID }, 
 			{ $set: { status: status, potwin: potwin, odds: odds, returns: returns, result: result, bet: nwBet,} });
 			if (!sa) { return NextResponse.json('error', {status: 400});}
-			console.log("fst update");
 		}
 		const gm2 = await dbClient.client.db().collection('bets')
 		.find({ 'userID': usr_id, 'status': 'open' }).toArray();
 		if (!gm2) {
 			return NextResponse.json('error', {status: 404});
 		}
-	 console.log("all good");
 		return NextResponse.json({openbet: gm2, me: {userID: usr.userID, fname: usr.fname, lname: usr.lname, email: usr.email, mobile: usr.mobile, accbal: accbal, currency: usr.currency}}, {status: 201});
-  //  } catch {
-	//    console.log("problem somme where");
-    //    return NextResponse.json('error', {status: 400});
-  //  }
+    } catch {
+	    console.log("problem somme where");
+        return NextResponse.json('error', {status: 400});
+    }
 };
