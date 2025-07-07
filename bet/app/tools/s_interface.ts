@@ -71,5 +71,5 @@ export interface Bet {
   mResult: string;
   mOutcome: string;
   mScore: string;
-};
+}[];
 }
