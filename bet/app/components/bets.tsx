@@ -98,25 +98,25 @@ export default function Bets() {
               <div className="w-6/10 bg-blue-200 p-4 rounded-lg font-bold flex justify-end">{`${item.date.substring(6, 8)} - ${item.date.substring(4, 6)} - ${item.date.substring(0, 4)}    ${item.time.substring(0, 2)} : ${item.time.substring(2, 4)}`}</div>
             </div>
             <div className="flex flex-col space-y-4">
-              <div className="bg-green-200 flex-row p-4 rounded-lg">
+              <div className="bg-green-200 flex-row space-x-4 p-4 rounded-lg">
                 {item.bet && `${item.bet[0].hometeam} vs ${item.bet[0].awayteam} ...`}
               </div>
-              <div className="bg-green-200 flex-row p-4 rounded-lg">
+              <div className="bg-green-200 flex-row space-x-4 p-4 rounded-lg">
                 <div className="p-4 w-3/10">Amount Booked</div>
                 <div className="p-4 w-6/10 font-bold">{item.betamt}</div>
               </div>
 
-              <div className="bg-green-200 flex-row p-4 rounded-lg">
+              <div className="bg-green-200 flex-row space-x-4 p-4 rounded-lg">
                 <div className="p-4 w-3/10">Odds</div>
                 <div className="p-4 w-6/10 font-bold">{item.odds}</div>
               </div>
 
-              <div className="bg-green-200 flex-row p-4 rounded-lg">
+              <div className="bg-green-200 flex-row space-x-4 p-4 rounded-lg">
                 <div className="p-4 w-3/10">Expected Winnings</div>
                 <div className="p-4 w-6/10 font-bold">{item.potwin}</div>
               </div>
 
-              <div className="bg-green-200 flex-row p-4 rounded-lg">
+              <div className="bg-green-200 flex-row space-x-4 p-4 rounded-lg">
                 <div className="p-4 w-3/10">Returns</div>
                 <div className="p-4 w-6/10 font-bold">{item.returns}</div>
               </div>

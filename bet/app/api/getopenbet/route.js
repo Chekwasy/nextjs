@@ -4,6 +4,35 @@ import redisClient from '../../../redis';
 import { multiply } from '../../tools/multiply';
 import axios from 'axios';
 
+const emp = [{ 
+    userID: '', 
+    gameID: '', 
+    returns: '', 
+    result: '', 
+    date: '', 
+    time: '', 
+    betamt: '', 
+    status: '', 
+    potwin: '', 
+    odds: '', 
+    bet: [{ 
+      id: '', 
+      gId: '', 
+      gTCountry: '', 
+      gSubtitle: '',  
+      mktT: '', 
+      mTime: '', 
+      hometeam: '', 
+      awayteam: '', 
+      odd: '', 
+      selection: '', 
+      mStatus: '', 
+      mResult: '', 
+      mOutcome: '', 
+      mScore: '',
+    }]
+}];
+
 export async function GET(request) {
     const dd = await request;
 	try {
@@ -24,7 +53,7 @@ export async function GET(request) {
 		}
 		const gmlen = gm.length;
 		if (gmlen === 0) {
-			return  NextResponse.json({openbet: [], me: null }, {status: 201});
+			return  NextResponse.json({openbet: emp, me: null }, {status: 201});
 		}
 
 		for (let a = 0; a < gmlen; a++) {
@@ -176,6 +205,9 @@ export async function GET(request) {
 		.find({ 'userID': usr_id, 'status': 'open' }).toArray();
 		if (!gm2) {
 			return NextResponse.json('error', {status: 404});
+		}
+		if (gm2.length === 0) {
+			return  NextResponse.json({openbet: emp, me: null }, {status: 201});
 		}
 		return NextResponse.json({openbet: gm2, me: {userID: usr.userID, fname: usr.fname, lname: usr.lname, email: usr.email, mobile: usr.mobile, accbal: accbal, currency: usr.currency}}, {status: 201});
     } catch {

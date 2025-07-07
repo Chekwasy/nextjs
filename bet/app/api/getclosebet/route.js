@@ -2,6 +2,35 @@ import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 
+const emp = [{ 
+    userID: '', 
+    gameID: '', 
+    returns: '', 
+    result: '', 
+    date: '', 
+    time: '', 
+    betamt: '', 
+    status: '', 
+    potwin: '', 
+    odds: '', 
+    bet: [{ 
+      id: '', 
+      gId: '', 
+      gTCountry: '', 
+      gSubtitle: '',  
+      mktT: '', 
+      mTime: '', 
+      hometeam: '', 
+      awayteam: '', 
+      odd: '', 
+      selection: '', 
+      mStatus: '', 
+      mResult: '', 
+      mOutcome: '', 
+      mScore: '',
+    }]
+}];
+
 export async function GET(request) {
 	const dd = await request;
 	try {
@@ -18,7 +47,7 @@ export async function GET(request) {
 		}
 		const gmlen = gm.length;
 		if (gmlen === 0) {
-			return  NextResponse.json({games: [] }, {status: 201});
+			return  NextResponse.json({games: emp }, {status: 201});
 		}
         return  NextResponse.json({closebet: gm}, {status: 201});
     } catch {
