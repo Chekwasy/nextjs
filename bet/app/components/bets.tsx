@@ -80,7 +80,7 @@ export default function Bets() {
   }, []);
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
-      <div className="md:w-4/5 w-11/12 items-center justify-center">
+      <div className="md:w-4/5 w-11/12 mx-auto">
         <div className="bg-gray-400 rounded-lg p-4 flex gap-4">
           <div className={`${betTab === 'open' ? 'bg-green-200' : 'bg-white'} text-gray-700 text-center rounded-lg border-4 border-green-500 hover:border-green-200 p-4 w-1/2`} onClick={() => handleOpenBet()}>
             Open Bets
@@ -90,12 +90,12 @@ export default function Bets() {
           </div>
         </div>
       </div>
-      <div className="md:w-4/5 w-11/12">
+      <div className="md:w-4/5 w-11/12 mx-auto">
         {(bet[0].status !== '') && bet.map((item: Bet, index: number) => (<div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
           <div className="flex flex-col space-y-4">
             <div className="rounded-lg p-1 flex gap-4">
-              <div className={`w-1/2 p-4 font-bold rounded-lg ${item.status === 'close' ? (item.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{item.result}</div>
-              <div className="w-1/2 bg-blue-200 p-4 rounded-lg font-bold flex justify-end">{`Date: ${item.date.substring(6, 8)} - ${item.date.substring(4, 6)} - ${item.date.substring(0, 4)}    Time: ${item.time.substring(0, 2)} : ${item.time.substring(2, 4)}`}</div>
+              <div className={`w-1/3 font-bold rounded-lg ${item.status === 'close' ? (item.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{item.result}</div>
+              <div className="w-2/3 bg-blue-200 rounded-lg font-bold flex justify-end">{`Date: ${item.date.substring(6, 8)} - ${item.date.substring(4, 6)} - ${item.date.substring(0, 4)}    Time: ${item.time.substring(0, 2)} : ${item.time.substring(2, 4)}`}</div>
             </div>
             <div className="flex flex-col space-y-1">
               <div className="bg-green-200 rounded-lg p-1 text-center font-bold flex gap-4">
@@ -103,7 +103,7 @@ export default function Bets() {
               </div>
               <div className="bg-green-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Amount Booked</div>
-                <div className=" w-1/2 font-bold text-end">{item.betamt.toLocaleString()}</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(item.betamt))}</div>
               </div>
 
               <div className="bg-green-200 rounded-lg p-1 flex gap-4">
@@ -113,12 +113,12 @@ export default function Bets() {
 
               <div className="bg-green-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Expected Winnings</div>
-                <div className=" w-1/2 font-bold text-end">{item.potwin.toLocaleString()}</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(item.potwin))}</div>
               </div>
 
               <div className="bg-green-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Returns</div>
-                <div className=" w-1/2 font-bold text-end">{item.returns.toLocaleString()}</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(item.returns))}</div>
               </div>
             </div>
           </div>
