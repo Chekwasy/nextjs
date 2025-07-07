@@ -94,8 +94,8 @@ export default function Bets() {
         {(bet[0].status !== '') && bet.map((item: Bet, index: number) => (<div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
           <div className="flex flex-col space-y-4">
             <div className="rounded-lg p-1 flex gap-4">
-              <div className={`w-1/3 font-bold rounded-lg ${item.status === 'close' ? (item.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{item.result}</div>
-              <div className="w-2/3 bg-blue-200 rounded-lg font-bold flex justify-end">{`Date: ${item.date.substring(6, 8)} - ${item.date.substring(4, 6)} - ${item.date.substring(0, 4)}    Time: ${item.time.substring(0, 2)} : ${item.time.substring(2, 4)}`}</div>
+              <div className={`w-1/3 font-bold p-1 rounded-lg ${item.status === 'close' ? (item.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{item.result}</div>
+              <div className="w-2/3 bg-blue-200 p-1 rounded-lg font-bold flex justify-end">{`Date: ${item.date.substring(6, 8)} - ${item.date.substring(4, 6)} - ${item.date.substring(0, 4)}    Time: ${item.time.substring(0, 2)} : ${item.time.substring(2, 4)}`}</div>
             </div>
             <div className="flex flex-col space-y-1">
               <div className="bg-green-200 rounded-lg p-1 text-center font-bold flex gap-4">
