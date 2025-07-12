@@ -39,7 +39,7 @@ export default function Bets() {
       mScore: '',
     }]
 }]);
-  const [clickbet, setClickBet] = useState<Bet>({ 
+  const [clickBet, setClickBet] = useState<Bet>({ 
     userID: '', 
     gameID: '', 
     returns: '', 
