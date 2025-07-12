@@ -162,8 +162,7 @@ export default function Bets() {
         </div>))}
       </div>)}
       {isOpen && (
-            <div className=" bg-white flex md:w-4/5 w-11/12 mx-auto">
-              <div className="popup-content bg-gray-200 rounded-lg mx-auto shadow-md p-8 w-4/5 md:w-3/4 lg:w-1/2 xl:w-1/2" >
+            <div className=" bg-gray-200 flex md:w-4/5 w-11/12 mx-auto">
                 <div className="flex justify-end">
                   <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
@@ -201,7 +200,7 @@ export default function Bets() {
           </div>
         </div>
                 {clickBet.bet.map((item, index) => (
-              <div key={index} className={`flex flex-col space-y-1 ${item.mOutcome !== "Pending" ? (item.mOutcome === "Lost" ? "bg-red-200" : "bg-green-200") : "bg-gray-200" }`}>
+              <div key={index} className={`flex flex-col space-y-4 ${item.mOutcome !== "Pending" ? (item.mOutcome === "Lost" ? "bg-red-200" : "bg-green-200") : "bg-gray-200" }`}>
               <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2 font-bold">{item.gTCountry}</div>
                 <div className=" w-1/2 font-bold text-end">{item.gSubtitle}</div>
@@ -251,7 +250,6 @@ export default function Bets() {
               </div>
             </div>
                 ))}
-              </div>
             </div>
           )}
     </div>
