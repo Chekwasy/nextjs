@@ -201,7 +201,7 @@ export default function Bets() {
           </div>
         </div>
                 {clickBet.bet.map((item, index) => (
-              <div className=`flex flex-col space-y-1 ${item.mOutcome !== "Pending" ? (item.mOutcome === "Lost" ? "bg-red-200" : "bg-green-200") : "bg-gray-200" }`>
+              <div className={`flex flex-col space-y-1 ${item.mOutcome !== "Pending" ? (item.mOutcome === "Lost" ? "bg-red-200" : "bg-green-200") : "bg-gray-200" }`}>
               <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2 font-bold">{item.gTCountry}</div>
                 <div className=" w-1/2 font-bold text-end">{item.gSubtitle}</div>
