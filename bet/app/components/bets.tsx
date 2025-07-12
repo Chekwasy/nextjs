@@ -107,11 +107,11 @@ export default function Bets() {
   const handleClose = () => {
       setIsOpen(false);
   };
-  const handleOverlayClick = (e: MouseEvent) => {
-    if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
-      handleClose();
-    }
-  };
+  //const handleOverlayClick = (e: MouseEvent) => {
+   // if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
+    //  handleClose();
+   // }
+ // };
   useEffect(() => {
     handleOpenBet();
   }, []);
