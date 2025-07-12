@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, MouseEvent } from 'react';
+import { useState, useEffect, } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Bet, StoreState } from '../tools/s_interface';
