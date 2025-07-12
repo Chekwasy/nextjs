@@ -128,7 +128,7 @@ export default function Bets() {
         </div>
       </div>
       <div className="md:w-4/5 w-11/12 mx-auto">
-        {(bet[0].status !== '') && bet.map((item: Bet, index: number) => (<div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4" onClick={() => setIsOpen(true); setClickBet(item);}>
+        {(bet[0].status !== '') && bet.map((item: Bet, index: number) => (<div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4" onClick={() => {setIsOpen(true); setClickBet(item);}}>
           <div className="flex flex-col space-y-4">
             <div className="rounded-lg p-1 flex gap-4">
               <div className={`w-1/3 font-bold p-1 rounded-lg ${item.status === 'close' ? (item.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{item.result}</div>
