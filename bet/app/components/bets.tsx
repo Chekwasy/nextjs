@@ -117,7 +117,7 @@ export default function Bets() {
   }, []);
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
-      <div className="md:w-4/5 w-11/12 mx-auto">
+      {!(isOpen) && (<div className="md:w-4/5 w-11/12 mx-auto">
         <div className="bg-gray-400 rounded-lg p-4 flex gap-4">
           <div className={`${betTab === 'open' ? 'bg-green-200' : 'bg-white'} text-gray-700 text-center rounded-lg border-4 border-green-500 hover:border-green-200 p-4 w-1/2`} onClick={() => handleOpenBet()}>
             Open Bets
@@ -126,8 +126,8 @@ export default function Bets() {
             Closed Bets
           </div>
         </div>
-      </div>
-      <div className="md:w-4/5 w-11/12 mx-auto">
+      </div>)}
+      {!(isOpen) && (<div className="md:w-4/5 w-11/12 mx-auto">
         {(bet[0].status !== '') && bet.map((item: Bet, index: number) => (<div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4" onClick={() => {setIsOpen(true); setClickBet(item);}}>
           <div className="flex flex-col space-y-4">
             <div className="rounded-lg p-1 flex gap-4">
@@ -160,10 +160,10 @@ export default function Bets() {
             </div>
           </div>
         </div>))}
-      </div>
+      </div>)}
       {isOpen && (
-            <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center">
-              <div className="popup-content bg-gray-200 rounded-lg max-h-screen/2 mx-auto shadow-md p-8 w-4/5 md:w-3/4 lg:w-1/2 xl:w-1/2" >
+            <div className=" bg-white flex md:w-4/5 w-11/12 mx-auto">
+              <div className="popup-content bg-gray-200 rounded-lg mx-auto shadow-md p-8 w-4/5 md:w-3/4 lg:w-1/2 xl:w-1/2" >
                 <div className="flex justify-end">
                   <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
