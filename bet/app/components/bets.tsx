@@ -163,14 +163,14 @@ export default function Bets() {
       </div>)}
       {isOpen && (
             <div className=" bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
-                <div className="flex justify-end">
-                  <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
                 <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
+                  <div className="flex justify-end">
+                    <button className="text-gray-900 hover:text-gray-700" onClick={handleClose} >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
                   <div className="flex flex-col space-y-4">
                     <div className="rounded-lg p-1 flex gap-4">
                       <div className={`w-1/3 font-bold p-1 rounded-lg ${clickBet.status === 'close' ? (clickBet.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{clickBet.result}</div>
@@ -200,7 +200,7 @@ export default function Bets() {
                   </div>
   
                   {clickBet.bet.map((item, index) => (
-                  <div key={index} className={`flex flex-col space-y-1 border-b-4 border-gray-700 rounded-b-md ${item.mOutcome !== "Pending" ? (item.mOutcome === "Lost" ? "bg-red-200" : "bg-green-200") : "bg-gray-200" }`}>
+                  <div key={index} className={`flex flex-col space-y-1 border-b-4 border-gray-700 rounded-b-md ${item.mOutcome !== "Pending" ? (item.mOutcome === "Lost" ? "bg-red-500" : "bg-green-500") : "bg-gray-200" }`}>
                     <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
                       <div className=" w-1/2 font-bold">{item.gTCountry}</div>
                       <div className=" w-1/2 font-bold text-end">{item.gSubtitle}</div>
