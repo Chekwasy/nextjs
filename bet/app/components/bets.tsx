@@ -215,7 +215,7 @@ export default function Bets() {
                     </div>
                     <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
                       <div className=" w-1/2">Time</div>
-                      <div className=" w-1/2 font-bold text-end">{item.mTime}</div>
+                      <div className=" w-1/2 font-bold text-end">{`${item.mTime.substring(6, 8)} - ${item.mTime.substring(4, 6)} - ${item.mTime.substring(0, 4)} | ${item.mTime.substring(8, 10)} : ${item.mTime.substring(10, 12)}`}</div>
                     </div>
                     <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
                       <div className=" w-1/2">Mkt Type</div>
