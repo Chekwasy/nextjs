@@ -128,7 +128,7 @@ export async function GET(request) {
 												itmCopy.odd = '1';
 											}
 										}
-										itmCopy.mScore = `${homescore} : ${awayscore}s`;
+										itmCopy.mScore = `${homescore} : ${awayscore}`;
 									}
 									nwBet.push(itmCopy);
 								} else if (gamesJson.Stages[i].Events[j].Eps.includes('.')) {
