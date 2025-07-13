@@ -171,85 +171,86 @@ export default function Bets() {
                   </button>
                 </div>
                 <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
-          <div className="flex flex-col space-y-4">
-            <div className="rounded-lg p-1 flex gap-4">
-              <div className={`w-1/3 font-bold p-1 rounded-lg ${clickBet.status === 'close' ? (clickBet.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{clickBet.result}</div>
-              <div className="w-2/3 bg-blue-200 p-1 rounded-lg font-bold flex justify-end">{`Date: ${clickBet.date.substring(6, 8)} - ${clickBet.date.substring(4, 6)} - ${clickBet.date.substring(0, 4)}    Time: ${clickBet.time.substring(0, 2)} : ${clickBet.time.substring(2, 4)}`}</div>
-            </div>
-            <div className="flex flex-col space-y-1">
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Amount Booked</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(clickBet.betamt))}</div>
-              </div>
+                  <div className="flex flex-col space-y-4">
+                    <div className="rounded-lg p-1 flex gap-4">
+                      <div className={`w-1/3 font-bold p-1 rounded-lg ${clickBet.status === 'close' ? (clickBet.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{clickBet.result}</div>
+                      <div className="w-2/3 bg-blue-200 p-1 rounded-lg font-bold flex justify-end">{`Date: ${clickBet.date.substring(6, 8)} - ${clickBet.date.substring(4, 6)} - ${clickBet.date.substring(0, 4)}    Time: ${clickBet.time.substring(0, 2)} : ${clickBet.time.substring(2, 4)}`}</div>
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                        <div className=" w-1/2">Amount Booked</div>
+                        <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(clickBet.betamt))}</div>
+                      </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Odds</div>
-                <div className=" w-1/2 font-bold text-end">{clickBet.odds}</div>
-              </div>
+                      <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                        <div className=" w-1/2">Odds</div>
+                        <div className=" w-1/2 font-bold text-end">{clickBet.odds}</div>
+                      </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Expected Winnings</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(clickBet.potwin))}</div>
-              </div>
+                      <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                        <div className=" w-1/2">Expected Winnings</div>
+                        <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(clickBet.potwin))}</div>
+                      </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Returns</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(clickBet.returns))}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-                {clickBet.bet.map((item, index) => (
-              <div key={index} className={`flex flex-col space-y-4 ${item.mOutcome !== "Pending" ? (item.mOutcome === "Lost" ? "bg-red-200" : "bg-green-200") : "bg-gray-200" }`}>
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2 font-bold">{item.gTCountry}</div>
-                <div className=" w-1/2 font-bold text-end">{item.gSubtitle}</div>
-              </div>
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Home</div>
-                <div className=" w-1/2 font-bold text-end">{item.hometeam}</div>
-              </div>
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Away</div>
-                <div className=" w-1/2 font-bold text-end">{item.awayteam}</div>
-              </div>
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Time</div>
-                <div className=" w-1/2 font-bold text-end">{item.mTime}</div>
-              </div>
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Mkt Type</div>
-                <div className=" w-1/2 font-bold text-end">{item.mktT}</div>
-              </div>
+                      <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                        <div className=" w-1/2">Returns</div>
+                        <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(clickBet.returns))}</div>
+                      </div>
+                    </div>
+                  </div>
+  
+                  {clickBet.bet.map((item, index) => (
+                  <div key={index} className={`flex flex-col space-y-1 border-b-4 border-gray-700 rounded-b-md ${item.mOutcome !== "Pending" ? (item.mOutcome === "Lost" ? "bg-red-200" : "bg-green-200") : "bg-gray-200" }`}>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2 font-bold">{item.gTCountry}</div>
+                      <div className=" w-1/2 font-bold text-end">{item.gSubtitle}</div>
+                    </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Home</div>
+                      <div className=" w-1/2 font-bold text-end">{item.hometeam}</div>
+                    </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Away</div>
+                      <div className=" w-1/2 font-bold text-end">{item.awayteam}</div>
+                    </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Time</div>
+                      <div className=" w-1/2 font-bold text-end">{item.mTime}</div>
+                    </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Mkt Type</div>
+                      <div className=" w-1/2 font-bold text-end">{item.mktT}</div>
+                    </div>
 
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Odd</div>
-                <div className=" w-1/2 font-bold text-end">{item.odd}</div>
-              </div>
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Selection</div>
-                <div className=" w-1/2 font-bold text-end">{item.selection}</div>
-              </div>
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Status</div>
-                <div className=" w-1/2 font-bold text-end">{item.mStatus}</div>
-              </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Odd</div>
+                      <div className=" w-1/2 font-bold text-end">{item.odd}</div>
+                    </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Selection</div>
+                      <div className=" w-1/2 font-bold text-end">{item.selection}</div>
+                    </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Status</div>
+                      <div className=" w-1/2 font-bold text-end">{item.mStatus}</div>
+                    </div>
 
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Result</div>
-                <div className=" w-1/2 font-bold text-end">{item.mResult}</div>
-              </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Result</div>
+                      <div className=" w-1/2 font-bold text-end">{item.mResult}</div>
+                    </div>
 
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Outcome</div>
-                <div className=" w-1/2 font-bold text-end">{item.mOutcome}</div>
-              </div>
-              <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Score</div>
-                <div className=" w-1/2 font-bold text-end">{item.mScore}</div>
-              </div>
-            </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Outcome</div>
+                      <div className=" w-1/2 font-bold text-end">{item.mOutcome}</div>
+                    </div>
+                    <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+                      <div className=" w-1/2">Score</div>
+                      <div className=" w-1/2 font-bold text-end">{item.mScore}</div>
+                    </div>
+                  </div>
                 ))}
+              </div>
             </div>
           )}
     </div>
