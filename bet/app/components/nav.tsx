@@ -238,6 +238,42 @@ export default function Nav() {
               </Link>
             </li>)}
             <li>
+              <Link href={'/two2win'}>
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/2odds.svg" alt="Two2Win" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Two2Win </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </li>
+            <li>
+              <Link href={'/gamehub'}>
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/allposts.svg" alt="GameHub" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> GameHub </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </li>
+            {storeItems.mainSlice && storeItems.mainSlice.logged && (<li>
+              <Link href={'/postit'}>
+                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                  <div className="group">
+                    <Image src="/icons/postgame.svg" alt="PostIt" width={35} height={35} />
+                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> PostIt </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </li>)}
+            <li>
               <Link href={'/about'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
@@ -285,7 +321,7 @@ export default function Nav() {
                 >
                   <Image
                     src="/icons/close.svg"
-                    alt="Close"
+                    alt=""
                     width={30}
                     height={30}
                   />
@@ -294,84 +330,130 @@ export default function Nav() {
               </li>
              <li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/'}>
-                  <div className='text-gray-100 hover:text-white flex items-center'>
+                  <div className='text-gray-100 flex-row hover:text-white flex items-center'>
                     <Image
                     src="/icons/home.svg"
-                    alt="Home"
+                    alt=""
                     width={30}
                     height={30}
                   />
+                  <div className='text-sm'>Home</div>
                   </div>
                 </Link>
               </li>
               {storeItems.mainSlice && !storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/auth/signup'}>
-                  <div className='text-gray-100 hover:text-white flex items-center'>
+                  <div className='text-gray-100 hover:text-white flex flex-row items-center'>
                     <Image
                     src="/icons/signup.svg"
-                    alt="Signup"
+                    alt=""
                     width={30}
                     height={30}
                   />
+                  <div className='text-sm'>Signup</div>
                   </div>
                 </Link>
               </li>)}
               {storeItems.mainSlice && !storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/auth/login'}>
-                  <div className='text-gray-100 hover:text-white flex items-center'>
+                  <div className='text-gray-100 hover:text-white flex flex-row items-center'>
                     <Image
                     src="/icons/login.svg"
-                    alt="Login"
+                    alt=""
                     width={30}
                     height={30}
                   />
+                  <div className='text-sm'>Login</div>
                   </div>
                 </Link>
               </li>)}
               {storeItems.mainSlice && storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/bets'}>
-                  <div className='text-gray-900 hover:text-white flex items-center'>
+                  <div className='text-gray-900 hover:text-white flex flex-row items-center'>
                     <Image
                     src="/icons/games.svg"
-                    alt="Bets"
+                    alt=""
                     width={30}
                     height={30}
                   />
+                  <div className='text-sm'>Bets</div>
                   </div>
                 </Link>
               </li>)}
               {storeItems.mainSlice && storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/profile'}>
-                  <div className='text-gray-100 hover:text-white flex items-center'>
+                  <div className='text-gray-100 hover:text-white flex flex-row items-center'>
                     <Image
                     src="/icons/profile.svg"
-                    alt="Profile"
+                    alt=""
                     width={30}
                     height={30}
                   />
+                  <div className='text-sm'>Profile</div>
+                  </div>
+                </Link>
+              </li>)}
+              <li className='px-4 py-2 hover:bg-gray-700'>
+                <Link href={'/two2win'}>
+                  <div className='text-gray-100 hover:text-white flex flex-row items-center'>
+                    <Image
+                    src="/icons/2odds.svg"
+                    alt=""
+                    width={30}
+                    height={30}
+                  />
+                  <div className='text-sm'>Two2Win</div>
+                  </div>
+                </Link>
+              </li>
+              <li className='px-4 py-2 hover:bg-gray-700'>
+                <Link href={'/gamehub'}>
+                  <div className='text-gray-100 hover:text-white flex flex-row items-center'>
+                    <Image
+                    src="/icons/allposts.svg"
+                    alt=""
+                    width={30}
+                    height={30}
+                  />
+                  <div className='text-sm'>GameHub</div>
+                  </div>
+                </Link>
+              </li>
+              {storeItems.mainSlice && storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
+                <Link href={'/postit'}>
+                  <div className='text-gray-100 hover:text-white flex flex-row items-center'>
+                    <Image
+                    src="/icons/postgame.svg"
+                    alt=""
+                    width={30}
+                    height={30}
+                  />
+                  <div className='text-sm'>PostIt</div>
                   </div>
                 </Link>
               </li>)}
               <li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/about'}>
-                  <div className='text-gray-100 hover:text-white flex items-center'>
+                  <div className='text-gray-100 hover:text-white flex flex-row items-center'>
                     <Image
                     src="/icons/about.svg"
-                    alt="About"
+                    alt=""
                     width={30}
                     height={30}
                   />
+                  <div className='text-sm'>About</div>
                   </div>
                 </Link>
               </li>
               {storeItems && storeItems.mainSlice.logged && (<li>
-                <div onClick={() => handleLogout()} className='text-gray-100 hover:text-red-700 cursor-pointer flex items-center'>
+                <div onClick={() => handleLogout()} className='text-gray-100 hover:text-red-700 cursor-pointer flex flex-row items-center'>
                   <Image
                     src="/icons/logout.svg"
-                    alt="Logout"
+                    alt=""
                     width={30}
                     height={30}
                   />
+                  <div className='text-sm text-red-500'>Logout</div>
                 </div>
               </li>)}
             </ul>
