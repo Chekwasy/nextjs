@@ -280,7 +280,7 @@ export default function Nav() {
             >
               <li className='px-4 py-2 hover:bg-green-500'>
                 <button
-                  className='md:hidden flex items-center justify-center w-8 h-8 hover:text-white'
+                  className='md:hidden flex flex-row items-center justify-center w-8 h-8 hover:text-white'
                   onClick={() => setMenuOpen(!menuOpen)}
                 >
                   <Image
@@ -289,6 +289,7 @@ export default function Nav() {
                     width={30}
                     height={30}
                   />
+                  <div className='text-sm'>Close</div>
                 </button>
               </li>
              <li className='px-4 py-2 hover:bg-gray-700'>
