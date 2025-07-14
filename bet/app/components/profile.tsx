@@ -13,6 +13,9 @@ export default function Profile() {
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
+      <div className=" bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
+        
       </div>
+    </div>
     );
 }
