@@ -418,7 +418,10 @@ export default function Main() {
           </div>
         </div>
         <button aria-label="Open sidebar" onClick={() => setSidebarOpen(!sidebarOpen)} className="flex flex-row items-center">
-		{storeItems.mainSlice.played.length > 0 && (<div className="rounded-full w-5 h-5 text-sm mt-0 mb-0 bg-red-700 text-white">{storeItems.mainSlice.played.length === 0 ? '' : storeItems.mainSlice.played.length}</div>)}
+          {storeItems.mainSlice.played.length > 0 && (
+          <div className="rounded-full w-5 h-5 text-sm mt-0 mb-0 bg-red-700 text-white">
+            {storeItems.mainSlice.played.length === 0 ? '' : storeItems.mainSlice.played.length}
+          </div>)}
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -427,36 +430,36 @@ export default function Main() {
       <div className="p-4 mt-12">
         <div className="grid gap-4">
           {games.map((game, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md p-4">
-              <h3 className="text-lg font-bold mb-2">{game.subtitle}</h3>
-              <p className="text-gray-600">{game.titleCountry}</p>
-              <div className="mt-4">
-                {game.events.map((match, idx) => (
-                  <div key={idx} className="flex flex-col items-center mb-4 border-b border-gray-200 pb-4">
-                    <div className="flex justify-between w-full">
-                      <div className="w-1/2 flex flex-col items-center">
-                        <div className="text-lg text-center">{match.hometeam}</div>
-                        <div className="text-lg text-center">{match.awayteam}</div>
-                      </div>
-                      <div className="w-1/10 text-lg text-center">
-                        {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
-                      </div>
-                      <div className="w-2/5 flex justify-around">
-                        <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
-                          {match.homeodd}
-                        </button>
-                        <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
-                          {match.drawodd}
-                        </button>
-                        <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
-                          {match.awayodd}
-                        </button>
-                      </div>
-                    </div>
+          <div key={index} className="bg-white rounded-lg shadow-md p-4">
+            <h3 className="text-lg font-bold mb-2">{game.subtitle}</h3>
+            <p className="text-gray-600">{game.titleCountry}</p>
+            <div className="mt-4">
+              {game.events.map((match, idx) => (
+              <div key={idx} className="flex flex-col items-center mb-4 border-b border-gray-200 pb-4">
+                <div className="flex justify-between w-full">
+                  <div className="w-1/2 flex flex-col items-center">
+                    <div className="text-lg text-center">{match.hometeam}</div>
+                    <div className="text-lg text-center">{match.awayteam}</div>
                   </div>
-                ))}
+                  <div className="w-1/10 text-lg text-center">
+                    {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
+                  </div>
+                  <div className="w-2/5 flex justify-around">
+                    <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
+                      {match.homeodd}
+                    </button>
+                    <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
+                      {match.drawodd}
+                    </button>
+                    <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
+                      {match.awayodd}
+                    </button>
+                  </div>
+                </div>
               </div>
+              ))}
             </div>
+          </div>
           ))}
         </div>
       </div>
@@ -472,73 +475,76 @@ export default function Main() {
         </div>
         <div className="p-4 text-gray-700 mt-12">
           {storeItems.mainSlice.played && storeItems.mainSlice.played.map((item) => (
-            <div key={item.id} className="bg-white shadow-md rounded-lg p-4">
-              <div className='flex justify-between'>
-                <h4 className='w-1/3'>{item.gSubtitle}</h4>
-                <h4 className='w-1/3'>{item.mktT}</h4>
-                <div className='flex items-center w-1/3'><Image onClick={() => handleHDAR(item)} src="/icons/close.svg"
-                  alt="Close"
-                  width={30}
-                  height={30}
-                /></div>
-              </div>
-              <h3 className="font-bold text-lg">{item.hometeam} vs {item.awayteam}</h3>
-              <div className='flex justify-between'>
-                <p className='w-1/3'>{`${item.mTime.substring(8, 10)}:${item.mTime.substring(10, 12)}`}</p>
-                <p className='w-1/3'>{item.selection}</p>
-                <h4 className='w-1/3 font-bold'>{item.odd}</h4>
-              </div>
+          <div key={item.id} className="bg-white shadow-md rounded-lg p-4">
+            <div className='flex justify-between'>
+              <h4 className='w-1/3'>{item.gSubtitle}</h4>
+              <h4 className='w-1/3'>{item.mktT}</h4>
+              <div className='flex items-center w-1/3'><Image onClick={() => handleHDAR(item)} src="/icons/close.svg"
+                alt="Close"
+                width={30}
+                height={30}
+              /></div>
             </div>
+            <h3 className="font-bold text-lg">{item.hometeam} vs {item.awayteam}</h3>
+            <div className='flex justify-between'>
+              <p className='w-1/3'>{`${item.mTime.substring(8, 10)}:${item.mTime.substring(10, 12)}`}</p>
+              <p className='w-1/3'>{item.selection}</p>
+              <h4 className='w-1/3 font-bold'>{item.odd}</h4>
+            </div>
+          </div>
           ))}
         </div>
-	{ storeItems.mainSlice.played.length > 0 && (<div className="w-full flex flex-col text-white max-w-md mx-auto p-4 bg-gray-200 rounded-lg border border-white shadow-md">
-  <div className="mb-1">
-    <div className="w-85 h-10  cursor-text bg-blue-400 rounded-lg border border-white flex items-center justify-center" onClick={() => { setToggleInput(!toggleInput); setDone(false);}}>
-	    {`Amt: ${storeItems ? storeItems.mainSlice.me.currency : ''} ${new Intl.NumberFormat().format(parseFloat(betAmt === '' ? '0' : betAmt))}`}
-    </div>
-  </div>
-  <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
-    {`Odds: ${odds}`}
-  </div>
-  <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
-    {`Win: ${new Intl.NumberFormat().format(parseFloat(potWin === '' ? '0' : potWin))}`}
-  </div>
-</div>)}
-	{ storeItems.mainSlice.played.length > 0 && toggleInput && (<div className="p-4 grid grid-cols-4 gap-1">
-{!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('1')}>1</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('2')}>2</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('3')}>3</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('4')}>4</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('5')}>5</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('6')}>6</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('7')}>7</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('8')}>8</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('9')}>9</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('.')}>.</button>)}
-  {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('0')}>0</button>)}
-  {!done && (<button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Del')}>Del</button>)}
-  {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('10')}>10</button>)}
-  {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('100')}>100</button>)}
-  {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>)}
-  {!done && (<button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button>)}
-{storeItems.mainSlice && storeItems.mainSlice.logged && !done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => setDone(!done)} >Done</button>)}
-{storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet()} >Book Bet</button>)}
-{storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
-</div>)}
-      </div>
-      {isOpen && (
-        <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
-          <div className="popup-content bg-gray-200 rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
-            <div className="flex justify-end">
-              <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+        { storeItems.mainSlice.played.length > 0 && (
+        <div className="w-full flex flex-col text-white max-w-md mx-auto p-4 bg-gray-200 rounded-lg border border-white shadow-md">
+          <div className="mb-1">
+            <div className="w-85 h-10  cursor-text bg-blue-400 rounded-lg border border-white flex items-center justify-center" onClick={() => { setToggleInput(!toggleInput); setDone(false);}}>
+              {`Amt: ${storeItems ? storeItems.mainSlice.me.currency : ''} ${new Intl.NumberFormat().format(parseFloat(betAmt === '' ? '0' : betAmt))}`}
             </div>
-            <h2 className="text-lg font-bold mb-4">{msg}</h2>
+          </div>
+          <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
+            {`Odds: ${odds}`}
+          </div>
+          <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
+            {`Win: ${new Intl.NumberFormat().format(parseFloat(potWin === '' ? '0' : potWin))}`}
           </div>
         </div>
+        )}
+        { storeItems.mainSlice.played.length > 0 && toggleInput && (
+        <div className="p-4 grid grid-cols-4 gap-1">
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('1')}>1</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('2')}>2</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('3')}>3</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('4')}>4</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('5')}>5</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('6')}>6</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('7')}>7</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('8')}>8</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('9')}>9</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('.')}>.</button>)}
+          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('0')}>0</button>)}
+          {!done && (<button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Del')}>Del</button>)}
+          {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('10')}>10</button>)}
+          {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('100')}>100</button>)}
+          {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>)}
+          {!done && (<button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button>)}
+          {storeItems.mainSlice && storeItems.mainSlice.logged && !done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => setDone(!done)} >Done</button>)}
+          {storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet()} >Book Bet</button>)}
+          {storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
+        </div>)}
+      </div>
+      {isOpen && (
+      <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
+        <div className="popup-content bg-gray-200 rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
+          <div className="flex justify-end">
+            <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <h2 className="text-lg font-bold mb-4">{msg}</h2>
+        </div>
+      </div>
       )}
     </div>
   );

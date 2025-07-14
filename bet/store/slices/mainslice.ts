@@ -26,6 +26,12 @@ interface StoreState {
     mobile: string;
     accbal: string;
     currency: string;
+    rating: string;
+    sub: string;
+    TGames: string;
+    TWon: string;
+    TLost: string;
+    nickname: string;
   },
   buttonState: {[key: string]: boolean}
 }
@@ -41,6 +47,12 @@ const storeS: StoreState = {
     mobile: '',
     accbal: '',
     currency: 'N',
+    rating: '',
+    sub: '',
+    TGames: '',
+    TWon: '',
+    TLost: '',
+    nickname: '',
   },
   buttonState: {'': false},
 }

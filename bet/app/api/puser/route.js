@@ -33,7 +33,7 @@ export async function POST(request) {
 		return NextResponse.json('user exists', {status: 404});
 	}
 	const result = await (await dbClient.client.db().collection('users'))
-	.insertOne({userID: userID, email: email, password: password, fname: firstname, lname: lastname, mobile: "", accbal: '10000', currency: "N"});
+	.insertOne({userID: userID, email: email, password: password, fname: firstname, lname: lastname, mobile: "", accbal: '10000', currency: "N", rating: '', sub: '', TGames: '', TWon: '', TLost: '', nickname: '',});
 	if (result) {
             return NextResponse.json({'success': email, message: "Signup Successful"}, {status: 201});
         }
