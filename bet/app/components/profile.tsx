@@ -8,17 +8,21 @@ export default function Profile() {
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
       <div className=" bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
-        <h2 className="text-2xl font-bold mb-4">User Profile</h2>
-    <div className="flex flex-col md:flex-row justify-between mb-4">
-      <div className="flex flex-col w-full md:w-1/2 mb-4 md:mb-0">
-        <p className="text-lg font-bold mb-2">Account Information</p>
-        <p className="text-md mb-2">Name: {storeItems?.mainSlice.me.fname} {storeItems?.mainSlice.me.lname}</p>
+        <h2 className="text-2xl font-bold p-4">My Profile</h2>
+    <div className="flex flex-col justify-between p-2">
+      <div className="flex flex-col w-full p-1">
+        <div className="text-lg font-bold p-2">Account Information</div>
+        <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Name</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.fname} {storeItems?.mainSlice.me.lname}</div>
+        </div>
+        <p className="text-md mb-2">Name: </p>
         <p className="text-md mb-2">Email: {storeItems?.mainSlice.me.email}</p>
         <p className="text-md mb-2">Mobile: {storeItems?.mainSlice.me.mobile}</p>
         <p className="text-md mb-2">Account Balance: {storeItems?.mainSlice.me.accbal} {storeItems?.mainSlice.me.currency}</p>
       </div>
-      <div className="flex flex-col w-full md:w-1/2">
-        <p className="text-lg font-bold mb-2">Gaming Statistics</p>
+      <div className="flex flex-col w-full">
+        <p className="text-lg font-bold mb-2">Statistics</p>
         <p className="text-md mb-2">Nickname: {storeItems?.mainSlice.me.nickname}</p>
         <p className="text-md mb-2">Rating: {storeItems?.mainSlice.me.rating}%</p>
         <p className="text-md mb-2">Subscription: {storeItems?.mainSlice.me.sub}</p>
