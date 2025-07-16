@@ -5,7 +5,10 @@ export async function GET() {
       const today = new Date();
       const hour = today.getHours();
       const minute = today.getMinutes();
-      return  NextResponse.json({hour: hour, minute: minute }, {status: 201});
+      const day = today.getDate();
+      const month = today.getMonth();
+      const year = today.getFullYear();
+      return  NextResponse.json({hour: hour, minute: minute, day: day, month: month, year: year }, {status: 201});
     } catch {
         return NextResponse.json('error', {status: 400});
     }
