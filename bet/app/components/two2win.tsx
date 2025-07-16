@@ -40,7 +40,7 @@ export default function Two2Win() {
       </div>
       {calenderOpen && (
       <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center">
-        <div className=" bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/4 lg:w-1/6 xl:w-1/8" >
+        <div className=" bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/4 xl:w-1/4" >
           <div className="flex justify-end">
             <button className="text-gray-500 hover:text-gray-700" onClick={handleCalenderClose} >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
@@ -63,7 +63,7 @@ export default function Two2Win() {
             </div>
             <div className="flex flex-row w-full text-sm text-gray-700">
               {weekL.map((item, index) => (
-              <div key={index} className="text-center w-1/7">
+              <div key={index} className={`text-center w-1/7 ${item === 'Sun' ? 'text-red-500' : ''}`}>
                 {item}
               </div>
               ))}
@@ -71,7 +71,7 @@ export default function Two2Win() {
             <div className='grid grid-cols-7 gap-2'>
               {weekD.map((item, index) => (
               <div key={index} className="flex flex-row w-full text-sm text-gray-700">
-                {item}
+                {parseInt(item) > 0 && parseInt(item) < 32 ? item : ''}
               </div>
               ))}
             </div>
