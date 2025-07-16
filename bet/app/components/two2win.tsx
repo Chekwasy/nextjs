@@ -12,7 +12,7 @@ import { monthL, weekL, weekD } from '../tools/lists_dict';
 export default function Two2Win() {
   //usedispatch to be able to write to store
   //const dispatch = useDispatch();
-  const [calenderOpen, setCalenderOpen] = useState(false);
+  const [calenderOpen, setCalenderOpen] = useState(true);
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
   //useSelector to extract what is in the store

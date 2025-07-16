@@ -12,23 +12,49 @@ export default function Profile() {
     <div className="flex flex-col justify-between p-2">
       <div className="flex flex-col w-full p-1">
         <div className="text-lg font-bold p-2">Account Information</div>
-        <div className="bg-blue-200 rounded-lg p-1 flex gap-4">
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
           <div className=" w-1/2">Name</div>
           <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.fname} {storeItems?.mainSlice.me.lname}</div>
         </div>
-        <p className="text-md mb-2">Name: </p>
-        <p className="text-md mb-2">Email: {storeItems?.mainSlice.me.email}</p>
-        <p className="text-md mb-2">Mobile: {storeItems?.mainSlice.me.mobile}</p>
-        <p className="text-md mb-2">Account Balance: {storeItems?.mainSlice.me.accbal} {storeItems?.mainSlice.me.currency}</p>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Email</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.email}</div>
+        </div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Mobile</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.mobile}</div>
+        </div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Account Balance</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.currency} {storeItems?.mainSlice.me.accbal}</div>
+        </div>
       </div>
       <div className="flex flex-col w-full">
-        <p className="text-lg font-bold mb-2">Statistics</p>
-        <p className="text-md mb-2">Nickname: {storeItems?.mainSlice.me.nickname}</p>
-        <p className="text-md mb-2">Rating: {storeItems?.mainSlice.me.rating}%</p>
-        <p className="text-md mb-2">Subscription: {storeItems?.mainSlice.me.sub}</p>
-        <p className="text-md mb-2">Total Games: {storeItems?.mainSlice.me.TGames}</p>
-        <p className="text-md mb-2">Total Won: {storeItems?.mainSlice.me.TWon}</p>
-        <p className="text-md mb-2">Total Lost: {storeItems?.mainSlice.me.TLost}</p>
+        <div className="text-lg font-bold p-2">Statistics</div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Nickname</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.nickname}</div>
+        </div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Rating</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.rating}%</div>
+        </div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Sub. Category</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.sub}</div>
+        </div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Total Games</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.TGames}</div>
+        </div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Total Won</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.TWon}</div>
+        </div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Total Lost</div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.TLost}</div>
+        </div>
       </div>
     </div>
       </div>
