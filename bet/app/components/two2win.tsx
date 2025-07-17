@@ -12,7 +12,7 @@ export default function Two2Win() {
   //usedispatch to be able to write to store
   //const dispatch = useDispatch();
   const [calenderOpen, setCalenderOpen] = useState(true);
-  const [sDay, setSDay] = useState(0);
+  const [sDay, setSDay] = useState('');
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
   const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
@@ -33,7 +33,7 @@ export default function Two2Win() {
         tok: Cookies.get('trybet_tok'),
     }})
     .then((response) => {
-      setSDay(response.data.day);
+      setSDay(response.data.day.toString());
       setSMonth(monthL[response.data.month]);
       setSYear(response.data.year.toString());
       setCalender(getCalender(response.data.year, response.data.month + 1));
@@ -94,7 +94,7 @@ export default function Two2Win() {
             {calender.map((week, index) => (
   <div key={index} className="flex flex-row w-full gap-2">
     {week.map((day, idx) => (
-      <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  parseInt(day) ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(parseInt(day))}>
+      <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(day.toString())}>
         {day === '' ? '' : day}
       </div>
     ))}
