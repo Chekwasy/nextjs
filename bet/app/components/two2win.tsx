@@ -94,7 +94,7 @@ export default function Two2Win() {
             {calender.map((week, index) => (
   <div key={index} className="flex flex-row w-full gap-2">
     {week.map((day, idx) => (
-      <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(day)}>
+      <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  parseInt(day) ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(parseInt(day))}>
         {day === '' ? '' : day}
       </div>
     ))}
