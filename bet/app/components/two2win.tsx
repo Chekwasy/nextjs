@@ -15,13 +15,13 @@ export default function Two2Win() {
   const [calenderOpen, setCalenderOpen] = useState(true);
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
-  const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
+  const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2)) + 1));
   //const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const handleCalenderClose = () => {
         setCalenderOpen(false);
     };
   const handleCalender = (yr: string, mnt: string) => {
-    setCalender(getCalender(parseInt(yr), parseInt(mnt.slice(-2))));
+    setCalender(getCalender(parseInt(yr), parseInt(mnt.slice(-2)) + 1));
   };
                           
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Two2Win() {
     .then((response) => {
       setSMonth(monthL[response.data.month]);
       setSYear(response.data.year.toString());
-      setCalender(getCalender(response.data.year, response.data.month));
+      setCalender(getCalender(response.data.year, response.data.month + 1));
     })
     .catch(error => {
       console.log(error.message);
@@ -56,14 +56,14 @@ export default function Two2Win() {
           <div className="flex flex-col b-2 w-full border-gray-700 bg-white p-1">
             <div className="flex flex-row w-full">
               <div className="flex flex-row">
-                <Image src="/icons/left.svg" alt="<" width={30} height={30} className="mr-2"/>
-                <div className="text-gray-700 font-bold text-center mr-2">{sMonth.slice(0, -2)}</div>
-                <Image src="/icons/right.svg" alt=">" width={30} height={30} className="mr-2"/>
+                <Image src="/icons/left.svg" alt="<" width={30} height={30} className="mr-4"/>
+                <div className="text-gray-700 font-bold text-center mr-4">{sMonth.slice(0, -2)}</div>
+                <Image src="/icons/right.svg" alt=">" width={30} height={30} className="mr-4"/>
               </div>
               <div className="flex flex-row">
-                <Image src="/icons/left.svg" alt="<" width={30} height={30} className="mr-2" />
-                <div className="text-gray-700 font-bold text-center mr-2" onClick={() => handleCalender(sYear, sMonth)}>{sYear}</div>
-                <Image src="/icons/right.svg" alt=">" width={30} height={30} className="mr-2"/>
+                <Image src="/icons/left.svg" alt="<" width={30} height={30} className="mr-4" />
+                <div className="text-gray-700 font-bold text-center mr-4" onClick={() => handleCalender(sYear, sMonth)}>{sYear}</div>
+                <Image src="/icons/right.svg" alt=">" width={30} height={30} className="mr-4"/>
               </div>
             </div>
             <div className="flex flex-row w-full text-sm text-gray-700">
