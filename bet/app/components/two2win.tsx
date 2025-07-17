@@ -15,7 +15,6 @@ export default function Two2Win() {
   const [sDay, setSDay] = useState('');
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
-  hhbb
   const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
   //const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const handleCalenderClose = () => {
