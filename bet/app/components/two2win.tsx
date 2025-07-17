@@ -72,13 +72,19 @@ export default function Two2Win() {
               </div>
               ))}
             </div>
-            {calender.map((wk, index) => (
-            <div key={index} className='flex flex-col gap-2'>
-              {wk.map((dy, idx) => (
-              <div key={idx} className="flex flex-row w-full text-sm text-gray-700">
-                {dy}
-              </div>
+            {calender.map((week, index) => (
+            <div key={index} className="flex flex-col gap-2">
+              {week.map((day, idx) => (
+                <div key={idx} className="flex flex-row w-full text-sm text-gray-700">
+                  {day === '' ? (
+                     <div className="w-8"></div>
+                  ) : (
+                    <div className="w-8">{day}</div>
+                   )}
+                 </div>
               ))}
+               </div>
+             ))}
             </div>
             ))}
           </div>
