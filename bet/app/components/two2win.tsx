@@ -76,7 +76,7 @@ export default function Two2Win() {
             {calender.map((week, index) => (
   <div key={index} className="flex flex-row w-full gap-2">
     {week.map((day, idx) => (
-      <div key={idx} className="text-sm text-gray-700">
+      <div key={idx} className="text-center w-1/7 text-gray-700">
         {day === '' ? '' : day}
       </div>
     ))}
