@@ -23,7 +23,7 @@ export default function Two2Win() {
     setCalender(getCalender(parseInt(yr), parseInt(mnt)));
   };
   useEffect(() => {
-    handleCalender(sYear, mnt.slice(-2));
+    handleCalender(sYear, sMonth.slice(-2));
   }, [sYear, sMonth]);
                           
   useEffect(() => {
