@@ -15,14 +15,17 @@ export default function Two2Win() {
   const [calenderOpen, setCalenderOpen] = useState(true);
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
-  const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2)) + 1));
+  const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
   //const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const handleCalenderClose = () => {
         setCalenderOpen(false);
     };
   const handleCalender = (yr: string, mnt: string) => {
-    setCalender(getCalender(parseInt(yr), parseInt(mnt.slice(-2)) + 1));
+    setCalender(getCalender(parseInt(yr), parseInt(mnt)));
   };
+  useEffect(() => {
+    handleCalender(sYear, mnt.slice(-2));
+  }, [sYear, sMonth]);
                           
   useEffect(() => {
     axios.get('/api/getdate', {
@@ -55,15 +58,29 @@ export default function Two2Win() {
           </div>
           <div className="flex flex-col b-2 w-full border-gray-700 bg-white p-1">
             <div className="flex flex-row w-full">
-              <div className="flex flex-row">
-                <Image src="/icons/left.svg" alt="<" width={30} height={30} className="mr-4"/>
-                <div className="text-gray-700 font-bold text-center mr-4">{sMonth.slice(0, -2)}</div>
-                <Image src="/icons/right.svg" alt=">" width={30} height={30} className="mr-4"/>
+              <div className="flex w-1/2">
+                <select
+                  value={sMonth}
+                  onChange={(e) => setSMonth(e.target.value)}
+                  className="text-gray-700 font-bold text-center mr-4"
+                >
+                  {monthL.map((month, index) => (
+                  <option key={index} value={month}>
+                    {month.slice(0, -2)}
+                  </option>
+                  ))}
+                </select>
+
               </div>
-              <div className="flex flex-row">
-                <Image src="/icons/left.svg" alt="<" width={30} height={30} className="mr-4" />
-                <div className="text-gray-700 font-bold text-center mr-4" onClick={() => handleCalender(sYear, sMonth)}>{sYear}</div>
-                <Image src="/icons/right.svg" alt=">" width={30} height={30} className="mr-4"/>
+              <div className="flex w-1/2">
+                <select
+                  value={sYear}
+                  onChange={(e) => setSYear(e.target.value.toString())}
+                  className="text-gray-700 font-bold text-center mr-4"
+                >
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                </select>
               </div>
             </div>
             <div className="flex flex-row w-full text-sm text-gray-700">
