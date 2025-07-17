@@ -12,7 +12,7 @@ export default function Two2Win() {
   //usedispatch to be able to write to store
   //const dispatch = useDispatch();
   const [calenderOpen, setCalenderOpen] = useState(true);
-  const [sDay, setSDay] = useState('');
+  const [sDay, setSDay] = useState(0);
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
   const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
