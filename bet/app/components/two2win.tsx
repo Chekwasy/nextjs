@@ -15,11 +15,15 @@ export default function Two2Win() {
   const [calenderOpen, setCalenderOpen] = useState(true);
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
-  const [calender, setcalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
+  const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
   //const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const handleCalenderClose = () => {
         setCalenderOpen(false);
     };
+  const handleCalender = (yr: string, mnt: string) => {
+    setCalender(getCalender(parseInt(yr), parseInt(mnt.slice(-2))));
+  };
+                          
   useEffect(() => {
     axios.get('/api/getdate', {
       headers: {
@@ -57,7 +61,7 @@ export default function Two2Win() {
               </div>
               <div className="flex flex-row">
                 <Image src="/icons/left.svg" alt="<" width={30} height={30} />
-                <div className="text-gray-700 font-bold text-center">{sYear}</div>
+                <div className="text-gray-700 font-bold text-center" onClick={() => handleCalender(sYear, sMonth)}>{sYear}</div>
                 <Image src="/icons/right.svg" alt=">" width={30} height={30} />
               </div>
             </div>
