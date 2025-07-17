@@ -11,7 +11,7 @@ import { monthL, weekL, getCalender} from '../tools/lists_dict';
 export default function Two2Win() {
   //usedispatch to be able to write to store
   //const dispatch = useDispatch();
-  const [calenderOpen, setCalenderOpen] = useState(true);
+  const [calenderOpen, setCalenderOpen] = useState(false);
   const [sDay, setSDay] = useState('');
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
@@ -45,10 +45,10 @@ export default function Two2Win() {
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
       <div className=" bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
-      
+        <div className='flex w-1/2 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400' onClick={() => setCalenderOpen(true)}>Date</div>
       </div>
       {calenderOpen && (
-      <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex items-center">
+      <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center">
         <div className=" bg-white rounded-lg shadow-md p-4 w-3/4 md:w-1/4 lg:w-1/4 xl:w-1/4" >
           <div className="flex justify-end">
             <button className="text-gray-500 hover:text-gray-700" onClick={handleCalenderClose} >
