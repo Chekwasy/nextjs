@@ -56,12 +56,12 @@ export default function Two2Win() {
             <div className="flex flex-row w-full">
               <div className="flex flex-row">
                 <Image src="/icons/left.svg" alt="<" width={30} height={30} className="mr-2"/>
-                <div className="text-gray-700 font-bold text-center className="mr-2"">{sMonth.slice(0, -2)}</div>
+                <div className="text-gray-700 font-bold text-center mr-2">{sMonth.slice(0, -2)}</div>
                 <Image src="/icons/right.svg" alt=">" width={30} height={30} className="mr-2"/>
               </div>
               <div className="flex flex-row">
                 <Image src="/icons/left.svg" alt="<" width={30} height={30} className="mr-2" />
-                <div className="text-gray-700 font-bold text-center className="mr-2"" onClick={() => handleCalender(sYear, sMonth)}>{sYear}</div>
+                <div className="text-gray-700 font-bold text-center mr-2" onClick={() => handleCalender(sYear, sMonth)}>{sYear}</div>
                 <Image src="/icons/right.svg" alt=">" width={30} height={30} className="mr-2"/>
               </div>
             </div>
