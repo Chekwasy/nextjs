@@ -32,6 +32,7 @@ export default function Two2Win() {
     .then((response) => {
       setSMonth(monthL[response.data.month]);
       setSYear(response.data.year.toString());
+      setCalender(getCalender(response.data.year, response.data.month));
     })
     .catch(error => {
       console.log(error.message);
@@ -73,13 +74,13 @@ export default function Two2Win() {
               ))}
             </div>
             {calender.map((week, index) => (
-            <div key={index} className="flex flex-col gap-2">
+            <div key={index} className="flex flex-col w-full gap-2">
               {week.map((day, idx) => (
-                <div key={idx} className="flex flex-row w-full text-sm text-gray-700">
+                <div key={idx} className="flex flex-row w-1/7 text-sm text-gray-700">
                   {day === '' ? (
-                     <div className="w-8"></div>
+                  {''}
                   ) : (
-                    <div className="w-8">{day}</div>
+                    {day}
                    )}
                 </div>
               ))}
