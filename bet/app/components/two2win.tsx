@@ -77,11 +77,7 @@ export default function Two2Win() {
             <div key={index} className="flex flex-col w-full gap-2">
               {week.map((day, idx) => (
                 <div key={idx} className="flex flex-row w-1/7 text-sm text-gray-700">
-                  {day === '' ? (
-                  {''}
-                  ) : (
-                    {day}
-                   )}
+                  {day === '' ? '' : day}
                 </div>
               ))}
             </div>
