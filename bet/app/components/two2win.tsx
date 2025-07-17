@@ -4,7 +4,7 @@ import { useState, useEffect, } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 //import { StoreState } from '../tools/s_interface';
-import { monthL, weekL, weekD } from '../tools/lists_dict';
+import { monthL, weekL, getCalender} from '../tools/lists_dict';
 //import { useDispatch, useSelector } from 'react-redux';
 //import { mainStateReducer } from '@/store/slices/mainslice';
 
@@ -15,7 +15,7 @@ export default function Two2Win() {
   const [calenderOpen, setCalenderOpen] = useState(true);
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
-  //useSelector to extract what is in the store
+  const [calender, setcalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
   //const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const handleCalenderClose = () => {
         setCalenderOpen(false);
@@ -52,7 +52,7 @@ export default function Two2Win() {
             <div className="flex flex-row w-full">
               <div className="flex flex-row">
                 <Image src="/icons/left.svg" alt="<" width={30} height={30} />
-                <div className="text-gray-700 font-bold text-center">{sMonth}</div>
+                <div className="text-gray-700 font-bold text-center">{sMonth.slice(0, -2)}</div>
                 <Image src="/icons/right.svg" alt=">" width={30} height={30} />
               </div>
               <div className="flex flex-row">
@@ -68,13 +68,15 @@ export default function Two2Win() {
               </div>
               ))}
             </div>
-            <div className='grid grid-cols-7 gap-2'>
-              {weekD.map((item, index) => (
-              <div key={index} className="flex flex-row w-full text-sm text-gray-700">
-                {parseInt(item) > 0 && parseInt(item) < 32 ? item : ''}
+            {calender.map((wk, index) => (
+            <div key={index} className='flex flex-col gap-2'>
+              {wk.map((dy, idx) => (
+              <div key={idx} className="flex flex-row w-full text-sm text-gray-700">
+                {dy}
               </div>
               ))}
             </div>
+            ))}
           </div>
         </div>
       </div>
