@@ -324,6 +324,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm'>Close</div>
                 </button>
@@ -336,6 +337,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700'>Home</div>
                   </div>
@@ -349,6 +351,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700'>Signup</div>
                   </div>
@@ -362,6 +365,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700'>Login</div>
                   </div>
@@ -375,6 +379,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700'>Bets</div>
                   </div>
@@ -388,6 +393,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700'>Profile</div>
                   </div>
@@ -401,6 +407,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700'>Two2Win</div>
                   </div>
@@ -414,6 +421,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700'>GameHub</div>
                   </div>
@@ -427,6 +435,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700'>PostIt</div>
                   </div>
@@ -440,6 +449,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-gray-700 w-4/5'>About</div>
                   </div>
@@ -452,6 +462,7 @@ export default function Nav() {
                     alt=""
                     width={30}
                     height={30}
+                    className="mr-2"
                   />
                   <div className='text-sm text-red-500 w-4/5'>Logout</div>
                 </div>
