@@ -12,6 +12,7 @@ export default function Two2Win() {
   //usedispatch to be able to write to store
   //const dispatch = useDispatch();
   const [calenderOpen, setCalenderOpen] = useState(true);
+  const [sDay, setSDay] = useState('');
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
   hhbb
@@ -33,6 +34,7 @@ export default function Two2Win() {
         tok: Cookies.get('trybet_tok'),
     }})
     .then((response) => {
+      setSDay(response.data.day);
       setSMonth(monthL[response.data.month]);
       setSYear(response.data.year.toString());
       setCalender(getCalender(response.data.year, response.data.month + 1));
@@ -47,8 +49,8 @@ export default function Two2Win() {
       
       </div>
       {calenderOpen && (
-      <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center">
-        <div className=" bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/4 xl:w-1/4" >
+      <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex items-center">
+        <div className=" bg-white rounded-lg shadow-md p-4 w-3/4 md:w-1/4 lg:w-1/4 xl:w-1/4" >
           <div className="flex justify-end">
             <button className="text-gray-500 hover:text-gray-700" onClick={handleCalenderClose} >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
@@ -93,7 +95,7 @@ export default function Two2Win() {
             {calender.map((week, index) => (
   <div key={index} className="flex flex-row w-full gap-2">
     {week.map((day, idx) => (
-      <div key={idx} className="text-center w-1/7 text-gray-700">
+      <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day ? 'bg-green-300' : ''}`} onClick={() => itm !== '' && setSDay(itm)}>
         {day === '' ? '' : day}
       </div>
     ))}
