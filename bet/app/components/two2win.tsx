@@ -48,8 +48,8 @@ export default function Two2Win() {
         <div className='flex w-1/2 font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>
       {calenderOpen && (
-      <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center mt-20">
-        <div className=" bg-white rounded-lg shadow-md p-4 w-3/4 md:w-1/4 lg:w-1/4 xl:w-1/4 max-h-fit overflow-y-auto" >
+      <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center mt-40">
+        <div className=" bg-white rounded-lg shadow-md p-4 w-3/4 md:w-1/4 lg:w-1/4 xl:w-1/4 h-1/4 overflow-y-auto" >
           <div className="flex justify-end">
             <button className="text-gray-500 hover:text-gray-700" onClick={handleCalenderClose} >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
