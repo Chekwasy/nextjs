@@ -44,8 +44,8 @@ export default function Two2Win() {
   }, []);
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
-      <div className=" bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
-        <div className='flex w-1/2 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
+      <div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
+        <div className='flex w-1/2 font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>
       {calenderOpen && (
       <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center mt-20">
