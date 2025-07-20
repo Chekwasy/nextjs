@@ -48,59 +48,59 @@ export default function Two2Win() {
         <div className='flex w-1/2 font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>
       <div className="max-w-4xl mx-auto p-4 md:p-6 lg:p-8">
-  <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8">
-    <h2 className="text-2xl font-bold text-gray-800">Stake Tracker</h2>
-    <div className="flex flex-wrap -mx-4">
-      <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Commencement Date</h3>
-        <p className="text-lg text-gray-600">20 July 2025</p>
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8">
+          <h2 className="text-2xl font-bold text-gray-800">Stake Tracker</h2>
+          <div className="flex flex-wrap -mx-4">
+            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">Commencement Date</h3>
+              <p className="text-lg text-gray-600">20 July 2025</p>
+            </div>
+            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">Starting Balance</h3>
+              <p className="text-lg text-gray-600">$1000</p>
+            </div>
+            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">{`Today's`} Stake</h3>
+              <p className="text-lg text-gray-600">$50</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap -mx-4 mt-4">
+            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">{`Today's`} Odd</h3>
+              <p className="text-lg text-gray-600">2.5</p>
+            </div>
+            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">Expected Balance</h3>
+              <p className="text-lg text-gray-600">$1200</p>
+            </div>
+            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">Date Posted</h3>
+              <p className="text-lg text-gray-600">20 July 2025</p>
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800 mt-4">Matches</h2>
+          <div className="flex flex-wrap -mx-4 mt-4">
+            <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">Home Team 1</h3>
+              <p className="text-lg text-gray-600">vs Away Team 1</p>
+              <p className="text-lg text-gray-600">Selection Odd: 2.1</p>
+              <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team A</span></p>
+            </div>
+            <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">Home Team 2</h3>
+              <p className="text-lg text-gray-600">vs Away Team 2</p>
+              <p className="text-lg text-gray-600">Selection Odd: 1.8</p>
+              <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team B</span></p>
+            </div>
+            <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
+              <h3 className="text-xl font-bold text-gray-800">Home Team 3</h3>
+              <p className="text-lg text-gray-600">vs Away Team 3</p>
+              <p className="text-lg text-gray-600">Selection Odd: 2.5</p>
+              <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team C</span></p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Starting Balance</h3>
-        <p className="text-lg text-gray-600">$1000</p>
-      </div>
-      <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Today's Stake</h3>
-        <p className="text-lg text-gray-600">$50</p>
-      </div>
-    </div>
-    <div className="flex flex-wrap -mx-4 mt-4">
-      <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Today's Odd</h3>
-        <p className="text-lg text-gray-600">2.5</p>
-      </div>
-      <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Expected Balance</h3>
-        <p className="text-lg text-gray-600">$1200</p>
-      </div>
-      <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Date Posted</h3>
-        <p className="text-lg text-gray-600">20 July 2025</p>
-      </div>
-    </div>
-    <h2 className="text-2xl font-bold text-gray-800 mt-4">Matches</h2>
-    <div className="flex flex-wrap -mx-4 mt-4">
-      <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Home Team 1</h3>
-        <p className="text-lg text-gray-600">vs Away Team 1</p>
-        <p className="text-lg text-gray-600">Selection Odd: 2.1</p>
-        <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team A</span></p>
-      </div>
-      <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Home Team 2</h3>
-        <p className="text-lg text-gray-600">vs Away Team 2</p>
-        <p className="text-lg text-gray-600">Selection Odd: 1.8</p>
-        <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team B</span></p>
-      </div>
-      <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
-        <h3 className="text-xl font-bold text-gray-800">Home Team 3</h3>
-        <p className="text-lg text-gray-600">vs Away Team 3</p>
-        <p className="text-lg text-gray-600">Selection Odd: 2.5</p>
-        <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team C</span></p>
-      </div>
-    </div>
-  </div>
-</div>
 
       {calenderOpen && (
       <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center mt-40">
@@ -147,15 +147,14 @@ export default function Two2Win() {
               ))}
             </div>
             {calender.map((week, index) => (
-  <div key={index} className="flex flex-row w-full gap-2">
-    {week.map((day, idx) => (
-      <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(day.toString())}>
-        {day === '' ? '' : day}
-      </div>
-    ))}
-  </div>
-))}
-
+            <div key={index} className="flex flex-row w-full gap-2">
+              {week.map((day, idx) => (
+                <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(day.toString())}>
+                  {day === '' ? '' : day}
+                </div>
+              ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>
