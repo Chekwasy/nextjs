@@ -79,11 +79,11 @@ export default function Two2Win() {
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
       <div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
-        <div className='flex w-1/2 font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
+        <div className='flex w-1/2 text-center font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>
       <div className="bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
         <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 mb-6">
             <div className="rounded-lg p-1 flex gap-4">
               <div className={`w-1/3 font-bold p-2 text-center rounded-lg ${two2win.status === 'Won' ? 'bg-green-500 text-white' : (two2win.status === 'Lost' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white')}`}>{two2win.status}</div>
               <div className="w-2/3 bg-blue-200 p-2 text-center rounded-lg font-bold flex justify-end">{`${two2win.commencement.substring(0, 2)} ${two2win.commencement.substring(2, 5)} ${two2win.commencement.substring(7, 11)}`}</div>
