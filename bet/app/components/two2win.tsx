@@ -9,12 +9,42 @@ import { monthL, weekL, getCalender} from '../tools/lists_dict';
 
 
 export default function Two2Win() {
+  const two2win = {
+    commencement: '20Jul072025',
+    Sbal: '10000',
+    Tstake: '100',
+    Todd: '2.35',
+    Ebal: '10235',
+    status: 'Pending',
+    published: '21Jul072025',
+    games: [
+      {
+        hometeam: 'Manchester United',
+        awayteam: 'Chelsea',
+        selection: 'Home win',
+        odd: '1.4',
+      },
+      {
+        hometeam: 'Arsnal',
+        awayteam: 'Liverpool',
+        selection: 'Away win',
+        odd: '1.4',
+      },
+      {
+        hometeam: 'Manchester City',
+        awayteam: 'Fulham',
+        selection: 'Over 1.5',
+        odd: '1.2',
+      }
+    ]
+  }
   //usedispatch to be able to write to store
   //const dispatch = useDispatch();
   const [calenderOpen, setCalenderOpen] = useState(false);
   const [sDay, setSDay] = useState('');
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
+  const [toDay, setToDay] = useState('');
   const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
   //const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const handleCalenderClose = () => {
@@ -33,9 +63,13 @@ export default function Two2Win() {
         tok: Cookies.get('trybet_tok'),
     }})
     .then((response) => {
-      setSDay(response.data.day.toString());
-      setSMonth(monthL[response.data.month]);
-      setSYear(response.data.year.toString());
+      const ddd = response.data.day.toString();
+      const mmm = monthL[response.data.month];
+      const yyy = response.data.year.toString();
+      setSDay(ddd);
+      setSMonth(mmm);
+      setSYear(yyy);
+      setToDay(`${ddd}${mmm}${yyy}`);
       setCalender(getCalender(response.data.year, response.data.month + 1));
     })
     .catch(error => {
@@ -47,60 +81,63 @@ export default function Two2Win() {
       <div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
         <div className='flex w-1/2 font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>
-      <div className="max-w-4xl mx-auto p-4 md:p-6 lg:p-8">
-        <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8">
-          <h2 className="text-2xl font-bold text-gray-800">Stake Tracker</h2>
-          <div className="flex flex-wrap -mx-4">
-            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">Commencement Date</h3>
-              <p className="text-lg text-gray-600">20 July 2025</p>
+      <div className="bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
+        <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
+          <div className="flex flex-col space-y-4">
+            <div className="rounded-lg p-1 flex gap-4">
+              <div className={`w-1/3 font-bold p-2 text-center rounded-lg ${two2win.status === 'Won' ? 'bg-green-500 text-white' : (two2win.status === 'Lost' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white')}`}>{two2win.status}</div>
+              <div className="w-2/3 bg-blue-200 p-2 text-center rounded-lg font-bold flex justify-end">{`${two2win.commencement.substring(0, 2)} ${two2win.commencement.substring(2, 5)} ${two2win.commencement.substring(7, 11)}`}</div>
             </div>
-            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">Starting Balance</h3>
-              <p className="text-lg text-gray-600">$1000</p>
-            </div>
-            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">{`Today's`} Stake</h3>
-              <p className="text-lg text-gray-600">$50</p>
-            </div>
-          </div>
-          <div className="flex flex-wrap -mx-4 mt-4">
-            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">{`Today's`} Odd</h3>
-              <p className="text-lg text-gray-600">2.5</p>
-            </div>
-            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">Expected Balance</h3>
-              <p className="text-lg text-gray-600">$1200</p>
-            </div>
-            <div className="w-full md:w-1/2 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">Date Posted</h3>
-              <p className="text-lg text-gray-600">20 July 2025</p>
-            </div>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 mt-4">Matches</h2>
-          <div className="flex flex-wrap -mx-4 mt-4">
-            <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">Home Team 1</h3>
-              <p className="text-lg text-gray-600">vs Away Team 1</p>
-              <p className="text-lg text-gray-600">Selection Odd: 2.1</p>
-              <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team A</span></p>
-            </div>
-            <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">Home Team 2</h3>
-              <p className="text-lg text-gray-600">vs Away Team 2</p>
-              <p className="text-lg text-gray-600">Selection Odd: 1.8</p>
-              <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team B</span></p>
-            </div>
-            <div className="w-full md:w-1/3 xl:w-1/3 p-4 md:p-6 lg:p-8">
-              <h3 className="text-xl font-bold text-gray-800">Home Team 3</h3>
-              <p className="text-lg text-gray-600">vs Away Team 3</p>
-              <p className="text-lg text-gray-600">Selection Odd: 2.5</p>
-              <p className="text-lg text-gray-600">Selection: <span className="font-bold">Team C</span></p>
+            <div className="flex flex-col space-y-1">
+              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                <div className=" w-1/2">Starting Balance</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Sbal))}</div>
+              </div>
+
+              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                <div className=" w-1/2">{`Today's Stake`}</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Tstake))}</div>
+              </div>
+
+              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                <div className=" w-1/2">{`Today's Odd`}</div>
+                <div className=" w-1/2 font-bold text-end">{two2win.Todd}</div>
+              </div>
+
+              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                <div className=" w-1/2">Expected Balance</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Ebal))}</div>
+              </div>
+
+              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                <div className=" w-1/2">Post On</div>
+                <div className=" w-1/2 font-bold text-end">{`${two2win.published.substring(0, 2)} ${two2win.published.substring(2, 5)} ${two2win.published.substring(7, 11)}`}</div>
+              </div>
+
             </div>
           </div>
-        </div>
+          {two2win.games.map((item, index) => (
+          <div key={index} className={`flex flex-col space-y-1 mb-6 border-b-4 border-gray-700 rounded-b-md`}>
+            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
+              <div className=" w-1/2 font-bold">Home Team</div>
+              <div className=" w-1/2 font-bold text-lg text-end">{item.hometeam}</div>
+            </div>
+            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
+              <div className=" w-1/2 font-bold">Away Team</div>
+              <div className=" w-1/2 font-bold text-lg text-end">{item.awayteam}</div>
+            </div>
+            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
+              <div className=" w-1/2 font-bold">Selection</div>
+              <div className=" w-1/2 font-bold text-lg text-end">{item.selection}</div>
+            </div>
+            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
+              <div className=" w-1/2 font-bold">Odd</div>
+              <div className=" w-1/2 font-bold text-lg text-end">{item.odd}</div>
+            </div>
+          </div>
+          ))}
       </div>
+    </div>
 
       {calenderOpen && (
       <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center mt-40">
@@ -149,7 +186,7 @@ export default function Two2Win() {
             {calender.map((week, index) => (
             <div key={index} className="flex flex-row w-full gap-2">
               {week.map((day, idx) => (
-                <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(day.toString())}>
+                <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() && (sDay.toString() + sMonth.toString() + sYear.toString()) === toDay ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(day.toString())}>
                   {day === '' ? '' : day}
                 </div>
               ))}

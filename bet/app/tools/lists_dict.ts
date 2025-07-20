@@ -1,4 +1,4 @@
-const monthL = ['Jan01', 'Feb02', 'Mar03', 'Apr04', 'May05', 'Jun06', 'Jul07', 'Aug08', 'Sept09', 'Oct10', 'Nov11', 'Dec12'];
+const monthL = ['Jan01', 'Feb02', 'Mar03', 'Apr04', 'May05', 'Jun06', 'Jul07', 'Aug08', 'Sep09', 'Oct10', 'Nov11', 'Dec12'];
 const weekL = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 const getCalender = (year: number, month: number) => {
   // Get the first day of the month
