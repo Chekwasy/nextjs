@@ -10,19 +10,19 @@ import { monthL, weekL, getCalender} from '../tools/lists_dict';
 
 export default function Two2Win() {
   const [two2win, setTwo2win] = useState({
-    commencement: '',
-    Sbal: '',
-    Tstake: '',
-    Todd: '',
-    Ebal: '',
+    commencement: '-----------',
+    Sbal: '0',
+    Tstake: '0',
+    Todd: '0',
+    Ebal: '0',
     status: '',
-    published: '',
+    published: '-----------',
     games: [
       {
         hometeam: '',
         awayteam: '',
         selection: '',
-        odd: '',
+        odd: '0',
       },
     ]
   });
@@ -76,7 +76,8 @@ export default function Two2Win() {
         }
       })
       .catch(error => {
-        setMsg('A problem occurred  ' + error.message);
+        console.log(error.message);
+        setMsg('Game of the day not ready');
         setIsOpen(true);
       });
     }
