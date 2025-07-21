@@ -250,30 +250,6 @@ export default function Nav() {
               </Link>
             </li>
             <li>
-              <Link href={'/gamehub'}>
-                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
-                  <div className="group">
-                    <Image src="/icons/allposts.svg" alt="GameHub" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
-                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> GameHub </span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            {storeItems.mainSlice && storeItems.mainSlice.logged && (<li>
-              <Link href={'/postit'}>
-                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
-                  <div className="group">
-                    <Image src="/icons/postgame.svg" alt="PostIt" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
-                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> PostIt </span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </li>)}
-            <li>
               <Link href={'/about'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
@@ -413,34 +389,6 @@ export default function Nav() {
                   </div>
                 </Link>
               </li>
-              <li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/gamehub'}>
-                  <div className='text-gray-700 hover:text-white flex flex-row items-center'>
-                    <Image
-                    src="/icons/allposts.svg"
-                    alt=""
-                    width={30}
-                    height={30}
-                    className="mr-2"
-                  />
-                  <div className='text-sm text-gray-700'>GameHub</div>
-                  </div>
-                </Link>
-              </li>
-              {storeItems.mainSlice && storeItems.mainSlice.logged && (<li className='px-4 py-2 hover:bg-gray-700'>
-                <Link href={'/postit'}>
-                  <div className='text-gray-700 hover:text-white flex flex-row items-center'>
-                    <Image
-                    src="/icons/postgame.svg"
-                    alt=""
-                    width={30}
-                    height={30}
-                    className="mr-2"
-                  />
-                  <div className='text-sm text-gray-700'>PostIt</div>
-                  </div>
-                </Link>
-              </li>)}
               <li className='px-4 py-2 hover:bg-gray-700'>
                 <Link href={'/about'}>
                   <div className='text-gray-700 hover:text-white flex flex-row items-center'>

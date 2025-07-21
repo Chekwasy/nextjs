@@ -33,6 +33,7 @@ export default function Two2Win() {
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
   const [toDay, setToDay] = useState('');
+  const [showGuide, setShowGuide] = useState(false);
   //to set message to display 
   const [msg, setMsg] = useState('This for popup message!');
   //control message open or close
@@ -61,7 +62,7 @@ export default function Two2Win() {
       axios.get('/api/gettwo2win', {
         headers: {
           tok: Cookies.get('trybet_tok'),
-          date: `${sDay}${sMonth.substring(3, 5)}${sYear}`,
+          date: `${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`,
       }})
       .then((response) => {
         if (response.data.game) {
@@ -98,6 +99,7 @@ export default function Two2Win() {
       setSYear(yyy);
       setToDay(`${ddd}${mmm}${yyy}`);
       setCalender(getCalender(response.data.year, response.data.month + 1));
+      handleDay(ddd.toString());
     })
     .catch(error => {
       console.log(error.message);
@@ -179,7 +181,55 @@ export default function Two2Win() {
           )}
       </div>
     </div>
-
+      <div
+        className="fixed bottom-0 right-0 mb-4 mr-4 cursor-pointer"
+        onClick={() => setShowGuide(true)}
+      >
+        <div
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+        >
+          Guide
+        </div>
+      </div>
+      {showGuide && (
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on how to use this platform.</h2>
+            <p className="text-lg md:text-xl text-gray-600">
+              <b>Introduction to Our Betting System</b><br/>
+              We initiate our betting system with a starting balance of N10,000 and a minimum daily stake of N100. This foundational amount can be adjusted proportionally to achieve varying returns.
+              
+              <b>Key Terms and Definitions</b>
+              <ul>
+                <li><b>{`Today's`} Stake</b>: The amount allocated for staking on a particular day.</li>
+                <li><b>{`Today's`} Odd</b>: The total odd for the day, reflected accurately from the betting platform at the time of update.</li>
+                <li><b>Expected Balance</b>: The anticipated amount if the prediction results in a win.</li>
+                <li><b>Post Date</b>: The date when the game was updated on our site.</li>
+              </ul>
+              
+              <b>Match Structure and Odds</b><br/>
+              A {`day's`} schedule may comprise 1, 2, 3, or 4 matches, with a minimum total odd of 2. Each match involves:
+              <ul>
+                <li>Home Team and Away Team: Competing teams.</li>
+                <li>Selection: Our predicted outcome for the match.</li>
+                <li>Odd: The confirmed odd from the betting platform.</li>
+              </ul>
+              
+              <b>Recommendations for Getting Started</b><br/>
+              For optimal results, we advise commencing with a modest investment:
+              <ul>
+                <li>N1,000 with a N10 minimum stake</li>
+                <li>N10,000 with a N100 minimum stake</li>
+                <li>N100,000 with a N1,000 minimum stake</li>
+              </ul>
+              
+              <b>Performance Expectations and Risk Management</b><br/>
+              Our strategy aims to deliver a minimum monthly percentage return of 30%. However, please note that this comes with a 100% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
+            </p>
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg" onClick={() => setShowGuide(false)} > Close </button>
+          </div>
+        </div>
+      )}
       {calenderOpen && (
       <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center mt-40">
         <div className=" bg-white rounded-lg shadow-md p-4 w-3/4 md:w-1/4 lg:w-1/4 xl:w-1/4 h-1/4 overflow-y-auto" >
