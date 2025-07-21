@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, } from 'react';
+import { useState, useEffect, MouseEvent} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 //import { StoreState } from '../tools/s_interface';
@@ -9,35 +9,23 @@ import { monthL, weekL, getCalender} from '../tools/lists_dict';
 
 
 export default function Two2Win() {
-  const two2win = {
-    commencement: '20Jul072025',
-    Sbal: '10000',
-    Tstake: '100',
-    Todd: '2.35',
-    Ebal: '10235',
-    status: 'Pending',
-    published: '21Jul072025',
+  const [two2win, setTwo2win] = useState({
+    commencement: '',
+    Sbal: '',
+    Tstake: '',
+    Todd: '',
+    Ebal: '',
+    status: '',
+    published: '',
     games: [
       {
-        hometeam: 'Manchester United',
-        awayteam: 'Chelsea',
-        selection: 'Home win',
-        odd: '1.4',
+        hometeam: '',
+        awayteam: '',
+        selection: '',
+        odd: '',
       },
-      {
-        hometeam: 'Arsnal',
-        awayteam: 'Liverpool',
-        selection: 'Away win',
-        odd: '1.4',
-      },
-      {
-        hometeam: 'Manchester City',
-        awayteam: 'Fulham',
-        selection: 'Over 1.5',
-        odd: '1.2',
-      }
     ]
-  }
+  });
   //usedispatch to be able to write to store
   //const dispatch = useDispatch();
   const [calenderOpen, setCalenderOpen] = useState(false);
@@ -45,6 +33,10 @@ export default function Two2Win() {
   const [sMonth, setSMonth] = useState('');
   const [sYear, setSYear] = useState('');
   const [toDay, setToDay] = useState('');
+  //to set message to display 
+  const [msg, setMsg] = useState('This for popup message!');
+  //control message open or close
+  const [isOpen, setIsOpen] = useState(false);
   const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
   //const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const handleCalenderClose = () => {
@@ -52,6 +44,41 @@ export default function Two2Win() {
     };
   const handleCalender = (yr: string, mnt: string) => {
     setCalender(getCalender(parseInt(yr), parseInt(mnt)));
+  };
+  //handle close message popup
+  const handleClose = () => {
+      setIsOpen(false);
+  };
+  //Handle overlay click to close message popup
+  const handleOverlayClick = (e: MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
+      handleClose();
+    }
+  };
+  const handleDay = (dyy: string) => {
+    if (dyy !== '') {
+      setSDay(dyy.toString());
+      axios.get('/api/gettwo2win', {
+        headers: {
+          tok: Cookies.get('trybet_tok'),
+          date: `${sDay}${sMonth.substring(3, 5)}${sYear}`,
+      }})
+      .then((response) => {
+        if (response.data.game) {
+          setTwo2win(response.data.game);
+          setSDay(dyy.toString());
+          setCalenderOpen(false);
+        } else {
+          setMsg('No data on selected date');
+          setIsOpen(true);
+          setCalenderOpen(false);
+        }
+      })
+      .catch(error => {
+        setMsg('A problem occurred  ' + error.message);
+        setIsOpen(true);
+      });
+    }
   };
   useEffect(() => {
     handleCalender(sYear, sMonth.slice(-2));
@@ -136,6 +163,20 @@ export default function Two2Win() {
             </div>
           </div>
           ))}
+          {isOpen && (
+            <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
+              <div className="popup-content bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
+                <div className="flex justify-end">
+                  <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <h2 className="text-lg font-bold mb-4">{msg}</h2>
+              </div>
+            </div>
+          )}
       </div>
     </div>
 
@@ -186,7 +227,7 @@ export default function Two2Win() {
             {calender.map((week, index) => (
             <div key={index} className="flex flex-row w-full gap-2">
               {week.map((day, idx) => (
-                <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() && (sDay.toString() + sMonth.toString() + sYear.toString()) === toDay ? 'bg-green-300' : ''}`} onClick={() => day && setSDay(day.toString())}>
+                <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() && (sDay.toString() + sMonth.toString() + sYear.toString()) === toDay ? 'bg-green-300' : ''}`} onClick={() => handleDay(day.toString())}>
                   {day === '' ? '' : day}
                 </div>
               ))}
