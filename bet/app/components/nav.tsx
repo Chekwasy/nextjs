@@ -45,6 +45,19 @@ export default function Nav() {
       setIsOpen(true);
     });
   };
+  const handleReload = () => {
+    axios.get('/api/getreload', {
+      headers: {
+        tok: Cookies.get('trybet_tok'),
+    }})
+    .then(async (response) => {
+        const dd = response;
+        dispatch(mainStateReducer({logged: dd.data.logged, played: storeItems.mainSlice.played, me: dd.data.me, buttonState: storeItems.mainSlice.buttonState}));
+    })
+    .catch(error => {
+      console.log(error.message);
+    });
+  };
   useEffect(() => {
     axios.get('/api/getme', {
       headers: {
@@ -166,16 +179,14 @@ export default function Nav() {
                 </div>
             </li>)}
             {storeItems && storeItems.mainSlice.logged && (<li>
-              <Link href={'/reload'}>
-                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
-                  <div className="group">
-                    <Image src="/icons/reload.svg" alt="Reload" width={35} height={35} />
-                    <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
-                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Reset </span>
-                    </div>
+              <button className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative' onClick={() => handleReload()}>
+                <div className="group">
+                  <Image src="/icons/reload.svg" alt="Reload" width={35} height={35} />
+                  <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
+                    <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Reset </span>
                   </div>
                 </div>
-              </Link>
+              </button>
             </li>)}
             <li>
               <Link href={'/'}>
