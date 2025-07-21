@@ -107,9 +107,9 @@ export default function Two2Win() {
   }, []);
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
-      <div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
+      {!showGuide && (<div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
         <div className='flex w-1/2 text-center font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
-      </div>
+      </div>)}
       {!showGuide && (<div className="bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
         <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
           <div className="flex flex-col space-y-4 mb-6">
@@ -192,7 +192,7 @@ export default function Two2Win() {
         </div>
       </div>)}
       {showGuide && (
-        <div className="bg-gray-800 bg-opacity-50 mt-20 flex items-center justify-center">
+        <div className="bg-gray-800 mt-3 mb-3 flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on how to use this platform.</h2>
             <p className="text-lg md:text-xl text-gray-600">
