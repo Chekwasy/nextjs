@@ -110,7 +110,7 @@ export default function Two2Win() {
       <div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
         <div className='flex w-1/2 text-center font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>
-      <div className="bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
+      {!showGuide && (<div className="bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
         <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
           <div className="flex flex-col space-y-4 mb-6">
             <div className="rounded-lg p-1 flex gap-4">
@@ -179,20 +179,20 @@ export default function Two2Win() {
               </div>
             </div>
           )}
-      </div>
-    </div>
-      <div
-        className="fixed bottom-0 right-0 mb-4 mr-4 cursor-pointer"
-        onClick={() => setShowGuide(true)}
-      >
-        <div
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
-        >
-          Guide
         </div>
-      </div>
+        <div
+          className="fixed bottom-0 right-0 mb-4 mr-4 cursor-pointer"
+          onClick={() => setShowGuide(true)}
+        >
+          <div
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+          >
+            Guide
+          </div>
+        </div>
+      </div>)}
       {showGuide && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center">
+        <div className="bg-gray-800 bg-opacity-50 mt-20 flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on how to use this platform.</h2>
             <p className="text-lg md:text-xl text-gray-600">
