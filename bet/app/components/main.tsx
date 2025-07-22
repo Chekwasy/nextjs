@@ -427,7 +427,7 @@ export default function Main() {
           </svg>
         </button>
       </div>
-      <div className="p-4 mt-12">
+      <div className="bg-white p-4 mt-12">
         <div className="grid gap-4">
           {games.map((game, index) => (
           <div key={index} className="bg-white rounded-lg shadow-md p-4">
