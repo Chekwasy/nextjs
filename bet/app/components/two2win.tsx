@@ -56,11 +56,11 @@ export default function Two2Win() {
       handleClose();
     }
   };
-  const handleDay = (dyy: string) => {
-    console.log(`${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`);
+  const handleDay = (dyy: string, myy: string, yyy: string) => {
+    console.log(`${dyy.toString().padStart(2, '0')}${myy}${yyy}`);
     if (dyy !== '') {
       setSDay(dyy.toString());
-      axios.get(`/api/gettwo2win?date=${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`)
+      axios.get(`/api/gettwo2win?date=${dyy.toString().padStart(2, '0')}${myy}${yyy}`)
       .then((response) => {
         if (response.data.game) {
           setTwo2win(response.data.game);
@@ -97,7 +97,7 @@ export default function Two2Win() {
       setSYear(yyy);
       setToDay(`${ddd}${mmm}${yyy}`);
       setCalender(getCalender(response.data.year, response.data.month + 1));
-      handleDay(ddd.toString());
+      handleDay(ddd.toString(), mmm, yyy);
     })
     .catch(error => {
       console.log(error.message);
@@ -275,9 +275,9 @@ export default function Two2Win() {
             {calender.map((week, index) => (
             <div key={index} className="flex flex-row w-full gap-2">
               {week.map((day, idx) => (
-                <div key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() && (sDay.toString() + sMonth.toString() + sYear.toString()) === toDay ? 'bg-green-300' : ''}`} onClick={() => handleDay(day.toString())}>
+                <button key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() && (sDay.toString() + sMonth.toString() + sYear.toString()) === toDay ? 'bg-green-300' : ''}`} onClick={() => handleDay(day.toString(), sMonth, sYear)}>
                   {day === '' ? '' : day}
-                </div>
+                </button>
               ))}
               </div>
             ))}
