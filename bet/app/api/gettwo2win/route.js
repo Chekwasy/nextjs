@@ -4,7 +4,8 @@ import { NextResponse } from 'next/server';
 export async function GET(request) {
     const dd = await request;
     try {
-        const date = dd.headers.get("date");
+        const url = new URL(dd.url);
+        const date = url.searchParams.get('date');
         console.log(date);
         if (!date) { return  NextResponse.json('error', {status: 400});}
         const game = await dbClient.client.db().collection('two2win')
