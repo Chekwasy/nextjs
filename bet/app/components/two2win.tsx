@@ -61,7 +61,6 @@ export default function Two2Win() {
       setSDay(dyy.toString());
       axios.get('/api/gettwo2win', {
         headers: {
-          tok: Cookies.get('trybet_tok'),
           date: `${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`.toString(),
       }})
       .then((response) => {
