@@ -60,10 +60,7 @@ export default function Two2Win() {
     console.log(`${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`);
     if (dyy !== '') {
       setSDay(dyy.toString());
-      axios.get('/api/gettwo2win', {
-        headers: {
-          date: `${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`.toString(),
-      }})
+      axios.get(`/api/gettwo2win?date=${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`)
       .then((response) => {
         if (response.data.game) {
           setTwo2win(response.data.game);
