@@ -57,7 +57,6 @@ export default function Two2Win() {
     }
   };
   const handleDay = (dyy: string, myy: string, yyy: string) => {
-    console.log(`${dyy.toString().padStart(2, '0')}${myy}${yyy}`);
     if (dyy !== '') {
       setSDay(dyy.toString());
       axios.get(`/api/gettwo2win?date=${dyy.toString().padStart(2, '0')}${myy}${yyy}`)
