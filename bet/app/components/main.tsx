@@ -431,27 +431,27 @@ export default function Main() {
         <div className="grid gap-4">
           {games.map((game, index) => (
           <div key={index} className="bg-white rounded-lg shadow-md p-4">
-            <h3 className="text-lg font-bold mb-2">{game.subtitle}</h3>
-            <p className="text-gray-600">{game.titleCountry}</p>
-            <div className="mt-4">
+            <h3 className="text-lg text-gray-800 text-lg font-bold mb-2">{game.subtitle}</h3>
+            <p className="text-gray-600 text-lg">{game.titleCountry}</p>
+            <div className="mt-4 text-gray-800 text-sm">
               {game.events.map((match, idx) => (
               <div key={idx} className="flex flex-col items-center mb-4 border-b border-gray-200 pb-4">
                 <div className="flex justify-between w-full">
                   <div className="w-1/2 flex flex-col items-center">
-                    <div className="text-lg text-center">{match.hometeam}</div>
-                    <div className="text-lg text-center">{match.awayteam}</div>
+                    <div className="text-sm text-gray-800 text-center">{match.hometeam}</div>
+                    <div className="text-sm text-gray-800 text-center">{match.awayteam}</div>
                   </div>
-                  <div className="w-1/10 text-lg text-center">
+                  <div className="w-1/10 text-xs text-center">
                     {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
                   </div>
                   <div className="w-2/5 flex justify-around">
-                    <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white font-bold py-2 px-4 rounded`}>
+                    <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white text-sm font-bold p-2 rounded`}>
                       {match.homeodd}
                     </button>
-                    <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold py-2 px-4 rounded`}>
+                    <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold text-sm p-2 rounded`}>
                       {match.drawodd}
                     </button>
-                    <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold py-2 px-4 rounded`}>
+                    <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold text-sm p-2 rounded`}>
                       {match.awayodd}
                     </button>
                   </div>

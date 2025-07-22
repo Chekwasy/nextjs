@@ -6,7 +6,7 @@ import store from '@/store/store';
 
 export default function Home() {
   return (
-    <div className="bg-cover bg-white text-sm text-gray-900 bg-center h-screen w-screen"
+    <div className="bg-cover bg-gray-200 text-sm text-gray-900 bg-center h-screen w-screen"
       >
       <Provider store={store}>
         <Nav/>
