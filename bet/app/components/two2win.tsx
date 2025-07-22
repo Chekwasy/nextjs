@@ -62,7 +62,7 @@ export default function Two2Win() {
       axios.get('/api/gettwo2win', {
         headers: {
           tok: Cookies.get('trybet_tok'),
-          date: `${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`,
+          date: `${sDay.toString().padStart(2, '0')}${sMonth}${sYear}`.toString(),
       }})
       .then((response) => {
         if (response.data.game) {
