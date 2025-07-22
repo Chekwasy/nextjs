@@ -99,7 +99,7 @@ function Page() {
   };
   return (
     <div>
-      <div className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
+      <div className="bg-cover bg-center bg-white text-sm text-gray-900 h-screen w-screen flex justify-center items-center"
       >
         <div className="bg-gray-500 rounded-lg shadow-lg p-8 xs:w-full sm:w-1/2 md:w-2/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
           <h2 className="text-3xl font-bold text-green-500 mb-4">Login</h2>
