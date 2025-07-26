@@ -564,7 +564,7 @@ export default function Main() {
               <li><b>Reload/Reset</b>: Restores the balance to N10,000 if it falls below this amount.</li>
             </ul>
             <b>Conclusion</b>
-            We strive to carefully select daily games for our Two2Win option. Please note that we do not bet with users' funds. We welcome investors and look forward to collaborating with them.
+            We strive to carefully select daily games for our Two2Win option. Please note that we do not bet with {`users'`} funds. We welcome investors and look forward to collaborating with them.
           </p>
           <button className="bg-gray-900 hover:bg-gray-400 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg" onClick={() => setShowGuide(false)} >
             Close

@@ -242,7 +242,7 @@ export default function Two2Win() {
                 <li><b>Expected Balance</b>: The anticipated amount if the prediction results in a win.</li>
                 <li><b>Post Date</b>: The date when the game was updated on our site.</li>
                 <li><b>Closing Balance</b>: The account balance after all games have ended for the day</li>
-                <li><b>Current ROI</b>: The percentage return on investment (ROI) from the principal amount to date</li>
+                <li><b>Current ROI</b>: The percentage return on investment {`(ROI)`} from the principal amount to date</li>
               </ul>
               
               <b>Match Structure and Odds</b><br/>
