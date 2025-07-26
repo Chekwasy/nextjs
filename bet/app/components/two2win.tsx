@@ -175,7 +175,7 @@ export default function Two2Win() {
 
               <div className="bg-green-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Current ROI</div>
-                <div className=" w-1/2 font-bold text-lg text-end">{(parseFloat(two2win.Sbal) / 10000) * 100} %</div>
+                <div className=" w-1/2 font-bold text-lg text-end">{(((parseFloat(two2win.Sbal) / 10000) * 100) - 100).toFixed(2)} %</div>
               </div>
 
             </div>
