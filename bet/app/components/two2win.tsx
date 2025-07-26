@@ -2,7 +2,7 @@
 import { useState, useEffect, MouseEvent} from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { StoreState } from '../tools/s_interface';
 import Cookies from 'js-cookie';
 import { isDateInPast } from '../tools/dateitems';
