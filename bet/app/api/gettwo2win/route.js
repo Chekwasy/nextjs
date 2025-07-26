@@ -26,8 +26,10 @@ export async function GET(request) {
         const game = await dbClient.client.db().collection('two2win')
         .findOne({ "date": date });
         if (!game) { return  NextResponse.json({game: null, message: "Success" }, {status: 201});}
+        console.log('b4end');
         return  NextResponse.json({game: game.game, message: "Success" }, {status: 201});
     } catch {
+        console.log('inerr');
         return  NextResponse.json('error', {status: 400});
     }
 };
