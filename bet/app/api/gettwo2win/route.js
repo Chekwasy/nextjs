@@ -1,10 +1,11 @@
 import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
-import { isDateInPast } from '../../tools/dateitems'
+import { isDateInPast } from '../../tools/dateitems';
+import redisClient from '../../../redis';
 
 export async function GET(request) {
     const dd = await request;
-    //try {
+    try {
         const url = new URL(dd.url);
         const date = url.searchParams.get('date');
         const tok = dd.headers.get('tok');
@@ -28,8 +29,8 @@ export async function GET(request) {
         if (!game) { return  NextResponse.json({game: null, message: "Success" }, {status: 201});}
         console.log('b4end');
         return  NextResponse.json({game: game.game, message: "Success" }, {status: 201});
-    //} catch {
-      //  console.log('inerr');
-        //return  NextResponse.json('error', {status: 400});
-    //}
+    } catch {
+        console.log('inerr');
+        return  NextResponse.json('error', {status: 400});
+    }
 };
