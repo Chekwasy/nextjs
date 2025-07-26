@@ -140,7 +140,7 @@ export default function Nav() {
                   <div className="group">
                     <Image src="/icons/reload.svg" alt="Reload" width={35} height={35} />
                     <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
-                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Reset </span>
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Reload </span>
                     </div>
                   </div>
           </div>
@@ -248,7 +248,7 @@ export default function Nav() {
                 </div>
               </Link>
             </li>)}
-            <li>
+            {storeItems.mainSlice && storeItems.mainSlice.logged && (<li>
               <Link href={'/two2win'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group">
@@ -259,7 +259,7 @@ export default function Nav() {
                   </div>
                 </div>
               </Link>
-            </li>
+            </li>)}
             <li>
               <Link href={'/about'}>
                 <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>

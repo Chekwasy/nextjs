@@ -79,19 +79,24 @@ function Page() {
 	//Change password and email to a base64 string
     	const encodestr = btoa(email + ':' + password);
     	//Api call to connect 
-    	axios.post('/api/connect', {
-    	  auth_header: `encoded ${encodestr}`,
-   	 })
-   	 .then(async (response) => {
-    	  await Cookies.set('trybet_tok', response.data.token, { expires: 7, path: '/', });
-    	  setMsg(response.data.message);
-   	   setIsOpen(true);
-   	   router.push("/");
-  	  })
-   	 .catch(error => {
-   	   setMsg(error.message);
-   	   setIsOpen(true);
-   	 });
+    	try {
+        axios.post('/api/connect', {
+    	    auth_header: `encoded ${encodestr}`,
+   	    })
+   	    .then(async (response) => {
+    	    await Cookies.set('trybet_tok', response.data.token, { expires: 7, path: '/', });
+    	    setMsg(response.data.message);
+   	      setIsOpen(true);
+   	      router.push("/");
+  	    })
+   	    .catch(error => {
+   	      setMsg(error.message);
+   	      setIsOpen(true);
+   	    });
+      } catch {
+        setMsg('Submission error. Check input data');
+	      setIsOpen(true);  
+      }
     } else {
 	    setMsg('Submission error. Check input data');
 	    setIsOpen(true);

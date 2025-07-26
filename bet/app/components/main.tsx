@@ -23,6 +23,7 @@ export default function Main() {
   const [betAmt, setBetAmt] = useState('');
   const [potWin, setPotWin] = useState('');
   const [odds, setOdds] = useState('');
+  const [showGuide, setShowGuide] = useState(false);
   const [playedA, setPlayedA] = useState<PlayeD[]>([]);
   //state to hold games from api
   const [games, setGames] = useState([{
@@ -532,6 +533,45 @@ export default function Main() {
           {storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
         </div>)}
       </div>
+      {!showGuide && (<div
+        className="fixed bottom-0 right-0 mb-4 mr-4 cursor-pointer"
+        onClick={() => setShowGuide(true)}
+      >
+        <div
+          className="bg-gray-900 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-lg"
+        >
+          Guide
+        </div>
+      </div>)}
+      {showGuide && (
+        <div className="bg-gray-800 fixed top-0 left-0 w-full h-full mt-3 mb-3 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on How to Use This Site</h2>
+          <p className="text-lg md:text-xl text-gray-600">
+            <b>Site Description</b>
+            This site is designed to facilitate practice betting for the 1x2 betting category only, using virtual money. It is not intended for real-money betting. Users may be eligible to win prizes through test betting on this site, details of which will be announced at a later date.
+            <b>Menu Options Definition</b>
+            <ul>
+              <li><b>Close Button</b>: Closes the menu dropdown tab.</li>
+              <li><b>Home</b>: Returns the user to the homepage.</li>
+              <li><b>Sign Up</b>: Directs the user to the sign-up page.</li>
+              <li><b>Login</b>: Directs the user to the login page.</li>
+              <li><b>Bets</b>: Displays played games, including open and closed games.</li>
+              <li><b>Profile</b>: Directs the user to their profile dashboard.</li>
+              <li><b>Two2Win</b>: Provides access to our 2-odds strategy, offering 50% monthly winnings. Users can view this option for free for 7 days, after which a weekly subscription fee of N100 applies.</li>
+              <li><b>About</b>: Directs the user to the about us page, which outlines our mission.</li>
+              <li><b>Logout</b>: Logs the user out when clicked.</li>
+              <li><b>Reload/Reset</b>: Restores the balance to N10,000 if it falls below this amount.</li>
+            </ul>
+            <b>Conclusion</b>
+            We strive to carefully select daily games for our Two2Win option. Please note that we do not bet with users' funds. We welcome investors and look forward to collaborating with them.
+          </p>
+          <button className="bg-gray-900 hover:bg-gray-400 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg" onClick={() => setShowGuide(false)} >
+            Close
+          </button>
+        </div>
+      </div>
+      )}
       {isOpen && (
       <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
         <div className="popup-content bg-gray-200 rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >

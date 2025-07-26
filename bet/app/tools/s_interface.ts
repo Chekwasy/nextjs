@@ -30,6 +30,7 @@ export interface StoreState { mainSlice: {
     TWon: string;
     TLost: string;
     nickname: string;
+    jdate: string;
   };
   buttonState: {[key: string]: boolean};
 }}

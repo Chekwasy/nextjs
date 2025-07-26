@@ -114,25 +114,30 @@ function Page() {
     e.preventDefault();
     
     if (password === confirmPassword && 
-	cemail && cpwd && cpwd2 && cfirstname && 
-	clastname && email !== '' && password !== '' && 
-	confirmPassword !== '' && firstname !== '' &&
-	lastname !== ''
+	  cemail && cpwd && cpwd2 && cfirstname && 
+	  clastname && email !== '' && password !== '' && 
+	  confirmPassword !== '' && firstname !== '' &&
+	  lastname !== ''
        ) {
       const encodestr = btoa(email + ':' + password);
-      axios.post('/api/puser', {
-        emailpwd: `encoded ${encodestr}`,
-        firstname: firstname, 
-        lastname: lastname,
-      })
-      .then(async (response) => {
-        setMsg(response.data.message);
-        setIsOpen(true);
-      })
-      .catch(error => {
-        setMsg(error.message);
-        setIsOpen(true);
-      });
+      try {
+        axios.post('/api/puser', {
+          emailpwd: `encoded ${encodestr}`,
+          firstname: firstname, 
+          lastname: lastname,
+        })
+        .then(async (response) => {
+          setMsg(response.data.message);
+          setIsOpen(true);
+        })
+        .catch(error => {
+          setMsg(error.message);
+          setIsOpen(true);
+        });
+      } catch {
+        setMsg('Submission error. Check input data');
+	      setIsOpen(true);
+      }
     } else { setMsg('Submission error. Check input data'); setIsOpen(true);}
   };
   return (

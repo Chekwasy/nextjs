@@ -8,8 +8,8 @@ export default function About() {
   const [about, setAbout] = useState(
     [
       {
-        title: 'Goal',
-        body: 'jdsjdsj skjsjsjk jsjjsjk ksskjjsjks lsksjjkj jkskdskj kskjhhsh kdhfkhdsfkh kdshfhkshfkhs kdhdfkhdsflsjd kdshhshd kfksdhfl lllflsdl llhdflhlshh lsldllshdf nlflsdlfl hsdlhflhsdlhls kkscsjcsjc kkhjj',
+        title: 'Our Mission',
+        body: '',
       }
     ]
   );

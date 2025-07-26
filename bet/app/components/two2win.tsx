@@ -1,7 +1,11 @@
 "use client"
 import { useState, useEffect, MouseEvent} from 'react';
 import axios from 'axios';
+import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreState } from '../tools/s_interface';
 import Cookies from 'js-cookie';
+import { isDateInPast } from '../tools/dateitems';
 //import { StoreState } from '../tools/s_interface';
 import { monthL, weekL, getCalender} from '../tools/lists_dict';
 //import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +13,7 @@ import { monthL, weekL, getCalender} from '../tools/lists_dict';
 
 
 export default function Two2Win() {
+  const storeItems: StoreState = useSelector((state) => state) as StoreState;
   const [two2win, setTwo2win] = useState({
     commencement: '-----------',
     Sbal: '0',
@@ -59,7 +64,10 @@ export default function Two2Win() {
   const handleDay = (dyy: string, myy: string, yyy: string) => {
     if (dyy !== '') {
       setSDay(dyy.toString());
-      axios.get(`/api/gettwo2win?date=${dyy.toString().padStart(2, '0')}${myy}${yyy}`)
+      axios.get(`/api/gettwo2win?date=${dyy.toString().padStart(2, '0')}${myy}${yyy}`, {
+      headers: {
+        tok: Cookies.get('trybet_tok'),
+      }})
       .then((response) => {
         if (response.data.game) {
           setTwo2win(response.data.game);
@@ -104,6 +112,12 @@ export default function Two2Win() {
   }, []);
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
+      {!showGuide && isDateInPast(storeItems.mainSlice?.me.sub.slice(-8)) && (<div className="flex items-center p-2 md:w-4/5 w-11/12 mx-auto">
+        <Link href="/sub">
+          <a className="text-blue-600 hover:text-blue-800">Activate Your Subscription</a>
+        </Link>
+      </div>)}
+
       {!showGuide && (<div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
         <div className='flex w-1/2 text-center font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>)}
@@ -116,7 +130,12 @@ export default function Two2Win() {
             </div>
             <div className="flex flex-col space-y-1">
               <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Starting Balance</div>
+                <div className=" w-1/2">Principal / Starting Capital</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(10000)}</div>
+              </div>
+
+              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                <div className=" w-1/2">Opening Balance</div>
                 <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Sbal))}</div>
               </div>
 
@@ -138,6 +157,25 @@ export default function Two2Win() {
               <div className="bg-green-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Post On</div>
                 <div className=" w-1/2 font-bold text-end">{`${two2win.published.substring(0, 2)} ${two2win.published.substring(2, 5)} ${two2win.published.substring(7, 11)}`}</div>
+              </div>
+
+              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                <div className=" w-1/2">Closing Balance</div>
+                <div className=" w-1/2 font-bold text-end">{
+                two2win.status === 'Pending' ? '' : (
+                  two2win.status === 'Won' ? (
+                    new Intl.NumberFormat().format(
+                      parseFloat(two2win.Sbal) + (parseFloat(two2win.Tstake) * parseFloat(two2win.Todd))
+                    )) : (
+                      new Intl.NumberFormat().format(
+                        parseFloat(two2win.Sbal) - (parseFloat(two2win.Tstake))
+                      ))
+                    )}</div>
+              </div>
+
+              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+                <div className=" w-1/2">Current ROI</div>
+                <div className=" w-1/2 font-bold text-lg text-end">{(parseFloat(two2win.Sbal) / 10000) * 100} %</div>
               </div>
 
             </div>
@@ -194,14 +232,17 @@ export default function Two2Win() {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on how to use this platform.</h2>
             <p className="text-lg md:text-xl text-gray-600">
               <b>Introduction to Our Betting System</b><br/>
-              We initiate our betting system with a starting balance of N10,000 and a minimum daily stake of N100. This foundational amount can be adjusted proportionally to achieve varying returns.
+              We initiate our betting system with a Principal amount (Starting Capital) of  N10,000 and a minimum daily stake of N100. This foundational amount can be adjusted proportionally to achieve varying returns.
               
               <b>Key Terms and Definitions</b>
               <ul>
+                <li><b>Opening Balance</b>: The account balance as the start of the day</li>
                 <li><b>{`Today's`} Stake</b>: The amount allocated for staking on a particular day.</li>
                 <li><b>{`Today's`} Odd</b>: The total odd for the day, reflected accurately from the betting platform at the time of update.</li>
                 <li><b>Expected Balance</b>: The anticipated amount if the prediction results in a win.</li>
                 <li><b>Post Date</b>: The date when the game was updated on our site.</li>
+                <li><b>Closing Balance</b>: The account balance after all games have ended for the day</li>
+                <li><b>Current ROI</b>: The percentage return on investment (ROI) from the principal amount to date</li>
               </ul>
               
               <b>Match Structure and Odds</b><br/>
@@ -221,7 +262,7 @@ export default function Two2Win() {
               </ul>
               
               <b>Performance Expectations and Risk Management</b><br/>
-              Our strategy aims to deliver a minimum monthly percentage return of 30%. However, please note that this comes with a 100% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
+              Our strategy aims to deliver a minimum monthly percentage return of 50%. However, please note that this comes with a 100% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
             </p>
             <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg" onClick={() => setShowGuide(false)} > Close </button>
           </div>

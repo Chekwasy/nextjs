@@ -12,6 +12,9 @@ export default function Home() {
         <Nav/>
         <Two2Win/>
       </Provider>
+      <div className="text-center text-gray-400 p-2">
+        &copy; 2025 Chekwasy Businesses. All rights reserved.
+      </div>
     </div>
   );
 }

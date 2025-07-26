@@ -32,6 +32,7 @@ interface StoreState {
     TWon: string;
     TLost: string;
     nickname: string;
+    jdate: string;
   },
   buttonState: {[key: string]: boolean}
 }
@@ -53,6 +54,7 @@ const storeS: StoreState = {
     TWon: '',
     TLost: '',
     nickname: '',
+    jdate: '',
   },
   buttonState: {'': false},
 }
