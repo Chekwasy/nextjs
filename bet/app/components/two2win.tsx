@@ -112,7 +112,7 @@ export default function Two2Win() {
   }, []);
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
-      {!showGuide && isDateInPast(storeItems.mainSlice?.me.sub.slice(-8)) && (<button className="flex items-center p-4 md:w-4/5 w-11/12 mx-auto">
+      {!showGuide && isDateInPast(storeItems.mainSlice?.me.sub.slice(-8)) && (<button className="flex items-center mt-4 p-4 md:w-4/5 w-11/12 mx-auto">
         <Link href="/sub">
           <a className="text-white bg-blue-700 rounded-lg font-bold text-sm p-4 hover:text-blue-800">Activate Your Subscription</a>
         </Link>
