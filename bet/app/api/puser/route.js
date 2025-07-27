@@ -2,7 +2,7 @@ import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { v4 } from 'uuid';
-import { getDateTimeString } from '../../tools/dateitems'
+import { getDateTimeString, getSeventhDay } from '../../tools/dateitems'
 
 
 const makeID = () => {
@@ -35,8 +35,9 @@ export async function POST(request) {
 	}
 
 	const jdate = getDateTimeString();
+	const sevth = getSeventhDay(jdate);
 	const result = await (await dbClient.client.db().collection('users'))
-	.insertOne({userID: userID, email: email, password: password, fname: firstname, lname: lastname, mobile: "", accbal: '10000', currency: "N", rating: '', sub: `free_${jdate}`, TGames: '', TWon: '', TLost: '', nickname: '', jdate: jdate,});
+	.insertOne({userID: userID, email: email, password: password, fname: firstname, lname: lastname, mobile: "", accbal: '10000', currency: "N", rating: '', sub: `free_${sevth}`, TGames: '', TWon: '', TLost: '', nickname: '', jdate: jdate,});
 	if (result) {
             return NextResponse.json({'success': email, message: "Signup Successful"}, {status: 201});
         }

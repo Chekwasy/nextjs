@@ -10,7 +10,7 @@ export const isDateInPast = (dateString: string) => {
   const currentDate = new Date();
 
   return inputDate.getTime() < currentDate.getTime();
-}
+};
 
 export const getDateTimeString = () => {
   const date = new Date();
@@ -19,4 +19,21 @@ export const getDateTimeString = () => {
   const year = date.getFullYear().toString();
   
   return `${day}${month}${year}`;
-}
+};
+
+export const getSeventhDay = (dateString: string) => {
+  const dateParts = dateString.match(/(\d{2})(\d{2})(\d{2})/);
+  if (!dateParts) return null;
+
+  const day = parseInt(dateParts[1]);
+  const month = parseInt(dateParts[2]);
+  const year = parseInt(dateParts[3]);
+
+  const date = new Date(parseInt(`20${year}`), month - 1, day + 7);
+
+  const seventhDay = date.getDate().toString().padStart(2, '0');
+  const seventhMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+  const seventhYear = date.getFullYear().toString().slice(-2);
+
+  return `${seventhDay}${seventhMonth}${seventhYear}`;
+};
