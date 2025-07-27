@@ -179,7 +179,7 @@ export default function Nav() {
                 </div>
             </li>)}
             {storeItems && storeItems.mainSlice.logged && (<li>
-              <button className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative' onClick={() => handleReload()}>
+              <button className='hover:bg-green-200 rounded cursor-pointer text-gray-700 hover:text-white flex items-center relative' onClick={() => handleReload()}>
                 <div className="group">
                   <Image src="/icons/reload.svg" alt="Reload" width={35} height={35} />
                   <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
@@ -266,14 +266,14 @@ export default function Nav() {
                   <div className="group">
                     <Image src="/icons/about.svg" alt="About" width={35} height={35} />
                     <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">
-                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> Info </span>
+                      <span className="bg-gray-800 text-gray-100 text-sm px-2 py-1 rounded"> About </span>
                     </div>
                   </div>
                 </div>
               </Link>
             </li>
             {storeItems && storeItems.mainSlice.logged && (<li>
-                <div className='hover:bg-green-200 rounded text-gray-700 hover:text-white flex items-center relative'>
+                <div className='hover:bg-green-200 cursor-pointer rounded text-gray-700 hover:text-white flex items-center relative'>
                   <div className="group" onClick={() => handleLogout()}>
                     <Image src="/icons/logout.svg" alt="Logout" width={35} height={35} />
                     <div className="absolute invisible group-hover:visible transition-opacity duration-200 -mt-1 ml-6">

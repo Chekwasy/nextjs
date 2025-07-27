@@ -119,16 +119,16 @@ export default function Bets() {
     <div className="flex-col w-full justify-center items-center mt-16">
       {!(isOpen) && (<div className="md:w-4/5 w-11/12 mx-auto">
         <div className="bg-gray-400 rounded-lg p-4 flex gap-4">
-          <div className={`${betTab === 'open' ? 'bg-green-200' : 'bg-white'} text-gray-700 text-center rounded-lg border-4 border-green-500 hover:border-green-200 p-4 w-1/2`} onClick={() => handleOpenBet()}>
+          <div className={`${betTab === 'open' ? 'bg-green-200' : 'bg-white'} cursor-pointer text-gray-700 text-center rounded-lg border-4 border-green-500 hover:border-green-200 p-4 w-1/2`} onClick={() => handleOpenBet()}>
             Open Bets
           </div>
-          <div className={`${betTab === 'close' ? 'bg-green-200' : 'bg-white'} rounded-lg border-4 border-green-500 text-center hover:border-green-300 p-4 w-1/2`} onClick={() => handleCloseBet()}>
+          <div className={`${betTab === 'close' ? 'bg-green-200' : 'bg-white'} cursor-pointer rounded-lg border-4 border-green-500 text-center hover:border-green-300 p-4 w-1/2`} onClick={() => handleCloseBet()}>
             Closed Bets
           </div>
         </div>
       </div>)}
       {!(isOpen) && (<div className="md:w-4/5 w-11/12 mx-auto">
-        {(bet[0].status !== '') && bet.map((item: Bet, index: number) => (<div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto mb-4 p-4" onClick={() => {setIsOpen(true); setClickBet(item);}}>
+        {(bet[0].status !== '') && bet.map((item: Bet, index: number) => (<div key={index} className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 cursor-pointer mx-auto mb-4 p-4" onClick={() => {setIsOpen(true); setClickBet(item);}}>
           <div className="flex flex-col space-y-4">
             <div className="rounded-lg p-1 flex gap-4">
               <div className={`w-1/3 font-bold p-1 rounded-lg ${item.status === 'close' ? (item.result === 'Won' ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-yellow-200'}`}>{item.result}</div>
@@ -165,7 +165,7 @@ export default function Bets() {
             <div className=" bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
                 <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
                   <div className="flex justify-end">
-                    <button className="text-gray-900 hover:text-gray-700" onClick={handleClose} >
+                    <button className="text-gray-900 cursor-pointer hover:text-gray-700" onClick={handleClose} >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>

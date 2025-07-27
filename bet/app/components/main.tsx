@@ -402,11 +402,11 @@ export default function Main() {
         <h2 className="font-bold text-lg">1 X 2</h2>
         <div>
           <div className="flex justify-center">
-            <button onClick={handlePrevious}><Image src="/icons/back.svg" alt="back" width={30} height={30} /></button>
+            <button className='cursor-pointer' onClick={handlePrevious}><Image src="/icons/back.svg" alt="back" width={30} height={30} /></button>
             <div className="relative">
-              <button onClick={() => setShowList(!showList)}>{datee}</button>
+              <button className='cursor-pointer' onClick={() => setShowList(!showList)}>{datee}</button>
               {showList && (
-                <ul className="absolute bg-white shadow-lg p-4 w-40 text-gray-800 rounded-lg left-0 ml-[-35px] mt-[10]">
+                <ul className="absolute cursor-pointer bg-white shadow-lg p-4 w-40 text-gray-800 rounded-lg left-0 ml-[-35px] mt-[10]">
                 {dateelist.map((item) => (
                   <li key={item.date} onClick={() => handleDateSelect(item.date, item.indent)} className="py-2 px-4 bg-green-500 text-white text-center rounded-md hover:bg-green-700 mb-2">
                     {item.date}
@@ -415,10 +415,10 @@ export default function Main() {
               </ul>
               )}
             </div>
-            <button onClick={handleNext}><Image src="/icons/front.svg" alt="Next" width={30} height={30} /></button>
+            <button className='cursor-pointer' onClick={handleNext}><Image src="/icons/front.svg" alt="Next" width={30} height={30} /></button>
           </div>
         </div>
-        <button aria-label="Open sidebar" onClick={() => setSidebarOpen(!sidebarOpen)} className="flex flex-row items-center">
+        <button aria-label="Open sidebar" onClick={() => setSidebarOpen(!sidebarOpen)} className="flex cursor-pointer flex-row items-center">
           {storeItems.mainSlice.played.length > 0 && (
           <div className="rounded-full w-5 h-5 text-sm mt-0 mb-0 bg-red-700 text-white">
             {storeItems.mainSlice.played.length === 0 ? '' : storeItems.mainSlice.played.length}
@@ -446,13 +446,13 @@ export default function Main() {
                     {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
                   </div>
                   <div className="w-2/5 flex justify-around">
-                    <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white text-sm font-bold p-2 rounded`}>
+                    <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white text-sm font-bold p-2 cursor-pointer rounded`}>
                       {match.homeodd}
                     </button>
-                    <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold text-sm p-2 rounded`}>
+                    <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold text-sm p-2 cursor-pointer rounded`}>
                       {match.drawodd}
                     </button>
-                    <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold text-sm p-2 rounded`}>
+                    <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold text-sm p-2 cursor-pointer rounded`}>
                       {match.awayodd}
                     </button>
                   </div>

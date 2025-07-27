@@ -112,14 +112,14 @@ export default function Two2Win() {
   }, []);
   return (
     <div className="flex-col w-full justify-center items-center mt-16">
-      {!showGuide && isDateInPast(storeItems.mainSlice?.me.sub.slice(-8)) && (<div className="flex items-center p-2 md:w-4/5 w-11/12 mx-auto">
+      {!showGuide && isDateInPast(storeItems.mainSlice?.me.sub.slice(-8)) && (<button className="flex items-center p-2 md:w-4/5 w-11/12 mx-auto">
         <Link href="/sub">
-          <a className="text-blue-600 hover:text-blue-800">Activate Your Subscription</a>
+          <a className="text-white bg-blue-700 rounded-lg font-bold text-sm hover:text-blue-800">Activate Your Subscription</a>
         </Link>
-      </div>)}
+      </button>)}
 
       {!showGuide && (<div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
-        <div className='flex w-1/2 text-center font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
+        <div className='flex w-1/2 text-center cursor-pointer font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>)}
       {!showGuide && (<div className="bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
         <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
@@ -264,15 +264,15 @@ export default function Two2Win() {
               <b>Performance Expectations and Risk Management</b><br/>
               Our strategy aims to deliver a minimum monthly percentage return of 50%. However, please note that this comes with a 100% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
             </p>
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg" onClick={() => setShowGuide(false)} > Close </button>
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 md:py-3 px-4 md:px-6 cursor-pointer rounded-lg" onClick={() => setShowGuide(false)} > Close </button>
           </div>
         </div>
       )}
       {calenderOpen && (
       <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center mt-40">
-        <div className=" bg-white rounded-lg shadow-md p-4 w-3/4 md:w-1/4 lg:w-1/4 xl:w-1/4 h-1/4 overflow-y-auto" >
+        <div className=" bg-white rounded-lg shadow-md p-4 w-3/4 md:w-1/4 lg:w-1/4 xl:w-1/4 h-1/4 md:h:3/10 overflow-y-auto" >
           <div className="flex justify-end">
-            <button className="text-gray-500 hover:text-gray-700" onClick={handleCalenderClose} >
+            <button className="text-gray-500 cursor-pointer hover:text-gray-700" onClick={handleCalenderClose} >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -284,7 +284,7 @@ export default function Two2Win() {
                 <select
                   value={sMonth}
                   onChange={(e) => setSMonth(e.target.value)}
-                  className="text-gray-700 font-bold text-center mr-4"
+                  className="text-gray-700 cursor-pointer font-bold text-center mr-4"
                 >
                   {monthL.map((month, index) => (
                   <option key={index} value={month}>
@@ -298,7 +298,7 @@ export default function Two2Win() {
                 <select
                   value={sYear}
                   onChange={(e) => setSYear(e.target.value.toString())}
-                  className="text-gray-700 font-bold text-center mr-4"
+                  className="text-gray-700 font-bold cursor-pointer text-center mr-4"
                 >
                   <option value="2025">2025</option>
                   <option value="2026">2026</option>
@@ -315,7 +315,7 @@ export default function Two2Win() {
             {calender.map((week, index) => (
             <div key={index} className="flex flex-row w-full gap-2">
               {week.map((day, idx) => (
-                <button key={idx} className={`text-center w-1/7 text-gray-700 ${sDay ===  day.toString() && (sDay.toString() + sMonth.toString() + sYear.toString()) === toDay ? 'bg-green-300' : ''}`} onClick={() => handleDay(day.toString(), sMonth, sYear)}>
+                <button key={idx} className={`text-center w-1/7 p-1 cursor-pointer text-gray-700 ${sDay ===  day.toString() && (sDay.toString() + sMonth.toString() + sYear.toString()) === toDay ? 'bg-green-300' : ''}`} onClick={() => handleDay(day.toString(), sMonth, sYear)}>
                   {day === '' ? '' : day}
                 </button>
               ))}

@@ -158,7 +158,7 @@ function Page() {
                 <div className='text-blue-500 hover:text-white flex items-center'>Signup</div>
             </Link>
             <button
-              className="bg-green-500 hover:bg-green-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
+              className="bg-green-500 cursor-pointer hover:bg-green-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
               type="submit"
             >
               Login
