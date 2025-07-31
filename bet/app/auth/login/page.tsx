@@ -4,11 +4,12 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Eye, EyeOff } from 'lucide-react'; // Import Eye and EyeOff icons
 
 //function to check ASCII value usage
 
 function Page() {
-  // For switching to home after authentication
+  //For switching to home after authentication
   const router = useRouter();
   //Store email value
   const [email, setEmail] = useState('');
@@ -22,6 +23,8 @@ function Page() {
   const [cpwd, setCpwd] = useState(true);
   //Check email correct
   const [cemail, setCemail] = useState(true);
+  // New state to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   //handle close message popup
   const handleClose = () => {
@@ -76,30 +79,43 @@ function Page() {
     //prevent form default submission 
     e.preventDefault();
     if (cemail && cpwd && email !== '' && password!== '') {
-	//Change password and email to a base64 string
-    	const encodestr = btoa(email + ':' + password);
-    	//Api call to connect 
-    	try {
+      //Change password and email to a base64 string
+      const encodestr = btoa(email + ':' + password);
+      //Api call to connect 
+      try {
         axios.post('/api/connect', {
-    	    auth_header: `encoded ${encodestr}`,
-   	    })
-   	    .then(async (response) => {
-    	    await Cookies.set('trybet_tok', response.data.token, { expires: 7, path: '/', });
-    	    setMsg(response.data.message);
-   	      setIsOpen(true);
-   	      router.push("/");
-  	    })
-   	    .catch(error => {
-   	      setMsg(error.message);
-   	      setIsOpen(true);
-   	    });
+          auth_header: `encoded ${encodestr}`,
+        })
+        .then(async (response) => {
+          await Cookies.set('trybet_tok', response.data.token, { expires: 7, path: '/', });
+          setMsg(response.data.message);
+          setIsOpen(true);
+          router.push("/");
+        })
+        .catch(error => {
+          if (error.response) {
+            setMsg(error.response.data.message);
+            setIsOpen(true);
+          } else {
+            setMsg('An error occured. Try again');
+            setIsOpen(true);
+          }
+        });
       } catch {
-        setMsg('Submission error. Check input data');
-	      setIsOpen(true);  
+        setMsg('An error Ocurred. Try again or contact us');
+        setIsOpen(true);  
       }
     } else {
-	    setMsg('Submission error. Check input data');
-	    setIsOpen(true);
+      if (!cemail) {
+        setMsg('email contains unallowed symbol');
+        setIsOpen(true);
+      } else if (!cpwd) {
+        setMsg('password contains unallowed symbol');
+        setIsOpen(true);
+      } else {
+        setMsg('Incomplete data');
+        setIsOpen(true);
+      }
     }
   };
   return (
@@ -139,20 +155,30 @@ function Page() {
                 onChange={handleEmailChange}
               />
             </div>
+            {/* Password Field with Toggle */}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                 Password
               </label>
-              <input
-                className={`appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none ${cpwd ? 'border-gray-200' : 'border-red-500'}`}
-                id="password"
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={password}
-                required
-                onChange={handlePasswordChange}
-              />
+              <div className="relative">
+                <input
+                  className={`appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 pr-10 leading-tight focus:outline-none ${cpwd ? 'border-gray-200' : 'border-red-500'}`}
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  name="password"
+                  value={password}
+                  required
+                  onChange={handlePasswordChange}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-gray-500 hover:text-gray-700"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff /> : <Eye />}
+                </button>
+              </div>
             </div>
             <Link href={'/auth/signup'}>
                 <div className='text-blue-500 hover:text-white flex items-center'>Signup</div>

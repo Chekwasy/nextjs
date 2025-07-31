@@ -81,6 +81,7 @@ function Page() {
         setCfirstname(true);
     }
   };
+  //onchange ref for lastname
   const handleLastnameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
     setLastname(nwval);
@@ -92,6 +93,7 @@ function Page() {
         setClastname(true);
     }
   };
+  //onchange ref for confirm password
   const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
     setConfirmPassword(nwval);
@@ -103,15 +105,15 @@ function Page() {
         setCpwd2(true);
     }
   };
+  //func to submit form for signup
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
     if (password === confirmPassword && 
     cemail && cpwd && cpwd2 && cfirstname && 
     clastname && email !== '' && password !== '' && 
     confirmPassword !== '' && firstname !== '' &&
     lastname !== ''
-       ) {
+      ) {
       const encodestr = btoa(email + ':' + password);
       try {
         axios.post('/api/puser', {
@@ -136,7 +138,24 @@ function Page() {
         setMsg('An error Ocurred. Try again or contact us');
         setIsOpen(true);
       }
-    } else { setMsg('Submission error. Check input data'); setIsOpen(true);}
+    } else { 
+      if (password !== confirmPassword) {
+        setMsg('Password mismatch');
+        setIsOpen(true);
+      } else if (!cemail) {
+        setMsg('email contains unallowed symbol');
+        setIsOpen(true);
+      } else if (!cpwd || !cpwd2) {
+        setMsg('password contains unallowed symbol');
+        setIsOpen(true);
+      } else if (!cfirstname || !clastname) {
+        setMsg('firstname or lastname contains unallowed symbol');
+        setIsOpen(true);
+      } else {
+        setMsg('Incomplete data');
+        setIsOpen(true);
+      }
+    }
   };
   
   return (
