@@ -118,8 +118,13 @@ function Page() {
           setIsOpen(true);
         })
         .catch(error => {
-          setMsg(error.data.message);
-          setIsOpen(true);
+          if (error.response) {
+            setMsg(error.response.data.message);
+            setIsOpen(true);
+          } else {
+            setMsg('An error occured. Try again');
+            setIsOpen(true);
+          }
         });
       } catch {
         setMsg('Submission error. Check input data');
