@@ -160,7 +160,6 @@ function Page() {
           )}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <span className="block text-gray-300 text-sm font-bold mb-2">{'Allowed symbols ~!@#%&_{}[].;<>'}</span>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstname">
                 Firstname
               </label>
@@ -207,6 +206,7 @@ function Page() {
             </div>
             {/* Password Field with Toggle */}
             <div className="mb-4">
+              <span className="block text-gray-300 text-sm font-bold mb-2">{'Allowed symbols ~!@#%&_{}[].;<>'}</span>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                 Password
               </label>
