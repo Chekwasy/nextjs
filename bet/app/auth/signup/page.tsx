@@ -69,7 +69,7 @@ function Page() {
     const nwval = e.target.value;
     setPassword(nwval);
     //Validates password entered
-    if (!(nwval.length > 2) || 
+    if (!(nwval.length > 5) || 
         !checkpwd(nwval)) {
         setCpwd(false);
     } else {
@@ -92,7 +92,7 @@ function Page() {
     const nwval = e.target.value;
     setLastname(nwval);
     //Validates lastname entered
-    if (!(nwval.length > 5) || 
+    if (!(nwval.length > 2) || 
         !checkpwd(nwval)) {
         setClastname(false);
     } else {
