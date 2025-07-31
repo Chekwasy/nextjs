@@ -118,7 +118,7 @@ function Page() {
           setIsOpen(true);
         })
         .catch(error => {
-          setMsg(error.message);
+          setMsg(error.data.message);
           setIsOpen(true);
         });
       } catch {
