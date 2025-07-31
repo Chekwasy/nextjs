@@ -2,60 +2,66 @@
 import { useState, ChangeEvent, FormEvent, MouseEvent } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { Eye, EyeOff } from 'lucide-react'; // Import Eye and EyeOff icons
 import { checkpwd } from '../../tools/func';
 
 function Page() {
-  //Store firstname value
+  // Store firstname value
   const [firstname, setFirstname] = useState('');
-  //Store lastname value
+  // Store lastname value
   const [lastname, setLastname] = useState('');
-  //Store email value
+  // Store email value
   const [email, setEmail] = useState('');
-  //store password value
+  // Store password value
   const [password, setPassword] = useState('');
-  //Store confirmation password 
+  // Store confirmation password 
   const [confirmPassword, setConfirmPassword] = useState('');
-  //to set message to display 
+  // to set message to display 
   const [msg, setMsg] = useState('This for popup message!');
-  //control message open or close
+  // control message open or close
   const [isOpen, setIsOpen] = useState(false);
-  //Check password correct 
+  // Check password correct 
   const [cpwd, setCpwd] = useState(true);
-  //Check email correct
+  // Check email correct
   const [cemail, setCemail] = useState(true);
-  //Check confirm password 
+  // Check confirm password 
   const [cpwd2, setCpwd2] = useState(true);
-  //Check firstname 
+  // Check firstname 
   const [cfirstname, setCfirstname] = useState(true);
-  //Check lastname
+  // Check lastname
   const [clastname, setClastname] = useState(true);
 
-  //handle close message popup
+  // New state to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  // New state to toggle confirm password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // handle close message popup
   const handleClose = () => {
       setIsOpen(false);
   };
-  //Handle overlay click to close message popup
+  // Handle overlay click to close message popup
   const handleOverlayClick = (e: MouseEvent) => {
     if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
       handleClose();
     }
   };
-  //Sets and check what was typed for email
+  // Sets and check what was typed for email
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
     setEmail(nwval);
-    //validates email entered
+    // validates email entered
     if (!(nwval.length > 5) || !checkpwd(nwval) || !nwval.includes('@') || !nwval.includes('.')) {
       setCemail(false);
     } else {
       setCemail(true);
     }
   };
-  //Sets and check what was typed for password 
+  // Sets and check what was typed for password 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
     setPassword(nwval);
-    //Validates password entered
+    // Validates password entered
     if (!(nwval.length > 5) || 
         !checkpwd(nwval)) {
         setCpwd(false);
@@ -63,11 +69,11 @@ function Page() {
         setCpwd(true);
     }
   };
-  //Sets and check value for firstname
+  // Sets and check value for firstname
   const handleFirstnameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
     setFirstname(nwval);
-    //Validates firstname entered
+    // Validates firstname entered
     if (!(nwval.length > 2) || 
         !checkpwd(nwval)) {
         setCfirstname(false);
@@ -78,7 +84,7 @@ function Page() {
   const handleLastnameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
     setLastname(nwval);
-    //Validates lastname entered
+    // Validates lastname entered
     if (!(nwval.length > 2) || 
         !checkpwd(nwval)) {
         setClastname(false);
@@ -89,7 +95,7 @@ function Page() {
   const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const nwval = e.target.value;
     setConfirmPassword(nwval);
-    //Validates confirm password entered
+    // Validates confirm password entered
     if (!(nwval.length > 5) || 
         !checkpwd(nwval)) {
         setCpwd2(false);
@@ -101,10 +107,10 @@ function Page() {
     e.preventDefault();
     
     if (password === confirmPassword && 
-	  cemail && cpwd && cpwd2 && cfirstname && 
-	  clastname && email !== '' && password !== '' && 
-	  confirmPassword !== '' && firstname !== '' &&
-	  lastname !== ''
+    cemail && cpwd && cpwd2 && cfirstname && 
+    clastname && email !== '' && password !== '' && 
+    confirmPassword !== '' && firstname !== '' &&
+    lastname !== ''
        ) {
       const encodestr = btoa(email + ':' + password);
       try {
@@ -127,11 +133,12 @@ function Page() {
           }
         });
       } catch {
-        setMsg('Submission error. Check input data');
-	      setIsOpen(true);
+        setMsg('An error Ocurred. Try again or contact us');
+        setIsOpen(true);
       }
     } else { setMsg('Submission error. Check input data'); setIsOpen(true);}
   };
+  
   return (
     <div>
       <div className="bg-cover bg-white text-sm text-gray-900 bg-center h-screen w-screen flex justify-center items-center">
@@ -164,8 +171,8 @@ function Page() {
                 placeholder="Firstname"
                 name="firstname"
                 value={firstname}
-		required 
-		onChange={handleFirstnameChange}
+                required 
+                onChange={handleFirstnameChange}
               />
             </div>
             <div className="mb-4">
@@ -178,8 +185,8 @@ function Page() {
                 type="text"
                 placeholder="Lastname"
                 name="lastname"
-		required 
-		value={lastname}
+                required 
+                value={lastname}
                 onChange={handleLastnameChange}
               />
             </div>
@@ -193,40 +200,60 @@ function Page() {
                 type="email"
                 placeholder="Email"
                 name="email"
-		required 
-		value={email}
+                required 
+                value={email}
                 onChange={handleEmailChange}
               />
             </div>
+            {/* Password Field with Toggle */}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                 Password
               </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="password"
-                type="password"
-                placeholder="Password"
-                name="password"
-		required 
-		value={password}
-                onChange={handlePasswordChange}
-              />
+              <div className="relative">
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 pr-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  name="password"
+                  required 
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-gray-500 hover:text-gray-700"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff /> : <Eye />}
+                </button>
+              </div>
             </div>
+            {/* Confirm Password Field with Toggle */}
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
                 Confirm Password
               </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="confirmPassword"
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
-		required 
-		value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-              />
+              <div className="relative">
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 pr-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="confirmPassword"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                  required 
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-gray-500 hover:text-gray-700"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <EyeOff /> : <Eye />}
+                </button>
+              </div>
             </div>
             <Link href={'/auth/login'}>
                 <div className='text-blue-500 hover:text-white flex items-center'>Login</div>
