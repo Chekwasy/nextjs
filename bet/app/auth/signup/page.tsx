@@ -2,6 +2,7 @@
 import { useState, ChangeEvent, FormEvent, MouseEvent } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { checkpwd } from '../../tools/func';
 
 function Page() {
   //Store firstname value
@@ -32,20 +33,6 @@ function Page() {
   //handle close message popup
   const handleClose = () => {
       setIsOpen(false);
-  };
-  //Checks pwd and email characters
-  const checkpwd = (strr : string) => {
-	  const len = strr.length;
-	  if (len > 50) {
-		  return false;
-	  }
-	  const otherChx = `~!@#%&_{}[].;<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`;
-	  for (let i = 0; i < len; i++) {
-		  if (!(otherChx.includes(strr[i]))) {
-			  return false;
-		  }
-	  }
-	  return true;
   };
   //Handle overlay click to close message popup
   const handleOverlayClick = (e: MouseEvent) => {
