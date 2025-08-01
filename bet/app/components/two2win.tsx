@@ -231,10 +231,12 @@ export default function Two2Win() {
           <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on how to use this platform.</h2>
             <p className="text-lg md:text-xl text-gray-600">
-              <b>Introduction to Our Betting System</b><br/>
+              <b>Introduction to Our Betting System</b>
               We initiate our betting system with a Principal amount (Starting Capital) of  N10,000 and a minimum daily stake of N100. This foundational amount can be adjusted proportionally to achieve varying returns.
+              <br/><br/>
               <b>Tips</b>
               : Start with a capital of N10,000. Once your earnings reach 80% of this initial capital, you have the option to withdraw N10,000, leaving you with a balance of N8,000. Continue playing with this N8,000 balance until it reaches N16,000, at which point you should double your stake on the site. If your balance further increases to N24,000, you can triple your stake, and so on. You are free to manage your withdrawals as you see fit. Access to this feature requires a subscription of N250 weekly or N800 monthly.
+              <br/><br/>
               <b>Key Terms and Definitions</b>
               <ul>
                 <li><b>Opening Balance</b>: The account balance as the start of the day</li>

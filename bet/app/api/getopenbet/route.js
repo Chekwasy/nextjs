@@ -81,7 +81,7 @@ export async function GET(request) {
 						for (let j = 0; j < evtLen; j++) {
 							if (gamesJson.Stages[i].Events[j].T1[0].Nm === (gm[a].bet[c]).hometeam) {
 								if (gamesJson.Stages[i].Events[j].Eps.includes("'")) {
-									itmCopy.mStatus = gamesJson.Stages[i].Events[j].Eps;
+									itmCopy.mStatus = `${gamesJson.Stages[i].Events[j].Eps}`;
 									itmCopy.mResult = 'Pending';
 									itmCopy.mOutcome = 'Pending';
 									itmCopy.mScore = `${gamesJson.Stages[i].Events[j].Tr1OR} : ${gamesJson.Stages[i].Events[j].Tr2OR}`;
@@ -93,10 +93,10 @@ export async function GET(request) {
 									itmCopy.mScore = `${gamesJson.Stages[i].Events[j].Tr1OR} : ${gamesJson.Stages[i].Events[j].Tr2OR}`;
 									nwBet.push(itmCopy);
 								} else if (gamesJson.Stages[i].Events[j].Eps === 'FT' || gamesJson.Stages[i].Events[j].Eps === 'AET' || gamesJson.Stages[i].Events[j].Eps === 'AP') {
-									if (itmCopy.mStatus !== 'FT' || itmCopy.mStatus && 'AET' && itmCopy.mStatus !== 'AP') {
+									if (itmCopy.mStatus !== 'FT') {
 										itmCopy.mStatus = 'FT';
-										const homescore = gamesJson.Stages[i].Events[j].Tr1OR;
-										const awayscore = gamesJson.Stages[i].Events[j].Tr2OR;
+										const homescore = `${gamesJson.Stages[i].Events[j].Tr1OR}`;
+										const awayscore = `${gamesJson.Stages[i].Events[j].Tr2OR}`;
 										if (parseInt(homescore) > parseInt(awayscore)) {
 											itmCopy.mResult = 'Home Won';
 										} else if (parseInt(homescore) < parseInt(awayscore)) {
@@ -168,17 +168,17 @@ export async function GET(request) {
 			}
 			//go through nwBet and recheck odd total potwin etc
 			const doclen = nwBet.length;
-			let won = true;
+			let won = false;
 			for (let b = 0; b < doclen; b++) {
 				odds = multiply(odds, nwBet[b].odd)
 				if (nwBet[b].mOutcome === 'Pending') {
 					won = false;
 				}
-				if (nwBet[b].mOutcome === 'Lost') {
+				else if (nwBet[b].mOutcome === 'Lost') {
 					result = 'Lost';
 					won = false;
 				}
-				if (nwBet[b].mOutcome === 'Won') {
+				else if (nwBet[b].mOutcome === 'Won') {
 					won = true;
 				}
 			}
