@@ -17,7 +17,7 @@ export default function Sub() {
     }
   };
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-indigo-800 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-300 to-gray-600 p-4">
       <div className="bg-white rounded-xl shadow-2xl p-6 sm:p-8 md:p-10 lg:p-12 w-full max-w-md transform transition-all duration-300 hover:scale-105">
         <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-8">
           Choose Your Plan
