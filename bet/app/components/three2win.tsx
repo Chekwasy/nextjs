@@ -233,7 +233,8 @@ export default function Three2Win() {
             <p className="text-lg md:text-xl text-gray-600">
               <b>Introduction to Our Betting System</b><br/>
               We initiate our betting system with a Principal amount (Starting Capital) of  N8,000 and a minimum daily stake of N20. This foundational amount can be adjusted proportionally to achieve varying returns.
-              
+              <b>Tips</b>
+              : Start with a capital of N4,000. Once your earnings reach 80% of this initial capital, you have the option to withdraw N4,000, leaving you with a balance of N3,200. Continue playing with this N3,200 balance until it reaches N7,000, at which point you should double your stake on the site. If your balance further increases to N10500,000, you can triple your stake, and so on. You are free to manage your withdrawals as you see fit. Access to this feature requires a subscription of N250 weekly or N800 monthly.
               <b>Key Terms and Definitions</b>
               <ul>
                 <li><b>Opening Balance</b>: The account balance as the start of the day</li>
@@ -263,7 +264,7 @@ export default function Three2Win() {
               </ul>
               
               <b>Performance Expectations and Risk Management</b><br/>
-              Our strategy aims to deliver a minimum monthly percentage return of 30%. However, please note that this comes with a 80% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
+              Our strategy aims to deliver a minimum monthly percentage return of 30%. However, please note that this comes with a 80% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose. For more information, reach out to us via tiktok on chekwasy_trybet
             </p>
             <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 md:py-3 px-4 md:px-6 cursor-pointer rounded-lg" onClick={() => setShowGuide(false)} > Close </button>
           </div>

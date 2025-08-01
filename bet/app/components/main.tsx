@@ -398,7 +398,7 @@ export default function Main() {
   };
   return (
     <div className="relative bg-white rounded-b-lg border-4 border-green-300 mt-16 lg:border-2 lg:w-4/5 mx-auto">
-      <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
+      {!showGuide && (<div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
         <h2 className="font-bold text-lg">1 X 2</h2>
         <div>
           <div className="flex justify-center">
@@ -427,8 +427,8 @@ export default function Main() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-      </div>
-      <div className="bg-white p-4 mt-12">
+      </div>)}
+      {!showGuide && (<div className="bg-white p-4 mt-12">
         <div className="grid gap-4">
           {games.map((game, index) => (
           <div key={index} className="bg-white rounded-lg shadow-md p-4">
@@ -463,9 +463,9 @@ export default function Main() {
           </div>
           ))}
         </div>
-      </div>
+      </div>)}
       {/* Sidebar */}
-      <div className={`absolute items-center top-0 right-0 min-h-screen w-96 bg-white shadow-lg border-4 rounded-lg border-green-300 ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '65px' }}>
+      {!showGuide && (<div className={`absolute items-center top-0 right-0 min-h-screen w-96 bg-white shadow-lg border-4 rounded-lg border-green-300 ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '65px' }}>
         <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
           <h2 className="font-bold text-lg">Bookings</h2>
           <button aria-label="Close sidebar" onClick={() => setSidebarOpen(false)}>
@@ -532,7 +532,7 @@ export default function Main() {
           {storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet()} >Book Bet</button>)}
           {storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
         </div>)}
-      </div>
+      </div>)}
       {!showGuide && (<div
         className="fixed bottom-0 right-0 mb-4 mr-4 cursor-pointer"
         onClick={() => setShowGuide(true)}
@@ -544,27 +544,33 @@ export default function Main() {
         </div>
       </div>)}
       {showGuide && (
-        <div className="bg-gray-800 fixed top-0 left-0 w-full h-full mt-3 mb-3 flex items-center justify-center">
+        <div className="bg-gray-800 mt-3 mb-3 flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on How to Use This Site</h2>
           <p className="text-lg md:text-xl text-gray-600">
             <b>Site Description</b>
-            This site is designed to facilitate practice betting for the 1x2 betting category only, using virtual money. It is not intended for real-money betting. Users may be eligible to win prizes through test betting on this site, details of which will be announced at a later date.
-            <b>Menu Options Definition</b>
+            : This platform is designed exclusively for virtual betting practice within the 1x2 betting category. It uses virtual money and is not intended for real-money wagering. Users may be eligible for prizes through test betting, with further details to be announced at a later date.
+            <br/><br/>
+            <b>Tips</b>
+            : Explore our Two2Win and Three2Win options for opportunities to enhance your investment returns.
+            <br/><br/>
+            <b>Menu Options Defined</b>
             <ul>
-              <li><b>Close Button</b>: Closes the menu dropdown tab.</li>
-              <li><b>Home</b>: Returns the user to the homepage.</li>
-              <li><b>Sign Up</b>: Directs the user to the sign-up page.</li>
-              <li><b>Login</b>: Directs the user to the login page.</li>
-              <li><b>Bets</b>: Displays played games, including open and closed games.</li>
-              <li><b>Profile</b>: Directs the user to their profile dashboard.</li>
-              <li><b>Two2Win</b>: Provides access to our 2-odds strategy, offering 50% monthly winnings. Users can view this option for free for 7 days, after which a weekly subscription fee of N100 applies.</li>
-              <li><b>About</b>: Directs the user to the about us page, which outlines our mission.</li>
-              <li><b>Logout</b>: Logs the user out when clicked.</li>
-              <li><b>Reload/Reset</b>: Restores the balance to N10,000 if it falls below this amount.</li>
+              <li><b>Close Button</b>: Closes the current menu dropdown.</li>
+              <li><b>Home</b>: Navigates the user to the homepage.</li>
+              <li><b>Sign Up</b>: Directs the user to the account registration page.</li>
+              <li><b>Login</b>: Directs the user to the account login page.</li>
+              <li><b>Bets</b>: Displays a comprehensive record of played games, including both open and closed bets.</li>
+              <li><b>Profile</b>: Directs the user to their personal dashboard.</li>
+              <li><b>Two2Win</b>: Provides access to our 2-odds strategy, which offers projected monthly returns of 40%. Users can access this option for a complimentary 7-day trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies.</li>
+              <li><b>Three2Win</b>: Provides access to our 3-odds strategy, which offers projected monthly returns of 30%. Users can access this option for a complimentary 7-day trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies. (A single subscription grants access to both the Two2Win and Three2Win categories.)</li>
+              <li><b>About</b>: Directs the user to the About Us page, which outlines our mission and objectives.</li>
+              <li><b>Logout</b>: Logs the user out of their current session.</li>
+              <li><b>Reload/Reset</b>: Resets the virtual balance to N10,000 if it falls below this amount.</li>
             </ul>
+            <br/>
             <b>Conclusion</b>
-            We strive to carefully select daily games for our Two2Win option. Please note that we do not bet with {`users'`} funds. We welcome investors and look forward to collaborating with them.
+            : Our Two2Win option demonstrates a 75% confidence rate over a one-year period, while our Three2Win option boasts a 95% confidence rate. We are committed to carefully curating daily game selections for our Two2Win and Three2Win option. Please be advised that we do not manage or bet with user funds. We welcome and are open to collaborations with potential investors.
           </p>
           <button className="bg-gray-900 hover:bg-gray-400 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg" onClick={() => setShowGuide(false)} >
             Close
