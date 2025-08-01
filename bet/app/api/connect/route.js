@@ -29,7 +29,9 @@ export async function POST(request) {
 		const auth_token = makeID();
 		redisClient.set(`auth_${auth_token}`, user.userID, 7 * 24 * 60 * 60);
 		return NextResponse.json({token: auth_token, message: "Login Successful"}, {status: 201});
-	}
+	} else {
+		return NextResponse.json({message: 'error Email or Password Incorrect'}, {status: 400});
+    }
     } catch {
 	return NextResponse.json({message: 'error processing signin'}, {status: 400});
     }
