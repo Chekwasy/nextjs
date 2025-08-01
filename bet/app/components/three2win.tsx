@@ -12,9 +12,9 @@ import { monthL, weekL, getCalender} from '../tools/lists_dict';
 //import { mainStateReducer } from '@/store/slices/mainslice';
 
 
-export default function Two2Win() {
+export default function Three2Win() {
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
-  const [two2win, setTwo2win] = useState({
+  const [three2win, setThree2win] = useState({
     commencement: '-----------',
     Sbal: '0',
     Tstake: '0',
@@ -70,7 +70,7 @@ export default function Two2Win() {
       }})
       .then((response) => {
         if (response.data.game) {
-          setTwo2win(response.data.game);
+          setThree2win(response.data.game);
           setSDay(dyy.toString());
           setCalenderOpen(false);
         } else {
@@ -119,82 +119,82 @@ export default function Two2Win() {
       </button>)}
 
       {!showGuide && (<div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
-        <div className='flex w-1/2 text-center cursor-pointer font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
+        <div className='flex w-1/2 text-center cursor-pointer font-bold p-4 font-bold rounded-lg shadow-md bg-blue-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
       </div>)}
       {!showGuide && (<div className="bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
         <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
           <div className="flex flex-col space-y-4 mb-6">
             <div className="rounded-lg p-1 flex gap-4">
-              <div className={`w-1/3 font-bold p-2 text-center rounded-lg ${two2win.status === 'Won' ? 'bg-green-500 text-white' : (two2win.status === 'Lost' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white')}`}>{two2win.status}</div>
-              <div className="w-2/3 bg-blue-200 p-2 text-center rounded-lg font-bold flex justify-end">{`${two2win.commencement.substring(0, 2)} ${two2win.commencement.substring(2, 5)} ${two2win.commencement.substring(7, 11)}`}</div>
+              <div className={`w-1/3 font-bold p-2 text-center rounded-lg ${three2win.status === 'Won' ? 'bg-green-500 text-white' : (three2win.status === 'Lost' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white')}`}>{three2win.status}</div>
+              <div className="w-2/3 bg-purple-200 p-2 text-center rounded-lg font-bold flex justify-end">{`${three2win.commencement.substring(0, 2)} ${three2win.commencement.substring(2, 5)} ${three2win.commencement.substring(7, 11)}`}</div>
             </div>
             <div className="flex flex-col space-y-1">
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+              <div className="bg-lime-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Principal / Starting Capital</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(10000)}</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(8000)}</div>
               </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+              <div className="bg-lime-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Opening Balance</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Sbal))}</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(three2win.Sbal))}</div>
               </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+              <div className="bg-lime-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">{`Today's Stake`}</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Tstake))}</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(three2win.Tstake))}</div>
               </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+              <div className="bg-lime-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">{`Today's Odd`}</div>
-                <div className=" w-1/2 font-bold text-end">{two2win.Todd}</div>
+                <div className=" w-1/2 font-bold text-end">{three2win.Todd}</div>
               </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+              <div className="bg-lime-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Expected Balance</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Ebal))}</div>
+                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(three2win.Ebal))}</div>
               </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+              <div className="bg-lime-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Post On</div>
-                <div className=" w-1/2 font-bold text-end">{`${two2win.published.substring(0, 2)} ${two2win.published.substring(2, 5)} ${two2win.published.substring(7, 11)}`}</div>
+                <div className=" w-1/2 font-bold text-end">{`${three2win.published.substring(0, 2)} ${three2win.published.substring(2, 5)} ${three2win.published.substring(7, 11)}`}</div>
               </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+              <div className="bg-lime-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Closing Balance</div>
                 <div className=" w-1/2 font-bold text-end">{
-                two2win.status === 'Pending' ? '' : (
-                  two2win.status === 'Won' ? (
+                three2win.status === 'Pending' ? '' : (
+                  three2win.status === 'Won' ? (
                     new Intl.NumberFormat().format(
-                      parseFloat(two2win.Sbal) + (parseFloat(two2win.Tstake) * parseFloat(two2win.Todd))
+                      parseFloat(three2win.Sbal) + (parseFloat(three2win.Tstake) * parseFloat(three2win.Todd))
                     )) : (
                       new Intl.NumberFormat().format(
-                        parseFloat(two2win.Sbal) - (parseFloat(two2win.Tstake))
+                        parseFloat(three2win.Sbal) - (parseFloat(three2win.Tstake))
                       ))
                     )}</div>
               </div>
 
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
+              <div className="bg-lime-200 rounded-lg p-1 flex gap-4">
                 <div className=" w-1/2">Current ROI</div>
-                <div className=" w-1/2 font-bold text-lg text-end">{(((parseFloat(two2win.Sbal) / 10000) * 100) - 100).toFixed(2)} %</div>
+                <div className=" w-1/2 font-bold text-lg text-end">{(((parseFloat(three2win.Sbal) / 10000) * 100) - 100).toFixed(2)} %</div>
               </div>
 
             </div>
           </div>
-          {two2win.games.map((item, index) => (
+          {three2win.games.map((item, index) => (
           <div key={index} className={`flex flex-col space-y-1 mb-6 border-b-4 border-gray-700 rounded-b-md`}>
-            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
+            <div className="bg-purple-200 rounded-lg p-2 flex gap-4">
               <div className=" w-1/2 font-bold">Home Team</div>
               <div className=" w-1/2 font-bold text-lg text-end">{item.hometeam}</div>
             </div>
-            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
+            <div className="bg-purple-200 rounded-lg p-2 flex gap-4">
               <div className=" w-1/2 font-bold">Away Team</div>
               <div className=" w-1/2 font-bold text-lg text-end">{item.awayteam}</div>
             </div>
-            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
+            <div className="bg-purple-200 rounded-lg p-2 flex gap-4">
               <div className=" w-1/2 font-bold">Selection</div>
               <div className=" w-1/2 font-bold text-lg text-end">{item.selection}</div>
             </div>
-            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
+            <div className="bg-purple-200 rounded-lg p-2 flex gap-4">
               <div className=" w-1/2 font-bold">Odd</div>
               <div className=" w-1/2 font-bold text-lg text-end">{item.odd}</div>
             </div>
@@ -220,7 +220,7 @@ export default function Two2Win() {
           onClick={() => setShowGuide(true)}
         >
           <div
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
+            className="bg-purple-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
           >
             Guide
           </div>
@@ -232,7 +232,7 @@ export default function Two2Win() {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on how to use this platform.</h2>
             <p className="text-lg md:text-xl text-gray-600">
               <b>Introduction to Our Betting System</b><br/>
-              We initiate our betting system with a Principal amount (Starting Capital) of  N10,000 and a minimum daily stake of N100. This foundational amount can be adjusted proportionally to achieve varying returns.
+              We initiate our betting system with a Principal amount (Starting Capital) of  N8,000 and a minimum daily stake of N20. This foundational amount can be adjusted proportionally to achieve varying returns.
               
               <b>Key Terms and Definitions</b>
               <ul>
@@ -246,7 +246,7 @@ export default function Two2Win() {
               </ul>
               
               <b>Match Structure and Odds</b><br/>
-              A {`day's`} schedule may comprise 1, 2, 3, or 4 matches, with a minimum total odd of 2. Each match involves:
+              A {`day's`} schedule may comprise 2, 3, 4, 5 or 6 matches, with a minimum total odd of 3. Each match involves:
               <ul>
                 <li>Home Team and Away Team: Competing teams.</li>
                 <li>Selection: Our predicted outcome for the match.</li>
@@ -256,14 +256,14 @@ export default function Two2Win() {
               <b>Recommendations for Getting Started</b><br/>
               For optimal results, we advise commencing with a modest investment:
               <ul>
-                <li>N1,000 with a N10 minimum stake</li>
-                <li>N5,000 with a N50 minimum stake</li>
-                <li>N10,000 with a N100 minimum stake</li>
-                <li>N100,000 with a N1,000 minimum stake</li>
+                <li>N4,000 with a N10 minimum stake</li>
+                <li>N8,000 with a N20 minimum stake</li>
+                <li>N40,000 with a N100 minimum stake</li>
+                <li>N400,000 with a N1,000 minimum stake</li>
               </ul>
               
               <b>Performance Expectations and Risk Management</b><br/>
-              Our strategy aims to deliver a minimum monthly percentage return of 40%. However, please note that this comes with a 80% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose. For instance, with 10,000 naira, one could only recover minimum of 20% if stategy fails. 
+              Our strategy aims to deliver a minimum monthly percentage return of 30%. However, please note that this comes with a 80% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
             </p>
             <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 md:py-3 px-4 md:px-6 cursor-pointer rounded-lg" onClick={() => setShowGuide(false)} > Close </button>
           </div>
