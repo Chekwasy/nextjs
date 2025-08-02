@@ -1,47 +1,18 @@
-const getCalender = (year, month) => {
-  // Get the first day of the month
-  const firstDay = new Date(year, month - 1, 1);
+export const getThirtiethDay = (dateString) => {
+  const dateParts = dateString.match(/(\d{2})(\d{2})(\d{2})/);
+  if (!dateParts) return null;
 
-  // Get the last day of the month
-  const lastDay = new Date(year, month, 0);
+  const day = parseInt(dateParts[1]);
+  const month = parseInt(dateParts[2]);
+  const year = parseInt(dateParts[3]);
 
-  // Get the day of the week for the first day of the month
-  const firstDayOfWeek = firstDay.getDay();
+  const date = new Date(parseInt(`20${year}`), month - 1, day + 30);
 
-  // Get the number of days in the month
-  const numDays = lastDay.getDate();
+  const thDay = date.getDate().toString().padStart(2, '0');
+  const thMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+  const thYear = date.getFullYear().toString().slice(-2);
 
-  // Initialize the calendar
-  const calendar = [];
-
-  // Initialize the week
-  let week = [];
-
-  // Add empty days for the first week
-  for (let i = 0; i < firstDayOfWeek; i++) {
-    week.push('');
-  }
-
-  // Add days to the calendar
-  for (let i = 1; i <= numDays; i++) {
-    week.push(i);
-
-    // If the week is full, add it to the calendar
-    if (week.length === 7) {
-      calendar.push(week);
-      week = [];
-    }
-  }
-
-  // Add empty days for the last week
-  while (week.length < 7) {
-    week.push('');
-  }
-
-  // Add the last week to the calendar
-  calendar.push(week);
-
-  return calendar;
+  return `${thDay}${thMonth}${thYear}`;
 };
 
-console.log(getCalender(2025, 7));
+console.log(getThirtiethDay('09082025'));
