@@ -50,32 +50,32 @@ export default function Sub() {
       .then(async (response) => {
         if (PaystackPop) { // Ensures PaystackPop is loaded before using it
           PaystackPop.resumeTransaction(response.data.access_code, {
-                // The onSuccess callback for payment confirmation
-                onSuccess: (transaction) => {
-                    
-                    //Sending reference for final verification
-                    axios.post('/api/verify', { reference: transaction.reference }, {
-                        headers: {
-                            'tok': Cookies.get('trybet_tok'),
-                            'Content-Type': 'application/json',
-                            reference: transaction.reference,
-                        },
-                    })
-                    .then(verifyResponse => {
-                        console.log('Verification successful:', verifyResponse.data);
-                        // Redirect or update UI to reflect the new subscription status
-                        alert("Subscription successful!");
-                    })
-                    .catch(verifyError => {
-                        console.error("Verification failed:", verifyError.message);
-                        alert("Payment successful, but verification failed. Please contact support.");
-                    });
-                },
-                onClose: () => {
-                    // This function is called if the user closes the pop-up without paying
-                    alert('Transaction canceled by user.');
-                },
+            // The onSuccess callback for payment confirmation
+            onSuccess: (transaction) => {
+            //Sending reference for final verification
+            axios.post('/api/verify', {}, {
+              headers: {
+                'tok': Cookies.get('trybet_tok'),
+                'Content-Type': 'application/json',
+                reference: transaction.reference,
+              },
+            })
+            .then(verifyResponse => {
+              setMsg(verifyResponse.data.message);
+              setIsOpen(true);
+              // Redirect or update UI to reflect the new subscription status
+            })
+            .catch(verifyError => {
+              console.error("Verification failed:", verifyError.message);
+              setMsg("Payment successful, but verification failed. Please contact support.");
+              setIsOpen(true);
             });
+          }, onClose: () => {
+            // This function is called if the user closes the pop-up without paying
+            setMsg('Transaction canceled.');
+            setIsOpen(true);
+          },
+          });
         } else {
           setMsg("Payment gateway not ready. Please try again.");
           setIsOpen(true);

@@ -41,7 +41,6 @@ export async function POST(request) {
         let reference = '';
         await axios.post(apiEndpoint, data, { headers })
         .then(async (response) => {
-            console.log(response.data);
             access_code = response.data.data.access_code;
             reference = response.data.data.reference;
         })
