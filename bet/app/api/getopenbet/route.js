@@ -169,18 +169,21 @@ export async function GET(request) {
 			//go through nwBet and recheck odd total potwin etc
 			const doclen = nwBet.length;
 			let won = false;
+			let wonL = [];
 			for (let b = 0; b < doclen; b++) {
 				odds = multiply(odds, nwBet[b].odd)
 				if (nwBet[b].mOutcome === 'Pending') {
-					won = false;
 				}
 				else if (nwBet[b].mOutcome === 'Lost') {
 					result = 'Lost';
 					won = false;
 				}
 				else if (nwBet[b].mOutcome === 'Won') {
-					won = true;
+					wonL.push('Won');
 				}
+			}
+			if (wonL.length === doclen) {
+				won = true;
 			}
 			potwin = multiply(betamt, odds); 
 			if (won) {
