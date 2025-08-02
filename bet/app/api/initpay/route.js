@@ -38,13 +38,17 @@ export async function POST(request) {
         };
 
         const data = {
-            email,
-            amount
+            email: email,
+            amount: amount
         };
-        const response = await axios.post(apiEndpoint, data, { headers });
-        const access_code = response.data.access_code;
-
-        await initializeTransaction();
+        let access_code = '';
+        await axios.post(apiEndpoint, data, { headers })
+        .then(async (response) => {
+            access_code = response.data.access_code;
+        })
+        .catch(error => {
+            console.log(error);
+        });
         console.log('after pay');
         return  NextResponse.json({access_code: access_code, message: "Success" }, {status: 201});
     } catch {
