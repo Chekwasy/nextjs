@@ -1,0 +1,47 @@
+const getCalender = (year, month) => {
+  // Get the first day of the month
+  const firstDay = new Date(year, month - 1, 1);
+
+  // Get the last day of the month
+  const lastDay = new Date(year, month, 0);
+
+  // Get the day of the week for the first day of the month
+  const firstDayOfWeek = firstDay.getDay();
+
+  // Get the number of days in the month
+  const numDays = lastDay.getDate();
+
+  // Initialize the calendar
+  const calendar = [];
+
+  // Initialize the week
+  let week = [];
+
+  // Add empty days for the first week
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    week.push('');
+  }
+
+  // Add days to the calendar
+  for (let i = 1; i <= numDays; i++) {
+    week.push(i);
+
+    // If the week is full, add it to the calendar
+    if (week.length === 7) {
+      calendar.push(week);
+      week = [];
+    }
+  }
+
+  // Add empty days for the last week
+  while (week.length < 7) {
+    week.push('');
+  }
+
+  // Add the last week to the calendar
+  calendar.push(week);
+
+  return calendar;
+};
+
+console.log(getCalender(2025, 7));
