@@ -18,7 +18,7 @@ export async function POST(request) {
 	    if (!user) { return  NextResponse.json({message: 'User has no access. Try signup'}, {status: 401});}
 
         const apiEndpoint = 'https://api.paystack.co/transaction/initialize';
-        const secretKey = process.env.PSK || '';
+        const secretKey = process.env.PSKT || '';
         const email = user.email;
         let amount = '25000';
         if (plan === 'monthly') {
