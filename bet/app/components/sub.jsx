@@ -39,7 +39,6 @@ export default function Sub() {
 
   const handleProceed = () => {
     if (selectedPlan) {
-      alert(`Proceeding with ${selectedPlan} plan!`);
       axios.post('/api/initpay', {}, {
         headers: {
           'tok': Cookies.get('trybet_tok'),
