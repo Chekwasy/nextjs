@@ -17,7 +17,7 @@ export async function POST(request) {
     	.findOne({ "userID": usr_id });
 	    if (!user) { return  NextResponse.json({message: 'User has no access. Try signup'}, {status: 401});}
 
-        const apiEndpoint = `https://api.paystack.co/transaction/verify/:${reference}`;
+        const apiEndpoint = `https://api.paystack.co/transaction/verify/${reference}`;
         const secretKey = 'sk_test_c7475fd045815e1d20471fe419e713025c9cea10'; 
 
         const headers = {
@@ -37,7 +37,7 @@ export async function POST(request) {
         if (status === 'success') {
             return  NextResponse.json({status: status, message: "Payment Successful" }, {status: 201});
         } else {
-            return  NextResponse.json({status: status, message: `Paymentssss ${status}` }, {status: 201});
+            return  NextResponse.json({status: status, message: `Payment ${status}` }, {status: 201});
         }
     } catch {
         return  NextResponse.json({message: 'Payment Verification Error'}, {status: 401});
