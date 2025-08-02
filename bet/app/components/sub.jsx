@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'; // Import useEffect
+import { useState, useEffect, MouseEvent } from 'react'; // Import useEffect
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -8,48 +8,88 @@ import Cookies from 'js-cookie';
 export default function Sub() {
   const [selectedPlan, setSelectedPlan] = useState(''); // 'weekly' or 'monthly'
   const [PaystackPop, setPaystackPop] = useState(null); // State to hold the PaystackPop instance
+  //to set message to display 
+  const [msg, setMsg] = useState('This for popup message!');
+  //control message open or close
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Dynamically import PaystackPop only on the client-side
+  //handle close message popup
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+  //Handle overlay click to close message popup
+  const handleOverlayClick = (e) => {
+    if ((e.target).classList.contains('popup-overlay')) {
+      handleClose();
+    }
+  };
+
+  // Dynamically imports PaystackPop only on the client-side
   useEffect(() => {
     if (typeof window !== 'undefined') { // Ensure window object exists (client-side)
       import('@paystack/inline-js')
         .then((module) => {
-          setPaystackPop(new module.default()); // Store the PaystackPop instance in state
+          setPaystackPop(new module.default()); // Stores the PaystackPop instance in state
         })
         .catch((error) => {
           console.error("Failed to load PaystackPop:", error);
         });
     }
-  }, []); // Empty dependency array means this runs once on component mount (client-side)
-
+  }, []);
 
   const handleProceed = () => {
     if (selectedPlan) {
       alert(`Proceeding with ${selectedPlan} plan!`);
-
       axios.post('/api/initpay', {}, {
         headers: {
           'tok': Cookies.get('trybet_tok'),
           'Content-Type': 'application/json',
-          // Pass 'plan' as a string directly, no need for JSON.stringify here for a simple string
           'plan': selectedPlan,
         },
       })
       .then(async (response) => {
-        if (PaystackPop) { // Ensure PaystackPop is loaded before using it
-          PaystackPop.resumeTransaction(response.data.access_code);
+        if (PaystackPop) { // Ensures PaystackPop is loaded before using it
+          PaystackPop.resumeTransaction(response.data.access_code, {
+                // The onSuccess callback for payment confirmation
+                onSuccess: (transaction) => {
+                    
+                    //Sending reference for final verification
+                    axios.post('/api/verify', { reference: transaction.reference }, {
+                        headers: {
+                            'tok': Cookies.get('trybet_tok'),
+                            'Content-Type': 'application/json',
+                            reference: transaction.reference,
+                        },
+                    })
+                    .then(verifyResponse => {
+                        console.log('Verification successful:', verifyResponse.data);
+                        // Redirect or update UI to reflect the new subscription status
+                        alert("Subscription successful!");
+                    })
+                    .catch(verifyError => {
+                        console.error("Verification failed:", verifyError.message);
+                        alert("Payment successful, but verification failed. Please contact support.");
+                    });
+                },
+                onClose: () => {
+                    // This function is called if the user closes the pop-up without paying
+                    alert('Transaction canceled by user.');
+                },
+            });
         } else {
-          console.error("PaystackPop is not loaded yet.");
-          alert("Payment gateway not ready. Please try again.");
+          setMsg("Payment gateway not ready. Please try again.");
+          setIsOpen(true);
         }
       })
       .catch(error => {
-        console.error("Error initiating transaction:", error.message); // Use console.error for errors
-        alert("An error occurred. Please try again.");
+        console.error(error.message);
+        setMsg("An error occurred. Please try again.");
+        setIsOpen(true);
       });
 
     } else {
-      alert('Please select a subscription plan first.');
+      setMsg('Please select a subscription plan first.');
+      setIsOpen(true);
     }
   };
 
@@ -103,6 +143,20 @@ export default function Sub() {
           Proceed
         </button>
       </div>
+      {isOpen && (
+        <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
+          <div className="popup-content bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
+            <div className="flex justify-end">
+              <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <h2 className="text-lg font-bold mb-4">{msg}</h2>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
