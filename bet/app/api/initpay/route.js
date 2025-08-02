@@ -44,7 +44,8 @@ export async function POST(request) {
         let access_code = '';
         await axios.post(apiEndpoint, data, { headers })
         .then(async (response) => {
-            access_code = response.data.access_code;
+            console.log(response.data);
+            access_code = response.data.data.access_code;
         })
         .catch(error => {
             console.log(error);
