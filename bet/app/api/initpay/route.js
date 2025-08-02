@@ -8,6 +8,8 @@ export async function POST(request) {
 	try {
         const plan = JSON.parse(dd.headers.get('plan'));
         const tok = dd.headers.get("tok");
+        console.log(plan);
+        console.log(tok);
 	    if (!tok) { return  NextResponse.json('error', {status: 400});}
     	const usr_id = await redisClient.get(`auth_${tok}`);
 	    if (!usr_id) {
@@ -17,6 +19,7 @@ export async function POST(request) {
     	.findOne({ "userID": usr_id });
 	    if (!user) { return  NextResponse.json('error', {status: 401});}
 
+        console.log('pass auth');
         const apiEndpoint = 'https://api.paystack.co/transaction/initialize';
         const secretKey = 'sk_test_c7475fd045815e1d20471fe419e713025c9cea10';
         const email = user.email;
@@ -41,6 +44,7 @@ export async function POST(request) {
         const access_code = response.data.access_code;
 
         await initializeTransaction();
+        console.log('after pay');
         return  NextResponse.json({access_code: access_code, message: "Success" }, {status: 201});
     } catch {
         return  NextResponse.json('error', {status: 400});
