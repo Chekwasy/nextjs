@@ -27,7 +27,7 @@ export default function Sub() {
     if (selectedPlan) {
       alert(`Proceeding with ${selectedPlan} plan!`);
 
-      axios.post('/api/postsavedgames', {}, {
+      axios.post('/api/initpay', {}, {
         headers: {
           'tok': Cookies.get('trybet_tok'),
           'Content-Type': 'application/json',
