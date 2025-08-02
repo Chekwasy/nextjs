@@ -28,6 +28,10 @@ export default function Profile() {
           <div className=" w-1/2">Account Balance</div>
           <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.currency} {storeItems?.mainSlice.me.accbal}</div>
         </div>
+        <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
+          <div className=" w-1/2">Subscription Expires On </div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice.me.sub.slice(-8)}</div>
+        </div>
       </div>
     </div>
       </div>
