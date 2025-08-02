@@ -7,7 +7,7 @@ export async function POST(request) {
 	const dd = await request;
 	try {
         console.log('aaa');
-        const plan = JSON.parse(dd.headers.get('plan'));
+        const plan = dd.headers.get('plan');
         const tok = dd.headers.get("tok");
         console.log(plan);
         console.log(tok);
