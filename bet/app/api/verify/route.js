@@ -18,7 +18,7 @@ export async function POST(request) {
 	    if (!user) { return  NextResponse.json({message: 'User has no access. Try signup'}, {status: 401});}
 
         const apiEndpoint = `https://api.paystack.co/transaction/verify/${reference}`;
-        const secretKey = process.env.PSKT || ''; 
+        const secretKey = process.env.PSK || ''; 
 
         const headers = {
             'Authorization': `Bearer ${secretKey}`,
