@@ -33,6 +33,7 @@ export async function POST(request) {
             console.error(error);
             return  NextResponse.json({message: 'Error from payment channel'}, {status: 401});
         });
+        console.log(status);
         if (status === 'success') {
             return  NextResponse.json({status: status, message: "Payment Successful" }, {status: 201});
         } else {
