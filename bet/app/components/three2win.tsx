@@ -168,7 +168,7 @@ export default function Three2Win() {
                       parseFloat(three2win.Sbal) + (parseFloat(three2win.Tstake) * parseFloat(three2win.Todd))
                     )) : (
                       new Intl.NumberFormat().format(
-                        parseFloat(three2win.Sbal) - (parseFloat(three2win.Tstake))
+                        parseFloat(three2win.Sbal)
                       ))
                     )}</div>
               </div>
