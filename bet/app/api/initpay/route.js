@@ -18,13 +18,13 @@ export async function POST(request) {
 	    if (!user) { return  NextResponse.json('error', {status: 401});}
 
         const apiEndpoint = 'https://api.paystack.co/transaction/initialize';
-        const secretKey = 'YOUR_SECRET_KEY';
+        const secretKey = 'sk_test_c7475fd045815e1d20471fe419e713025c9cea10';
         const email = user.email;
         let amount = '250';
-        if (plan === 'month') {
+        if (plan === 'monthly') {
             amount = '800';
         }
-        if (plan === 'week') {
+        if (plan === 'weekly') {
             amount = '250';
         } 
 
@@ -41,7 +41,7 @@ export async function POST(request) {
         const access_code = response.data.access_code;
 
         await initializeTransaction();
-        return  NextResponse.json({me: {access_code: access_code}, logged: true, message: "Success" }, {status: 201});
+        return  NextResponse.json({access_code: access_code, message: "Success" }, {status: 201});
     } catch {
         return  NextResponse.json('error', {status: 400});
     }

@@ -1,8 +1,8 @@
 "use client"
 import { useState } from 'react';
-//import axios from 'axios';
-//import Cookies from 'js-cookie';
-
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import PaystackPop from '@paystack/inline-js';
 
 export default function Sub() {
   const [selectedPlan, setSelectedPlan] = useState(''); // 'weekly' or 'monthly'
@@ -10,8 +10,20 @@ export default function Sub() {
   const handleProceed = () => {
     if (selectedPlan) {
       alert(`Proceeding with ${selectedPlan} plan!`);
-      // Here you would typically integrate with your payment processing logic
-      // e.g., redirect to checkout, call an API, etc.
+      axios.post('/api/postsavedgames',{}, {
+		    headers: {
+		      'tok': Cookies.get('trybet_tok'),
+		      'Content-Type': 'application/json',
+		      plan: JSON.stringify(selectedPlan),
+	      },
+      })
+      .then(async (response) => {
+        const popup = new PaystackPop();
+        popup.resumeTransaction(response.data.access_code);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
     } else {
       alert('Please select a subscription plan first.');
     }
