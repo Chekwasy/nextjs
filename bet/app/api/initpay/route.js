@@ -24,12 +24,12 @@ export async function POST(request) {
         const apiEndpoint = 'https://api.paystack.co/transaction/initialize';
         const secretKey = 'sk_test_c7475fd045815e1d20471fe419e713025c9cea10';
         const email = user.email;
-        let amount = '250';
+        let amount = '25000';
         if (plan === 'monthly') {
-            amount = '800';
+            amount = '80000';
         }
         if (plan === 'weekly') {
-            amount = '250';
+            amount = '25000';
         } 
 
         const headers = {
