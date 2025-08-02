@@ -49,7 +49,7 @@ export async function POST(request) {
         .catch(error => {
             console.log(error);
         });
-        console.log('after pay');
+        console.log('after pay ', access_code);
         return  NextResponse.json({access_code: access_code, message: "Success" }, {status: 201});
     } catch {
         return  NextResponse.json('error', {status: 400});
