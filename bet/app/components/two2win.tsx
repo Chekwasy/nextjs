@@ -1,334 +1,516 @@
-"use client"
-import { useState, useEffect, MouseEvent} from 'react';
+"use client";
+
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { StoreState } from '../tools/s_interface';
 import Cookies from 'js-cookie';
-import { isDateInPast } from '../tools/dateitems';
-//import { StoreState } from '../tools/s_interface';
-import { monthL, weekL, getCalender} from '../tools/lists_dict';
-//import { useDispatch, useSelector } from 'react-redux';
-//import { mainStateReducer } from '@/store/slices/mainslice';
+import { isDateInPast } from '../tools/dateitems'; // Helper for date checking
+import { monthL, weekL, getCalender } from '../tools/lists_dict'; // Calendar helpers
 
+// Define a type for the game structure to ensure type safety
+interface Two2WinGame {
+  hometeam: string;
+  awayteam: string;
+  selection: string;
+  odd: string;
+}
 
-export default function Two2Win() {
-  const storeItems: StoreState = useSelector((state) => state) as StoreState;
-  const [two2win, setTwo2win] = useState({
-    commencement: '-----------',
-    Sbal: '0',
-    Tstake: '0',
-    Todd: '0',
-    Ebal: '0',
-    status: '',
-    published: '-----------',
-    games: [
-      {
-        hometeam: '',
-        awayteam: '',
-        selection: '',
-        odd: '0',
-      },
-    ]
-  });
-  //usedispatch to be able to write to store
-  //const dispatch = useDispatch();
-  const [calenderOpen, setCalenderOpen] = useState(false);
-  const [sDay, setSDay] = useState('');
-  const [sMonth, setSMonth] = useState('');
-  const [sYear, setSYear] = useState('');
-  const [toDay, setToDay] = useState('');
-  const [showGuide, setShowGuide] = useState(false);
-  //to set message to display 
-  const [msg, setMsg] = useState('This for popup message!');
-  //control message open or close
-  const [isOpen, setIsOpen] = useState(false);
-  const [calender, setCalender] = useState(getCalender(parseInt(sYear), parseInt(sMonth.slice(-2))));
-  //const storeItems: StoreState = useSelector((state) => state) as StoreState;
-  const handleCalenderClose = () => {
-        setCalenderOpen(false);
-    };
-  const handleCalender = (yr: string, mnt: string) => {
-    setCalender(getCalender(parseInt(yr), parseInt(mnt)));
-  };
-  //handle close message popup
-  const handleClose = () => {
-      setIsOpen(false);
-  };
-  //Handle overlay click to close message popup
-  const handleOverlayClick = (e: MouseEvent) => {
-    if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
-      handleClose();
-    }
-  };
-  const handleDay = (dyy: string, myy: string, yyy: string) => {
-    if (dyy !== '') {
-      setSDay(dyy.toString());
-      axios.get(`/api/gettwo2win?date=${dyy.toString().padStart(2, '0')}${myy}${yyy}`, {
-      headers: {
-        tok: Cookies.get('trybet_tok'),
-      }})
-      .then((response) => {
-        if (response.data.game) {
-          setTwo2win(response.data.game);
-          setSDay(dyy.toString());
-          setCalenderOpen(false);
-        } else {
-          setMsg('No data on selected date');
-          setIsOpen(true);
-          setCalenderOpen(false);
-        }
-      })
-      .catch(error => {
-        console.log(error.message);
-        setMsg('Game of the day not ready');
-        setIsOpen(true);
-      });
-    }
-  };
-  useEffect(() => {
-    handleCalender(sYear, sMonth.slice(-2));
-  }, [sYear, sMonth]);
-                          
-  useEffect(() => {
-    axios.get('/api/getdate', {
-      headers: {
-        tok: Cookies.get('trybet_tok'),
-    }})
-    .then((response) => {
-      const ddd = response.data.day.toString();
-      const mmm = monthL[response.data.month];
-      const yyy = response.data.year.toString();
-      setSDay(ddd);
-      setSMonth(mmm);
-      setSYear(yyy);
-      setToDay(`${ddd}${mmm}${yyy}`);
-      setCalender(getCalender(response.data.year, response.data.month + 1));
-      handleDay(ddd.toString(), mmm, yyy);
-    })
-    .catch(error => {
-      console.log(error.message);
-    });
-  }, []);
+// Define a type for the main Two2Win data
+interface Two2WinData {
+  commencement: string;
+  Sbal: string;
+  Tstake: string;
+  Todd: string;
+  Ebal: string;
+  status: 'Won' | 'Lost' | 'Pending' | '';
+  published: string;
+  games: Two2WinGame[];
+}
+
+// Initial state for the Two2Win data
+const initialTwo2WinState: Two2WinData = {
+  commencement: '-----------',
+  Sbal: '0',
+  Tstake: '0',
+  Todd: '0',
+  Ebal: '0',
+  status: '',
+  published: '-----------',
+  games: [], // Initialize as an empty array
+};
+
+// --- Popup Component ---
+interface PopupProps {
+  message: string;
+  onClose: () => void;
+  isOpen: boolean;
+}
+
+const Popup = ({ message, onClose, isOpen }: PopupProps) => {
+  if (!isOpen) return null;
+
   return (
-    <div className="flex-col w-full justify-center items-center mt-16">
-      {!showGuide && isDateInPast(storeItems.mainSlice?.me.sub.slice(-8)) && (<button className="flex items-center mt-6 p-4 md:w-4/5 w-11/12 mx-auto">
-        <Link href="/sub">
-          <a className="text-white bg-blue-700 rounded-lg font-bold text-sm p-4 hover:text-gray-200">Activate Your Subscription</a>
-        </Link>
-      </button>)}
-
-      {!showGuide && (<div className=" bg-gray-200 flex flex-col p-2 md:w-4/5 w-11/12 mx-auto">
-        <div className='flex w-1/2 text-center cursor-pointer font-bold p-4 font-bold rounded-lg shadow-md bg-green-500 text-white b-2 border-gray-400 mx-auto' onClick={() => setCalenderOpen(true)}>Date : {sDay} / {sMonth.slice(0, -2)} / {sYear}</div>
-      </div>)}
-      {!showGuide && (<div className="bg-gray-200 flex flex-col md:w-4/5 w-11/12 mx-auto">
-        <div className="bg-gray-200 rounded-lg w-full md:w-4/5 lg:w-7/10 xl:w-7/10 mx-auto p-4">
-          <div className="flex flex-col space-y-4 mb-6">
-            <div className="rounded-lg p-1 flex gap-4">
-              <div className={`w-1/3 font-bold p-2 text-center rounded-lg ${two2win.status === 'Won' ? 'bg-green-500 text-white' : (two2win.status === 'Lost' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white')}`}>{two2win.status}</div>
-              <div className="w-2/3 bg-blue-200 p-2 text-center rounded-lg font-bold flex justify-end">{`${two2win.commencement.substring(0, 2)} ${two2win.commencement.substring(2, 5)} ${two2win.commencement.substring(7, 11)}`}</div>
-            </div>
-            <div className="flex flex-col space-y-1">
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Principal / Starting Capital</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(10000)}</div>
-              </div>
-
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Opening Balance</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Sbal))}</div>
-              </div>
-
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">{`Today's Stake`}</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Tstake))}</div>
-              </div>
-
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">{`Today's Odd`}</div>
-                <div className=" w-1/2 font-bold text-end">{two2win.Todd}</div>
-              </div>
-
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Expected Balance</div>
-                <div className=" w-1/2 font-bold text-end">{new Intl.NumberFormat().format(parseFloat(two2win.Ebal))}</div>
-              </div>
-
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Post On</div>
-                <div className=" w-1/2 font-bold text-end">{`${two2win.published.substring(0, 2)} ${two2win.published.substring(2, 5)} ${two2win.published.substring(7, 11)}`}</div>
-              </div>
-
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Closing Balance</div>
-                <div className=" w-1/2 font-bold text-end">{
-                two2win.status === 'Pending' ? '' : (
-                  two2win.status === 'Won' ? (
-                    new Intl.NumberFormat().format(
-                      parseFloat(two2win.Sbal) + (parseFloat(two2win.Tstake) * parseFloat(two2win.Todd))
-                    )) : (
-                      new Intl.NumberFormat().format(
-                        parseFloat(two2win.Sbal)
-                      ))
-                    )}</div>
-              </div>
-
-              <div className="bg-green-200 rounded-lg p-1 flex gap-4">
-                <div className=" w-1/2">Current ROI</div>
-                <div className=" w-1/2 font-bold text-lg text-end">{(((parseFloat(two2win.Sbal) / 10000) * 100) - 100).toFixed(2)} %</div>
-              </div>
-
-            </div>
-          </div>
-          {two2win.games.map((item, index) => (
-          <div key={index} className={`flex flex-col space-y-1 mb-6 border-b-4 border-gray-700 rounded-b-md`}>
-            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
-              <div className=" w-1/2 font-bold">Home Team</div>
-              <div className=" w-1/2 font-bold text-lg text-end">{item.hometeam}</div>
-            </div>
-            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
-              <div className=" w-1/2 font-bold">Away Team</div>
-              <div className=" w-1/2 font-bold text-lg text-end">{item.awayteam}</div>
-            </div>
-            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
-              <div className=" w-1/2 font-bold">Selection</div>
-              <div className=" w-1/2 font-bold text-lg text-end">{item.selection}</div>
-            </div>
-            <div className="bg-blue-200 rounded-lg p-2 flex gap-4">
-              <div className=" w-1/2 font-bold">Odd</div>
-              <div className=" w-1/2 font-bold text-lg text-end">{item.odd}</div>
-            </div>
-          </div>
-          ))}
-          {isOpen && (
-            <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
-              <div className="popup-content bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
-                <div className="flex justify-end">
-                  <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <h2 className="text-lg font-bold mb-4">{msg}</h2>
-              </div>
-            </div>
-          )}
-        </div>
-        <div
-          className="fixed bottom-0 right-0 mb-4 mr-4 cursor-pointer"
-          onClick={() => setShowGuide(true)}
+    <div
+      className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 animate-fade-in"
+      onClick={onClose} // Close on overlay click
+    >
+      <div
+        className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm transform scale-95 animate-pop-in relative"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside popup
+      >
+        <button
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-200 transition-colors"
+          onClick={onClose}
+          aria-label="Close message"
         >
-          <div
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg"
-          >
-            Guide
-          </div>
-        </div>
-      </div>)}
-      {showGuide && (
-        <div className="bg-gray-800 mt-3 mb-3 flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on how to use this platform.</h2>
-            <p className="text-lg md:text-xl text-gray-600">
-              <b>Introduction to Our Betting System</b>
-              We initiate our betting system with a Principal amount (Starting Capital) of  N10,000 and a minimum daily stake of N100. This foundational amount can be adjusted proportionally to achieve varying returns.
-              <br/><br/>
-              <b>Tips</b>
-              : Start with a capital of N10,000. Once your earnings reach 80% of this initial capital, you have the option to withdraw N10,000, leaving you with a balance of N8,000. Continue playing with this N8,000 balance until it reaches N16,000, at which point you should double your stake on the site. If your balance further increases to N24,000, you can triple your stake, and so on. You are free to manage your withdrawals as you see fit. Access to this feature requires a subscription of N250 weekly or N800 monthly.
-              <br/><br/>
-              <b>Key Terms and Definitions</b>
-              <ul>
-                <li><b>Opening Balance</b>: The account balance as the start of the day</li>
-                <li><b>{`Today's`} Stake</b>: The amount allocated for staking on a particular day.</li>
-                <li><b>{`Today's`} Odd</b>: The total odd for the day, reflected accurately from the betting platform at the time of update.</li>
-                <li><b>Expected Balance</b>: The anticipated amount if the prediction results in a win.</li>
-                <li><b>Post Date</b>: The date when the game was updated on our site.</li>
-                <li><b>Closing Balance</b>: The account balance after all games have ended for the day</li>
-                <li><b>Current ROI</b>: The percentage return on investment {`(ROI)`} from the principal amount to date</li>
-              </ul>
-              
-              <b>Match Structure and Odds</b><br/>
-              A {`day's`} schedule may comprise 1, 2, 3, or 4 matches, with a minimum total odd of 2. Each match involves:
-              <ul>
-                <li>Home Team and Away Team: Competing teams.</li>
-                <li>Selection: Our predicted outcome for the match.</li>
-                <li>Odd: The confirmed odd from the betting platform.</li>
-              </ul>
-              
-              <b>Recommendations for Getting Started</b><br/>
-              For optimal results, we advise commencing with a modest investment:
-              <ul>
-                <li>N1,000 with a N10 minimum stake</li>
-                <li>N5,000 with a N50 minimum stake</li>
-                <li>N10,000 with a N100 minimum stake</li>
-                <li>N100,000 with a N1,000 minimum stake</li>
-              </ul>
-              
-              <b>Performance Expectations and Risk Management</b><br/>
-              Our strategy aims to deliver a minimum monthly percentage return of 40%. However, please note that this comes with a 80% risk ratio, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose. For instance, with 10,000 naira, one could only recover minimum of 20% if stategy fails. For more information, reach out to us via tiktok on chekwasy_trybet
-            </p>
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 md:py-3 px-4 md:px-6 cursor-pointer rounded-lg" onClick={() => setShowGuide(false)} > Close </button>
-          </div>
-        </div>
-      )}
-      {calenderOpen && (
-      <div className=" fixed top-0 left-0 w-full h-full bg-transparent flex justify-center mt-40">
-        <div className=" bg-white rounded-lg shadow-md p-4 w-3/4 md:w-1/4 lg:w-1/4 xl:w-1/4 h-1/4 md:h:3/10 overflow-y-auto" >
-          <div className="flex justify-end">
-            <button className="text-gray-500 cursor-pointer hover:text-gray-700" onClick={handleCalenderClose} >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          <div className="flex flex-col b-2 w-full border-gray-700 bg-white p-1">
-            <div className="flex flex-row w-full">
-              <div className="flex w-1/2">
-                <select
-                  value={sMonth}
-                  onChange={(e) => setSMonth(e.target.value)}
-                  className="text-gray-700 cursor-pointer font-bold text-center mr-4"
-                >
-                  {monthL.map((month, index) => (
-                  <option key={index} value={month}>
-                    {month.slice(0, -2)}
-                  </option>
-                  ))}
-                </select>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <h2 className="text-lg font-bold text-gray-800 text-center mt-4">{message}</h2>
+      </div>
+    </div>
+  );
+};
 
-              </div>
-              <div className="flex w-1/2">
-                <select
-                  value={sYear}
-                  onChange={(e) => setSYear(e.target.value.toString())}
-                  className="text-gray-700 font-bold cursor-pointer text-center mr-4"
+// --- Calendar Component ---
+interface CalendarProps {
+  selectedDay: string;
+  selectedMonth: string;
+  selectedYear: string;
+  todayString: string;
+  calendarData: (string | number)[][];
+  onDaySelect: (day: string, month: string, year: string) => void;
+  onMonthChange: (month: string) => void;
+  onYearChange: (year: string) => void;
+  onClose: () => void;
+}
+
+const CalendarModal = ({
+  selectedDay, selectedMonth, selectedYear, todayString, calendarData,
+  onDaySelect, onMonthChange, onYearChange, onClose
+}: CalendarProps) => {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-start pt-20 z-40 animate-fade-in">
+      <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm transform scale-95 animate-pop-in overflow-y-auto max-h-[80vh] relative">
+        <button
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-colors"
+          onClick={onClose}
+          aria-label="Close calendar"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Select Date</h3>
+
+        <div className="flex justify-around mb-4">
+          <select
+            value={selectedMonth}
+            onChange={(e) => onMonthChange(e.target.value)}
+            className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 text-gray-700 font-semibold"
+            aria-label="Select month"
+          >
+            {monthL.map((month, index) => (
+              <option key={index} value={month}>
+                {month.slice(0, -2)}
+              </option>
+            ))}
+          </select>
+          <select
+            value={selectedYear}
+            onChange={(e) => onYearChange(e.target.value)}
+            className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 text-gray-700 font-semibold"
+            aria-label="Select year"
+          >
+            {[2024, 2025, 2026, 2027].map((year) => ( // Example range, adjust as needed
+              <option key={year} value={year.toString()}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="grid grid-cols-7 gap-1 text-sm font-semibold text-center mb-2">
+          {weekL.map((dayName, index) => (
+            <div key={index} className={`${dayName === 'Sun' ? 'text-red-500' : 'text-gray-600'}`}>
+              {dayName}
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-7 gap-1">
+          {calendarData.map((week, weekIndex) => (
+            <div key={weekIndex} className="contents">
+              {week.map((day, dayIndex) => (
+                <button
+                  key={`${weekIndex}-${dayIndex}`}
+                  className={`p-2 rounded-md transition-colors duration-200 text-gray-800
+                    ${day === '' ? 'cursor-not-allowed text-gray-400' : 'hover:bg-green-100 cursor-pointer'}
+                    ${day !== '' && `${day.toString()}${selectedMonth}${selectedYear}` === todayString ? 'bg-green-300 font-bold' : ''}
+                    ${day !== '' && selectedDay === day.toString() && `${day.toString()}${selectedMonth}${selectedYear}` !== todayString ? 'bg-green-500 text-white font-bold' : ''}
+                  `}
+                  onClick={() => day !== '' && onDaySelect(day.toString(), selectedMonth, selectedYear)}
+                  disabled={day === ''}
                 >
-                  <option value="2025">2025</option>
-                  <option value="2026">2026</option>
-                </select>
-              </div>
-            </div>
-            <div className="flex flex-row w-full text-sm text-gray-700">
-              {weekL.map((item, index) => (
-              <div key={index} className={`text-center w-1/7 ${item === 'Sun' ? 'text-red-500' : ''}`}>
-                {item}
-              </div>
-              ))}
-            </div>
-            {calender.map((week, index) => (
-            <div key={index} className="flex flex-row w-full gap-2">
-              {week.map((day, idx) => (
-                <button key={idx} className={`text-center w-1/7 p-1 cursor-pointer text-gray-700 ${sDay ===  day.toString() && (sDay.toString() + sMonth.toString() + sYear.toString()) === toDay ? 'bg-green-300' : ''}`} onClick={() => handleDay(day.toString(), sMonth, sYear)}>
-                  {day === '' ? '' : day}
+                  {day}
                 </button>
               ))}
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
+    </div>
+  );
+};
+
+// --- Guide Modal Component ---
+interface GuideModalProps {
+  onClose: () => void;
+}
+
+const GuideModal = ({ onClose }: GuideModalProps) => {
+  return (
+    <div className="bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 animate-fade-in">
+      <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-3xl transform scale-95 animate-pop-in overflow-y-auto max-h-[90vh] relative">
+        <button
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-colors"
+          onClick={onClose}
+          aria-label="Close guide"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Understanding Two2Win</h2>
+        <div className="prose max-w-none text-gray-700 leading-relaxed text-base md:text-lg">
+          <p>
+            Welcome to the Two2Win daily betting system! We start with a **Principal amount (Starting Capital) of ₦10,000** and a minimum daily stake of ₦100. This foundational amount can be adjusted proportionally to achieve varying returns.
+          </p>
+
+          <h3 className="text-2xl font-bold text-gray-800 mt-6 mb-3">Tips for Success:</h3>
+          <ul className="list-disc list-inside space-y-2">
+            <li>Start with a capital of ₦10,000.</li>
+            <li>When your earnings reach 80% of your initial capital, you can withdraw ₦10,000, leaving ₦8,000 to continue.</li>
+            <li>If your balance grows to ₦16,000, consider doubling your daily stake. At ₦24,000, you can triple it, and so on.</li>
+            <li>You have full control over your withdrawals.</li>
+            <li>Access to this feature requires a subscription: ₦250 weekly or ₦800 monthly.</li>
+          </ul>
+
+          <h3 className="text-2xl font-bold text-gray-800 mt-6 mb-3">Key Terms & Definitions:</h3>
+          <ul className="list-disc list-inside space-y-2">
+            <li><strong>Opening Balance:</strong> Your account balance at the start of the day.</li>
+            <li><strong>{`Today's`} Stake:</strong> The amount allocated for betting on a particular day.</li>
+            <li><strong>{`Today's`} Odd:</strong> The total odds for the {`day's`} selected games, confirmed from the betting platform.</li>
+            <li><strong>Expected Balance:</strong> The anticipated account balance if the daily prediction wins.</li>
+            <li><strong>Post On:</strong> The date and time when the daily game was published on our site.</li>
+            <li><strong>Closing Balance:</strong> Your account balance after all games for the day have concluded.</li>
+            <li><strong>Current ROI:</strong> The percentage return on investment (ROI) from your initial principal amount to date.</li>
+          </ul>
+
+          <h3 className="text-2xl font-bold text-gray-800 mt-6 mb-3">Match Structure and Odds:</h3>
+          <p>
+            A typical {`day's`} schedule includes 1 to 4 matches, with a **minimum total odd of 2.00**. Each match entry provides:
+          </p>
+          <ul className="list-disc list-inside space-y-1">
+            <li><strong>Home Team & Away Team:</strong> The two competing teams.</li>
+            <li><strong>Selection:</strong> Our carefully predicted outcome for the match.</li>
+            <li><strong>Odd:</strong> The confirmed odd for our selection from the betting platform.</li>
+          </ul>
+
+          <h3 className="text-2xl font-bold text-gray-800 mt-6 mb-3">Recommended Starting Investments:</h3>
+          <ul className="list-disc list-inside space-y-2">
+            <li>₦1,000 with a ₦10 minimum daily stake</li>
+            <li>₦5,000 with a ₦50 minimum daily stake</li>
+            <li>₦10,000 with a ₦100 minimum daily stake</li>
+            <li>₦100,000 with a ₦1,000 minimum daily stake</li>
+          </ul>
+
+          <h3 className="text-2xl font-bold text-gray-800 mt-6 mb-3">Performance Expectations & Risk Management:</h3>
+          <p>
+            Our strategy targets a **minimum monthly ROI of 40%**. However, {`it's`} crucial to understand that this comes with an **80% risk ratio**, meaning substantial losses are possible. We strongly advise starting with an amount you are genuinely comfortable losing. For example, with a ₦10,000 capital, one could recover a minimum of 20% if the strategy faces setbacks.
+          </p>
+          <p className="mt-4">
+            For more information, reach out to us via TikTok: <a href="https://www.tiktok.com/@chekwasy_trybet" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-semibold">@chekwasy_trybet</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Main Two2Win Component ---
+export default function Two2Win() {
+  const storeItems: StoreState = useSelector((state) => state) as StoreState;
+
+  const [two2winData, setTwo2winData] = useState<Two2WinData>(initialTwo2WinState); // Renamed for clarity
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false); // Renamed for clarity
+  const [selectedDay, setSelectedDay] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState(''); // E.g., 'Jan11'
+  const [selectedYear, setSelectedYear] = useState('');
+  const [todayFormatted, setTodayFormatted] = useState(''); // Format: DDMMYYYY
+  const [isGuideOpen, setIsGuideOpen] = useState(false); // Renamed showGuide
+
+  // State for general popup messages
+  const [message, setMessage] = useState('');
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
+
+  const [calendarGrid, setCalendarGrid] = useState<(string | number)[][]>([]);
+
+  // Memoized function to update calendar grid
+  const updateCalendarGrid = useCallback((year: number, monthNum: number) => {
+    setCalendarGrid(getCalender(year, monthNum));
+  }, []);
+
+  // Handler for closing the general message popup
+  const handleCloseMessage = useCallback(() => {
+    setIsMessageOpen(false);
+    setMessage('');
+  }, []);
+
+  // Function to fetch Two2Win data for a specific date
+  const fetchTwo2WinData = useCallback(async (day: string, month: string, year: string) => {
+    if (!day || !month || !year) return;
+
+    const formattedDate = `${day.padStart(2, '0')}${month.slice(-2)}${year}`;
+    try {
+      const response = await axios.get(`/api/gettwo2win?date=${formattedDate}`, {
+        headers: {
+          tok: Cookies.get('trybet_tok') || '',
+        },
+      });
+      if (response.data.game) {
+        setTwo2winData(response.data.game);
+        setSelectedDay(day.toString());
+        setIsCalendarOpen(false);
+      } else {
+        setMessage('No game data found for the selected date.');
+        setIsMessageOpen(true);
+        // Optionally reset to a default state or previous data if no game
+        setTwo2winData(initialTwo2WinState);
+        setIsCalendarOpen(false);
+      }
+    } catch (error) {
+      console.error("Error fetching Two2Win data:", error);
+      setMessage('Failed to load game for this date. Please try again.');
+      setIsMessageOpen(true);
+      setTwo2winData(initialTwo2WinState);
+    }
+  }, []);
+
+  // Effect to set initial date and fetch today's data on component mount
+  useEffect(() => {
+    const fetchInitialDate = async () => {
+      try {
+        const response = await axios.get('/api/getdate', {
+          headers: {
+            tok: Cookies.get('trybet_tok') || '',
+          },
+        });
+        const ddd = response.data.day.toString();
+        const mmm = monthL[response.data.month]; // e.g., 'Jan11'
+        const yyy = response.data.year.toString();
+
+        setSelectedDay(ddd);
+        setSelectedMonth(mmm);
+        setSelectedYear(yyy);
+        setTodayFormatted(`${ddd}${mmm.slice(-2)}${yyy}`);
+        updateCalendarGrid(response.data.year, response.data.month + 1); // month + 1 for 1-indexed
+        fetchTwo2WinData(ddd.toString(), mmm, yyy);
+      } catch (error) {
+        console.error(`Error fetching initial date: ${error}`);
+        setMessage('Could not load current date or game data. Please check your connection.');
+        setIsMessageOpen(true);
+      }
+    };
+    fetchInitialDate();
+  }, [fetchTwo2WinData, updateCalendarGrid]); // Dependencies for useEffect
+
+  // Effect to re-render calendar when selected month or year changes
+  useEffect(() => {
+    if (selectedYear && selectedMonth) {
+      const monthNum = parseInt(selectedMonth.slice(-2));
+      updateCalendarGrid(parseInt(selectedYear), monthNum);
+    }
+  }, [selectedYear, selectedMonth, updateCalendarGrid]);
+
+  // Helper to get status color
+  const getStatusColor = (status: Two2WinData['status']) => {
+    switch (status) {
+      case 'Won':
+        return 'bg-green-600 text-white';
+      case 'Lost':
+        return 'bg-red-600 text-white';
+      case 'Pending':
+        return 'bg-yellow-500 text-gray-900';
+      default:
+        return 'bg-gray-400 text-white'; // Default for empty/initial state
+    }
+  };
+
+  // Helper to format date string from API (e.g., '01Jan2025')
+  const formatApiDate = (dateStr: string) => {
+    if (!dateStr || dateStr.length < 11) return 'N/A'; // e.g. "01 Jan 2025"
+    return `${dateStr.substring(0, 2)} ${dateStr.substring(2, 5)} ${dateStr.substring(7, 11)}`;
+  };
+
+  // Check if subscription is active
+  const isSubscriptionActive = storeItems.mainSlice?.me?.sub
+    ? !isDateInPast(storeItems.mainSlice.me.sub.slice(-8))
+    : false;
+
+  const showTwo2WinContent = !isGuideOpen && two2winData.status !== '';
+
+  return (
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 py-6 px-4 sm:px-6 lg:px-8 mt-16">
+      {/* Subscription Call to Action */}
+      {!isGuideOpen && !isSubscriptionActive && (
+        <div className="w-full max-w-md mb-6">
+          <Link href="/sub" className="block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-center shadow-md transition-colors duration-300">
+            Activate Your Subscription Today!
+          </Link>
+        </div>
+      )}
+
+      {/* Date Selector */}
+      {!isGuideOpen && (
+        <div className="w-full max-w-md mb-6">
+          <button
+            className="flex items-center justify-center w-full p-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow-md transition-colors duration-300"
+            onClick={() => setIsCalendarOpen(true)}
+            aria-label="Select date for 2 to Win game"
+          >
+            🗓️ Date: {selectedDay || 'DD'} / {selectedMonth.slice(0, 3) || 'MMM'} / {selectedYear || 'YYYY'}
+          </button>
+        </div>
+      )}
+
+      {/* Main Two2Win Content Display */}
+      {showTwo2WinContent && (
+        <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-2xl animate-fade-in mb-6">
+          <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+            <div className={`text-2xl font-extrabold px-4 py-2 rounded-full ${getStatusColor(two2winData.status)}`}>
+              {two2winData.status || 'N/A'}
+            </div>
+            <div className="text-gray-600 text-base font-semibold">
+              Commencement: {formatApiDate(two2winData.commencement)}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg">
+              <span className="text-gray-600 text-sm">Principal / Starting Capital</span>
+              <span className="text-lg font-bold text-gray-800">₦{new Intl.NumberFormat().format(10000)}</span>
+            </div>
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg">
+              <span className="text-gray-600 text-sm">Opening Balance</span>
+              <span className="text-lg font-bold text-gray-800">₦{new Intl.NumberFormat().format(parseFloat(two2winData.Sbal))}</span>
+            </div>
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg">
+              <span className="text-gray-600 text-sm">{`Today's`} Stake</span>
+              <span className="text-lg font-bold text-green-700">₦{new Intl.NumberFormat().format(parseFloat(two2winData.Tstake))}</span>
+            </div>
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg">
+              <span className="text-gray-600 text-sm">{`Today's`} Total Odd</span>
+              <span className="text-lg font-bold text-purple-700">{two2winData.Todd}</span>
+            </div>
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg">
+              <span className="text-gray-600 text-sm">Expected Closing Balance</span>
+              <span className="text-lg font-bold text-blue-700">₦{new Intl.NumberFormat().format(parseFloat(two2winData.Ebal))}</span>
+            </div>
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg">
+              <span className="text-gray-600 text-sm">Published On</span>
+              <span className="text-lg font-bold text-gray-800">{formatApiDate(two2winData.published)}</span>
+            </div>
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg col-span-1 sm:col-span-2">
+              <span className="text-gray-600 text-sm">Actual Closing Balance</span>
+              <span className="text-xl font-bold text-right">
+                {two2winData.status === 'Pending' ? (
+                  <span className="text-gray-500">Pending</span>
+                ) : (
+                  <span className={two2winData.status === 'Won' ? 'text-green-700' : 'text-red-700'}>
+                    ₦{new Intl.NumberFormat().format(
+                      two2winData.status === 'Won'
+                        ? parseFloat(two2winData.Sbal) + (parseFloat(two2winData.Tstake) * parseFloat(two2winData.Todd))
+                        : parseFloat(two2winData.Sbal)
+                    )}
+                  </span>
+                )}
+              </span>
+            </div>
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg col-span-1 sm:col-span-2">
+              <span className="text-gray-600 text-sm">Current ROI (from Principal)</span>
+              <span className="text-xl font-bold text-right text-indigo-700">
+                {(((parseFloat(two2winData.Sbal) / 10000) * 100) - 100).toFixed(2)} %
+              </span>
+            </div>
+          </div>
+
+          <h3 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Daily Game Details:</h3>
+          {two2winData.games.length > 0 ? (
+            <div className="space-y-4">
+              {two2winData.games.map((game, index) => (
+                <div key={index} className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                  <p className="text-lg font-semibold text-gray-900 mb-2">{game.hometeam} vs {game.awayteam}</p>
+                  <div className="grid grid-cols-2 gap-2 text-sm text-gray-700">
+                    <div className="font-medium">Our Selection:</div>
+                    <div className="text-right font-semibold text-green-700">{game.selection}</div>
+                    <div className="font-medium">Odd:</div>
+                    <div className="text-right font-semibold">{game.odd}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center p-4 text-gray-600">No specific game details available for this date.</div>
+          )}
+        </div>
+      )}
+
+      {/* "No Data" Placeholder */}
+      {!isGuideOpen && two2winData.status === '' && (
+        <div className="text-center p-8 bg-white rounded-xl shadow-lg w-full max-w-md">
+          <p className="text-xl text-gray-600 font-semibold mb-2">No game data available for the selected date.</p>
+          <p className="text-gray-500">Please select another date or check back later.</p>
+        </div>
+      )}
+
+      {/* Guide Button (Fixed bottom right) */}
+      {!isGuideOpen && (
+        <button
+          className="fixed bottom-4 right-4 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 z-30"
+          onClick={() => setIsGuideOpen(true)}
+        >
+          View Guide
+        </button>
+      )}
+
+      {/* Modals */}
+      {isCalendarOpen && (
+        <CalendarModal
+          selectedDay={selectedDay}
+          selectedMonth={selectedMonth}
+          selectedYear={selectedYear}
+          todayString={todayFormatted}
+          calendarData={calendarGrid}
+          onDaySelect={fetchTwo2WinData}
+          onMonthChange={setSelectedMonth}
+          onYearChange={setSelectedYear}
+          onClose={() => setIsCalendarOpen(false)}
+        />
+      )}
+
+      {isGuideOpen && (
+        <GuideModal onClose={() => setIsGuideOpen(false)} />
+      )}
+
+      {isMessageOpen && (
+        <Popup message={message} onClose={handleCloseMessage} isOpen={isMessageOpen} />
       )}
     </div>
-    );
+  );
 }
