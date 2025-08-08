@@ -381,7 +381,7 @@ export default function Main() {
 
       {/* Main Content Area - Game Listings */}
       {!showGuide && (
-        <div className="bg-white p-4 pt-20"> {/* Adjusted padding-top to accommodate header */}
+        <div className="bg-white p-4 pt-20">
           <div className="grid gap-6">
             {games.length > 0 ? (
               games.map((game, index) => (
@@ -436,7 +436,7 @@ export default function Main() {
       {!showGuide && (
         <div
           className={`fixed top-0 right-0 h-full w-96 bg-white shadow-xl border-l-4 border-green-300 z-50 transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
-          style={{ top: '0px' }} // Ensure it's at the very top
+          style={{ top: '0px' }}
         >
           <div className="sticky top-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center z-10">
             <h2 className="font-bold text-xl">My Bet Slip</h2>
@@ -446,7 +446,7 @@ export default function Main() {
               </svg>
             </button>
           </div>
-          <div className="p-4 overflow-y-auto h-[calc(100vh-250px)]"> {/* Adjusted height to make room for betting panel */}
+          <div className="p-4 overflow-y-auto h-[calc(100vh-250px)]">
             {selectedGames.length > 0 ? (
               selectedGames.map((item) => (
                 <div key={item.id} className="bg-gray-50 shadow-md rounded-lg p-3 mb-3 border border-gray-200">
@@ -552,7 +552,7 @@ export default function Main() {
         </div>
       )}
       {showGuide && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div className="bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-50 overflow-y-auto">
           <div className="bg-white rounded-lg shadow-2xl p-6 md:p-8 lg:p-10 w-full max-w-2xl transform scale-95 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">How to Use This Site 📖</h2>
             <hr className="mb-4" />
