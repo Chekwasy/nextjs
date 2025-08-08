@@ -15,10 +15,10 @@ export default function Nav() {
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
 
   // State Management
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Renamed for clarity
-  const [message, setMessage] = useState(''); // Renamed for clarity
-  const [isMessageOpen, setIsMessageOpen] = useState(false); // Renamed for clarity
-  const [profilePicKey, setProfilePicKey] = useState(Date.now()); // Used to force image reload
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
+  const [profilePicKey, setProfilePicKey] = useState(Date.now());
 
   // Handlers for message popup
   const handleCloseMessage = useCallback(() => {
@@ -132,7 +132,7 @@ export default function Nav() {
     const type = imageFile.type;
 
     const fileReader = new FileReader();
-    fileReader.onloadend = async (e) => { // Use onloadend for more robust error handling
+    fileReader.onloadend = async (e) => { 
       if (!e.target?.result) {
         setMessage("Failed to read image file.");
         setIsMessageOpen(true);
@@ -149,7 +149,7 @@ export default function Nav() {
         });
         setMessage(response.data.message || "Profile picture updated successfully!");
         setIsMessageOpen(true);
-        setProfilePicKey(Date.now()); // Force Image component to re-render with new source
+        setProfilePicKey(Date.now());
       } catch (error) {
         setMessage(`Image upload failed: ${error}`);
         setIsMessageOpen(true);
@@ -182,7 +182,7 @@ export default function Nav() {
   );
 
   return (
-    <nav className='bg-green-700 py-3 fixed top-0 left-0 w-full z-50 shadow-lg'> {/* Increased z-index, added shadow */}
+    <nav className='bg-green-700 py-3 fixed top-0 left-0 w-full z-50 shadow-lg'>
       <div className='container mx-auto px-4 flex justify-between items-center'>
         {/* Logo/Site Title */}
         <Link href={'/'} className='flex items-center'>
@@ -208,7 +208,7 @@ export default function Nav() {
         </div>
 
         {/* Desktop Navigation Links */}
-        <ul className='hidden md:flex items-center space-x-2 lg:space-x-4'> {/* Adjusted spacing */}
+        <ul className='hidden md:flex items-center space-x-2 lg:space-x-4'>
           {/* Profile Picture Upload */}
           {storeItems.mainSlice.logged && (
             <li>
@@ -232,7 +232,7 @@ export default function Nav() {
                 type="file"
                 onChange={handleImageUpload}
                 accept="image/*"
-                className="hidden" // Use hidden Tailwind class
+                className="hidden"
               />
             </li>
           )}
@@ -251,7 +251,7 @@ export default function Nav() {
             <NavItem
               iconSrc="/icons/reload.svg"
               altText="Reload"
-              label="Reset Balance"
+              label="Reload"
               onClick={handleReloadBalance}
             />
           )}
@@ -283,11 +283,11 @@ export default function Nav() {
           aria-label="Toggle navigation menu"
         >
           <Image
-            src={isMenuOpen ? "/icons/close.svg" : "/icons/menu.svg"} // Dynamic icon
+            src={isMenuOpen ? "/icons/close.svg" : "/icons/menu.svg"}
             alt={isMenuOpen ? "Close menu" : "Open menu"}
             width={28}
             height={28}
-            className="filter brightness-0 invert" // Ensures icon is white
+            className="filter brightness-0 invert"
           />
         </button>
 
@@ -324,7 +324,7 @@ export default function Nav() {
                 height={64}
                 objectFit="cover"
                 className="rounded-full"
-                key={profilePicKey + '_mobile'} // Separate key for mobile to ensure re-render
+                key={profilePicKey + '_mobile'}
               />
             </button>
             <input

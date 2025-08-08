@@ -1,199 +1,243 @@
-"use client"
-import { useState, ChangeEvent, FormEvent, MouseEvent } from 'react';
+"use client";
+
+import { useState, ChangeEvent, FormEvent, MouseEvent, useCallback } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeOff } from 'lucide-react'; // Import Eye and EyeOff icons
+import { Eye, EyeOff } from 'lucide-react'; // Lucide icons are great for modern UIs
 
-//function to check ASCII value usage
+// Custom type for the allowed characters for better readability
+const ALLOWED_CHARS_REGEX = /^[~!@#$%&_{}[\].;<>a-zA-Z0-9]*$/;
 
-function Page() {
-  //For switching to home after authentication
-  const router = useRouter();
-  //Store email value
-  const [email, setEmail] = useState('');
-  //store password value
-  const [password, setPassword] = useState('');
-  //to set message to display 
-  const [msg, setMsg] = useState('This for popup message!');
-  //control message open or close
-  const [isOpen, setIsOpen] = useState(false);
-  //Check password correct 
-  const [cpwd, setCpwd] = useState(true);
-  //Check email correct
-  const [cemail, setCemail] = useState(true);
-  // New state to toggle password visibility
-  const [showPassword, setShowPassword] = useState(false);
-
-  //handle close message popup
-  const handleClose = () => {
-      setIsOpen(false);
-    };
-  //Checks pwd and email characters
-  const checkpwd = (strr : string) => {
-    const len = strr.length;
-    if (len > 50) {
-      return false;
-    }
-    const otherChx = `~!@#%&_{}[].;<>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`;
-    for (let i = 0; i < len; i++) {
-      if (!(otherChx.includes(strr[i]))) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  //Handle overlay click to close message popup
-  const handleOverlayClick = (e: MouseEvent) => {
-    if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
-      handleClose();
-    }
-  };
-  //Sets and check what was typed for email
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const nwval = e.target.value;
-    setEmail(nwval);
-    //validates email entered
-    if (!(nwval.length > 5) || !checkpwd(nwval) || !nwval.includes('@') || !nwval.includes('.')) {
-      setCemail(false);
-    } else {
-      setCemail(true);
-    }
-  };
-  //Sets and check what was typed for password 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const nwval = e.target.value;
-    setPassword(nwval);
-    //Validates password entered
-    if (!(nwval.length > 5) || 
-        !checkpwd(nwval)) {
-        setCpwd(false);
-    } else {
-        setCpwd(true);
-    }
-  };
-  //Handles submission of Login form
-  const handleLSubmit = (e: FormEvent<HTMLFormElement>) => {
-    //prevent form default submission 
-    e.preventDefault();
-    if (cemail && cpwd && email !== '' && password!== '') {
-      //Change password and email to a base64 string
-      const encodestr = btoa(email + ':' + password);
-      //Api call to connect 
-      try {
-        axios.post('/api/connect', {
-          auth_header: `encoded ${encodestr}`,
-        })
-        .then(async (response) => {
-          await Cookies.set('trybet_tok', response.data.token, { expires: 7, path: '/', });
-          setMsg(response.data.message);
-          setIsOpen(true);
-          router.push("/");
-        })
-        .catch(error => {
-          if (error.response) {
-            setMsg(error.response.data.message);
-            setIsOpen(true);
-          } else {
-            setMsg('An error occured. Try again');
-            setIsOpen(true);
-          }
-        });
-      } catch {
-        setMsg('An error Ocurred. Try again or contact us');
-        setIsOpen(true);  
-      }
-    } else {
-      if (!cemail) {
-        setMsg('email contains unallowed symbol');
-        setIsOpen(true);
-      } else if (!cpwd) {
-        setMsg('password contains unallowed symbol');
-        setIsOpen(true);
-      } else {
-        setMsg('Incomplete data');
-        setIsOpen(true);
-      }
-    }
-  };
-  return (
-    <div>
-      <div className="bg-cover bg-center bg-white text-sm text-gray-900 h-screen w-screen flex justify-center items-center"
-      >
-        <div className="bg-gray-500 rounded-lg shadow-lg p-8 xs:w-full sm:w-1/2 md:w-2/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
-          <h2 className="text-3xl font-bold text-green-500 mb-4">Login</h2>
-          {isOpen && (
-            <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
-              <div className="popup-content bg-white rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
-                <div className="flex justify-end">
-                  <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <h2 className="text-lg font-bold mb-4">{msg}</h2>
-              </div>
-            </div>
-          )}
-          <form onSubmit={handleLSubmit}>
-            <div className="mb-4">
-              <span className="block text-gray-300 text-sm font-bold mb-2">{'Allowed symbols ~!@#%&_{}[].;<>'}</span>
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                Email
-              </label>
-              <input
-                className={`appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none ${cemail ? 'border-gray-200' : 'border-red-500'}`}
-                id="email"
-                type="text"
-                placeholder="Email"
-                name="email"
-                value={email}
-                required
-                onChange={handleEmailChange}
-              />
-            </div>
-            {/* Password Field with Toggle */}
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  className={`appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 pr-10 leading-tight focus:outline-none ${cpwd ? 'border-gray-200' : 'border-red-500'}`}
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  required
-                  onChange={handlePasswordChange}
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-gray-500 hover:text-gray-700"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <EyeOff /> : <Eye />}
-                </button>
-              </div>
-            </div>
-            <Link href={'/auth/signup'}>
-                <div className='text-blue-500 hover:text-white flex items-center'>Signup</div>
-            </Link>
-            <button
-              className="bg-green-500 cursor-pointer hover:bg-green-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
-              type="submit"
-            >
-              Login
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  )
+// A custom Popup component to centralize message display
+interface PopupProps {
+  message: string;
+  onClose: () => void;
+  onOverlayClick: (e: MouseEvent) => void;
+  isOpen: boolean;
 }
 
-export default Page
+const Popup = ({ message, onClose, onOverlayClick, isOpen }: PopupProps) => {
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="popup-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      onClick={onOverlayClick}
+    >
+      <div className="popup-content bg-white rounded-lg shadow-xl p-6 w-full max-w-sm transform scale-95 animate-pop-in border border-gray-300 relative">
+        <button
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-200 transition-colors"
+          onClick={onClose}
+          aria-label="Close message"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <h2 className="text-lg font-bold text-gray-800 text-center mt-4">{message}</h2>
+      </div>
+    </div>
+  );
+};
+
+function LoginPage() { // Renamed from 'Page' to 'LoginPage' for clarity
+  const router = useRouter();
+
+  // State for form inputs
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // State for validation feedback
+  const [isEmailValid, setIsEmailValid] = useState(true); // Renamed for clarity
+  const [isPasswordValid, setIsPasswordValid] = useState(true); // Renamed for clarity
+
+  // State for password visibility toggle
+  const [showPassword, setShowPassword] = useState(false);
+
+  // State for popup message
+  const [message, setMessage] = useState(''); // Renamed for clarity
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // Renamed for clarity
+
+  // Handler to close the popup message
+  const handleClosePopup = useCallback(() => {
+    setIsPopupOpen(false);
+    setMessage(''); // Clear message when closed
+  }, []);
+
+  // Handler for overlay click to close popup
+  const handleOverlayClick = useCallback((e: MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
+      handleClosePopup();
+    }
+  }, [handleClosePopup]);
+
+  // General character validation for inputs
+  const isValidInputChars = useCallback((str: string): boolean => {
+    return str.length <= 50 && ALLOWED_CHARS_REGEX.test(str);
+  }, []);
+
+  // Email input change handler
+  const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    // Real-time validation for email
+    const isValid = newEmail.length >= 6 && newEmail.includes('@') && newEmail.includes('.') && isValidInputChars(newEmail);
+    setIsEmailValid(isValid);
+  }, [isValidInputChars]);
+
+  // Password input change handler
+  const handlePasswordChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    // Real-time validation for password
+    const isValid = newPassword.length >= 6 && isValidInputChars(newPassword);
+    setIsPasswordValid(isValid);
+  }, [isValidInputChars]);
+
+  // Handles form submission
+  const handleLoginSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Re-validate just before submission
+    const finalEmailValid = email.length >= 6 && email.includes('@') && email.includes('.') && isValidInputChars(email);
+    const finalPasswordValid = password.length >= 6 && isValidInputChars(password);
+
+    setIsEmailValid(finalEmailValid);
+    setIsPasswordValid(finalPasswordValid);
+
+    if (!finalEmailValid || !finalPasswordValid) {
+      if (!finalEmailValid && !finalPasswordValid) {
+        setMessage('Invalid email and password format.');
+      } else if (!finalEmailValid) {
+        setMessage('Please enter a valid email address (min 6 chars, contains "@" and ".").');
+      } else {
+        setMessage('Password must be at least 6 characters and contain only allowed symbols.');
+      }
+      setIsPopupOpen(true);
+      return;
+    }
+
+    if (email === '' || password === '') {
+      setMessage('Please fill in both email and password fields.');
+      setIsPopupOpen(true);
+      return;
+    }
+
+    try {
+      const authHeader = btoa(`${email}:${password}`); // Encode credentials
+      const response = await axios.post('/api/connect', {
+        auth_header: `encoded ${authHeader}`,
+      });
+
+      Cookies.set('trybet_tok', response.data.token, { expires: 7, path: '/' });
+      setMessage(response.data.message || 'Login successful!');
+      setIsPopupOpen(true);
+      router.push("/");
+    } catch (error) {
+      const errorMessage = `An unexpected error occurred. Please try again. ${error}`;
+
+      setMessage(errorMessage);
+      setIsPopupOpen(true);
+    }
+  }, [email, password, router, isValidInputChars]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-700 to-green-900 flex justify-center items-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md animate-fade-in">
+        <h2 className="text-4xl font-extrabold text-green-700 mb-6 text-center">Welcome Back!</h2>
+
+        <p className="text-gray-600 text-sm mb-6 text-center">
+          Login to continue your betting journey.
+        </p>
+
+        <form onSubmit={handleLoginSubmit} noValidate> {/* noValidate prevents browser's default HTML5 validation */}
+          <div className="mb-5">
+            <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="email">
+              Email Address
+            </label>
+            <input
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
+                ${isEmailValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
+              id="email"
+              type="email" // Use type="email" for better mobile keyboard
+              placeholder="you@example.com"
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+              aria-invalid={!isEmailValid}
+              aria-describedby="email-error"
+            />
+            {!isEmailValid && (
+              <p id="email-error" className="text-red-500 text-xs mt-1">
+                Please enter a valid email (min 6 chars, includes @ and .).
+              </p>
+            )}
+            <span className="block text-gray-500 text-xs mt-1">
+              Allowed symbols: ~!@#$%&amp;\_{}\[].;&lt;&gt;
+            </span>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="password">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200 pr-10
+                  ${isPasswordValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Enter your password"
+                name="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+                aria-invalid={!isPasswordValid}
+                aria-describedby="password-error"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+            {!isPasswordValid && (
+              <p id="password-error" className="text-red-500 text-xs mt-1">
+                Password must be at least 6 characters and contain only allowed symbols.
+              </p>
+            )}
+          </div>
+
+          <button
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-300 transform hover:scale-105"
+            type="submit"
+          >
+            Log In
+          </button>
+        </form>
+
+        <p className="text-center text-gray-600 text-sm mt-6">
+          {`Don't`} have an account?{' '}
+          <Link href={'/auth/signup'} className="text-green-600 hover:text-green-800 font-semibold transition-colors duration-200">
+            Sign Up
+          </Link>
+        </p>
+      </div>
+
+      <Popup
+        message={message}
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        onOverlayClick={handleOverlayClick}
+      />
+    </div>
+  );
+}
+
+export default LoginPage;
