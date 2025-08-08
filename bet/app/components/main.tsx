@@ -1,5 +1,6 @@
-"use client"
-import React, { useState, useEffect, MouseEvent } from 'react';
+"use client";
+
+import React, { useState, useEffect, MouseEvent, useCallback } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,39 +10,38 @@ import { multiply } from '../tools/multiply';
 import Cookies from 'js-cookie';
 
 export default function Main() {
-  //usedispatch to be able to write to store
+  // Redux Hooks
   const dispatch = useDispatch();
-  //useSelector to extract what is in the store
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
-  //control to sidebar
+
+  // State Management
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [msg, setMsg] = useState('This for popup message!');
-  //control message open or close
-  const [isOpen, setIsOpen] = useState(false);
-  const [done, setDone] = useState(false);
-  const [toggleInput, setToggleInput] = useState(false);
-  const [betAmt, setBetAmt] = useState('');
-  const [potWin, setPotWin] = useState('');
-  const [odds, setOdds] = useState('');
+  const [message, setMessage] = useState(''); // Renamed for clarity
+  const [isMessageOpen, setIsMessageOpen] = useState(false); // Renamed for clarity
+  const [isBetInputDone, setIsBetInputDone] = useState(false); // Renamed for clarity
+  const [isBettingPanelOpen, setIsBettingPanelOpen] = useState(false); // Renamed for clarity
+  const [betAmount, setBetAmount] = useState(''); // Renamed for clarity
+  const [potentialWin, setPotentialWin] = useState(''); // Renamed for clarity
+  const [totalOdds, setTotalOdds] = useState(''); // Renamed for clarity
   const [showGuide, setShowGuide] = useState(false);
-  const [playedA, setPlayedA] = useState<PlayeD[]>([]);
-  //state to hold games from api
+  const [selectedGames, setSelectedGames] = useState<PlayeD[]>([]); // Renamed for clarity
+
+  // State for fetched games and dates
   const [games, setGames] = useState([{
-	  id: '',
-	  titleCountry: '',
-	  subtitle: '',
-	  events: [{
-		  id: '',
-		  hometeam: '',
-		  awayteam: '',
-		  homeodd: '',
-		  awayodd: '',
-		  drawodd: '',
-		  Esd: '',
-	  }]
+    id: '',
+    titleCountry: '',
+    subtitle: '',
+    events: [{
+      id: '',
+      hometeam: '',
+      awayteam: '',
+      homeodd: '',
+      awayodd: '',
+      drawodd: '',
+      Esd: '',
+    }]
   }]);
-  //state to hold dates from api
-  const [dateelist, setDateelist] = useState([
+  const [dateList, setDateList] = useState([
     { date: '', indent: 0 },
     { date: '', indent: 1 },
     { date: '', indent: 2 },
@@ -51,546 +51,567 @@ export default function Main() {
     { date: '', indent: 6 },
     { date: '', indent: 7 },
   ]);
-  //date string
-  const [datee, setDatee] = useState(dateelist[0].date);
-  //date indent
-  const [dateeIndent, setDateeIndent] = useState(0);
-  //show list of dates
-  const [showList, setShowList] = useState(false);
-  //load the games data from backend
-  const load = async () => {
-	  axios.get(`api/getgames?date=${dateeIndent}`)
-    .then(async (response) => {
-      const dd = response.data;
-      setGames(dd.games);
-	    setDateelist(dd.datee);
-	    setDatee(dd.datee[dateeIndent].date)
-    })
-    .catch(error => {
-      setMsg(`Network or server error ${error.message}`);
-      setIsOpen(true);
-    });
-  };
-  //make changes if dateIndent has any change or initialization
-  useEffect(() => {
-    load();
-  }, [dateeIndent]);
+  const [currentDate, setCurrentDate] = useState(dateList[0].date); // Renamed for clarity
+  const [currentDateIndent, setCurrentDateIndent] = useState(0); // Renamed for clarity
+  const [showDateList, setShowDateList] = useState(false); // Renamed for clarity
 
-  const calculateOdd = async (itm: {
-    id: string;
-    gId: string;
-    gTCountry: string;
-    gSubtitle: string;
-    mktT: string;
-    mTime: string;
-    hometeam: string;
-    awayteam: string;
-    odd: string;
-    selection: string;
-    mStatus: string;
-    mResult: string;
-    mOutcome: string;
-    mScore: string;
-  }[], btA: string) => {
-    let od = '1';
-    if (itm.length > 0) {
-	    itm.forEach((item) => {
-        const ln1 = item.odd.length;
-        const ln2 = od.length;
-        if (ln1 >= ln2) {
-          od = multiply(item.odd, od);
-        } else {
-          od = multiply(od, item.odd);
-        }
-      });
-      setOdds(od);
-      if (btA !== '') {
-        if (od.length >= btA.length) {
-          const val = multiply(od, btA);
-          setPotWin(val);
-        } else {
-          const val = multiply(btA, od);
-          setPotWin(val);
-        }
-      } else {
-        setPotWin('');
-      }
+  // Function to load games data from the backend
+  const loadGames = useCallback(async () => {
+    try {
+      const response = await axios.get(`/api/getgames?date=${currentDateIndent}`);
+      const { games: fetchedGames, datee: fetchedDates } = response.data;
+      setGames(fetchedGames);
+      setDateList(fetchedDates);
+      setCurrentDate(fetchedDates[currentDateIndent].date);
+    } catch (error) {
+      setMessage(`Network or server error: ${error}`);
+      setIsMessageOpen(true);
     }
-  };
+  }, [currentDateIndent]);
 
-  const handleButton = async (button: string) => {
-    const beT = betAmt;
-	  if (button === '1' ||
-	      button === '2' ||
-	      button === '3' ||
-	      button === '4' ||
-	      button === '5' ||
-	      button === '6' ||
-	      button === '7' ||
-	      button === '8' ||
-	      button === '9' ||
-	      button === '0') {
-		  if (beT === '' && button !== '0') {
-			  setBetAmt(button);
-        calculateOdd(playedA, button);
-		  } else if (beT !== '' && !beT.includes('.')) {
-			  setBetAmt(beT + button);
-        calculateOdd(playedA, beT + button);
-		  } else if (beT !== '' && beT.includes('.')) {
-        if (beT.split('.')[1].length < 2) {
-          setBetAmt(beT + button);
-          calculateOdd(playedA, beT + button);
+  // Effect hook to load games when `currentDateIndent` changes
+  useEffect(() => {
+    loadGames();
+  }, [currentDateIndent, loadGames]);
+
+  // Function to calculate total odds and potential winnings
+  const calculateOdds = useCallback(async (items: PlayeD[], currentBetAmount: string) => {
+    let calculatedOdds = '1';
+    if (items.length > 0) {
+      items.forEach((item) => {
+        const ln1 = item.odd.length;
+        const ln2 = calculatedOdds.length;
+        calculatedOdds = (ln1 >= ln2) ? multiply(item.odd, calculatedOdds) : multiply(calculatedOdds, item.odd);
+      });
+      setTotalOdds(calculatedOdds);
+
+      if (currentBetAmount !== '') {
+        const potential = (calculatedOdds.length >= currentBetAmount.length)
+          ? multiply(calculatedOdds, currentBetAmount)
+          : multiply(currentBetAmount, calculatedOdds);
+        setPotentialWin(potential);
+      } else {
+        setPotentialWin('');
+      }
+    } else {
+      setTotalOdds('1'); // Reset odds if no games selected
+      setPotentialWin('');
+    }
+  }, []);
+
+  useEffect(() => {
+    calculateOdds(selectedGames, betAmount);
+  }, [selectedGames, betAmount, calculateOdds]);
+
+  // Handles numerical button presses for bet amount input
+  const handleBetAmountInput = (button: string) => {
+    let newBetAmount = betAmount;
+
+    if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(button)) {
+      if (newBetAmount === '' && button !== '0') {
+        newBetAmount = button;
+      } else if (newBetAmount !== '' && !newBetAmount.includes('.')) {
+        newBetAmount += button;
+      } else if (newBetAmount !== '' && newBetAmount.includes('.')) {
+        if (newBetAmount.split('.')[1]?.length < 2) {
+          newBetAmount += button;
         }
-		  }
-    } else if (beT !== '' && button === '.' && !beT.includes('.')) {
-					setBetAmt(beT + button);
-		} else if (button === 'Del') {
-		  const nwAmt = beT.slice(0, -1);
-		  if (beT !== '') { setBetAmt(nwAmt); calculateOdd(playedA, nwAmt); }
-	  } else if (button === 'Clear') {
-		  setBetAmt('');
-	  } else if (button === '10' || button === '100' || button === '1000') {
-		  setBetAmt(button);
-      calculateOdd(playedA, button);
-	  }
+      }
+    } else if (button === '.' && !newBetAmount.includes('.')) {
+      newBetAmount += button;
+    } else if (button === 'Del') {
+      newBetAmount = newBetAmount.slice(0, -1);
+    } else if (button === 'Clear') {
+      newBetAmount = '';
+    } else if (['10', '100', '1000'].includes(button)) {
+      newBetAmount = button;
+    }
+
+    setBetAmount(newBetAmount);
+    // calculateOdds(selectedGames, newBetAmount); // This will be handled by the useEffect
   };
 
-  //Handle overlay click to close message popup
+  // Handle overlay click to close message popup
   const handleOverlayClick = (e: MouseEvent) => {
     if ((e.target as HTMLElement).classList.contains('popup-overlay')) {
-      handleClose();
+      handleCloseMessage();
     }
   };
 
-  //handle close message popup
-  const handleClose = () => {
-    setIsOpen(false);
+  // Handle close message popup
+  const handleCloseMessage = () => {
+    setIsMessageOpen(false);
   };
-  //handles date selected from list
+
+  // Handles date selection from the list
   const handleDateSelect = (date: string, indent: number) => {
-    setDatee(date);
-    setDateeIndent(indent);
-    setShowList(false);
+    setCurrentDate(date);
+    setCurrentDateIndent(indent);
+    setShowDateList(false);
   };
-  //handles next date
-  const handleNext = () => {
-    const currentIndex = dateelist.findIndex((item) => item.date === datee);
-    if (currentIndex < dateelist.length - 1) {
-      setDatee(dateelist[currentIndex + 1].date);
-      setDateeIndent(dateelist[currentIndex + 1].indent);
+
+  // Handles navigating to the next date
+  const handleNextDate = () => {
+    const currentIndex = dateList.findIndex((item) => item.date === currentDate);
+    if (currentIndex < dateList.length - 1) {
+      setCurrentDate(dateList[currentIndex + 1].date);
+      setCurrentDateIndent(dateList[currentIndex + 1].indent);
     }
   };
-  //handles previous date
-  const handlePrevious = () => {
-    const currentIndex = dateelist.findIndex((item) => item.date === datee);
+
+  // Handles navigating to the previous date
+  const handlePreviousDate = () => {
+    const currentIndex = dateList.findIndex((item) => item.date === currentDate);
     if (currentIndex > 0) {
-      setDatee(dateelist[currentIndex - 1].date);
-      setDateeIndent(dateelist[currentIndex - 1].indent);
+      setCurrentDate(dateList[currentIndex - 1].date);
+      setCurrentDateIndent(dateList[currentIndex - 1].indent);
     }
   };
-  //handle home draw and away odd selection
-  const handleHDA = async (m: {id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string}, sel: string, odd: string, gID: string, gT: string, gS: string) => {
-    const butState : {[key: string] : boolean} = {
-      ...storeItems.mainSlice.buttonState,
-      [m.hometeam + sel]: !storeItems.mainSlice.buttonState[m.hometeam + sel]
-    };
-    const pyd: {
-      id: string;
-      gId: string;
-      gTCountry: string;
-      gSubtitle: string;
-      mktT: string;
-      mTime: string;
-      hometeam: string;
-      awayteam: string;
-      odd: string;
-      selection: string;
-      mStatus: string;
-      mResult: string;
-      mOutcome: string;
-      mScore: string;
-    } = {
-      id: '',
-      gId: '',
-      gTCountry: '',
-      gSubtitle: '',
-      mktT: '',
-      mTime: '',
-      hometeam: '',
-      awayteam: '',
-      odd: '',
-      selection: '',
-      mStatus: '',
-      mResult: '',
-      mOutcome: '',
-      mScore: '',
-    };
-    const spyd = [...storeItems.mainSlice.played];
-    const index = spyd.findIndex((item) => item.id === m.hometeam + sel);
-    if (index !== -1) {
-      //handles when there is a match
-      spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
-	    calculateOdd(spyd, betAmt);
-      setPlayedA(spyd);
-	axios.post('/api/postsavedgames',{}, {
-		headers: {
-		  'tok': Cookies.get('trybet_tok'),
-		  'Content-Type': 'application/json',
-		  savedgames: JSON.stringify(spyd),
-		  savedbuttons: JSON.stringify(butState),
-	  },
-	})
-      .then(async (response) => {
-        console.log(response.data.message);
-      })
-      .catch(error => {
-        console.log(error.message);
+
+  // Helper function to save game selections and button states
+  const saveGameSelections = async (playedGames: PlayeD[], buttonStates: { [key: string]: boolean }) => {
+    try {
+      await axios.post('/api/postsavedgames', {}, {
+        headers: {
+          'tok': Cookies.get('trybet_tok') || '',
+          'Content-Type': 'application/json',
+          savedgames: JSON.stringify(playedGames),
+          savedbuttons: JSON.stringify(buttonStates),
+        },
       });
+      console.log("Game selections saved successfully.");
+    } catch (error) {
+      console.error("Error saving game selections:", error);
+    }
+  };
+
+  // Handle home, draw, and away odd selection
+  const handleSelection = async (match: {
+    id: string; hometeam: string; awayteam: string; homeodd: string; awayodd: string; drawodd: string; Esd: string
+  }, selectionType: string, oddValue: string, gameID: string, gameCountry: string, gameSubtitle: string) => {
+    const currentButtonState = {
+      ...storeItems.mainSlice.buttonState,
+      [match.hometeam + selectionType]: !storeItems.mainSlice.buttonState[match.hometeam + selectionType]
+    };
+
+    const newSelectedGames = [...storeItems.mainSlice.played];
+    const existingIndex = newSelectedGames.findIndex((item) => item.id === match.hometeam + selectionType);
+
+    if (existingIndex !== -1) {
+      // If selection exists, remove it
+      newSelectedGames.splice(existingIndex, 1);
     } else {
-      // Handle the case when no match is found
-      pyd.id = m.hometeam + sel;
-      pyd.gId = gID;
-      pyd.gTCountry = gT;
-      pyd.gSubtitle = gS;
-      pyd.hometeam = m.hometeam;
-      pyd.awayteam = m.awayteam;
-      pyd.odd = odd;
-      pyd.mktT = '1x2';
-      pyd.mTime = m.Esd;
-      pyd.selection = sel;
-      pyd.mStatus = 'Not Started';
-      pyd.mResult = 'NR';
-      pyd.mOutcome = 'Pending';
-      pyd.mScore = '- : -';
-      spyd.push(pyd);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
-	    calculateOdd(spyd, betAmt);
-      setPlayedA(spyd);
-	axios.post('/api/postsavedgames',{}, {
-		headers: {
-		  'tok': Cookies.get('trybet_tok'),
-		  'Content-Type': 'application/json',
-		  savedgames: JSON.stringify(spyd),
-		  savedbuttons: JSON.stringify(butState),
-	  },
-	})
-      .then(async (response) => {
-        console.log(response.data.message);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
+      // If selection does not exist, add it
+      const newPlayedGame: PlayeD = {
+        id: match.hometeam + selectionType,
+        gId: gameID,
+        gTCountry: gameCountry,
+        gSubtitle: gameSubtitle,
+        mktT: '1x2',
+        mTime: match.Esd,
+        hometeam: match.hometeam,
+        awayteam: match.awayteam,
+        odd: oddValue,
+        selection: selectionType,
+        mStatus: 'Not Started',
+        mResult: 'NR',
+        mOutcome: 'Pending',
+        mScore: '- : -',
+      };
+      newSelectedGames.push(newPlayedGame);
     }
+
+    dispatch(mainStateReducer({
+      logged: storeItems.mainSlice.logged,
+      played: newSelectedGames,
+      me: storeItems.mainSlice.me,
+      buttonState: currentButtonState
+    }));
+    setSelectedGames(newSelectedGames);
+    saveGameSelections(newSelectedGames, currentButtonState);
   };
-  //handle remove played from sidebar
-  const handleHDAR = async (itm: {
-    id: string;
-    gId: string;
-    gTCountry: string;
-    gSubtitle: string;
-    mktT: string;
-    mTime: string;
-    hometeam: string;
-    awayteam: string;
-    odd: string;
-    selection: string;
-    mStatus: string;
-    mResult: string;
-    mOutcome: string;
-    mScore: string;
-  }) => {
-    const butState : {[key: string] : boolean} = {
+
+  // Handle removing a played game from the sidebar
+  const handleRemovePlayedGame = async (gameToRemove: PlayeD) => {
+    const currentButtonState = {
       ...storeItems.mainSlice.buttonState,
-      [itm.hometeam + itm.selection]: !storeItems.mainSlice.buttonState[itm.hometeam + itm.selection]
+      [gameToRemove.hometeam + gameToRemove.selection]: !storeItems.mainSlice.buttonState[gameToRemove.hometeam + gameToRemove.selection]
     };
-    const spyd = [...storeItems.mainSlice.played];
-    const index = spyd.findIndex((item) => item.id === itm.id);
-    if (index !== -1) {
-      //handles when there is a match
-      spyd.splice(index, 1);
-      dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: spyd, me: storeItems.mainSlice.me, buttonState: butState}));
-	    calculateOdd(spyd, betAmt);
-      setPlayedA(spyd);
-      axios.post('/api/postsavedgames',{}, {
-		headers: {
-		  'tok': Cookies.get('trybet_tok'),
-		  'Content-Type': 'application/json',
-		  savedgames: JSON.stringify(spyd),
-		  savedbuttons: JSON.stringify(butState),
-	  },
-        })
-      .then(async (response) => {
-        console.log(response.data.message);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
+
+    const newSelectedGames = storeItems.mainSlice.played.filter((item) => item.id !== gameToRemove.id);
+
+    dispatch(mainStateReducer({
+      logged: storeItems.mainSlice.logged,
+      played: newSelectedGames,
+      me: storeItems.mainSlice.me,
+      buttonState: currentButtonState
+    }));
+    setSelectedGames(newSelectedGames);
+    saveGameSelections(newSelectedGames, currentButtonState);
+  };
+
+  // Handle booking the bet
+  const handleBookBet = async () => {
+    setIsBettingPanelOpen(!isBettingPanelOpen);
+    setIsBetInputDone(false);
+
+    try {
+      const dateResponse = await axios.get('/api/getdate');
+      const { hour, minute } = dateResponse.data;
+      const gameLength = storeItems.mainSlice.played.length;
+      let isExpired = false;
+
+      for (let i = 0; i < gameLength; i++) {
+        const gameTime = storeItems.mainSlice.played[i].mTime;
+        const formattedGameDate = `${gameTime.substring(0, 4)}-${gameTime.substring(4, 6)}-${gameTime.substring(6, 8)}`;
+        let foundDateMatch = false;
+
+        for (let j = 0; j < 8; j++) {
+          const checkDate = dateList[j].date;
+          if (formattedGameDate === checkDate) {
+            if (j === 0) {
+              const gameHour = parseInt(gameTime.substring(8, 10));
+              const gameMinute = parseInt(gameTime.substring(10, 12));
+              if (hour > gameHour || (hour === gameHour && minute > gameMinute)) {
+                isExpired = true;
+                break;
+              }
+            }
+            foundDateMatch = true;
+            break;
+          }
+        }
+        if (isExpired || !foundDateMatch) {
+          isExpired = true;
+          break;
+        }
+      }
+
+      if (!isExpired) {
+        const betResponse = await axios.post('/api/postbet', {}, {
+          headers: {
+            'tok': Cookies.get('trybet_tok') || '',
+            'Content-Type': 'application/json',
+            tobet: JSON.stringify(storeItems.mainSlice.played),
+            betamt: betAmount,
+            potwin: potentialWin,
+            odds: totalOdds
+          },
+        });
+        dispatch(mainStateReducer({
+          logged: storeItems.mainSlice.logged,
+          played: storeItems.mainSlice.played,
+          me: betResponse.data.me,
+          buttonState: storeItems.mainSlice.buttonState
+        }));
+        setMessage(betResponse.data.message);
+        setIsMessageOpen(true);
+      } else {
+        setMessage("One or more selected games have expired. Please review your selections.");
+        setIsMessageOpen(true);
+      }
+    } catch (error) {
+      setMessage(`Booking failed: ${error}`);
+      setIsMessageOpen(true);
     }
   };
-  const handleBookedBet = () => {
-	  setToggleInput(!toggleInput);
-	  setDone(false);
-	  axios.get('/api/getdate')
-	.then(async (response) => {
-		const hour = response.data.hour;
-		const minute = response.data.minute;
-		const gmLen = storeItems.mainSlice.played.length;
-		let expire = false;
-		let found = false;
-		for (let i = 0; i < gmLen; i++) {
-			const dt = storeItems.mainSlice.played[i].mTime;
-			const fdt = dt.substring(0, 4) + '-' + dt.substring(4, 6) + '-' + dt.substring(6, 8);
-			for (let j = 0; j < 8; j++) {
-				const dtchk = dateelist[j].date;
-				
-				if (fdt === dtchk) {
-					if (j === 0) {
-						const hour2 = parseInt(dt.substring(8, 10));
-						const minute2 = parseInt(dt.substring(10, 12));
-						if (hour > hour2) {
-							expire = true;
-							break;
-						} else if (hour === hour2 && minute > minute2) {
-							expire = true;
-							break;
-						}
-					}
-					found = true;
-					break;
-				}
-			}
-			if (expire) {
-				break;
-			}
-			if (!found) {
-				expire = true;
-				break;
-			}
-			found = false;
-		}
-		if (!expire) {
-			axios.post('/api/postbet',{}, {
-				headers: {
-					'tok': Cookies.get('trybet_tok'),
-					'Content-Type': 'application/json',
-					tobet: JSON.stringify(storeItems.mainSlice.played),
-					betamt: betAmt,
-					potwin: potWin,
-					odds: odds
-				},
-			})
-			.then(async (res) => {
-				dispatch(mainStateReducer({logged: storeItems.mainSlice.logged, played: storeItems.mainSlice.played, me: res.data.me, buttonState: storeItems.mainSlice.buttonState}));
-				setMsg(res.data.message);
-				setIsOpen(true);
-			})
-			.catch(error => {
-				setMsg(error.message);
-				setIsOpen(true);
-			});
-		}
-	})
-	.catch(error => {
-		setMsg(`Network or server error ${error.message}`);
-		setIsOpen(true);
-	});
-  };
+
   return (
     <div className="relative bg-white rounded-b-lg border-4 border-green-300 mt-16 lg:border-2 lg:w-4/5 mx-auto">
-      {!showGuide && (<div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
-        <h2 className="font-bold text-lg">1 X 2</h2>
-        <div>
-          <div className="flex justify-center">
-            <button className='cursor-pointer' onClick={handlePrevious}><Image src="/icons/back.svg" alt="back" width={30} height={30} /></button>
-            <div className="relative">
-              <button className='cursor-pointer' onClick={() => setShowList(!showList)}>{datee}</button>
-              {showList && (
-                <ul className="absolute cursor-pointer bg-white shadow-lg p-4 w-40 text-gray-800 rounded-lg left-0 ml-[-35px] mt-[10]">
-                {dateelist.map((item) => (
-                  <li key={item.date} onClick={() => handleDateSelect(item.date, item.indent)} className="py-2 px-4 bg-green-500 text-white text-center rounded-md hover:bg-green-700 mb-2">
-                    {item.date}
-                  </li>
-                ))}
-              </ul>
-              )}
-            </div>
-            <button className='cursor-pointer' onClick={handleNext}><Image src="/icons/front.svg" alt="Next" width={30} height={30} /></button>
-          </div>
-        </div>
-        <button aria-label="Open sidebar" onClick={() => setSidebarOpen(!sidebarOpen)} className="flex cursor-pointer flex-row items-center">
-          {storeItems.mainSlice.played.length > 0 && (
-          <div className="rounded-full w-5 h-5 text-sm mt-0 mb-0 bg-red-700 text-white">
-            {storeItems.mainSlice.played.length === 0 ? '' : storeItems.mainSlice.played.length}
-          </div>)}
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>)}
-      {!showGuide && (<div className="bg-white p-4 mt-12">
-        <div className="grid gap-4">
-          {games.map((game, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md p-4">
-            <h3 className="text-lg text-gray-800 text-lg font-bold mb-2">{game.subtitle}</h3>
-            <p className="text-gray-600 text-lg">{game.titleCountry}</p>
-            <div className="mt-4 text-gray-800 text-sm">
-              {game.events.map((match, idx) => (
-              <div key={idx} className="flex flex-col items-center mb-4 border-b border-gray-200 pb-4">
-                <div className="flex justify-between w-full">
-                  <div className="w-1/2 flex flex-col items-center">
-                    <div className="text-sm text-gray-800 text-center">{match.hometeam}</div>
-                    <div className="text-sm text-gray-800 text-center">{match.awayteam}</div>
-                  </div>
-                  <div className="w-1/10 text-xs text-center">
-                    {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
-                  </div>
-                  <div className="w-2/5 flex justify-around">
-                    <button onClick={() => handleHDA(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-green-500 hover:bg-green-200'} text-white text-sm font-bold p-2 cursor-pointer rounded`}>
-                      {match.homeodd}
-                    </button>
-                    <button onClick={() => handleHDA(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-blue-500 hover:bg-blue-200'} text-white font-bold text-sm p-2 cursor-pointer rounded`}>
-                      {match.drawodd}
-                    </button>
-                    <button onClick={() => handleHDA(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)} className={`${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-300' : 'bg-red-500 hover:bg-red-200'} text-white font-bold text-sm p-2 cursor-pointer rounded`}>
-                      {match.awayodd}
-                    </button>
-                  </div>
-                </div>
-              </div>
-              ))}
-            </div>
-          </div>
-          ))}
-        </div>
-      </div>)}
-      {/* Sidebar */}
-      {!showGuide && (<div className={`absolute items-center top-0 right-0 min-h-screen w-96 bg-white shadow-lg border-4 rounded-lg border-green-300 ${sidebarOpen ? 'block' : 'hidden'}`} id="sidebar" style={{ top: '65px' }}>
+      {/* Header Section */}
+      {!showGuide && (
         <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center">
-          <h2 className="font-bold text-lg">Bookings</h2>
-          <button aria-label="Close sidebar" onClick={() => setSidebarOpen(false)}>
+          <h2 className="font-bold text-lg">1 X 2 Matches</h2>
+          <div>
+            <div className="flex justify-center items-center gap-2">
+              <button
+                className='cursor-pointer p-1 rounded-full hover:bg-green-600 transition-colors'
+                onClick={handlePreviousDate}
+                aria-label="Previous Date"
+              >
+                <Image src="/icons/back.svg" alt="Back" width={24} height={24} />
+              </button>
+              <div className="relative">
+                <button
+                  className='cursor-pointer text-base font-semibold px-3 py-1 rounded-md hover:bg-green-600 transition-colors'
+                  onClick={() => setShowDateList(!showDateList)}
+                  aria-expanded={showDateList}
+                >
+                  {currentDate}
+                </button>
+                {showDateList && (
+                  <ul className="absolute z-10 bg-white shadow-xl p-3 w-40 text-gray-800 rounded-lg left-1/2 -translate-x-1/2 mt-2">
+                    {dateList.map((item) => (
+                      <li
+                        key={item.date}
+                        onClick={() => handleDateSelect(item.date, item.indent)}
+                        className="py-2 px-4 bg-green-500 text-white text-center rounded-md hover:bg-green-700 mb-2 cursor-pointer transition-colors last:mb-0"
+                      >
+                        {item.date}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <button
+                className='cursor-pointer p-1 rounded-full hover:bg-green-600 transition-colors'
+                onClick={handleNextDate}
+                aria-label="Next Date"
+              >
+                <Image src="/icons/front.svg" alt="Next" width={24} height={24} />
+              </button>
+            </div>
+          </div>
+          <button
+            aria-label="Open sidebar"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="flex cursor-pointer flex-row items-center relative p-1 rounded-full hover:bg-green-600 transition-colors"
+          >
+            {storeItems.mainSlice.played.length > 0 && (
+              <div className="absolute -top-1 -right-1 bg-red-700 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
+                {storeItems.mainSlice.played.length}
+              </div>
+            )}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
-        <div className="p-4 text-gray-700 mt-12">
-          {storeItems.mainSlice.played && storeItems.mainSlice.played.map((item) => (
-          <div key={item.id} className="bg-white shadow-md rounded-lg p-4">
-            <div className='flex justify-between'>
-              <h4 className='w-1/3'>{item.gSubtitle}</h4>
-              <h4 className='w-1/3'>{item.mktT}</h4>
-              <div className='flex items-center w-1/3'><Image onClick={() => handleHDAR(item)} src="/icons/close.svg"
-                alt="Close"
-                width={30}
-                height={30}
-              /></div>
-            </div>
-            <h3 className="font-bold text-lg">{item.hometeam} vs {item.awayteam}</h3>
-            <div className='flex justify-between'>
-              <p className='w-1/3'>{`${item.mTime.substring(8, 10)}:${item.mTime.substring(10, 12)}`}</p>
-              <p className='w-1/3'>{item.selection}</p>
-              <h4 className='w-1/3 font-bold'>{item.odd}</h4>
-            </div>
-          </div>
-          ))}
-        </div>
-        { storeItems.mainSlice.played.length > 0 && (
-        <div className="w-full flex flex-col text-white max-w-md mx-auto p-4 bg-gray-200 rounded-lg border border-white shadow-md">
-          <div className="mb-1">
-            <div className="w-85 h-10  cursor-text bg-blue-400 rounded-lg border border-white flex items-center justify-center" onClick={() => { setToggleInput(!toggleInput); setDone(false);}}>
-              {`Amt: ${storeItems ? storeItems.mainSlice.me.currency : ''} ${new Intl.NumberFormat().format(parseFloat(betAmt === '' ? '0' : betAmt))}`}
-            </div>
-          </div>
-          <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
-            {`Odds: ${odds}`}
-          </div>
-          <div className="w-85 h-10 bg-blue-600 rounded-lg border border-white flex items-center justify-center">
-            {`Win: ${new Intl.NumberFormat().format(parseFloat(potWin === '' ? '0' : potWin))}`}
-          </div>
-        </div>
-        )}
-        { storeItems.mainSlice.played.length > 0 && toggleInput && (
-        <div className="p-4 grid grid-cols-4 gap-1">
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('1')}>1</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('2')}>2</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('3')}>3</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('4')}>4</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('5')}>5</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('6')}>6</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('7')}>7</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('8')}>8</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('9')}>9</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('.')}>.</button>)}
-          {!done && (<button className="h-10 w-20 bg-gray-200 text-gray-600 hover:bg-gray-400 hover:text-white rounded" onClick={() => handleButton('0')}>0</button>)}
-          {!done && (<button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Del')}>Del</button>)}
-          {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('10')}>10</button>)}
-          {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('100')}>100</button>)}
-          {!done && (<button className="h-10 w-20 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleButton('1000')}>1000</button>)}
-          {!done && (<button className="h-10 w-20 bg-red-500 text-white hover:bg-red-700 rounded" onClick={() => handleButton('Clear')}>Clear</button>)}
-          {storeItems.mainSlice && storeItems.mainSlice.logged && !done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => setDone(!done)} >Done</button>)}
-          {storeItems.mainSlice && storeItems.mainSlice.logged && done && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" onClick={() => handleBookedBet()} >Book Bet</button>)}
-          {storeItems.mainSlice && !storeItems.mainSlice.logged && (<button className="h-10 w-60 col-span-2 bg-green-500 text-white hover:bg-green-700 rounded" >Signup/Login to Book</button>)}
-        </div>)}
-      </div>)}
-      {!showGuide && (<div
-        className="fixed bottom-0 right-0 mb-4 mr-4 cursor-pointer"
-        onClick={() => setShowGuide(true)}
-      >
-        <div
-          className="bg-gray-900 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-lg"
-        >
-          Guide
-        </div>
-      </div>)}
-      {showGuide && (
-        <div className="bg-gray-800 mt-3 mb-3 flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-md p-4 md:p-6 lg:p-8 w-11/12 md:w-2/3 lg:w-1/2 xl:w-1/3">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Guide on How to Use This Site</h2>
-          <p className="text-lg md:text-xl text-gray-600">
-            <b>Site Description</b>
-            : This platform is designed exclusively for virtual betting practice within the 1x2 betting category. It uses virtual money and is not intended for real-money wagering. Users may be eligible for prizes through test betting, with further details to be announced at a later date.
-            <br/><br/>
-            <b>Tips</b>
-            : Explore our Two2Win and Three2Win options for opportunities to enhance your investment returns.
-            <br/><br/>
-            <b>Menu Options Defined</b>
-            <ul>
-              <li><b>Close Button</b>: Closes the current menu dropdown.</li>
-              <li><b>Home</b>: Navigates the user to the homepage.</li>
-              <li><b>Sign Up</b>: Directs the user to the account registration page.</li>
-              <li><b>Login</b>: Directs the user to the account login page.</li>
-              <li><b>Bets</b>: Displays a comprehensive record of played games, including both open and closed bets.</li>
-              <li><b>Profile</b>: Directs the user to their personal dashboard.</li>
-              <li><b>Two2Win</b>: Provides access to our 2-odds strategy, which offers projected monthly returns of 40%. Users can access this option for a complimentary 7-day trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies.</li>
-              <li><b>Three2Win</b>: Provides access to our 3-odds strategy, which offers projected monthly returns of 30%. Users can access this option for a complimentary 7-day trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies. (A single subscription grants access to both the Two2Win and Three2Win categories.)</li>
-              <li><b>About</b>: Directs the user to the About Us page, which outlines our mission and objectives.</li>
-              <li><b>Logout</b>: Logs the user out of their current session.</li>
-              <li><b>Reload/Reset</b>: Resets the virtual balance to N10,000 if it falls below this amount.</li>
-            </ul>
-            <br/>
-            <b>Conclusion</b>
-            : Our Two2Win option demonstrates a 75% confidence rate over a one-year period, while our Three2Win option boasts a 95% confidence rate. We are committed to carefully curating daily game selections for our Two2Win and Three2Win option. Please be advised that we do not manage or bet with user funds. We welcome and are open to collaborations with potential investors.
-          </p>
-          <button className="bg-gray-900 hover:bg-gray-400 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg" onClick={() => setShowGuide(false)} >
-            Close
-          </button>
-        </div>
-      </div>
       )}
-      {isOpen && (
-      <div className="popup-overlay fixed top-0 left-0 w-full h-full bg-transparent flex items-center justify-center" onClick={handleOverlayClick}>
-        <div className="popup-content bg-gray-200 rounded-lg shadow-md p-8 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4" >
-          <div className="flex justify-end">
-            <button className="text-gray-500 hover:text-gray-700" onClick={handleClose} >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+
+      {/* Main Content Area - Game Listings */}
+      {!showGuide && (
+        <div className="bg-white p-4 pt-20"> {/* Adjusted padding-top to accommodate header */}
+          <div className="grid gap-6">
+            {games.length > 0 ? (
+              games.map((game, index) => (
+                <div key={game.id || index} className="bg-white rounded-lg shadow-md p-4 border border-gray-100">
+                  <h3 className="text-lg text-gray-800 font-bold mb-1">{game.subtitle}</h3>
+                  <p className="text-gray-600 text-base">{game.titleCountry}</p>
+                  <div className="mt-4">
+                    {game.events.map((match, idx) => (
+                      <div key={match.id || idx} className="flex flex-col items-center mb-4 pb-4 border-b last:border-b-0 border-gray-200">
+                        <div className="flex justify-between w-full items-center">
+                          <div className="w-1/2 flex flex-col pr-2">
+                            <div className="text-sm text-gray-800 font-medium">{match.hometeam}</div>
+                            <div className="text-sm text-gray-800 font-medium">{match.awayteam}</div>
+                          </div>
+                          <div className="w-1/6 text-xs text-center text-gray-500 font-semibold">
+                            {`${match.Esd.substring(8, 10)}:${match.Esd.substring(10, 12)}`}
+                          </div>
+                          <div className="w-2/5 flex justify-around gap-1">
+                            <button
+                              onClick={() => handleSelection(match, 'home', match.homeodd, game.id, game.titleCountry, game.subtitle)}
+                              className={`flex-1 text-white text-sm font-bold p-2 rounded transition-colors ${storeItems.mainSlice.buttonState[match.hometeam + 'home'] ? 'bg-gray-700 hover:bg-gray-600' : 'bg-green-500 hover:bg-green-600'}`}
+                            >
+                              {match.homeodd}
+                            </button>
+                            <button
+                              onClick={() => handleSelection(match, 'draw', match.drawodd, game.id, game.titleCountry, game.subtitle)}
+                              className={`flex-1 text-white font-bold text-sm p-2 rounded transition-colors ${storeItems.mainSlice.buttonState[match.hometeam + 'draw'] ? 'bg-gray-700 hover:bg-gray-600' : 'bg-blue-500 hover:bg-blue-600'}`}
+                            >
+                              {match.drawodd}
+                            </button>
+                            <button
+                              onClick={() => handleSelection(match, 'away', match.awayodd, game.id, game.titleCountry, game.subtitle)}
+                              className={`flex-1 text-white font-bold text-sm p-2 rounded transition-colors ${storeItems.mainSlice.buttonState[match.hometeam + 'away'] ? 'bg-gray-700 hover:bg-gray-600' : 'bg-red-500 hover:bg-red-600'}`}
+                            >
+                              {match.awayodd}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center text-gray-600 text-lg py-10">No games available for this date.</div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Sidebar - Bookings */}
+      {!showGuide && (
+        <div
+          className={`fixed top-0 right-0 h-full w-96 bg-white shadow-xl border-l-4 border-green-300 z-50 transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          style={{ top: '0px' }} // Ensure it's at the very top
+        >
+          <div className="sticky top-0 w-full bg-green-500 text-white p-4 rounded-t-lg flex justify-between items-center z-10">
+            <h2 className="font-bold text-xl">My Bet Slip</h2>
+            <button aria-label="Close sidebar" onClick={() => setSidebarOpen(false)} className="p-1 rounded-full hover:bg-green-600 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
-          <h2 className="text-lg font-bold mb-4">{msg}</h2>
+          <div className="p-4 overflow-y-auto h-[calc(100vh-250px)]"> {/* Adjusted height to make room for betting panel */}
+            {selectedGames.length > 0 ? (
+              selectedGames.map((item) => (
+                <div key={item.id} className="bg-gray-50 shadow-md rounded-lg p-3 mb-3 border border-gray-200">
+                  <div className='flex justify-between items-start mb-2'>
+                    <h4 className='text-sm font-semibold text-gray-700 w-2/3'>{item.gSubtitle} ({item.mktT})</h4>
+                    <button onClick={() => handleRemovePlayedGame(item)} className='p-1 rounded-full hover:bg-red-100 transition-colors' aria-label={`Remove ${item.hometeam} vs ${item.awayteam}`}>
+                      <Image src="/icons/close.svg" alt="Remove selection" width={20} height={20} />
+                    </button>
+                  </div>
+                  <h3 className="font-bold text-base text-gray-900 mb-1">{item.hometeam} vs {item.awayteam}</h3>
+                  <div className='flex justify-between items-center text-sm text-gray-600'>
+                    <p>{`${item.mTime.substring(8, 10)}:${item.mTime.substring(10, 12)}`}</p>
+                    <p className="font-semibold text-blue-700">{item.selection}</p>
+                    <h4 className='font-bold text-lg text-green-700'>{item.odd}</h4>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center text-gray-500 py-10">No games added to your bet slip yet.</div>
+            )}
+          </div>
+
+          {/* Betting Input and Actions */}
+          {selectedGames.length > 0 && (
+            <div className="absolute bottom-0 left-0 w-full bg-gray-100 p-4 rounded-b-lg border-t-2 border-gray-200">
+              <div className="w-full flex flex-col text-white max-w-md mx-auto space-y-2 mb-4">
+                <div
+                  className="w-full h-10 bg-blue-400 rounded-lg flex items-center justify-center font-bold text-lg cursor-pointer transition-colors hover:bg-blue-500"
+                  onClick={() => { setIsBettingPanelOpen(!isBettingPanelOpen); setIsBetInputDone(false); }}
+                >
+                  {`Amount: ${storeItems?.mainSlice?.me?.currency || ''} ${new Intl.NumberFormat().format(parseFloat(betAmount === '' ? '0' : betAmount))}`}
+                </div>
+                <div className="w-full h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-lg">
+                  {`Total Odds: ${totalOdds}`}
+                </div>
+                <div className="w-full h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-lg">
+                  {`Potential Win: ${storeItems?.mainSlice?.me?.currency || ''} ${new Intl.NumberFormat().format(parseFloat(potentialWin === '' ? '0' : potentialWin))}`}
+                </div>
+              </div>
+
+              {isBettingPanelOpen && (
+                <div className="grid grid-cols-4 gap-2 mb-4">
+                  {!isBetInputDone && (
+                    <>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('1')}>1</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('2')}>2</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('3')}>3</button>
+                      <button className="bet-key-btn bg-red-500 hover:bg-red-600" onClick={() => handleBetAmountInput('Del')}>Del</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('4')}>4</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('5')}>5</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('6')}>6</button>
+                      <button className="bet-key-btn bg-green-500 hover:bg-green-600" onClick={() => handleBetAmountInput('10')}>+10</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('7')}>7</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('8')}>8</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('9')}>9</button>
+                      <button className="bet-key-btn bg-green-500 hover:bg-green-600" onClick={() => handleBetAmountInput('100')}>+100</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('.')}>.</button>
+                      <button className="bet-key-btn" onClick={() => handleBetAmountInput('0')}>0</button>
+                      <button className="bet-key-btn bg-red-500 hover:bg-red-600" onClick={() => handleBetAmountInput('Clear')}>Clear</button>
+                      <button className="bet-key-btn bg-green-500 hover:bg-green-600" onClick={() => handleBetAmountInput('1000')}>+1000</button>
+                      <button
+                        className="col-span-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg transition-colors"
+                        onClick={() => setIsBetInputDone(true)}
+                      >
+                        Confirm Amount
+                      </button>
+                    </>
+                  )}
+
+                  {isBetInputDone && (
+                    storeItems.mainSlice.logged ? (
+                      <button
+                        className="col-span-4 bg-green-700 hover:bg-green-800 text-white font-bold py-3 rounded-lg transition-colors"
+                        onClick={handleBookBet}
+                      >
+                        Book Bet
+                      </button>
+                    ) : (
+                      <button
+                        className="col-span-4 bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-lg cursor-not-allowed"
+                        disabled
+                      >
+                        Login/Signup to Book Bet
+                      </button>
+                    )
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
-      </div>
+      )}
+
+      {/* Guide Section */}
+      {!showGuide && (
+        <div
+          className="fixed bottom-4 right-4 cursor-pointer z-40"
+          onClick={() => setShowGuide(true)}
+        >
+          <div className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-colors">
+            Guide
+          </div>
+        </div>
+      )}
+      {showGuide && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white rounded-lg shadow-2xl p-6 md:p-8 lg:p-10 w-full max-w-2xl transform scale-95 animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">How to Use This Site 📖</h2>
+            <hr className="mb-4" />
+            <div className="text-base md:text-lg text-gray-700 leading-relaxed space-y-4">
+              <p>
+                <strong>Site Description</strong>: This platform is designed exclusively for virtual betting practice within the 1x2 betting category. It uses virtual money and is not intended for real-money wagering. Users may be eligible for prizes through test betting, with further details to be announced at a later date.
+              </p>
+              <p>
+                <strong>Tips</strong>: Explore our <strong>Two2Win</strong> and <strong>Three2Win</strong> options for opportunities to enhance your investment returns.
+              </p>
+              <p className="font-bold text-xl text-center mt-6 mb-3">Menu Options Defined</p>
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li><strong>Close Button</strong>: Closes the current menu dropdown.</li>
+                <li><strong>Home</strong>: Navigates the user to the homepage.</li>
+                <li><strong>Sign Up</strong>: Directs the user to the account registration page.</li>
+                <li><strong>Login</strong>: Directs the user to the account login page.</li>
+                <li><strong>Bets</strong>: Displays a comprehensive record of played games, including both open and closed bets.</li>
+                <li><strong>Profile</strong>: Directs the user to their personal dashboard.</li>
+                <li>
+                  <strong>Two2Win</strong>: Provides access to our 2-odds strategy, which offers projected monthly returns of 40%. Users can access this option for a complimentary 7-day trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies.
+                </li>
+                <li>
+                  <strong>Three2Win</strong>: Provides access to our 3-odds strategy, which offers projected monthly returns of 30%. Users can access this option for a complimentary 7-day trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies. (A single subscription grants access to both the Two2Win and Three2Win categories.)
+                </li>
+                <li><strong>About</strong>: Directs the user to the About Us page, which outlines our mission and objectives.</li>
+                <li><strong>Logout</strong>: Logs the user out of their current session.</li>
+                <li><strong>Reload/Reset</strong>: Resets the virtual balance to N10,000 if it falls below this amount.</li>
+              </ul>
+              <p className="mt-6">
+                <strong>Conclusion</strong>: Our <strong>Two2Win</strong> option demonstrates a 75% confidence rate over a one-year period, while our <strong>Three2Win</strong> option boasts a 95% confidence rate. We are committed to carefully curating daily game selections for our Two2Win and Three2Win options. Please be advised that we do not manage or bet with user funds. We welcome and are open to collaborations with potential investors.
+              </p>
+            </div>
+            <button
+              className="mt-8 bg-gray-900 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg mx-auto block transition-colors shadow-md"
+              onClick={() => setShowGuide(false)}
+            >
+              Close Guide
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Popup Message */}
+      {isMessageOpen && (
+        <div
+          className="popup-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+          onClick={handleOverlayClick}
+        >
+          <div className="popup-content bg-gray-200 rounded-lg shadow-xl p-6 w-full max-w-sm transform scale-95 animate-pop-in border border-gray-300">
+            <div className="flex justify-end mb-3">
+              <button className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-300 transition-colors" onClick={handleCloseMessage} aria-label="Close message">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <h2 className="text-lg font-bold text-gray-800 text-center">{message}</h2>
+          </div>
+        </div>
       )}
     </div>
   );
