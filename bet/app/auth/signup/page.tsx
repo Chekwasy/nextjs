@@ -3,8 +3,8 @@
 import { useState, ChangeEvent, FormEvent, MouseEvent, useCallback } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { Eye, EyeOff } from 'lucide-react'; // Lucide icons for modern UI
-import { checkpwd } from '../../tools/func'; // Assuming this function exists and works as expected
+import { Eye, EyeOff } from 'lucide-react';
+import { checkpwd } from '../../tools/func';
 
 // A custom Popup component to centralize message display
 interface PopupProps {
@@ -77,7 +77,7 @@ function SignupPage() { // Renamed from 'Page' to 'SignupPage' for clarity
 
   // General character validation (using the imported checkpwd function)
   const isValidInputChars = useCallback((str: string): boolean => {
-    return str.length <= 50 && checkpwd(str); // Assuming checkpwd performs the symbol check
+    return str.length <= 50 && checkpwd(str);
   }, []);
 
   // Firstname input change handler
