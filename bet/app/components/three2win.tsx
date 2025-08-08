@@ -276,9 +276,9 @@ export default function Three2Win() {
   const fetchThree2WinData = useCallback(async (day: string, month: string, year: string) => {
     if (!day || !month || !year) return;
 
-    const formattedDate = `${day.padStart(2, '0')}${month.slice(-2)}${year}`;
+    const formattedDate = `${day.padStart(2, '0')}${month}${year}`;
     try {
-      const response = await axios.get(`/api/getthree2win?date=${formattedDate}`, { // API endpoint changed
+      const response = await axios.get(`/api/getthree2win?date=${formattedDate}`, { 
         headers: {
           tok: Cookies.get('trybet_tok') || '',
         },
@@ -311,13 +311,13 @@ export default function Three2Win() {
           },
         });
         const ddd = response.data.day.toString();
-        const mmm = monthL[response.data.month]; // e.g., 'Jan11'
+        const mmm = monthL[response.data.month]; // e.g., 'Jan01'
         const yyy = response.data.year.toString();
 
         setSelectedDay(ddd);
         setSelectedMonth(mmm);
         setSelectedYear(yyy);
-        setTodayFormatted(`${ddd}${mmm.slice(-2)}${yyy}`);
+        setTodayFormatted(`${ddd}${mmm}${yyy}`);
         updateCalendarGrid(response.data.year, response.data.month + 1); // month + 1 for 1-indexed
         fetchThree2WinData(ddd.toString(), mmm, yyy);
       } catch (error) {

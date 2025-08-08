@@ -276,7 +276,7 @@ export default function Two2Win() {
   const fetchTwo2WinData = useCallback(async (day: string, month: string, year: string) => {
     if (!day || !month || !year) return;
 
-    const formattedDate = `${day.padStart(2, '0')}${month.slice(-2)}${year}`;
+    const formattedDate = `${day.padStart(2, '0')}${month}${year}`;
     try {
       const response = await axios.get(`/api/gettwo2win?date=${formattedDate}`, {
         headers: {
