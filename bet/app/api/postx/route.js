@@ -7,18 +7,18 @@ import { getCurrentDateString, getCurrentTimeString } from '../../tools/dateitem
 export async function POST(request) {
 	const dd = await request;
 	try {
-        console.log('start');
+        const saved = JSON.parse(dd.headers.get('saved'));
         const tok = dd.headers.get('tok');
-        const db = dd.get('db');
-        const Sbal = dd.get('openBalance');
-        const Tstake = dd.get('todayStake');
-        const Todd = dd.get('totalOdd');
-        const Ebal = dd.get('expectedBalance');
-        const code = dd.get('code');
-        const games = dd.get('games');
+        const db = saved.get('db');
+        const Sbal = saved.get('openBalance');
+        const Tstake = saved.get('todayStake');
+        const Todd = saved.get('totalOdd');
+        const Ebal = saved.get('expectedBalance');
+        const code = saved.get('code');
+        const games = saved.get('games');
         const date = getCurrentDateString();
         const time = getCurrentTimeString();
-        
+        console.log('ss');
         if (!tok || !db || !Sbal || !Tstake || !Todd || !Ebal || !code || !games) { return NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {

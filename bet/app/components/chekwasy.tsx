@@ -115,10 +115,11 @@ export default function PostXForm() {
         };
 
         try {
-            const response = await axios.post('/api/postx', dataToSend, {
+            const response = await axios.post('/api/postx', {}, {
                 headers: {
                 'tok': Cookies.get('trybet_tok') || '',
                 'Content-Type': 'application/json',
+                saved: JSON.stringify(dataToSend),
                 },
             });
             setMessage('Data successfully sent!');
