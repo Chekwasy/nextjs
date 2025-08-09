@@ -33,10 +33,10 @@ export async function POST(request) {
                     date: date, 
                     game: {
                         date: date,
-                        Sbal: Sbal,
-                        Tstake: Tstake,
-                        Todd: Todd,
-                        Ebal: Ebal,
+                        Sbal: Sbal.toString(),
+                        Tstake: Tstake.toString(),
+                        Todd: Todd.toString(),
+                        Ebal: Ebal.toString(),
                         status: "Pending",
                         code: code,
                         games: games
@@ -57,10 +57,10 @@ export async function POST(request) {
                     date: date, 
                     game: {
                         date: date,
-                        Sbal: Sbal,
-                        Tstake: Tstake,
-                        Todd: Todd,
-                        Ebal: Ebal,
+                        Sbal: Sbal.toString(),
+                        Tstake: Tstake.toString(),
+                        Todd: Todd.toString(),
+                        Ebal: Ebal.toString(),
                         status: "Pending",
                         code: code,
                         games: games
@@ -81,10 +81,10 @@ export async function POST(request) {
                     date: date, 
                     game: [{
                         time: time,
-                        Sbal: Sbal,
-                        stake: Tstake,
-                        odd: Todd,
-                        Ebal: Ebal,
+                        Sbal: Sbal.toString(),
+                        stake: Tstake.toString(),
+                        odd: Todd.toString(),
+                        Ebal: Ebal.toString(),
                         status: "Pending",
                         code: code,
                         games: games
@@ -102,10 +102,10 @@ export async function POST(request) {
                     $push: {
                         game: {
                             time: time,
-                            Sbal: Sbal,
-                            stake: Tstake,
-                            odd: Todd,
-                            Ebal: Ebal,
+                            Sbal: Sbal.toString(),
+                            stake: Tstake.toString(),
+                            odd: Todd.toString(),
+                            Ebal: Ebal.toString(),
                             status: "Pending",
                             code: code,
                             games: games
