@@ -8,6 +8,7 @@ export async function POST(request) {
 	const dd = await request;
 	try {
         const saved = JSON.parse(dd.headers.get('saved'));
+        console.log(saved);
         const tok = dd.headers.get('tok');
         const db = saved.get('db');
         const Sbal = saved.get('openBalance');
