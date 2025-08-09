@@ -263,6 +263,7 @@ export default function Nav() {
               <NavItem href="/profile" iconSrc="/icons/profile.svg" altText="Profile" label="Profile" />
               <NavItem href="/two2win" iconSrc="/icons/2odds.svg" altText="Two2Win" label="Two2Win" />
               <NavItem href="/three2win" iconSrc="/icons/three2win.svg" altText="Three2Win" label="Three2Win" />
+              <NavItem href="/three2winpro" iconSrc="/icons/threepro.svg" altText="3toWinPro" label="3toWinPro" />
               <NavItem href="/sub" iconSrc="/icons/billing.svg" altText="Billing" label="Billing" />
               <NavItem href="/about" iconSrc="/icons/about.svg" altText="About" label="About" />
               <NavItem iconSrc="/icons/logout.svg" altText="Logout" label="Logout" onClick={handleLogout} />
@@ -353,6 +354,7 @@ export default function Nav() {
                 <MobileNavItem href="/profile" iconSrc="/icons/profile.svg" altText="Profile" label="Profile" onClick={() => setIsMenuOpen(false)} />
                 <MobileNavItem href="/two2win" iconSrc="/icons/2odds.svg" altText="Two2Win" label="Two2Win" onClick={() => setIsMenuOpen(false)} />
                 <MobileNavItem href="/three2win" iconSrc="/icons/three2win.svg" altText="Three2Win" label="Three2Win" onClick={() => setIsMenuOpen(false)} />
+                <MobileNavItem href="/three2winpro" iconSrc="/icons/threepro.svg" altText="3toWinPro" label="3toWinPro" onClick={() => setIsMenuOpen(false)} />
                 <MobileNavItem href="/sub" iconSrc="/icons/billing.svg" altText="Billing" label="Billing" onClick={() => setIsMenuOpen(false)} />
                 <MobileNavItem href="/about" iconSrc="/icons/about.svg" altText="About" label="About" onClick={() => setIsMenuOpen(false)} />
                 <MobileNavItem iconSrc="/icons/logout.svg" altText="Logout" label="Logout" onClick={() => { handleLogout(); setIsMenuOpen(false); }} />
