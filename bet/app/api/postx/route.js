@@ -73,6 +73,7 @@ export async function POST(request) {
             }
         }
         if (db[0] === 'threepro') {
+            console.log(time, Sbal, Tstake, Todd, Ebal, code, games);
             const g = await dbClient.client.db().collection('three2winpro')
             .findOne({ "date": date });
             if (!g) {
