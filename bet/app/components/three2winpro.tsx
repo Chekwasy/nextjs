@@ -285,7 +285,7 @@ export default function Three2WinPro() {
 
             {/* Guide Content */}
             {showGuide && (
-                <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-40 overflow-y-auto">
+                <div className="bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-40 overflow-y-auto">
                     <div className="bg-white rounded-xl shadow-2xl p-6 md:p-8 max-w-3xl w-full my-8 relative">
                         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 text-center">
                             📚 Guide on How to Use This Platform
