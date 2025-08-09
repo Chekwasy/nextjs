@@ -8,15 +8,14 @@ export async function POST(request) {
 	const dd = await request;
 	try {
         const saved = JSON.parse(dd.headers.get('saved'));
-        console.log(saved);
         const tok = dd.headers.get('tok');
-        const db = saved.get('db');
-        const Sbal = saved.get('openBalance');
-        const Tstake = saved.get('todayStake');
-        const Todd = saved.get('totalOdd');
-        const Ebal = saved.get('expectedBalance');
-        const code = saved.get('code');
-        const games = saved.get('games');
+        const db = saved.db;
+        const Sbal = saved.openBalance;
+        const Tstake = saved.todayStake;
+        const Todd = saved.totalOdd;
+        const Ebal = saved.expectedBalance;
+        const code = saved.code;
+        const games = saved.games;
         const date = getCurrentDateString();
         const time = getCurrentTimeString();
         console.log('ss');
