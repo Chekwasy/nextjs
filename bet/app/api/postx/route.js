@@ -24,9 +24,105 @@ export async function POST(request) {
         if (!usr_id) {
             return  NextResponse.json('error', {status: 401});
         }
-		console.log(db, Sbal, Tstake, Todd, Ebal, code, games, date, time);
-        return NextResponse.json({message: "Success" }, {status: 201});
-        } catch {
+        if (db[0] === 'two2win') {
+            const g = await dbClient.client.db().collection('two2win')
+            .findOne({ "date": date });
+            if (!g) {
+                const r = await dbClient.client.db().collection('two2win')
+                .insertOne({ 
+                    date: date, 
+                    game: {
+                        date: date,
+                        Sbal: Sbal,
+                        Tstake: Tstake,
+                        Todd: Todd,
+                        Ebal: Ebal,
+                        status: "Pending",
+                        code: code,
+                        games: games
+                    }    
+                });
+                if (!r) {
+                    return  NextResponse.json('error not done', {status: 401});
+                }
+                return  NextResponse.json({message: "Success" }, {status: 201});
+            }
+        }
+        if (db[0] === 'three2win') {
+            const g = await dbClient.client.db().collection('three2win')
+            .findOne({ "date": date });
+            if (!g) {
+                const r = await dbClient.client.db().collection('three2win')
+                .insertOne({ 
+                    date: date, 
+                    game: {
+                        date: date,
+                        Sbal: Sbal,
+                        Tstake: Tstake,
+                        Todd: Todd,
+                        Ebal: Ebal,
+                        status: "Pending",
+                        code: code,
+                        games: games
+                    }    
+                });
+                if (!r) {
+                    return  NextResponse.json('error not done', {status: 401});
+                }
+                return  NextResponse.json({message: "Success" }, {status: 201});
+            }
+        }
+        if (db[0] === 'threepro') {
+            const g = await dbClient.client.db().collection('three2winpro')
+            .findOne({ "date": date });
+            if (!g) {
+                const r = await dbClient.client.db().collection('three2winpro')
+                .insertOne({ 
+                    date: date, 
+                    game: [{
+                        time: time,
+                        Sbal: Sbal,
+                        stake: Tstake,
+                        odd: Todd,
+                        Ebal: Ebal,
+                        status: "Pending",
+                        code: code,
+                        games: games
+                    }]    
+                });
+                if (!r) {
+                    return  NextResponse.json('error not done', {status: 401});
+                }
+                return  NextResponse.json({message: "Success" }, {status: 201});
+            }
+            const r = await dbClient.client.db().collection('three2winpro')
+            .updateOne(
+                { date: date },
+                {
+                    $push: {
+                        game: {
+                            time: time,
+                            Sbal: Sbal,
+                            stake: Tstake,
+                            odd: Todd,
+                            Ebal: Ebal,
+                            status: "Pending",
+                            code: code,
+                            games: games
+                        }
+                    }
+                }
+            );
+            if (!r) {
+                return  NextResponse.json('error not done', {status: 401});
+            }
+            return  NextResponse.json({message: "Success" }, {status: 201});
+        } 
+        //if (db[0] === 'sevenpro') {
+            
+        //}
+        return  NextResponse.json('error', {status: 400});
+    } catch {
         return  NextResponse.json('error', {status: 400});
     }
 };
