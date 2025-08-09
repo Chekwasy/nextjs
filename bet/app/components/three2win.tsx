@@ -25,6 +25,7 @@ interface Three2WinData {
   Todd: string;
   Ebal: string;
   status: 'Won' | 'Lost' | 'Pending' | '';
+  code: string;
   games: Three2WinGame[];
 }
 
@@ -36,6 +37,7 @@ const initialThree2WinState: Three2WinData = {
   Todd: '0',
   Ebal: '0',
   status: '',
+  code: '',
   games: [], // Initialize as an empty array
 };
 
@@ -438,6 +440,12 @@ export default function Three2Win() {
               <span className="text-gray-600 text-sm">Current ROI (from Principal)</span>
               <span className="text-xl font-bold text-right text-indigo-700">
                 {(((parseFloat(three2winData.Sbal) / 8000) * 100) - 100).toFixed(2)} % {/* Principal changed to 8000 */}
+              </span>
+            </div>
+            <div className="flex flex-col p-3 bg-purple-50 rounded-lg col-span-1 sm:col-span-2">
+              <span className="text-gray-600 text-sm">SportyBet Code</span>
+              <span className="text-xl font-bold text-right text-indigo-700">
+                {three2winData.code}
               </span>
             </div>
           </div>

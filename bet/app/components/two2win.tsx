@@ -25,6 +25,7 @@ interface Two2WinData {
   Todd: string;
   Ebal: string;
   status: 'Won' | 'Lost' | 'Pending' | '';
+  code: string;
   games: Two2WinGame[];
 }
 
@@ -36,6 +37,7 @@ const initialTwo2WinState: Two2WinData = {
   Todd: '0',
   Ebal: '0',
   status: '',
+  code: '',
   games: [], // Initialize as an empty array
 };
 
@@ -439,6 +441,12 @@ export default function Two2Win() {
               <span className="text-gray-600 text-sm">Current ROI (from Principal)</span>
               <span className="text-xl font-bold text-right text-indigo-700">
                 {(((parseFloat(two2winData.Sbal) / 10000) * 100) - 100).toFixed(2)} %
+              </span>
+            </div>
+            <div className="flex flex-col p-3 bg-blue-50 rounded-lg col-span-1 sm:col-span-2">
+              <span className="text-gray-600 text-sm">SportyBet Code</span>
+              <span className="text-xl font-bold text-right text-indigo-700">
+                {two2winData.code}
               </span>
             </div>
           </div>
