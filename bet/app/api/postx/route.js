@@ -7,6 +7,7 @@ import { getCurrentDateString, getCurrentTimeString } from '../../tools/dateitem
 export async function POST(request) {
 	const dd = await request;
 	try {
+        console.log('start');
         const tok = dd.headers.get('tok');
         const db = dd.get('db');
         const Sbal = dd.get('openBalance');
@@ -17,6 +18,7 @@ export async function POST(request) {
         const games = dd.get('games');
         const date = getCurrentDateString();
         const time = getCurrentTimeString();
+        
         if (!tok || !db || !Sbal || !Tstake || !Todd || !Ebal || !code || !games) { return NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
