@@ -3,8 +3,6 @@
 
 import React, { useState, FormEvent } from 'react';
 import axios from 'axios';
-import { StoreState } from '../tools/s_interface';
-import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 
 
@@ -29,8 +27,7 @@ interface PostXData {
 }
 
 export default function PostXForm() {
-    //useSelector to extract what is in the store
-    const storeItems: StoreState = useSelector((state) => state) as StoreState;
+
     const [selectedDbs, setSelectedDbs] = useState<string[]>([]);
     const [openBalance, setOpenBalance] = useState<string>('');
     const [todayStake, setTodayStake] = useState<string>('');
@@ -187,7 +184,7 @@ export default function PostXForm() {
     };
     return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-        {storeItems?.mainSlice.me.email === 'richardchekwas@gmail.com' && <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl border border-gray-200">
+        <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl border border-gray-200">
             <h2 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
                 Enter Bet Data
             </h2>
@@ -314,7 +311,7 @@ export default function PostXForm() {
                     Submit Bet Data
                 </button>
             </form>
-        </div>}
+        </div>
     </div>
     );
 }
