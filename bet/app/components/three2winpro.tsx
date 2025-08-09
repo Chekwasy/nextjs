@@ -7,7 +7,7 @@ import { StoreState } from '../tools/s_interface';
 import Cookies from 'js-cookie';
 import { isDateInPast } from '../tools/dateitems';
 import { monthL, weekL, getCalender} from '../tools/lists_dict';
-
+ 
 
 export default function Three2WinPro() {
     const storeItems: StoreState = useSelector((state) => state) as StoreState;
