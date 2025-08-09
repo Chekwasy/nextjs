@@ -86,7 +86,7 @@ export default function Three2WinPro() {
     const fetchThree2WinProData = (day: string, month: string, year: string) => {
         if (!day) return;
 
-        const formattedDate = `${day.padStart(2, '0')}${month.slice(-2)}${year}`;
+        const formattedDate = `${day.padStart(2, '0')}${month}${year}`;
         axios.get(`/api/getthree2winpro?date=${formattedDate}`, {
             headers: { tok: Cookies.get('trybet_tok') },
         })
