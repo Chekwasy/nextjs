@@ -54,3 +54,34 @@ export const getThirtiethDay = (dateString: string) => {
 
   return `${thDay}${thMonth}${thYear}`;
 };
+
+export const getCurrentDateString = () => {
+  const now = new Date();
+
+  // Get the day of the month (DD)
+  const day = String(now.getDate()).padStart(2, '0');
+
+  // Get the month abbreviation (Mon)
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthAbbr = monthNames[now.getMonth()];
+
+  // Get the month number (MM), padded with a leading zero if needed
+  const monthNum = String(now.getMonth() + 1).padStart(2, '0'); // +1 because getMonth() is 0-indexed
+
+  // Get the full year (YYYY)
+  const year = now.getFullYear();
+
+  return `${day}${monthAbbr}${monthNum}${year}`;
+};
+
+export const getCurrentTimeString = () => {
+  const now = new Date();
+
+  // Get the hours (HH) in 24-hour format
+  const hours = String(now.getHours()).padStart(2, '0');
+
+  // Get the minutes (MM)
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+
+  return `${hours}${minutes}`;
+};
