@@ -1,4 +1,4 @@
-//import dbClient from '../../../db';
+import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
 import { getCurrentDateString, getCurrentTimeString } from '../../tools/dateitems';
@@ -77,6 +77,7 @@ export async function POST(request) {
             const g = await dbClient.client.db().collection('three2winpro')
             .findOne({ "date": date });
             if (!g) {
+                console.log(333);
                 const r = await dbClient.client.db().collection('three2winpro')
                 .insertOne({ 
                     date: date, 
