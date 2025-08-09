@@ -19,25 +19,23 @@ interface Three2WinGame {
 
 // Define a type for the main Three2Win data
 interface Three2WinData {
-  commencement: string;
+  date: string;
   Sbal: string;
   Tstake: string;
   Todd: string;
   Ebal: string;
   status: 'Won' | 'Lost' | 'Pending' | '';
-  published: string;
   games: Three2WinGame[];
 }
 
 // Initial state for the Three2Win data
 const initialThree2WinState: Three2WinData = {
-  commencement: '-----------',
+  date: '-----------',
   Sbal: '0',
   Tstake: '0',
   Todd: '0',
   Ebal: '0',
   status: '',
-  published: '-----------',
   games: [], // Initialize as an empty array
 };
 
@@ -198,7 +196,7 @@ const GuideModal = ({ onClose }: GuideModalProps) => {
             <li>When your earnings reach 80% of this initial capital, you can withdraw ₦4,000, leaving ₦3,200 to continue.</li>
             <li>If your balance grows to ₦7,000, consider doubling your daily stake. At ₦10,500, you can triple it, and so on.</li>
             <li>You have full control over your withdrawals.</li>
-            <li>Access to this feature requires a subscription: ₦250 weekly or ₦800 monthly.</li>
+            <li>Access to this feature requires a subscription: ₦250 weekly or ₦800 monthly. A 7days free trial applies</li>
           </ul>
 
           <h3 className="text-2xl font-bold text-gray-800 mt-6 mb-3">Key Terms & Definitions:</h3>
@@ -207,14 +205,13 @@ const GuideModal = ({ onClose }: GuideModalProps) => {
             <li><strong>{`Today's`} Stake:</strong> The amount allocated for betting on a particular day.</li>
             <li><strong>{`Today's`} Odd:</strong> The total odds for the {`day's`} selected games, confirmed from the betting platform.</li>
             <li><strong>Expected Balance:</strong> The anticipated account balance if the daily prediction wins.</li>
-            <li><strong>Post On:</strong> The date and time when the daily game was published on our site.</li>
             <li><strong>Closing Balance:</strong> Your account balance after all games for the day have concluded.</li>
             <li><strong>Current ROI:</strong> The percentage return on investment (ROI) from your initial principal amount to date.</li>
           </ul>
 
           <h3 className="text-2xl font-bold text-gray-800 mt-6 mb-3">Match Structure and Odds:</h3>
           <p>
-            A typical {`day's`} schedule includes 2 to 6 matches, with a **minimum total odd of 3.00**. Each match entry provides:
+            A typical {`day's`} schedule includes 2 to 5 matches, with a **minimum total odd of 3.00**. Each match entry provides:
           </p>
           <ul className="list-disc list-inside space-y-1">
             <li><strong>Home Team & Away Team:</strong> The two competing teams.</li>
@@ -232,7 +229,7 @@ const GuideModal = ({ onClose }: GuideModalProps) => {
 
           <h3 className="text-2xl font-bold text-gray-800 mt-6 mb-3">Performance Expectations & Risk Management:</h3>
           <p>
-            Our strategy targets a **minimum monthly ROI of 30%**. However, {`it's`} crucial to understand that this comes with an **80% risk ratio**, meaning substantial losses are possible. We strongly advise starting with an amount you are genuinely comfortable losing.
+            Our strategy targets a **minimum monthly ROI of 30%**. However, {`it's`} crucial to understand that this comes with an **90% risk ratio**, meaning substantial losses are possible. We strongly advise starting with an amount you are genuinely comfortable losing.
           </p>
           <p className="mt-4">
             For more information, reach out to us via TikTok: <a href="https://www.tiktok.com/@chekwasy_trybet" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-semibold">@chekwasy_trybet</a>.
@@ -396,7 +393,7 @@ export default function Three2Win() {
               {three2winData.status || 'N/A'}
             </div>
             <div className="text-gray-600 text-base font-semibold">
-              Commencement: {formatApiDate(three2winData.commencement)}
+              Date: {formatApiDate(three2winData.date)}
             </div>
           </div>
 
@@ -420,10 +417,6 @@ export default function Three2Win() {
             <div className="flex flex-col p-3 bg-purple-50 rounded-lg">
               <span className="text-gray-600 text-sm">Expected Closing Balance</span>
               <span className="text-lg font-bold text-blue-700">₦{new Intl.NumberFormat().format(parseFloat(three2winData.Ebal))}</span>
-            </div>
-            <div className="flex flex-col p-3 bg-purple-50 rounded-lg">
-              <span className="text-gray-600 text-sm">Published On</span>
-              <span className="text-lg font-bold text-gray-800">{formatApiDate(three2winData.published)}</span>
             </div>
             <div className="flex flex-col p-3 bg-purple-50 rounded-lg col-span-1 sm:col-span-2">
               <span className="text-gray-600 text-sm">Actual Closing Balance</span>
