@@ -211,7 +211,7 @@ export default function Three2WinPro() {
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">Current ROI:</span>
-                                        <span className="font-bold text-lg text-green-700">{(((parseFloat(entry.Sbal) / 8000) * 100) - 100).toFixed(2)} %</span>
+                                        <span className="font-bold text-lg text-green-700">{(((parseFloat(entry.Sbal) / 18000) * 100) - 100).toFixed(2)} %</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">SportyBet Code:</span>
