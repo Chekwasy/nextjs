@@ -181,7 +181,7 @@ export default function Three2WinPro() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Principal / Starting Capital:</span>
-                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(8000)}</span>
+                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(18000)}</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Opening Balance:</span>
