@@ -96,6 +96,7 @@ export async function POST(request) {
                 }
                 return  NextResponse.json({message: "Success" }, {status: 201});
             }
+            console.log(222);
             const r = await dbClient.client.db().collection('three2winpro')
             .updateOne(
                 { date: date },
