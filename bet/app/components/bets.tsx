@@ -139,7 +139,7 @@ export default function Bets() {
           tok: Cookies.get('trybet_tok') || '',
         }
       });
-      setBets(response.data.closebet.length > 0 ? response.data.closebet.reverse : [initialBetState]);
+      setBets(response.data.closebet.length > 0 ? response.data.closebet.reverse() : [initialBetState]);
       setActiveTab('closed');
     } catch (error) {
       console.error("Error fetching closed bets:", error);
