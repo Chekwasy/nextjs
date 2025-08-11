@@ -1,35 +1,45 @@
-// components/BetHistory.tsx (Renamed for better semantics)
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
-import { Bet, StoreState, PlayeD } from '../tools/s_interface';
+import { Bet, StoreState, PlayeD } from '../tools/s_interface'; // Ensure SingleGameBet is imported
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
 
 // Define initial empty state for a single bet within the Bet array
-// const initialSingleGameBet: PlayeD = {
-//   id: '',
-//   gId: '',
-//   gTCountry: '',
-//   gSubtitle: '',
-//   mktT: '',
-//   mTime: '',
-//   hometeam: '',
-//   awayteam: '',
-//   odd: '',
-//   selection: '',
-//   mStatus: '',
-//   mResult: '',
-//   mOutcome: '',
-//   mScore: '',
-// };
+const initialSingleGameBet: PlayeD = {
+  id: '',
+  gId: '',
+  gTCountry: '',
+  gSubtitle: '',
+  mktT: '',
+  mTime: '',
+  hometeam: '',
+  awayteam: '',
+  odd: '',
+  selection: '',
+  mStatus: '',
+  mResult: '',
+  mOutcome: '',
+  mScore: '',
+};
 
-// Define initial empty state for a full Bet object (only if needed as a default, otherwise just an empty array)
-// For clarity, we'll keep it here but emphasize that setBets([]) is better for "no data"
-// const initialBetState: Bet = { ... }; // You can remove this if you only use empty arrays for no data
+// Define initial empty state for a full Bet object
+const initialBetState: Bet = {
+  userID: '',
+  gameID: '',
+  returns: '',
+  result: '',
+  date: '',
+  time: '',
+  betamt: '',
+  status: '',
+  potwin: '',
+  odds: '',
+  bet: [initialSingleGameBet],
+};
 
 // Helper component for displaying individual game details within a bet slip
 interface BetGameDetailProps {
@@ -92,25 +102,20 @@ export default function Bets() {
   const dispatch = useDispatch();
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
 
-  // Initialize bets as an empty array. This is key!
-  const [bets, setBets] = useState<Bet[]>([]);
-  const [selectedBet, setSelectedBet] = useState<Bet | null>(null);
-  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'open' | 'closed'>('open');
-  const [isLoading, setIsLoading] = useState(true); // New loading state
+  const [bets, setBets] = useState<Bet[]>([initialBetState]); // Renamed 'bet' to 'bets' for clarity
+  const [selectedBet, setSelectedBet] = useState<Bet | null>(null); // Renamed 'clickBet' to 'selectedBet', initialized to null
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false); // Renamed 'isOpen' to 'isDetailModalOpen'
+  const [activeTab, setActiveTab] = useState<'open' | 'closed'>('open'); // Renamed 'betTab' to 'activeTab'
 
   // Fetch open bets
   const fetchOpenBets = useCallback(async () => {
-    setIsLoading(true); // Start loading
-    setActiveTab('open'); // Set tab immediately on click
-    setBets([]); // Clear existing bets immediately for a clean transition
     try {
       const response = await axios.get('/api/getopenbet', {
         headers: {
           tok: Cookies.get('trybet_tok') || '',
         }
       });
-      setBets(response.data.openbet || []); // Set to empty array if response is null/undefined
+      setBets(response.data.openbet.length > 0 ? response.data.openbet : [initialBetState]);
       if (response.data.me) {
         dispatch(mainStateReducer({
           logged: storeItems.mainSlice.logged,
@@ -119,31 +124,26 @@ export default function Bets() {
           buttonState: storeItems.mainSlice.buttonState
         }));
       }
+      setActiveTab('open');
     } catch (error) {
       console.error("Error fetching open bets:", error);
-      setBets([]); // Ensure empty array on error
-    } finally {
-      setIsLoading(false); // End loading
+      setBets([initialBetState]); // Reset to initial state on error or no bets
     }
   }, [dispatch, storeItems.mainSlice]);
 
   // Fetch closed bets
   const fetchClosedBets = useCallback(async () => {
-    setIsLoading(true); // Start loading
-    setActiveTab('closed'); // Set tab immediately on click
-    setBets([]); // Clear existing bets immediately for a clean transition
     try {
       const response = await axios.get('/api/getclosebet', {
         headers: {
           tok: Cookies.get('trybet_tok') || '',
         }
       });
-      setBets(response.data.closebet || []); // Set to empty array if response is null/undefined
+      setBets(response.data.closebet.length > 0 ? response.data.closebet : [initialBetState]);
+      setActiveTab('closed');
     } catch (error) {
       console.error("Error fetching closed bets:", error);
-      setBets([]); // Ensure empty array on error
-    } finally {
-      setIsLoading(false); // End loading
+      setBets([initialBetState]); // Reset to initial state on error or no bets
     }
   }, []);
 
@@ -162,14 +162,14 @@ export default function Bets() {
   // Initial data fetch on component mount
   useEffect(() => {
     fetchOpenBets();
-  }, [fetchOpenBets]);
+  }, []);
 
   // Determine header background color based on bet result
   const getResultHeaderColor = useCallback((status: string, result: string) => {
-    if (status === 'close') { // Assuming 'close' is the status for settled bets
+    if (status === 'close') {
       return result === 'Won' ? 'bg-green-600 text-white' : 'bg-red-600 text-white';
     }
-    return 'bg-yellow-400 text-gray-800'; // For 'open' or 'pending' status
+    return 'bg-yellow-400 text-gray-800';
   }, []);
 
   // Helper function to format date
@@ -209,78 +209,69 @@ export default function Bets() {
 
       {!isDetailModalOpen ? (
         <div className="w-full max-w-4xl space-y-6">
-          {isLoading ? (
-            <div className="text-center p-8 bg-white rounded-xl shadow-lg">
-              <p className="text-xl text-gray-600 font-semibold">Loading bets...</p>
-              <div className="mt-4 flex justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700"></div>
-              </div>
-            </div>
-          ) : (
-            bets.length > 0 ? ( // Check if bets array has actual items
-              bets.map((betItem: Bet) => (
-                <div
-                  key={betItem.gameID}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer overflow-hidden transform hover:-translate-y-1"
-                  onClick={() => openBetDetails(betItem)}
-                  aria-label={`View details for bet ${betItem.gameID}`}
-                >
-                  <div className={`p-4 ${getResultHeaderColor(betItem.status, betItem.result)} flex justify-between items-center`}>
-                    <h3 className="text-xl font-bold">{betItem.result === 'Won' ? 'Won' : betItem.result === 'Lost' ? 'Lost' : 'Pending'}</h3>
-                    <span className="text-sm">
-                      {formatDate(betItem.date)} | {formatTime(betItem.time)}
+          {bets[0].status !== '' ? (
+            bets.map((betItem: Bet) => (
+              <div
+                key={betItem.gameID}
+                className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer overflow-hidden transform hover:-translate-y-1"
+                onClick={() => openBetDetails(betItem)}
+                aria-label={`View details for bet ${betItem.gameID}`}
+              >
+                <div className={`p-4 ${getResultHeaderColor(betItem.status, betItem.result)} flex justify-between items-center`}>
+                  <h3 className="text-xl font-bold">{betItem.result === 'Won' ? 'Won' : betItem.result === 'Lost' ? 'Lost' : 'Pending'}</h3>
+                  <span className="text-sm">
+                    {formatDate(betItem.date)} | {formatTime(betItem.time)}
+                  </span>
+                </div>
+                <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-800">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-500">Amount Booked:</span>
+                    <span className="text-lg font-bold">₦{new Intl.NumberFormat().format(parseFloat(betItem.betamt || '0'))}</span>
+                  </div>
+                  <div className="flex flex-col md:text-right">
+                    <span className="text-sm font-medium text-gray-500">Total Odds:</span>
+                    <span className="text-lg font-bold">{betItem.odds || 'N/A'}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-500">Potential Winnings:</span>
+                    <span className="text-lg font-bold text-green-700">₦{new Intl.NumberFormat().format(parseFloat(betItem.potwin || '0'))}</span>
+                  </div>
+                  <div className="flex flex-col md:text-right">
+                    <span className="text-sm font-medium text-gray-500">Actual Returns:</span>
+                    <span className={`text-lg font-bold ${betItem.returns === '0.00' ? 'text-gray-700' : 'text-blue-700'}`}>
+                      ₦{new Intl.NumberFormat().format(parseFloat(betItem.returns || '0'))}
                     </span>
                   </div>
-                  <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-800">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-gray-500">Amount Booked:</span>
-                      <span className="text-lg font-bold">₦{new Intl.NumberFormat().format(parseFloat(betItem.betamt || '0'))}</span>
-                    </div>
-                    <div className="flex flex-col md:text-right">
-                      <span className="text-sm font-medium text-gray-500">Total Odds:</span>
-                      <span className="text-lg font-bold">{betItem.odds || 'N/A'}</span>
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-gray-500">Potential Winnings:</span>
-                      <span className="text-lg font-bold text-green-700">₦{new Intl.NumberFormat().format(parseFloat(betItem.potwin || '0'))}</span>
-                    </div>
-                    <div className="flex flex-col md:text-right">
-                      <span className="text-sm font-medium text-gray-500">Actual Returns:</span>
-                      <span className={`text-lg font-bold ${betItem.returns === '0.00' ? 'text-gray-700' : 'text-blue-700'}`}>
-                        ₦{new Intl.NumberFormat().format(parseFloat(betItem.returns || '0'))}
-                      </span>
-                    </div>
-                  </div>
-                  {betItem.bet && betItem.bet.length > 0 && (
-                    <div className="px-4 pb-4 text-sm text-gray-600">
-                      <p className="font-medium text-gray-700">Games Included:</p>
-                      <ul className="list-disc list-inside text-xs">
-                        {betItem.bet.slice(0, 3).map((game, idx) => ( // Show first 3 games for summary
-                          <li key={idx}>
-                            {game.hometeam} vs {game.awayteam} ({game.mktT} - {game.selection})
-                          </li>
-                        ))}
-                        {betItem.bet.length > 3 && (
-                          <li className="font-semibold">...and {betItem.bet.length - 3} more games.</li>
-                        )}
-                      </ul>
-                    </div>
-                  )}
                 </div>
-              ))
-            ) : (
-              <div className="text-center p-8 bg-white rounded-xl shadow-lg">
-                <p className="text-xl text-gray-600 font-semibold">No {activeTab} bets found.</p>
-                <p className="text-gray-500 mt-2">Time to place some wagers!</p>
-                <Link href="/" className="mt-4 inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">
-                  Go to Games
-                </Link>
+                {betItem.bet && betItem.bet.length > 0 && (
+                  <div className="px-4 pb-4 text-sm text-gray-600">
+                    <p className="font-medium text-gray-700">Games Included:</p>
+                    <ul className="list-disc list-inside text-xs">
+                      {betItem.bet.slice(0, 3).map((game, idx) => ( // Show first 3 games for summary
+                        <li key={idx}>
+                          {game.hometeam} vs {game.awayteam} ({game.mktT} - {game.selection})
+                        </li>
+                      ))}
+                      {betItem.bet.length > 3 && (
+                        <li className="font-semibold">...and {betItem.bet.length - 3} more games.</li>
+                      )}
+                    </ul>
+                  </div>
+                )}
               </div>
-            )
+            ))
+          ) : (
+            <div className="text-center p-8 bg-white rounded-xl shadow-lg">
+              <p className="text-xl text-gray-600 font-semibold">No {activeTab} bets found.</p>
+              <p className="text-gray-500 mt-2">Time to place some wagers!</p>
+              <Link href="/" className="mt-4 inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                Go to Games
+              </Link>
+            </div>
           )}
         </div>
       ) : (
-        // Bet Details Modal (remains largely the same)
+        // Bet Details Modal
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 animate-fade-in">
           <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-2xl transform scale-95 animate-pop-in overflow-y-auto max-h-[90vh]">
             <div className="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
