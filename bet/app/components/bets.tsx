@@ -115,7 +115,7 @@ export default function Bets() {
           tok: Cookies.get('trybet_tok') || '',
         }
       });
-      setBets(response.data.openbet.length > 0 ? response.data.openbet : [initialBetState]);
+      setBets(response.data.openbet.length > 0 ? response.data.openbet.reverse() : [initialBetState]);
       if (response.data.me) {
         dispatch(mainStateReducer({
           logged: storeItems.mainSlice.logged,
@@ -139,7 +139,7 @@ export default function Bets() {
           tok: Cookies.get('trybet_tok') || '',
         }
       });
-      setBets(response.data.closebet.length > 0 ? response.data.closebet : [initialBetState]);
+      setBets(response.data.closebet.length > 0 ? response.data.closebet.reverse : [initialBetState]);
       setActiveTab('closed');
     } catch (error) {
       console.error("Error fetching closed bets:", error);
