@@ -181,7 +181,7 @@ export default function Three2WinPro() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Principal / Starting Capital:</span>
-                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(18000)}</span>
+                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(8000)}</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Opening Balance:</span>
@@ -211,7 +211,7 @@ export default function Three2WinPro() {
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">Current ROI:</span>
-                                        <span className="font-bold text-lg text-green-700">{(((parseFloat(entry.Sbal) / 18000) * 100) - 100).toFixed(2)} %</span>
+                                        <span className="font-bold text-lg text-green-700">{(((parseFloat(entry.Sbal) / 8000) * 100) - 100).toFixed(2)} %</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">SportyBet Code:</span>
@@ -297,10 +297,10 @@ export default function Three2WinPro() {
                             <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
                                 <h3 className="font-bold text-blue-700 mb-2">💡 Tips for Success:</h3>
                                 <ul className="list-disc list-inside text-blue-800 space-y-1">
-                                    <li>Start with a capital of ₦18,000.</li>
-                                    <li>Once your earnings reach 90% of this initial capital, you have the option to withdraw ₦16,000, leaving you with a balance of ₦18,000.</li>
-                                    <li>Continue playing with this ₦18,000 balance until it reaches ₦34,000, at which point you should double your stake on the site.</li>
-                                    <li>If your balance further increases to ₦50,000, you can triple your stake, and so on.</li>
+                                    <li>Start with a capital of ₦8,000.</li>
+                                    <li>Once your earnings reach 90% of this initial capital, you have the option to withdraw ₦3,200, leaving you with a balance of ₦4,000.</li>
+                                    <li>Continue playing with this ₦4,000 balance until it reaches ₦8,000, at which point you should double your stake on the site.</li>
+                                    <li>If your balance further increases to ₦12,000, you can triple your stake, and so on.</li>
                                     <li>You are free to manage your withdrawals as you see fit.</li>
                                     <li>Access to this feature requires a subscription of ₦250 weekly or ₦800 monthly. A 7-day free trial applies.</li>
                                 </ul>
@@ -327,16 +327,16 @@ export default function Three2WinPro() {
                             <p>
                                 <strong>Recommendations for Getting Started:</strong> For optimal results, we advise commencing with a modest investment:
                                 <ul className="list-disc list-inside space-y-2 mt-2">
-                                    <li>₦1,800 with a ₦10 minimum stake</li>
-                                    <li>₦3,600 with a ₦20 minimum stake</li>
-                                    <li>₦18,000 with a ₦100 minimum stake</li>
-                                    <li>₦180,000 with a ₦1,000 minimum stake</li>
+                                    <li>₦4,000 with a ₦10 minimum stake</li>
+                                    <li>₦8,000 with a ₦20 minimum stake</li>
+                                    <li>₦40,000 with a ₦100 minimum stake</li>
+                                    <li>₦400,000 with a ₦1,000 minimum stake</li>
                                 </ul>
                             </p>
                             <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
                                 <h3 className="font-bold text-red-700 mb-2">⚠️ Performance Expectations and Risk Management:</h3>
                                 <p className="text-red-800">
-                                    Our strategy aims to deliver a minimum monthly percentage return of 100%. However, please note that this comes with a <strong>90% risk ratio</strong>, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
+                                    Our strategy aims to deliver a minimum monthly percentage return of 60%. However, please note that this comes with a <strong>90% risk ratio</strong>, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
                                 </p>
                             </div>
                             <p className="text-center text-gray-600">
