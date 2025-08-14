@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
-import { Bet, betS, StoreState, PlayeD } from '../tools/s_interface'; // Ensure SingleGameBet is imported
+import { Bet, betS, StoreState2, PlayeD } from '../tools/s_interface'; // Ensure SingleGameBet is imported
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
 import { betStateReducer } from '@/store/slices/betslice';
@@ -102,7 +102,7 @@ const BetGameDetail = ({ game }: BetGameDetailProps) => {
 // Main Bets component
 export default function Bets() {
   const dispatch: AppDispatch = useDispatch();
-  const storeItems: StoreState = useSelector((state: RootState) => state) as StoreState;
+  const storeItems: StoreState2 = useSelector((state: RootState) => state.mainSlice) as StoreState2;
   const betItems: betS = useSelector((state: RootState) => state.betSlice) as betS;
 
   const [bets, setBets] = useState<Bet[]>([initialBetState]); // Renamed 'bet' to 'bets' for clarity
@@ -121,10 +121,10 @@ export default function Bets() {
       setBets(response.data.openbet.length > 0 ? response.data.openbet.reverse() : [initialBetState]);
       if (response.data.me) {
         dispatch(mainStateReducer({
-          logged: storeItems.mainSlice.logged,
-          played: storeItems.mainSlice.played,
+          logged: storeItems.logged,
+          played: storeItems.played,
           me: response.data.me,
-          buttonState: storeItems.mainSlice.buttonState
+          buttonState: storeItems.buttonState
         }));
       }
       dispatch(betStateReducer({
@@ -135,7 +135,7 @@ export default function Bets() {
       console.error("Error fetching open bets:", error);
       setBets([initialBetState]); // Reset to initial state on error or no bets
     }
-  }, [dispatch, storeItems.mainSlice]);
+  }, [dispatch, storeItems]);
 
   // Fetch closed bets
   const fetchClosedBets = useCallback(async () => {
