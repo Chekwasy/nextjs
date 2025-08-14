@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const bet: {betTab: string} = {
-    betTab: 'open'
+    betTab: 'open',
 } 
 
 const betSlice = createSlice({

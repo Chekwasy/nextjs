@@ -8,6 +8,7 @@ import { Bet, betS, StoreState, PlayeD } from '../tools/s_interface'; // Ensure 
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
 import { betStateReducer } from '@/store/slices/betslice';
+import type { RootState, AppDispatch } from './../../store/store';
 
 // Define initial empty state for a single bet within the Bet array
 const initialSingleGameBet: PlayeD = {
@@ -100,9 +101,9 @@ const BetGameDetail = ({ game }: BetGameDetailProps) => {
 
 // Main Bets component
 export default function Bets() {
-  const dispatch = useDispatch();
-  const storeItems: StoreState = useSelector((state) => state) as StoreState;
-  const betItems: betS = useSelector((state) => state) as betS;
+  const dispatch: AppDispatch = useDispatch();
+  const storeItems: StoreState = useSelector((state: RootState) => state) as StoreState;
+  const betItems: betS = useSelector((state: RootState) => state.betSlice) as betS;
 
   const [bets, setBets] = useState<Bet[]>([initialBetState]); // Renamed 'bet' to 'bets' for clarity
   const [selectedBet, setSelectedBet] = useState<Bet | null>(null); // Renamed 'clickBet' to 'selectedBet', initialized to null
@@ -176,7 +177,7 @@ export default function Bets() {
     else if (betItems?.betTab === 'closed') {
       fetchClosedBets();
     }
-  }, [betItems, fetchOpenBets, fetchClosedBets]);
+  }, []);
 
   // Determine header background color based on bet result
   const getResultHeaderColor = useCallback((status: string, result: string) => {
