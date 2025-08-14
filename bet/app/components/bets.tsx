@@ -169,6 +169,7 @@ export default function Bets() {
 
   // Initial data fetch on component mount
   useEffect(() => {
+    alert(betItems.betTab);
     if (betItems?.betTab === 'open') {
       fetchOpenBets();
     }
