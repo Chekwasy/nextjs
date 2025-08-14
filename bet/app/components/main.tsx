@@ -16,15 +16,15 @@ export default function Main() {
 
   // State Management
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [message, setMessage] = useState(''); // Renamed for clarity
-  const [isMessageOpen, setIsMessageOpen] = useState(false); // Renamed for clarity
-  const [isBetInputDone, setIsBetInputDone] = useState(false); // Renamed for clarity
-  const [isBettingPanelOpen, setIsBettingPanelOpen] = useState(false); // Renamed for clarity
-  const [betAmount, setBetAmount] = useState(''); // Renamed for clarity
-  const [potentialWin, setPotentialWin] = useState(''); // Renamed for clarity
-  const [totalOdds, setTotalOdds] = useState(''); // Renamed for clarity
+  const [message, setMessage] = useState('');
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
+  const [isBetInputDone, setIsBetInputDone] = useState(false); 
+  const [isBettingPanelOpen, setIsBettingPanelOpen] = useState(false);
+  const [betAmount, setBetAmount] = useState('');
+  const [potentialWin, setPotentialWin] = useState('');
+  const [totalOdds, setTotalOdds] = useState(''); 
   const [showGuide, setShowGuide] = useState(false);
-  const [selectedGames, setSelectedGames] = useState<PlayeD[]>([]); // Renamed for clarity
+ // const [selectedGames, setSelectedGames] = useState<PlayeD[]>([]);
 
   // State for fetched games and dates
   const [games, setGames] = useState([{
@@ -51,9 +51,9 @@ export default function Main() {
     { date: '', indent: 6 },
     { date: '', indent: 7 },
   ]);
-  const [currentDate, setCurrentDate] = useState(dateList[0].date); // Renamed for clarity
-  const [currentDateIndent, setCurrentDateIndent] = useState(0); // Renamed for clarity
-  const [showDateList, setShowDateList] = useState(false); // Renamed for clarity
+  const [currentDate, setCurrentDate] = useState(dateList[0].date); 
+  const [currentDateIndent, setCurrentDateIndent] = useState(0); 
+  const [showDateList, setShowDateList] = useState(false); 
 
   // Function to load games data from the backend
   const loadGames = useCallback(async () => {
@@ -100,8 +100,8 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
-    calculateOdds(selectedGames, betAmount);
-  }, [selectedGames, betAmount, calculateOdds]);
+    calculateOdds(storeItems?.mainSlice.played, betAmount);
+  }, [storeItems, betAmount, calculateOdds]);
 
   // Handles numerical button presses for bet amount input
   const handleBetAmountInput = (button: string) => {
@@ -227,7 +227,6 @@ export default function Main() {
       me: storeItems.mainSlice.me,
       buttonState: currentButtonState
     }));
-    setSelectedGames(newSelectedGames);
     saveGameSelections(newSelectedGames, currentButtonState);
   };
 
@@ -246,7 +245,6 @@ export default function Main() {
       me: storeItems.mainSlice.me,
       buttonState: currentButtonState
     }));
-    setSelectedGames(newSelectedGames);
     saveGameSelections(newSelectedGames, currentButtonState);
   };
 
@@ -447,8 +445,8 @@ export default function Main() {
             </button>
           </div>
           <div className="p-4 overflow-y-auto h-[calc(100vh-250px)]">
-            {selectedGames.length > 0 ? (
-              selectedGames.map((item) => (
+            {storeItems?.mainSlice.played.length > 0 ? (
+              storeItems?.mainSlice.played.map((item) => (
                 <div key={item.id} className="bg-gray-50 shadow-md rounded-lg p-3 mb-3 border border-gray-200">
                   <div className='flex justify-between items-start mb-2'>
                     <h4 className='text-sm font-semibold text-gray-700 w-2/3'>{item.gSubtitle} ({item.mktT})</h4>
@@ -470,7 +468,7 @@ export default function Main() {
           </div>
 
           {/* Betting Input and Actions */}
-          {selectedGames.length > 0 && (
+          {storeItems?.mainSlice.played.length > 0 && (
             <div className="absolute bottom-0 left-0 w-full bg-gray-100 p-4 rounded-b-lg border-t-2 border-gray-200">
               <div className="w-full flex flex-col text-white max-w-md mx-auto space-y-2 mb-4">
                 <div
