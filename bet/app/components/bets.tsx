@@ -175,7 +175,7 @@ export default function Bets() {
     else if (betItems?.betTab === 'closed') {
       fetchClosedBets();
     }
-  }, []);
+  }, [betItems, fetchOpenBets, fetchClosedBets]);
 
   // Determine header background color based on bet result
   const getResultHeaderColor = useCallback((status: string, result: string) => {
