@@ -149,6 +149,7 @@ export default function Bets() {
       dispatch(betStateReducer({
           betTab: 'closed',
       }));
+      alert(betItems.betTab);
       setActiveTab('closed');
     } catch (error) {
       console.error("Error fetching closed bets:", error);
@@ -170,7 +171,6 @@ export default function Bets() {
 
   // Initial data fetch on component mount
   useEffect(() => {
-    alert(betItems.betTab);
     if (betItems?.betTab === 'open') {
       fetchOpenBets();
     }
