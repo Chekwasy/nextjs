@@ -1,31 +1,41 @@
-import { promises as fs } from 'fs'; // Keep this import
+import { promises as fs } from 'fs';
 
-async function searchAndPrintLastChars(searchString, filePath) {
+export async function searchAndPrintLastChars(searchString, filePath) {
     try {
-        const data = await fs.readFile(filePath, 'utf8'); // Use await with promise-based readFile
+        const data = await fs.readFile(filePath, 'utf8');
         const lines = data.split('\n');
+
+        const results = [];
 
         lines.forEach(line => {
             if (line.includes(searchString)) {
                 const last14Chars = line.slice(-14);
-                console.log(last14Chars);
+                results.push(last14Chars);
             }
         });
+
+        // Join all collected 14-character strings into one single string
+        return results.join(''); // Joins without any separator
+
     } catch (err) {
         console.error(`Error reading file: ${err}`);
+        return ''; // Return an empty string in case of an error
     }
 }
 
 // --- Example Usage ---
-// First, create a dummy pup.txt for demonstration
-// const dummyContent = `This is a test line with man united and some extra text.
-// Another line without the string.
-// Manchester United is a famous football club. Here are some numbers: 1234567890ABCD
-// A line with man united at the end. Final characters.
-// This line is short.
-// `;
 
-// fs.writeFileSync('pup.txt', puppeteer.txt);
+// Wrap the call in an IIFE (Immediately Invoked Function Expression)
+// or an async main function to use 'await' at the top level.
+// (async () => {
+//     // Call the function and await its result
+//     const extractedString = await searchAndPrintLastChars('Basel Copenhagen', 'output.txt');
+//     console.log(extractedString); // This will now log the actual string
+// })();
 
-// Call the function to search for 'man united' in 'pup.txt'
-searchAndPrintLastChars('Cerro Porteno', 'pup.txt');
+// Note: Ensure 'output.txt' exists and has content that matches your search criteria
+// For example, if 'output.txt' contains:
+// ID: 31609 Aston Villa Newcastle 2.31 3.77 3.11
+// ID: 31637 Brighton Fulham 1.97 3.85 3.95
+//
+// And you search for 'ID:', it would return: "3.113.95"

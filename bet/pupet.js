@@ -6,7 +6,7 @@ import puppeteer from 'puppeteer';
     const page = await browser.newPage();
 
     // Navigate to a URL (replace with the page you want to inspect)
-    await page.goto('https://www.sportybet.com/ng/sport/football/today');
+    await page.goto('https://www.sportybet.com/ng/sport/football/upcoming?time=0');
 
     // Get all text content from the body of the page
     const allPageText = await page.evaluate(() => {

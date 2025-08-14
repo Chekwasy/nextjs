@@ -1,9 +1,10 @@
 import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import axios from 'axios';
+import { searchAndPrintLastChars } from './../../../getodd';
 
 //scraps matches details from a source and align
-// them well and save in db. this is does for 7 
+// them well and save in db. this is done for 7 
 // days of the week on a first request of the day
 export async function GET(request: Request) {
     const dd = await request;
@@ -88,9 +89,18 @@ export async function GET(request: Request) {
 						Edt["id"] = j.toString();
 						Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 						Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
-						Edt['homeodd'] = '1.7';
-						Edt['awayodd'] = '1.8';
-						Edt['drawodd'] = '3.1';
+						const bothTeam = `${gamesJson.Stages[i].Events[j].T1[0].Nm} ${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+						const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
+						if (oddG !== '') {
+							const splitStr = oddG.split(' ');
+							Edt['homeodd'] = splitStr[0];
+							Edt['awayodd'] = splitStr[1];
+							Edt['drawodd'] = splitStr[2];	
+						} else {
+							Edt['homeodd'] = '1.7';
+							Edt['awayodd'] = '1.8';
+							Edt['drawodd'] = '3.1';
+						}
 						Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 						eventDit['events'].push(Edt);
 					}
@@ -99,9 +109,19 @@ export async function GET(request: Request) {
 							Edt["id"] = j.toString();
 							Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 							Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
-							Edt['homeodd'] = '1.7';
-							Edt['awayodd'] = '1.8';
-							Edt['drawodd'] = '3.1';
+
+							const bothTeam = `${gamesJson.Stages[i].Events[j].T1[0].Nm} ${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+							const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
+							if (oddG !== '') {
+								const splitStr = oddG.split(' ');
+								Edt['homeodd'] = splitStr[0];
+								Edt['awayodd'] = splitStr[1];
+								Edt['drawodd'] = splitStr[2];	
+							} else {
+								Edt['homeodd'] = '1.7';
+								Edt['awayodd'] = '1.8';
+								Edt['drawodd'] = '3.1';
+							}
 							Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 							eventDit['events'].push(Edt);
 						}
@@ -110,9 +130,18 @@ export async function GET(request: Request) {
 					Edt["id"] = j.toString();
 					Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 					Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
-					Edt['homeodd'] = '1.7';
-					Edt['awayodd'] = '1.8';
-					Edt['drawodd'] = '3.1';
+					const bothTeam = `${gamesJson.Stages[i].Events[j].T1[0].Nm} ${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+					const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
+					if (oddG !== '') {
+						const splitStr = oddG.split(' ');
+						Edt['homeodd'] = splitStr[0];
+						Edt['awayodd'] = splitStr[1];
+						Edt['drawodd'] = splitStr[2];	
+					} else {
+						Edt['homeodd'] = '1.7';
+						Edt['awayodd'] = '1.8';
+						Edt['drawodd'] = '3.1';
+					}
 					Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 					eventDit['events'].push(Edt);
 				}

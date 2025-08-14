@@ -20,3 +20,27 @@ export const checkpwd = (strr : string) => {
 	  }
 	  return true;
   };
+
+  export const findLongestWord = (str: string) => {
+  // 1. Split the string by spaces to get an array of words
+  const words = str.split(' ');
+
+  // 2. Initialize variables to keep track of the longest word found so far
+  let longestWord = '';
+  let maxLength = 0;
+
+  // 3. Iterate over the array of words
+  for (let i = 0; i < words.length; i++) {
+    const currentWord = words[i];
+
+    // 4. Compare the length of the current word with the maximum length found
+    if (currentWord.length > maxLength) {
+      maxLength = currentWord.length; // Update maxLength
+      longestWord = currentWord;      // Update longestWord
+    }
+  }
+
+  // 5. Return the longest word
+  return longestWord;
+}
+
