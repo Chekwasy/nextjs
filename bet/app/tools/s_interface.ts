@@ -80,3 +80,7 @@ export interface Bet {
   mScore: string;
 }[];
 }
+
+export interface betS {
+  betTab: string;
+}

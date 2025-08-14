@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
-import { Bet, StoreState, PlayeD } from '../tools/s_interface'; // Ensure SingleGameBet is imported
+import { Bet, betS, StoreState, PlayeD } from '../tools/s_interface'; // Ensure SingleGameBet is imported
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
 import { betStateReducer } from '@/store/slices/betslice';
@@ -102,7 +102,7 @@ const BetGameDetail = ({ game }: BetGameDetailProps) => {
 export default function Bets() {
   const dispatch = useDispatch();
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
-  const betItems: {betTab: string} = useSelector((state) => state) as {betTab: string};
+  const betItems: betS = useSelector((state) => state) as betS;
 
   const [bets, setBets] = useState<Bet[]>([initialBetState]); // Renamed 'bet' to 'bets' for clarity
   const [selectedBet, setSelectedBet] = useState<Bet | null>(null); // Renamed 'clickBet' to 'selectedBet', initialized to null
