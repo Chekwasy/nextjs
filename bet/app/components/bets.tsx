@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { Bet, StoreState, PlayeD } from '../tools/s_interface'; // Ensure SingleGameBet is imported
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
+import { betStateReducer } from '@/store/slices/betslice';
 
 // Define initial empty state for a single bet within the Bet array
 const initialSingleGameBet: PlayeD = {
@@ -101,6 +102,7 @@ const BetGameDetail = ({ game }: BetGameDetailProps) => {
 export default function Bets() {
   const dispatch = useDispatch();
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
+  const betItems: {betTab: string} = useSelector((state) => state) as {betTab: string};
 
   const [bets, setBets] = useState<Bet[]>([initialBetState]); // Renamed 'bet' to 'bets' for clarity
   const [selectedBet, setSelectedBet] = useState<Bet | null>(null); // Renamed 'clickBet' to 'selectedBet', initialized to null
@@ -124,6 +126,9 @@ export default function Bets() {
           buttonState: storeItems.mainSlice.buttonState
         }));
       }
+      dispatch(betStateReducer({
+          betTab: 'open',
+      }));
       setActiveTab('open');
     } catch (error) {
       console.error("Error fetching open bets:", error);
@@ -140,6 +145,9 @@ export default function Bets() {
         }
       });
       setBets(response.data.closebet.length > 0 ? response.data.closebet.reverse() : [initialBetState]);
+      dispatch(betStateReducer({
+          betTab: 'closed',
+      }));
       setActiveTab('closed');
     } catch (error) {
       console.error("Error fetching closed bets:", error);
@@ -161,7 +169,12 @@ export default function Bets() {
 
   // Initial data fetch on component mount
   useEffect(() => {
-    fetchOpenBets();
+    if (betItems?.betTab === 'open') {
+      fetchOpenBets();
+    }
+    else if (betItems?.betTab === 'closed') {
+      fetchClosedBets();
+    }
   }, []);
 
   // Determine header background color based on bet result
