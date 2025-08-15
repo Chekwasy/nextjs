@@ -3,16 +3,17 @@ import { promises as fs } from 'fs';
 export async function searchAndPrintLastChars(searchString, filePath) {
     try {
         const data = await fs.readFile(filePath, 'utf8');
-        console.log(data);
         const lines = data.split('\n');
 
         const results = '';
         const strings = searchString.split('=');
+        console.log(strings);
 
         lines.forEach(line => {
             if (line.includes(strings[0]) && line.includes(strings[1])) {
                 const last14Chars = line.slice(-14);
                 results = last14Chars;
+                console.log(results, 0);
                 return results;
             }
         });
