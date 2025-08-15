@@ -1,6 +1,7 @@
 import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import axios from 'axios';
+import { findLongestWord } from './../../tools/func';
 import { searchAndPrintLastChars } from './../../../getodd';
 
 //scraps matches details from a source and align
@@ -89,7 +90,11 @@ export async function GET(request: Request) {
 						Edt["id"] = j.toString();
 						Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 						Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
-						const bothTeam = `${gamesJson.Stages[i].Events[j].T1[0].Nm} ${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+						const Team1 = `${gamesJson.Stages[i].Events[j].T1[0].Nm}`;
+						const Team2 = `${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+						const Team1L = findLongestWord(Team1);
+						const Team2L = findLongestWord(Team2);
+						const bothTeam = `${Team1L} ${Team2L}`;
 						const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
 						if (oddG !== '') {
 							const splitStr = oddG.split(' ');

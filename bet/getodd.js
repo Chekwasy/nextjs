@@ -5,17 +5,17 @@ export async function searchAndPrintLastChars(searchString, filePath) {
         const data = await fs.readFile(filePath, 'utf8');
         const lines = data.split('\n');
 
-        const results = [];
+        const results = '';
+        const strings = searchString.split(' ');
 
         lines.forEach(line => {
-            if (line.includes(searchString)) {
+            if (line.includes(strings[0]) && line.includes(strings[1])) {
                 const last14Chars = line.slice(-14);
-                results.push(last14Chars);
+                results = last14Chars;
+                return results;
             }
         });
-
-        // Join all collected 14-character strings into one single string
-        return results.join(''); // Joins without any separator
+        return '';
 
     } catch (err) {
         console.error(`Error reading file: ${err}`);
