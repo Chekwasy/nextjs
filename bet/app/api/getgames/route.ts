@@ -90,6 +90,7 @@ export async function GET(request: Request) {
 						Edt["id"] = j.toString();
 						Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 						Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
+						
 						const Team1 = `${gamesJson.Stages[i].Events[j].T1[0].Nm}`;
 						const Team2 = `${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
 						const Team1L = findLongestWord(Team1);
@@ -99,13 +100,14 @@ export async function GET(request: Request) {
 						if (oddG !== '') {
 							const splitStr = oddG.split(' ');
 							Edt['homeodd'] = splitStr[0];
-							Edt['awayodd'] = splitStr[1];
-							Edt['drawodd'] = splitStr[2];	
+							Edt['drawodd'] = splitStr[1];
+							Edt['awayodd'] = splitStr[2];	
 						} else {
 							Edt['homeodd'] = '1.7';
-							Edt['awayodd'] = '1.8';
 							Edt['drawodd'] = '3.1';
+							Edt['awayodd'] = '1.8';
 						}
+
 						Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 						eventDit['events'].push(Edt);
 					}
@@ -115,18 +117,23 @@ export async function GET(request: Request) {
 							Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 							Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
 
-							const bothTeam = `${gamesJson.Stages[i].Events[j].T1[0].Nm} ${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+							const Team1 = `${gamesJson.Stages[i].Events[j].T1[0].Nm}`;
+							const Team2 = `${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+							const Team1L = findLongestWord(Team1);
+							const Team2L = findLongestWord(Team2);
+							const bothTeam = `${Team1L} ${Team2L}`;
 							const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
 							if (oddG !== '') {
 								const splitStr = oddG.split(' ');
 								Edt['homeodd'] = splitStr[0];
-								Edt['awayodd'] = splitStr[1];
-								Edt['drawodd'] = splitStr[2];	
+								Edt['drawodd'] = splitStr[1];
+								Edt['awayodd'] = splitStr[2];	
 							} else {
 								Edt['homeodd'] = '1.7';
-								Edt['awayodd'] = '1.8';
 								Edt['drawodd'] = '3.1';
+								Edt['awayodd'] = '1.8';
 							}
+
 							Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 							eventDit['events'].push(Edt);
 						}
@@ -135,17 +142,22 @@ export async function GET(request: Request) {
 					Edt["id"] = j.toString();
 					Edt['hometeam'] = gamesJson.Stages[i].Events[j].T1[0].Nm;
 					Edt['awayteam'] = gamesJson.Stages[i].Events[j].T2[0].Nm;
-					const bothTeam = `${gamesJson.Stages[i].Events[j].T1[0].Nm} ${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+					
+					const Team1 = `${gamesJson.Stages[i].Events[j].T1[0].Nm}`;
+					const Team2 = `${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
+					const Team1L = findLongestWord(Team1);
+					const Team2L = findLongestWord(Team2);
+					const bothTeam = `${Team1L} ${Team2L}`;
 					const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
 					if (oddG !== '') {
 						const splitStr = oddG.split(' ');
 						Edt['homeodd'] = splitStr[0];
-						Edt['awayodd'] = splitStr[1];
-						Edt['drawodd'] = splitStr[2];	
+						Edt['drawodd'] = splitStr[1];
+						Edt['awayodd'] = splitStr[2];	
 					} else {
 						Edt['homeodd'] = '1.7';
-						Edt['awayodd'] = '1.8';
 						Edt['drawodd'] = '3.1';
+						Edt['awayodd'] = '1.8';
 					}
 					Edt['Esd'] = gamesJson.Stages[i].Events[j].Esd.toString();
 					eventDit['events'].push(Edt);
