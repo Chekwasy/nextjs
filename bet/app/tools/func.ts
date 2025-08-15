@@ -28,6 +28,9 @@ export const checkpwd = (strr : string) => {
   // 2. Initialize variables to keep track of the longest word found so far
   let longestWord = '';
   let maxLength = 0;
+  if (words.length === 1) {
+    return words[0];
+  }
 
   // 3. Iterate over the array of words
   for (let i = 0; i < words.length; i++) {
