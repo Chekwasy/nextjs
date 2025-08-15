@@ -5,16 +5,12 @@ export async function searchAndPrintLastChars(searchString, filePath) {
         const data = await fs.readFile(filePath, 'utf8');
         const lines = data.split('\n');
 
-        const results = '';
         const strings = searchString.split('=');
-        console.log(strings);
 
         lines.forEach(line => {
             if (line.includes(strings[0]) && line.includes(strings[1])) {
                 const last14Chars = line.slice(-14);
-                results = last14Chars;
-                console.log(results, 0);
-                return results;
+                return last14Chars;
             }
         });
         return '';
