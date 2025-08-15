@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 export async function searchAndPrintLastChars(searchString, filePath) {
     try {
         const data = await fs.readFile(filePath, 'utf8');
+        console.log(data);
         const lines = data.split('\n');
 
         const results = '';
@@ -17,10 +18,10 @@ export async function searchAndPrintLastChars(searchString, filePath) {
         });
         return '';
 
-    } catch (err) {
-        console.error(`Error reading file: ${err}`);
-        return ''; // Return an empty string in case of an error
-    }
+     } catch (err) {
+         console.error(`Error reading file: ${err}`);
+         return ''; // Return an empty string in case of an error
+     }
 }
 
 // --- Example Usage ---
