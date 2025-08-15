@@ -6,7 +6,7 @@ export async function searchAndPrintLastChars(searchString, filePath) {
         const lines = data.split('\n');
 
         const results = '';
-        const strings = searchString.split(' ');
+        const strings = searchString.split('=');
 
         lines.forEach(line => {
             if (line.includes(strings[0]) && line.includes(strings[1])) {

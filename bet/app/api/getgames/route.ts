@@ -95,7 +95,7 @@ export async function GET(request: Request) {
 						const Team2 = `${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
 						const Team1L = findLongestWord(Team1);
 						const Team2L = findLongestWord(Team2);
-						const bothTeam = `${Team1L} ${Team2L}`;
+						const bothTeam = `${Team1L}=${Team2L}`;
 						const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
 						if (oddG !== '') {
 							const splitStr = oddG.split(' ');
@@ -121,7 +121,7 @@ export async function GET(request: Request) {
 							const Team2 = `${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
 							const Team1L = findLongestWord(Team1);
 							const Team2L = findLongestWord(Team2);
-							const bothTeam = `${Team1L} ${Team2L}`;
+							const bothTeam = `${Team1L}=${Team2L}`;
 							const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
 							if (oddG !== '') {
 								const splitStr = oddG.split(' ');
@@ -147,7 +147,7 @@ export async function GET(request: Request) {
 					const Team2 = `${gamesJson.Stages[i].Events[j].T2[0].Nm}`;
 					const Team1L = findLongestWord(Team1);
 					const Team2L = findLongestWord(Team2);
-					const bothTeam = `${Team1L} ${Team2L}`;
+					const bothTeam = `${Team1L}=${Team2L}`;
 					const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
 					if (oddG !== '') {
 						const splitStr = oddG.split(' ');
