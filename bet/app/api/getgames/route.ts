@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const url = new URL(dd.url);
     const date = url.searchParams.get('date');
     
-    try {
+    //try {
 	let givenDate = parseInt(date!);
 	if (givenDate > 7) {
 	    givenDate = 0;
@@ -202,7 +202,7 @@ export async function GET(request: Request) {
 	}
 	const rem = [];
 	if (sGames) {
-		const sGamesC = [...sGames.games];
+		const sGamesC = [...(sGames.games)];
 		let evtDit: { 
 			id: string, 
 			titleCountry: string, 
@@ -295,7 +295,7 @@ export async function GET(request: Request) {
 	}
 
 	return NextResponse.json({date: date_, datee: dates, games: (oddLst.length === 0 && sGames) ? rem : oddLst}, {status: 201});
-    } catch {
-	    return NextResponse.json('error fetching data', {status: 400});
-    }
+    //} catch {
+	  //  return NextResponse.json('error fetching data', {status: 400});
+    //}
 };
