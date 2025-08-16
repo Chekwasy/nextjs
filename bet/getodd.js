@@ -1,24 +1,29 @@
 import { promises as fs } from 'fs';
 
 export async function searchAndPrintLastChars(searchString, filePath) {
-    // try {
+    try {
         const data = await fs.readFile(filePath, 'utf8');
         const lines = data.split('\n');
 
-        const strings = searchString.split('=');
+        const strings = searchString.split('='); // This assumes searchString will always contain '='
 
-        lines.forEach(line => {
+        // Use a for...of loop instead of forEach
+        for (const line of lines) {
+            // Ensure both parts of the split string are present in the line
             if (line.includes(strings[0]) && line.includes(strings[1])) {
                 const last14Chars = line.slice(-14);
-                return last14Chars;
+                return last14Chars; // This will now correctly exit the searchAndPrintLastChars function
             }
-        });
+        }
+
+        // If no matching line is found after checking all lines
         return '';
 
-    //  } catch (err) {
-    //      console.error(`Error reading file: ${err}`);
-    //      return ''; // Return an empty string in case of an error
-    //  }
+    } catch (err) {
+        // Log the error for debugging purposes
+        console.error(`Error reading file "${filePath}": ${err}`);
+        return ''; // Return an empty string in case of an error
+    }
 }
 
 // --- Example Usage ---
