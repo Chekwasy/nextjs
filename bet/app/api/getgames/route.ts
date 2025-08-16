@@ -97,12 +97,12 @@ export async function GET(request: Request) {
 						const Team2L = findLongestWord(Team2);
 						const bothTeam = `${Team1L}=${Team2L}`;
 						const oddG = await searchAndPrintLastChars(bothTeam, 'output.txt');
-						console.log(oddG);
 						if (oddG !== '') {
-							const splitStr = oddG.split(' ');
-							Edt['homeodd'] = splitStr[0];
+
+							const splitStr = oddG.split(' ').reverse();
+							Edt['homeodd'] = splitStr[2];
 							Edt['drawodd'] = splitStr[1];
-							Edt['awayodd'] = splitStr[2];	
+							Edt['awayodd'] = splitStr[0];	
 						} else {
 							Edt['homeodd'] = '1.7';
 							Edt['drawodd'] = '3.1';
@@ -124,12 +124,11 @@ export async function GET(request: Request) {
 							const Team2L = findLongestWord(Team2);
 							const bothTeam = `${Team1L}=${Team2L}`;
 							const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
-							console.log(oddG);
 							if (oddG !== '') {
-								const splitStr = oddG.split(' ');
-								Edt['homeodd'] = splitStr[0];
+								const splitStr = oddG.split(' ').reverse();
+								Edt['homeodd'] = splitStr[2];
 								Edt['drawodd'] = splitStr[1];
-								Edt['awayodd'] = splitStr[2];	
+								Edt['awayodd'] = splitStr[0];	
 							} else {
 								Edt['homeodd'] = '1.7';
 								Edt['drawodd'] = '3.1';
@@ -151,12 +150,11 @@ export async function GET(request: Request) {
 					const Team2L = findLongestWord(Team2);
 					const bothTeam = `${Team1L}=${Team2L}`;
 					const oddG: string = await searchAndPrintLastChars(bothTeam, 'output.txt');
-					console.log(oddG);
 					if (oddG !== '') {
-						const splitStr = oddG.split(' ');
-						Edt['homeodd'] = splitStr[0];
+						const splitStr = oddG.split(' ').reverse();
+						Edt['homeodd'] = splitStr[2];
 						Edt['drawodd'] = splitStr[1];
-						Edt['awayodd'] = splitStr[2];	
+						Edt['awayodd'] = splitStr[0];	
 					} else {
 						Edt['homeodd'] = '1.7';
 						Edt['drawodd'] = '3.1';

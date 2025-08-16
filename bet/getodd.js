@@ -11,8 +11,7 @@ export async function searchAndPrintLastChars(searchString, filePath) {
         for (const line of lines) {
             // Ensure both parts of the split string are present in the line
             if (line.includes(strings[0]) && line.includes(strings[1])) {
-                const last14Chars = line.slice(-14);
-                return last14Chars; // This will now correctly exit the searchAndPrintLastChars function
+                return line;
             }
         }
 
