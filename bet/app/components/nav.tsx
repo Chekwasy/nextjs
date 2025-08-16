@@ -210,7 +210,7 @@ export default function Nav() {
         {/* Desktop Navigation Links */}
         <ul className='hidden md:flex items-center space-x-2 lg:space-x-4'>
           {/* Profile Picture Upload */}
-          {storeItems.mainSlice.logged && (
+          {/* {storeItems.mainSlice.logged && (
             <li>
               <button
                 onClick={() => document.getElementById('image-upload')?.click()}
@@ -235,7 +235,7 @@ export default function Nav() {
                 className="hidden"
               />
             </li>
-          )}
+          )} */}
 
           {/* Account Balance (Desktop only) */}
           {storeItems.mainSlice.logged && (

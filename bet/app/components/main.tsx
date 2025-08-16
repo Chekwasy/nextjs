@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, MouseEvent, useCallback } from 'react';
+import React, { useState, useEffect, MouseEvent, useCallback, ChangeEvent } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,8 @@ export default function Main() {
   const [isBettingPanelOpen, setIsBettingPanelOpen] = useState(false);
   const [betAmount, setBetAmount] = useState('');
   const [potentialWin, setPotentialWin] = useState('');
-  const [totalOdds, setTotalOdds] = useState(''); 
+  const [totalOdds, setTotalOdds] = useState('');
+  const [searchI, setSearchI] = useState(''); 
   const [showGuide, setShowGuide] = useState(false);
  // const [selectedGames, setSelectedGames] = useState<PlayeD[]>([]);
 
@@ -54,6 +55,52 @@ export default function Main() {
   const [currentDate, setCurrentDate] = useState(dateList[0].date); 
   const [currentDateIndent, setCurrentDateIndent] = useState(0); 
   const [showDateList, setShowDateList] = useState(false); 
+
+  const handleSearchI = (e: ChangeEvent<HTMLInputElement>) => {
+    const nwval = e.target.value;
+    setSearchI(nwval);
+  }
+  const searchTextAndScroll = () => {
+    const searchTerm = searchI;
+
+    // 2. Get content area element with null check
+    const contentArea = document.getElementById('contentArea');
+
+    // If contentArea is null, we can't proceed.
+    if (!contentArea) {
+      console.error("Error: 'contentArea' element not found.");
+      alert('Content area not available for search.');
+      return; // Exit the function
+    }
+
+    // 3. Select all elements within the content area
+    // querySelectorAll returns a NodeList, which is iterable.
+    // No need for optional chaining here as we've already checked contentArea.
+    const allElements = contentArea.querySelectorAll('*');
+    let foundElement = null;
+
+    // 4. Iterate through all elements to find the search term
+    // No need for optional chaining on `element` inside the loop, as `for...of` ensures `element` is a Node.
+    for (const element of allElements) {
+      // Check if textContent exists before converting to lowercase and including searchTerm.
+      // This handles elements that might not have textContent (e.g., img, input without value).
+      if (element.textContent && element.textContent.toLowerCase().includes(searchTerm)) {
+        foundElement = element;
+        break; // Stop at the first match
+      }
+    }
+
+    // 5. Scroll to the found element or alert if not found
+    if (foundElement) {
+      foundElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      // Optional: Add highlighting logic here
+    } else {
+      alert(`"${searchTerm}" not found on this page.`);
+    }
+  };
 
   // Function to load games data from the backend
   const loadGames = useCallback(async () => {
@@ -380,7 +427,16 @@ export default function Main() {
       {/* Main Content Area - Game Listings */}
       {!showGuide && (
         <div className="bg-white p-4 pt-20">
-          <div className="grid gap-6">
+          <div className="w-full flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-800 shadow-md rounded-lg">
+            <div className="flex flex-grow max-w-lg space-x-3"> 
+              <input type="text" id="searchInput" placeholder="Search Match..." value={searchI} onChange={handleSearchI} className="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              />
+              <button onClick={searchTextAndScroll} className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 ease-in-out">
+                Search
+              </button>
+            </div>
+          </div>
+          <div id='contentArea' className="grid gap-6">
             {games.length > 0 ? (
               games.map((game, index) => (
                 <div key={game.id || index} className="bg-white rounded-lg shadow-md p-4 border border-gray-100">
