@@ -273,24 +273,24 @@ export async function GET(request: Request) {
 						evtDit['events'].push(Edt);
 					}
 				}
-				if (evtDit.events.length > 0) {
-					rem.push(evtDit);
-				}
-				evtDit = {} as { 
-					id: string, 
-					titleCountry: string, 
-					subtitle: string, 
-					events: { 
-						id: string, 
-						hometeam: string, 
-						awayteam: string, 
-						homeodd: string, 
-						awayodd: string, 
-						drawodd: string, 
-						Esd: string 
-					}[] 
-				};
 			}
+			if (evtDit.events.length > 0) {
+				rem.push(evtDit);
+			}
+			evtDit = {} as { 
+				id: string, 
+				titleCountry: string, 
+				subtitle: string, 
+				events: { 
+					id: string, 
+					hometeam: string, 
+					awayteam: string, 
+					homeodd: string, 
+					awayodd: string, 
+					drawodd: string, 
+					Esd: string 
+				}[] 
+			};
 		}
 	}
 
