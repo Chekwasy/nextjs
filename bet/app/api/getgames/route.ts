@@ -69,19 +69,19 @@ export async function GET(request: Request) {
 					const Edt: { 
 						id: string, 
 						hometeam: string, 
-					awayteam: string, 
+						awayteam: string, 
 						homeodd: string, 
 						awayodd: string, 
-					drawodd: string, 
-					Esd: string 
+						drawodd: string, 
+						Esd: string 
 					} = {
-					id: '',
-					hometeam: '',
-					awayteam: '',
-					homeodd: '',
-					awayodd: '',
-					drawodd: '',
-					Esd: ''
+						id: '',
+						hometeam: '',
+						awayteam: '',
+						homeodd: '',
+						awayodd: '',
+						drawodd: '',
+						Esd: ''
 					};
 					if (givenDate === 0) {
 						const hr1 = today.getHours();
@@ -193,14 +193,108 @@ export async function GET(request: Request) {
   	const dates : {date: string; indent: number;}[] = [];
  	 const todayy = new Date();
 
- 	 for (let i = 0; i <= 7; i++) {
-  	  const date = new Date(todayy);
-  	  date.setDate(date.getDate() + i);
-  	  const dateString = date.toISOString().split('T')[0];
+ 	for (let i = 0; i <= 7; i++) {
+  	 const date = new Date(todayy);
+  	 date.setDate(date.getDate() + i);
+  	 const dateString = date.toISOString().split('T')[0];
 
- 	   dates.push({ date: dateString, indent: i });
-	  }
-	return NextResponse.json({date: date_, datee: dates, games: (oddLst.length === 0 && sGames) ? sGames.games : oddLst}, {status: 201});
+ 	  dates.push({ date: dateString, indent: i });
+	}
+	const rem = [];
+	if (sGames) {
+		const sGamesC = [...sGames.games];
+		let evtDit: { 
+			id: string, 
+			titleCountry: string, 
+			subtitle: string, 
+			events: { 
+			id: string, 
+			hometeam: string, 
+			awayteam: string, 
+			homeodd: string, 
+			awayodd: string, 
+			drawodd: string, 
+			Esd: string 
+		}[] 
+		} = {
+			id: '',
+			titleCountry: '',
+			subtitle: '',
+			events: []
+		};
+		const ggameslen = sGamesC.length;
+		for (let i = 0; i < ggameslen; i++) {
+			evtDit['id'] = sGamesC[i].id;
+			evtDit['titleCountry'] = sGamesC[i].titleCountry;
+			evtDit['subtitle'] = sGamesC[i].subtitle;
+			evtDit['events'] = [];
+			const gevtlen = sGamesC[i].events.length;
+			for (let j = 0; j < gevtlen; j++) {
+				const Edt: { 
+					id: string, 
+					hometeam: string, 
+					awayteam: string, 
+					homeodd: string, 
+					awayodd: string, 
+					drawodd: string, 
+					Esd: string 
+				} = {
+					id: '',
+					hometeam: '',
+					awayteam: '',
+					homeodd: '',
+					awayodd: '',
+					drawodd: '',
+					Esd: ''
+				};
+				const hr1 = today.getHours();
+				const mn1 = today.getMinutes();
+				const hr2 = parseInt(sGamesC[i].events[j].Esd.toString().substring(8, 10));
+				const mn2 = parseInt(sGamesC[i].events[j].Esd.toString().substring(10, 12));
+				if (hr2 > hr1) {
+					Edt["id"] = sGamesC[i].events[j].id;
+					Edt['hometeam'] = sGamesC[i].events[j].hometeam;
+					Edt['awayteam'] = sGamesC[i].events[j].awayteam;
+					Edt['homeodd'] = sGamesC[i].events[j].homeodd;
+					Edt['drawodd'] = sGamesC[i].events[j].drawodd;
+					Edt['awayodd'] = sGamesC[i].events[j].awayodd
+					Edt['Esd'] = sGamesC[i].events[j].Esd;
+					evtDit['events'].push(Edt);
+				}
+				if (hr2 === hr1) {
+					if (mn2 > mn1) {
+						Edt["id"] = sGamesC[i].events[j].id;
+						Edt['hometeam'] = sGamesC[i].events[j].hometeam;
+						Edt['awayteam'] = sGamesC[i].events[j].awayteam;
+						Edt['homeodd'] = sGamesC[i].events[j].homeodd;
+						Edt['drawodd'] = sGamesC[i].events[j].drawodd;
+						Edt['awayodd'] = sGamesC[i].events[j].awayodd
+						Edt['Esd'] = sGamesC[i].events[j].Esd;
+						evtDit['events'].push(Edt);
+					}
+				}
+				if (evtDit.events.length > 0) {
+					rem.push(evtDit);
+				}
+				evtDit = {} as { 
+					id: string, 
+					titleCountry: string, 
+					subtitle: string, 
+					events: { 
+						id: string, 
+						hometeam: string, 
+						awayteam: string, 
+						homeodd: string, 
+						awayodd: string, 
+						drawodd: string, 
+						Esd: string 
+					}[] 
+				};
+			}
+		}
+	}
+
+	return NextResponse.json({date: date_, datee: dates, games: (oddLst.length === 0 && sGames) ? rem : oddLst}, {status: 201});
     } catch {
 	    return NextResponse.json('error fetching data', {status: 400});
     }
