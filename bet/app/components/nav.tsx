@@ -198,7 +198,7 @@ export default function Nav() {
           )}
           {storeItems.mainSlice.logged && (
             <button
-              className="p-1 mr-3 rounded-full item-center hover:bg-green-600 transition-colors"
+              className="p-1 rounded-full item-center hover:bg-green-600 transition-colors"
               onClick={handleReloadBalance}
               aria-label="Reload virtual balance"
             >
@@ -240,7 +240,7 @@ export default function Nav() {
           {/* Account Balance (Desktop only) */}
           {storeItems.mainSlice.logged && (
             <li>
-              <div className='bg-green-800 rounded-lg ml-4 text-white text-xxs p-2 font-bold flex items-center justify-center'> {/* Added flex, items-center, justify-center */}
+              <div className='bg-green-800 rounded-lg ml-2 text-white text-xxs p-2 font-bold flex items-center justify-center'> {/* Added flex, items-center, justify-center */}
                 <div>{storeItems?.mainSlice.me.currency + ' '}</div>
                 <div>{(new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0'))).toString()}</div>
               </div>
