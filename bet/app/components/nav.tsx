@@ -241,7 +241,7 @@ export default function Nav() {
           {storeItems.mainSlice.logged && (
             <li>
               <div className='bg-green-800 rounded-lg text-white text-xxs p-2 text-bold'>
-                {storeItems?.mainSlice.me.currency + ' ' + new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0')).toString()}
+                {storeItems?.mainSlice.me.currency + ' ' + (new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0'))).toString()}
               </div>
             </li>
           )}
