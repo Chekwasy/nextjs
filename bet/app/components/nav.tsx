@@ -206,14 +206,6 @@ export default function Nav() {
             </button>
           )}
         </div>
-                  {/* Account Balance (Desktop only) */}
-          {storeItems.mainSlice.logged && (
-            <li>
-              <div className='bg-green-800 rounded-lg text-white text-xxs p-2 font-bold'>
-                {`${storeItems.mainSlice.me.currency || ''} ${new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0'))}`}
-              </div>
-            </li>
-          )}
 
         {/* Desktop Navigation Links */}
         <ul className='hidden md:flex items-center space-x-2 lg:space-x-4'>
@@ -245,7 +237,21 @@ export default function Nav() {
             </li>
           )} */}
 
-
+          {/* Account Balance (Desktop only) */}
+          {storeItems.mainSlice.logged && (
+            <li>
+              <div className='bg-green-800 rounded-lg text-white text-xxs p-2 text-bold'>
+                {`${storeItems.mainSlice.me.currency || ''}`}
+              </div>
+            </li>
+          )}
+          {storeItems.mainSlice.logged && (
+            <li>
+              <div className='bg-green-800 rounded-lg text-white text-xxs p-2 text-bold'>
+                {`${new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0'))}`}
+              </div>
+            </li>
+          )}
 
           {/* Reload Button (Desktop only) */}
           {storeItems.mainSlice.logged && (
