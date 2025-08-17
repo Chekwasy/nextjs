@@ -240,7 +240,7 @@ export default function Nav() {
           {/* Account Balance (Desktop only) */}
           {storeItems.mainSlice.logged && (
             <li>
-              <div className='bg-green-800 px-1 py-1 rounded-lg text-white text-xxs shadow-sm'>
+              <div className='bg-green-800 rounded-lg text-white text-xxs p-1'>
                 {`${storeItems.mainSlice.me.currency || ''} ${new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0'))}`}
               </div>
             </li>
