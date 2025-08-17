@@ -158,7 +158,7 @@ function LoginPage() { // Renamed from 'Page' to 'LoginPage' for clarity
               Email Address
             </label>
             <input
-              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
+              className={`w-full text-gray-600 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
                 ${isEmailValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
               id="email"
               type="email" // Use type="email" for better mobile keyboard
@@ -186,7 +186,7 @@ function LoginPage() { // Renamed from 'Page' to 'LoginPage' for clarity
             </label>
             <div className="relative">
               <input
-                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200 pr-10
+                className={`w-full text-gray-600 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200 pr-10
                   ${isPasswordValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
                 id="password"
                 type={showPassword ? 'text' : 'password'}

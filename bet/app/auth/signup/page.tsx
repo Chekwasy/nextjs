@@ -198,7 +198,7 @@ function SignupPage() { // Renamed from 'Page' to 'SignupPage' for clarity
               First Name
             </label>
             <input
-              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
+              className={`w-full text-gray-600 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
                 ${isFirstnameValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
               id="firstname"
               type="text"
@@ -223,7 +223,7 @@ function SignupPage() { // Renamed from 'Page' to 'SignupPage' for clarity
               Last Name
             </label>
             <input
-              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
+              className={`w-full text-gray-600 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
                 ${isLastnameValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
               id="lastname"
               type="text"
@@ -248,7 +248,7 @@ function SignupPage() { // Renamed from 'Page' to 'SignupPage' for clarity
               Email Address
             </label>
             <input
-              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
+              className={`w-full text-gray-600 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200
                 ${isEmailValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
               id="email"
               type="email"
@@ -274,7 +274,7 @@ function SignupPage() { // Renamed from 'Page' to 'SignupPage' for clarity
             </label>
             <div className="relative">
               <input
-                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200 pr-10
+                className={`w-full text-gray-600 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200 pr-10
                   ${isPasswordValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
                 id="password"
                 type={showPassword ? 'text' : 'password'}
@@ -312,7 +312,7 @@ function SignupPage() { // Renamed from 'Page' to 'SignupPage' for clarity
             </label>
             <div className="relative">
               <input
-                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200 pr-10
+                className={`w-full text-gray-600 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200 pr-10
                   ${isConfirmPasswordValid ? 'border-gray-300' : 'border-red-500 ring-red-300'}`}
                 id="confirmPassword"
                 type={showConfirmPassword ? 'text' : 'password'}
