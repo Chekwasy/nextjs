@@ -163,17 +163,17 @@ export default function Nav() {
     <li>
       {href ? (
         <Link href={href} className="flex items-center group relative p-2 rounded-md transition-colors hover:bg-green-600">
-          <Image src={iconSrc} alt={altText} width={24} height={24} className="filter brightness-0 invert group-hover:filter-none mr-2" /> {/* Inverted color */}
+          <Image src={iconSrc} alt={altText} width={24} height={24} className="filter brightness-0 invert group-hover:filter-none mr-1" /> {/* Inverted color */}
           <span className="text-white text-sm font-medium">{label}</span>
-          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block px-3 py-1 bg-gray-800 text-gray-100 text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mt-12 hidden group-hover:block px-3 py-1 bg-gray-800 text-gray-100 text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
             {label}
           </div>
         </Link>
       ) : (
         <button onClick={onClick} className="flex items-center group relative p-2 rounded-md transition-colors hover:bg-green-600 w-full text-left">
-          <Image src={iconSrc} alt={altText} width={24} height={24} className="filter brightness-0 invert group-hover:filter-none mr-2" />
+          <Image src={iconSrc} alt={altText} width={24} height={24} className="filter brightness-0 invert group-hover:filter-none mr-1" />
           <span className="text-white text-sm font-medium">{label}</span>
-          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block px-3 py-1 bg-gray-800 text-gray-100 text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mt-12 hidden group-hover:block px-3 py-1 bg-gray-800 text-gray-100 text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
             {label}
           </div>
         </button>
