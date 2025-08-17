@@ -240,8 +240,9 @@ export default function Nav() {
           {/* Account Balance (Desktop only) */}
           {storeItems.mainSlice.logged && (
             <li>
-              <div className='bg-green-800 rounded-lg text-white text-xxs p-2 text-bold'>
-                {storeItems?.mainSlice.me.currency + ' ' + (new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0'))).toString()}
+              <div className='bg-green-800 rounded-lg text-white text-xxs p-2 font-bold flex items-center justify-center'> {/* Added flex, items-center, justify-center */}
+                <div>{storeItems?.mainSlice.me.currency + ' '}</div>
+                <div>{(new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0'))).toString()}</div>
               </div>
             </li>
           )}
