@@ -36,6 +36,7 @@ tokenQueue.process(async (job, done) => {
 		throw new Error("Missing email or token");
 	}
 	console.log('Processing', email);
+    console.log('skey', secretKey);
 
 	//Data of email to be sent
 	let mailOptions = {
