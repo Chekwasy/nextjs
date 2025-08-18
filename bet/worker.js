@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
 //dobhplzccqrsxfco
 
 
-const secretKey = process.env.local.MSK || '';
+const secretKey = process.env.MSK || '';
 
 const transporter = nodemailer.createTransport({
     host: 'workplace.truehost.cloud',
