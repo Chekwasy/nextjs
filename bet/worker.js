@@ -1,4 +1,4 @@
-import Queue from 'bull/lib/queue';
+import Queue from 'bull/lib/queue.js';
 import nodemailer from 'nodemailer';
 
 //pass: 'ucblaybosshvkvwt'
