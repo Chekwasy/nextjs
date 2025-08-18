@@ -15,6 +15,8 @@ const transporter = nodemailer.createTransport({
         user: 'info@trybet.com.ng',
         pass: secretKey,
     },
+    logger: true,
+    debug: true,
     tls: {
     // set to false only if you have certificate issues; prefer leaving it default
     rejectUnauthorized: false
@@ -36,7 +38,6 @@ tokenQueue.process(async (job, done) => {
 		throw new Error("Missing email or token");
 	}
 	console.log('Processing', email);
-    console.log('skey', secretKey);
 
 	//Data of email to be sent
 	let mailOptions = {
