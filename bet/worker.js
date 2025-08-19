@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
     debug: true,
     tls: {
     // set to false only if you have certificate issues; prefer leaving it default
-    rejectUnauthorized: false
+    rejectUnauthorized: true
     }
 });
 
