@@ -21,6 +21,21 @@ export const checkpwd = (strr : string) => {
 	  return true;
   };
 
+  //function to check input datathat is only number
+export const checknumber = (strr: string) => {
+	const len = strr.length;
+	if (len > 50) {
+		return false;
+	}
+	const num = `1234567890`;
+	for (let i = 0; i < len; i++) {
+		if (!(num.includes(strr[i]))) {
+			return false;
+		}
+	}
+	return true;
+};
+
   export const findLongestWord = (str: string) => {
   // 1. Split the string by spaces to get an array of words
   const words = str.split(' ');

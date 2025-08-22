@@ -148,7 +148,7 @@ tokenQueue.process(async (job, done) => {
     <div class="container">
         <div class="header">
             <h1>TryBet</h1>
-            <p class="small-text">Your trusted betting platform</p>
+            <p class="small-text">Bet with confidence</p>
         </div>
         <div class="content">
             <h2>Your One-Time Password (OTP)</h2>
@@ -196,7 +196,7 @@ tokenQueue.process(async (job, done) => {
 			});
 		} else {
 			console.log(info.response);
-		}
+ 		}
 	});
 	done();
 });
