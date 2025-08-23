@@ -10,20 +10,13 @@ export async function POST(request) {
 		//data from frontend
     	const { token, auth_header } = dd;
 		if (!auth_header || !token ) { redisClient.del(email); return  NextResponse.json('error', {status: 400}); }
-		console.log('aaa');
 	 	const decoded_usr_str = Buffer.from(auth_header, 'base64').toString('utf-8');	
 		const usr_details = decoded_usr_str.split(':');
-		console.log(usr_details);
 		const pwd = crypto.createHash('sha256').update(usr_details[1]).digest('hex');
-		console.log('zzz');
 		const email = usr_details[0];
-		console.log('eee');
 		if (!email || !usr_details[1]) { redisClient.del(email); return NextResponse.json('error', {status: 401}); }
-		console.log('ggg');
 		if (!checkpwd(email)) { redisClient.del(email); return  NextResponse.json('error', {status: 401}); }
-		console.log('jjj');
 		if (!checkpwd(usr_details[1])) {redisClient.del(email); return  NextResponse.json('error', {status: 401});}
-		console.log('kkk');
 		if (!checknumber(token)) { 
 			redisClient.del(email);
 			return  NextResponse.json('error', {status: 401});
@@ -32,7 +25,6 @@ export async function POST(request) {
 		if (!tok) {
 			return  NextResponse.json('error', {status: 401});
 		}
-		console.log('ccc');
 		const mainstr = tok.slice(0,6);
 		const mainval = parseInt(tok.slice(-1)) + 1;
 		redisClient.del(email);

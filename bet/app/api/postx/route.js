@@ -148,7 +148,6 @@ export async function POST(request) {
                             Ebal: Ebal.toString(),
                             status: "Pending",
                             code: code,
-                            games: games
                         }
                     }
                 }
