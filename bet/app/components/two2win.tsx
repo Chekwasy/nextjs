@@ -171,7 +171,7 @@ export default function Two2Win() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Principal / Starting Capital:</span>
-                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(12000)}</span>
+                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(20000)}</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Opening Balance:</span>
@@ -201,7 +201,7 @@ export default function Two2Win() {
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">Current ROI:</span>
-                                        <span className="font-bold text-lg text-green-700">{(((parseFloat(entry.Sbal) / 12000) * 100) - 100).toFixed(2)} %</span>
+                                        <span className="font-bold text-lg text-green-700">{(((parseFloat(entry.Sbal) / 20000) * 100) - 100).toFixed(2)} %</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">SportyBet Code:</span>
@@ -261,15 +261,15 @@ export default function Two2Win() {
                         </h2>
                         <div className="text-lg md:text-xl text-gray-700 leading-relaxed space-y-6">
                             <p>
-                                <strong>Introduction to Our Betting System:</strong> We initiate our betting system with a Principal amount (Starting Capital) of ₦12,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns.
+                                <strong>Introduction to Our Betting System:</strong> We initiate our betting system with a Principal amount (Starting Capital) of ₦20,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns.
                             </p>
                             <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-md">
                                 <h3 className="font-bold text-green-700 mb-2">💡 Tips for Success:</h3>
                                 <ul className="list-disc list-inside text-green-800 space-y-1">
-                                     <li>Start with a capital of ₦12,000.</li>
-                                    <li>Once your earnings reach 15% of this initial capital, you have the option to withdraw ₦1,800, leaving you with a balance of ₦12,000.</li>
-                                    <li>Continue playing with this ₦12,000 balance until it reaches ₦24,000, at which point you should double your stake on the site.</li>
-                                    <li>If your balance further increases to ₦36,000, you can triple your stake, and so on.</li>
+                                     <li>Start with a capital of ₦20,000.</li>
+                                    <li>Once your earnings reach 15% of this initial capital, you have the option to withdraw ₦3,000, leaving you with a balance of ₦20,000.</li>
+                                    <li>Continue playing with this ₦20,000 balance until it reaches ₦40,000, at which point you should double your stake on the site.</li>
+                                    <li>If your balance further increases to ₦60,000, you can triple your stake, and so on.</li>
                                     <li>You are free to manage your withdrawals as you see fit.</li>
                                     <li>Access to this feature requires a subscription of ₦250 weekly or ₦800 monthly. A 7-day free trial applies.</li>
                                 </ul>
@@ -291,10 +291,10 @@ export default function Two2Win() {
                             <p>
                                 <strong>Recommendations for Getting Started:</strong> For optimal results, we advise commencing with a modest investment:
                                 <ul className="list-disc list-inside space-y-2 mt-2">
-                                    <li>₦6,000 with a ₦10 minimum stake</li>
-                                    <li>₦12,000 with a ₦20 minimum stake</li>
-                                    <li>₦60,000 with a ₦100 minimum stake</li>
-                                    <li>₦600,000 with a ₦1,000 minimum stake</li>
+                                    <li>₦10,000 with a ₦10 minimum stake</li>
+                                    <li>₦20,000 with a ₦20 minimum stake</li>
+                                    <li>₦100,000 with a ₦100 minimum stake</li>
+                                    <li>₦1,000,000 with a ₦1,000 minimum stake</li>
                                 </ul>
                             </p>
                             <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
