@@ -26,6 +26,7 @@ export async function POST(request) {
     	.findOne({ "userID": usr_id });
         console.log(usr.email);
     	if (!usr || usr?.email !== 'richardchekwas@gmail.com') { return  NextResponse.json('error', {status: 401});}
+        console.log(9876);
         if (db[0] === 'two2win') {
             const g = await dbClient.client.db().collection('two2win')
             .findOne({ "date": date });

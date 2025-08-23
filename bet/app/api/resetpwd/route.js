@@ -11,7 +11,7 @@ export async function POST(request) {
     	const { token, auth_header } = dd;
 		if (!auth_header || !token ) { redisClient.del(email); return  NextResponse.json('error', {status: 400}); }
 		console.log('aaa');
-		decoded_usr_str = Buffer.from(auth_header, 'base64').toString('utf-8');	
+	 	const decoded_usr_str = Buffer.from(auth_header, 'base64').toString('utf-8');	
 		const usr_details = decoded_usr_str.split(':');
 		console.log(usr_details);
 		const pwd = crypto.createHash('sha256').update(usr_details[1]).digest('hex');
@@ -24,8 +24,7 @@ export async function POST(request) {
 		console.log('jjj');
 		if (!checkpwd(usr_details[1])) {redisClient.del(email); return  NextResponse.json('error', {status: 401});}
 		console.log('kkk');
-		if (!checknumber(token)) {redisClient.del(email); return  NextResponse.json('error', {status: 401});}
-		console.log('bbb');	
+		if (!checknumber(token)) {redisClient.del(email); return  NextResponse.json('error', {status: 401});
 		const tok = await redisClient.get(email);
 		if (!tok) {
 			return  NextResponse.json('error', {status: 401});
@@ -49,3 +48,5 @@ export async function POST(request) {
         return  NextResponse.json('error', {status: 400});
     }
 };
+
+
