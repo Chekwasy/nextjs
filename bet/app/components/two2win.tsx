@@ -136,7 +136,7 @@ export default function Two2Win() {
             {/* Subscription Activation Button */}
             {!showGuide && hasSubscriptionExpired && (
                 <div className="w-full max-w-4xl mx-auto mb-6">
-                    <Link href="/sub" className="block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-center transition duration-300 ease-in-out shadow-md">
+                    <Link href="/sub" className="block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-center transition duration-300 ease-in-out shadow-md">
                         Activate Your Subscription
                     </Link>
                 </div>
@@ -146,7 +146,7 @@ export default function Two2Win() {
             {!showGuide && (
                 <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 mb-6">
                     <div
-                        className="flex justify-center items-center p-4 mb-6 cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300 ease-in-out"
+                        className="flex justify-center items-center p-4 mb-6 cursor-pointer bg-gradient-to-r from-green-500 to-indigo-600 text-white font-bold rounded-lg shadow-md hover:from-green-600 hover:to-indigo-700 transition duration-300 ease-in-out"
                         onClick={() => setIsCalendarOpen(true)}
                     >
                         📅 Date: {selectedDay} / {selectedMonth.slice(0, -2)} / {selectedYear}
@@ -159,11 +159,11 @@ export default function Two2Win() {
                                     <div className={`w-full sm:w-1/3 p-2 text-center rounded-lg font-bold text-white
                                         ${entry.status === 'Won' ? 'bg-green-600' :
                                         entry.status === 'Lost' ? 'bg-red-600' :
-                                        'bg-blue-600'}`}
+                                        'bg-green-600'}`}
                                     >
                                         {entry.status}
                                     </div>
-                                    <div className="w-full sm:w-2/3 p-2 text-center rounded-lg font-bold bg-purple-100 text-purple-800">
+                                    <div className="w-full sm:w-2/3 p-2 text-center rounded-lg font-bold bg-green-100 text-green-800">
                                         ⏱️ {`${entry.time.substring(0, 2)}:${entry.time.substring(2, 4)}`}
                                     </div>
                                 </div>
@@ -223,7 +223,7 @@ export default function Two2Win() {
             {!showGuide && (
                 <div className="fixed bottom-6 right-6 z-10">
                     <button
-                        className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                         onClick={() => setShowGuide(true)}
                     >
                         ℹ️ Guide
@@ -263,9 +263,9 @@ export default function Two2Win() {
                             <p>
                                 <strong>Introduction to Our Betting System:</strong> We initiate our betting system with a Principal amount (Starting Capital) of ₦12,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns.
                             </p>
-                            <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
-                                <h3 className="font-bold text-blue-700 mb-2">💡 Tips for Success:</h3>
-                                <ul className="list-disc list-inside text-blue-800 space-y-1">
+                            <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-md">
+                                <h3 className="font-bold text-green-700 mb-2">💡 Tips for Success:</h3>
+                                <ul className="list-disc list-inside text-green-800 space-y-1">
                                      <li>Start with a capital of ₦12,000.</li>
                                     <li>Once your earnings reach 15% of this initial capital, you have the option to withdraw ₦1,800, leaving you with a balance of ₦12,000.</li>
                                     <li>Continue playing with this ₦12,000 balance until it reaches ₦24,000, at which point you should double your stake on the site.</li>
@@ -344,7 +344,7 @@ export default function Two2Win() {
                                 <select
                                     value={selectedMonth}
                                     onChange={(e) => setSelectedMonth(e.target.value)}
-                                    className="flex-1 mr-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer text-gray-700 font-semibold"
+                                    className="flex-1 mr-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer text-gray-700 font-semibold"
                                 >
                                     {monthL.map((month, index) => (
                                         <option key={index} value={month}>
@@ -355,7 +355,7 @@ export default function Two2Win() {
                                 <select
                                     value={selectedYear}
                                     onChange={(e) => setSelectedYear(e.target.value)}
-                                    className="flex-1 ml-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer text-gray-700 font-semibold"
+                                    className="flex-1 ml-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer text-gray-700 font-semibold"
                                 >
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
@@ -377,7 +377,7 @@ export default function Two2Win() {
                                             <button
                                                 key={idx}
                                                 className={`text-center py-2 rounded-md transition-colors duration-200
-                                                    ${day === '' ? 'cursor-default bg-gray-100' : 'cursor-pointer hover:bg-blue-100'}
+                                                    ${day === '' ? 'cursor-default bg-gray-100' : 'cursor-pointer hover:bg-green-100'}
                                                     ${selectedDay === day.toString() && (day.toString() + selectedMonth + selectedYear) === todayFormatted
                                                         ? 'bg-green-200 text-green-800 font-bold'
                                                         : 'text-gray-800'
