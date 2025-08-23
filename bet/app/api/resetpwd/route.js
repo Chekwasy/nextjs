@@ -24,7 +24,10 @@ export async function POST(request) {
 		console.log('jjj');
 		if (!checkpwd(usr_details[1])) {redisClient.del(email); return  NextResponse.json('error', {status: 401});}
 		console.log('kkk');
-		if (!checknumber(token)) {redisClient.del(email); return  NextResponse.json('error', {status: 401});
+		if (!checknumber(token)) { 
+			redisClient.del(email);
+			return  NextResponse.json('error', {status: 401});
+		}
 		const tok = await redisClient.get(email);
 		if (!tok) {
 			return  NextResponse.json('error', {status: 401});
