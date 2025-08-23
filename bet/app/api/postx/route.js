@@ -24,9 +24,7 @@ export async function POST(request) {
         }
         const usr = await dbClient.client.db().collection('users')
     	.findOne({ "userID": usr_id });
-        console.log(usr.email);
     	if (!usr || usr?.email !== 'richardchekwas@gmail.com') { return  NextResponse.json('error', {status: 401});}
-        console.log(9876);
         if (db[0] === 'two2win') {
             const g = await dbClient.client.db().collection('two2win')
             .findOne({ "date": date });
@@ -130,7 +128,6 @@ export async function POST(request) {
                         Ebal: Ebal.toString(),
                         status: "Pending",
                         code: code,
-                        games: games
                     }]    
                 });
                 if (!r) {

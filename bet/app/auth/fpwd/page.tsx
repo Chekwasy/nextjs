@@ -3,7 +3,6 @@
 import { useState, ChangeEvent, FormEvent, MouseEvent, useCallback } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // For App Router navigation
 import { Eye, EyeOff } from 'lucide-react'; // Lucide icons for password visibility
 
 // --- Popup Component (Reused from LoginPage) ---
@@ -46,7 +45,6 @@ const ALLOWED_CHARS_REGEX = /^[~!@#$%&_{}[\].;<>a-zA-Z0-9]*$/;
 type ProcessStep = 'enterEmail' | 'enterToken' | 'resetPwd';
 
 function ForgotPasswordPage() { // Renamed component for clarity
-  const router = useRouter();
 
   // --- State for Form Inputs ---
   const [email, setEmail] = useState('');
@@ -246,8 +244,6 @@ function ForgotPasswordPage() { // Renamed component for clarity
         setNewPassword('');
         setConfirmPassword('');
         setProcessStep('enterEmail'); // Or router.push('/auth/login');
-        // If successful, consider redirecting to login
-        router.push('/auth/login');
       } catch {
         setMessage('Failed to reset password. Please try again.');
         setIsPopupOpen(true);
@@ -260,7 +256,6 @@ function ForgotPasswordPage() { // Renamed component for clarity
     newPassword,
     confirmPassword,
     isValidInputChars,
-    router,
   ]);
 
   return (
