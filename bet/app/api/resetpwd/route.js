@@ -16,9 +16,13 @@ export async function POST(request) {
 		const usr_details = decoded_usr_str.split(':');
 		const pwd = crypto.createHash('sha256').update(usr_details[1]).digest('hex');
 		const email = usr_details[0];
+		console.log('eee');
 		if (!email || !usr_details[1]) { redisClient.del(email); return NextResponse.json('error', {status: 401}); }
+		console.log('ggg');
 		if (!checkpwd(email)) { redisClient.del(email); return  NextResponse.json('error', {status: 401}); }
+		console.log('jjj');
 		if (!checkpwd(usr_details[1])) {redisClient.del(email); return  NextResponse.json('error', {status: 401});}
+		console.log('kkk');
 		if (!checknumber(token)) {redisClient.del(email); return  NextResponse.json('error', {status: 401});}
 		console.log('bbb');	
 		const tok = await redisClient.get(email);
