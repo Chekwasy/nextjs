@@ -20,6 +20,7 @@ export async function POST(request) {
 		if (!tok) {
 			return  NextResponse.json('error', {status: 400});
 		}
+		console.log('ddddd');
 		const mainstr = tok.slice(0,6);
 		const mainval = parseInt(tok.slice(-1)) + 1;
 		const finalstr = mainstr.toString() + mainval.toString();
