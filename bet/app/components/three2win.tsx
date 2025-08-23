@@ -136,7 +136,7 @@ export default function Three2Win() {
             {/* Subscription Activation Button */}
             {!showGuide && hasSubscriptionExpired && (
                 <div className="w-full max-w-4xl mx-auto mb-6">
-                    <Link href="/sub" className="block bg-brown-600 hover:bg-brown-700 text-white font-bold py-3 px-6 rounded-lg text-center transition duration-300 ease-in-out shadow-md">
+                    <Link href="/sub" className="block bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg text-center transition duration-300 ease-in-out shadow-md">
                         Activate Your Subscription
                     </Link>
                 </div>
@@ -146,7 +146,7 @@ export default function Three2Win() {
             {!showGuide && (
                 <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 mb-6">
                     <div
-                        className="flex justify-center items-center p-4 mb-6 cursor-pointer bg-gradient-to-r from-brown-500 to-brown-600 text-white font-bold rounded-lg shadow-md hover:from-brown-600 hover:to-brown-700 transition duration-300 ease-in-out"
+                        className="flex justify-center items-center p-4 mb-6 cursor-pointer bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-bold rounded-lg shadow-md hover:from-yellow-600 hover:to-yellow-700 transition duration-300 ease-in-out"
                         onClick={() => setIsCalendarOpen(true)}
                     >
                         📅 Date: {selectedDay} / {selectedMonth.slice(0, -2)} / {selectedYear}
@@ -159,12 +159,12 @@ export default function Three2Win() {
                                     <div className={`w-full sm:w-1/3 p-2 text-center rounded-lg font-bold text-white
                                         ${entry.status === 'Won' ? 'bg-green-600' :
                                         entry.status === 'Lost' ? 'bg-red-600' :
-                                        'bg-brown-600'}`}
+                                        'bg-yellow-600'}`}
                                     >
                                         {entry.status}
                                     </div>
-                                    <div className="w-full sm:w-2/3 p-2 text-center rounded-lg font-bold bg-brown-100 text-brown-800">
-                                        â±ï¸ {`${entry.time.substring(0, 2)}:${entry.time.substring(2, 4)}`}
+                                    <div className="w-full sm:w-2/3 p-2 text-center rounded-lg font-bold bg-yellow-100 text-yellow-800">
+                                        ⏱️ {`${entry.time.substring(0, 2)}:${entry.time.substring(2, 4)}`}
                                     </div>
                                 </div>
 
@@ -201,11 +201,11 @@ export default function Three2Win() {
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">Current ROI:</span>
-                                        <span className="font-bold text-lg text-brown-700">{(((parseFloat(entry.Sbal) / 12000) * 100) - 100).toFixed(2)} %</span>
+                                        <span className="font-bold text-lg text-yellow-700">{(((parseFloat(entry.Sbal) / 12000) * 100) - 100).toFixed(2)} %</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">SportyBet Code:</span>
-                                        <span className="font-bold text-lg text-brown-700">{entry.code}</span>
+                                        <span className="font-bold text-lg text-yellow-700">{entry.code}</span>
                                     </div>
                                 </div>
 
@@ -223,7 +223,7 @@ export default function Three2Win() {
             {!showGuide && (
                 <div className="fixed bottom-6 right-6 z-10">
                     <button
-                        className="bg-brown-600 hover:bg-brown-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+                        className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                         onClick={() => setShowGuide(true)}
                     >
                         â„¹ï¸ Guide
@@ -263,9 +263,9 @@ export default function Three2Win() {
                             <p>
                                 <strong>Introduction to Our Betting System:</strong> We initiate our betting system with a Principal amount (Starting Capital) of ₦8,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns.
                             </p>
-                            <div className="bg-brown-50 border-l-4 border-brown-400 p-4 rounded-md">
-                                <h3 className="font-bold text-brown-700 mb-2">💡 Tips for Success:</h3>
-                                <ul className="list-disc list-inside text-brown-800 space-y-1">
+                            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md">
+                                <h3 className="font-bold text-yellow-700 mb-2">💡 Tips for Success:</h3>
+                                <ul className="list-disc list-inside text-yellow-800 space-y-1">
                                     <li>Start with a capital of ₦8,000.</li>
                                     <li>Once your earnings reach 30% of this initial capital, you have the option to withdraw ₦2,400, leaving you with a balance of ₦8,000.</li>
                                     <li>Continue playing with this ₦8,000 balance until it reaches ₦16,000, at which point you should double your stake on the site.</li>
@@ -305,12 +305,12 @@ export default function Three2Win() {
                             </div>
                             <p className="text-center text-gray-600">
                             <p className="text-center text-gray-600">
-                            For more information, reach out to us via Email at <a href="mailto:info@trybet.com.ng" className="text-brown-500 hover:underline">info@trybet.com.ng</a>.
+                            For more information, reach out to us via Email at <a href="mailto:info@trybet.com.ng" className="text-yellow-500 hover:underline">info@trybet.com.ng</a>.
                             </p>
                             </p>
                         </div>
                         <button
-                            className="mt-8 w-full bg-brown-600 hover:bg-brown-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                            className="mt-8 w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
                             onClick={() => setShowGuide(false)}
                         >
                             Close Guide
@@ -344,7 +344,7 @@ export default function Three2Win() {
                                 <select
                                     value={selectedMonth}
                                     onChange={(e) => setSelectedMonth(e.target.value)}
-                                    className="flex-1 mr-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 cursor-pointer text-gray-700 font-semibold"
+                                    className="flex-1 mr-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 cursor-pointer text-gray-700 font-semibold"
                                 >
                                     {monthL.map((month, index) => (
                                         <option key={index} value={month}>
@@ -355,7 +355,7 @@ export default function Three2Win() {
                                 <select
                                     value={selectedYear}
                                     onChange={(e) => setSelectedYear(e.target.value)}
-                                    className="flex-1 ml-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 cursor-pointer text-gray-700 font-semibold"
+                                    className="flex-1 ml-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 cursor-pointer text-gray-700 font-semibold"
                                 >
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
@@ -377,9 +377,9 @@ export default function Three2Win() {
                                             <button
                                                 key={idx}
                                                 className={`text-center py-2 rounded-md transition-colors duration-200
-                                                    ${day === '' ? 'cursor-default bg-gray-100' : 'cursor-pointer hover:bg-brown-100'}
+                                                    ${day === '' ? 'cursor-default bg-gray-100' : 'cursor-pointer hover:bg-yellow-100'}
                                                     ${selectedDay === day.toString() && (day.toString() + selectedMonth + selectedYear) === todayFormatted
-                                                        ? 'bg-brown-200 text-brown-800 font-bold'
+                                                        ? 'bg-yellow-200 text-yellow-800 font-bold'
                                                         : 'text-gray-800'
                                                     }`}
                                                 onClick={() => {
