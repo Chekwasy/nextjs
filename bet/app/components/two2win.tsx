@@ -286,7 +286,7 @@ export default function Two2Win() {
                                 </ul>
                             </p>
                             <p>
-                                <strong>Match Structure and Odds:</strong> A schedule comprises 1 matche, with a minimum total odd of 2.
+                                <strong>Match Structure and Odds:</strong> A schedule comprises 1 match, with a minimum total odd of 2.
                             </p>
                             <p>
                                 <strong>Recommendations for Getting Started:</strong> For optimal results, we advise commencing with a modest investment:
