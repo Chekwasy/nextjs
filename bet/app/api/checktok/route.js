@@ -7,6 +7,7 @@ export async function POST(request) {
 	const dd = await request;
 	try {
 		const { email, token } = dd;
+		console.log(email, token);
 		if (!email || !token) {
 			return  NextResponse.json('error', {status: 400});
 		}
@@ -16,6 +17,7 @@ export async function POST(request) {
 		if (!(checknumber(token))) {
 			return  NextResponse.json('error', {status: 400});
 		}
+		console.log('aaaaa');
 		const tok = await redisClient.get(email);
 		if (!tok) {
 			return  NextResponse.json('error', {status: 400});
