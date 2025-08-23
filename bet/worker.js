@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Queue from 'bull/lib/queue.js';
 import nodemailer from 'nodemailer';
 
