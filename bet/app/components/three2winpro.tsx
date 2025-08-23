@@ -309,7 +309,7 @@ export default function Three2WinPro() {
                                 </p>
                             </div>
                             <p className="text-center text-gray-600">
-                                For more information, reach out to us via TikTok on <a href="https://www.tiktok.com/@chekwasy_trybet" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">@chekwasy_trybet</a>.
+                                For more information, reach out to us via Email at <a href="mailto:info@trybet.com.ng" className="text-green-500 hover:underline">info@trybet.com.ng</a>.
                             </p>
                         </div>
                         <button

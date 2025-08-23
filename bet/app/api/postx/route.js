@@ -32,22 +32,42 @@ export async function POST(request) {
                 const r = await dbClient.client.db().collection('two2win')
                 .insertOne({ 
                     date: date, 
-                    game: {
-                        date: date,
+                    game: [{
+                        time: time,
                         Sbal: Sbal.toString(),
-                        Tstake: Tstake.toString(),
-                        Todd: Todd.toString(),
+                        stake: Tstake.toString(),
+                        odd: Todd.toString(),
                         Ebal: Ebal.toString(),
                         status: "Pending",
                         code: code,
-                        games: games
-                    }    
+                    }]    
                 });
                 if (!r) {
                     return  NextResponse.json('error not done', {status: 401});
                 }
                 return  NextResponse.json({message: "Success" }, {status: 201});
             }
+            const r = await dbClient.client.db().collection('two2win')
+            .updateOne(
+                { date: date },
+                {
+                    $push: {
+                        game: {
+                            time: time,
+                            Sbal: Sbal.toString(),
+                            stake: Tstake.toString(),
+                            odd: Todd.toString(),
+                            Ebal: Ebal.toString(),
+                            status: "Pending",
+                            code: code,
+                        }
+                    }
+                }
+            );
+            if (!r) {
+                return  NextResponse.json('error not done', {status: 401});
+            }
+            return  NextResponse.json({message: "Success" }, {status: 201});
         }
         if (db[0] === 'three2win') {
             const g = await dbClient.client.db().collection('three2win')
@@ -56,29 +76,47 @@ export async function POST(request) {
                 const r = await dbClient.client.db().collection('three2win')
                 .insertOne({ 
                     date: date, 
-                    game: {
-                        date: date,
+                    game: [{
+                        time: time,
                         Sbal: Sbal.toString(),
-                        Tstake: Tstake.toString(),
-                        Todd: Todd.toString(),
+                        stake: Tstake.toString(),
+                        odd: Todd.toString(),
                         Ebal: Ebal.toString(),
                         status: "Pending",
                         code: code,
-                        games: games
-                    }    
+                    }]    
                 });
                 if (!r) {
                     return  NextResponse.json('error not done', {status: 401});
                 }
                 return  NextResponse.json({message: "Success" }, {status: 201});
             }
+            const r = await dbClient.client.db().collection('three2win')
+            .updateOne(
+                { date: date },
+                {
+                    $push: {
+                        game: {
+                            time: time,
+                            Sbal: Sbal.toString(),
+                            stake: Tstake.toString(),
+                            odd: Todd.toString(),
+                            Ebal: Ebal.toString(),
+                            status: "Pending",
+                            code: code,
+                        }
+                    }
+                }
+            );
+            if (!r) {
+                return  NextResponse.json('error not done', {status: 401});
+            }
+            return  NextResponse.json({message: "Success" }, {status: 201});
         }
         if (db[0] === 'threepro') {
-            console.log(time, Sbal, Tstake, Todd, Ebal, code, games);
             const g = await dbClient.client.db().collection('three2winpro')
             .findOne({ "date": date });
             if (!g) {
-                console.log(333);
                 const r = await dbClient.client.db().collection('three2winpro')
                 .insertOne({ 
                     date: date, 
@@ -98,7 +136,6 @@ export async function POST(request) {
                 }
                 return  NextResponse.json({message: "Success" }, {status: 201});
             }
-            console.log(222);
             const r = await dbClient.client.db().collection('three2winpro')
             .updateOne(
                 { date: date },
