@@ -4,11 +4,11 @@ import redisClient from '../../../redis';
 import crypto from 'crypto';
 import { checknumber, checkpwd } from './../../tools/func';
 
-export async function GET(request) {
+export async function POST(request) {
 	try {
 		const dd = await request.json();
 		//data from frontend
-    	const { auth_header, token } = dd;
+    	const { token, auth_header } = dd;
 		console.log(auth_header, token);
 		if (!auth_header || !token ) { redisClient.del(email); return  NextResponse.json('error', {status: 400}); }
 		console.log('aaa');
