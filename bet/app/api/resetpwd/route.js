@@ -9,12 +9,13 @@ export async function POST(request) {
 		const dd = await request.json();
 		//data from frontend
     	const { token, auth_header } = dd;
-		console.log(auth_header, token);
 		if (!auth_header || !token ) { redisClient.del(email); return  NextResponse.json('error', {status: 400}); }
 		console.log('aaa');
 		decoded_usr_str = Buffer.from(auth_header, 'base64').toString('utf-8');	
 		const usr_details = decoded_usr_str.split(':');
+		console.log(usr_details);
 		const pwd = crypto.createHash('sha256').update(usr_details[1]).digest('hex');
+		console.log('zzz');
 		const email = usr_details[0];
 		console.log('eee');
 		if (!email || !usr_details[1]) { redisClient.del(email); return NextResponse.json('error', {status: 401}); }
