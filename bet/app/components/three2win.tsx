@@ -171,7 +171,7 @@ export default function Three2Win() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Principal / Starting Capital:</span>
-                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(12000)}</span>
+                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(8000)}</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Opening Balance:</span>
@@ -201,7 +201,7 @@ export default function Three2Win() {
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">Current ROI:</span>
-                                        <span className="font-bold text-lg text-yellow-700">{(((parseFloat(entry.Sbal) / 12000) * 100) - 100).toFixed(2)} %</span>
+                                        <span className="font-bold text-lg text-yellow-700">{(((parseFloat(entry.Sbal) / 8000) * 100) - 100).toFixed(2)} %</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">SportyBet Code:</span>
@@ -226,7 +226,7 @@ export default function Three2Win() {
                         className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
                         onClick={() => setShowGuide(true)}
                     >
-                        â„¹ï¸ Guide
+                      ℹ️ Guide
                     </button>
                 </div>
             )}
@@ -271,7 +271,7 @@ export default function Three2Win() {
                                     <li>Continue playing with this ₦8,000 balance until it reaches ₦16,000, at which point you should double your stake on the site.</li>
                                     <li>If your balance further increases to ₦24,000, you can triple your stake, and so on.</li>
                                     <li>You are free to manage your withdrawals as you see fit.</li>
-                                    <li>Access to this feature requires a subscription of â‚¦250 weekly or â‚¦800 monthly. A 7-day free trial applies.</li>
+                                    <li>Access to this feature requires a subscription of ₦250 weekly or ₦800 monthly. A 7-day free trial applies.</li>
                                 </ul>
                             </div>
                             <p>
@@ -298,7 +298,7 @@ export default function Three2Win() {
                                 </ul>
                             </p>
                             <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
-                                <h3 className="font-bold text-red-700 mb-2">âš ï¸ Performance Expectations and Risk Management:</h3>
+                                <h3 className="font-bold text-red-700 mb-2">⚠️ Performance Expectations and Risk Management:</h3>
                                 <p className="text-red-800">
                                     Our strategy aims to deliver a minimum monthly percentage return of 30%. However, please note that this comes with a <strong>90% risk ratio</strong>, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
                                 </p>
