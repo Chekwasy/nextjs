@@ -6,14 +6,6 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 
-// Define an interface for a single game entry
-interface GameInput {
-    hometeam: string;
-    awayteam: string;
-    selection: string;
-    odd: string;
-}
-
 // Define the structure of the data to be sent
 interface PostXData {
     db: string[]; // Array of selected checkbox values
@@ -22,8 +14,7 @@ interface PostXData {
     totalOdd: number;
     expectedBalance: number;
     code: string;
-    gamesNumber: number;
-    games: GameInput[]; // Array of game objects
+
 }
 
 export default function PostXForm() {
@@ -34,9 +25,6 @@ export default function PostXForm() {
     const [totalOdd, setTotalOdd] = useState<string>('');
     const [expectedBalance, setExpectedBalance] = useState<string>('');
     const [code, setCode] = useState<string>('');
-    const [gamesNumber, setGamesNumber] = useState<number>(0);
-    const [games, setGames] = useState<GameInput[]>([]);
-
     const [message, setMessage] = useState<string | null>(null);
     const [isError, setIsError] = useState<boolean>(false);
 
@@ -48,41 +36,6 @@ export default function PostXForm() {
         setSelectedDbs(prev =>
             checked ? [...prev, value] : prev.filter(db => db !== value)
         );
-    };
-
-    // Handle change for games number input
-    const handleGamesNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const num = parseInt(event.target.value, 10);
-        if (!isNaN(num) && num >= 0) {
-            setGamesNumber(num);
-            // Initialize or resize the games array based on the new number
-            setGames(prevGames => {
-                const newGames = [...prevGames];
-                while (newGames.length < num) {
-                    newGames.push({ hometeam: '', awayteam: '', selection: '', odd: '' });
-                }
-                return newGames.slice(0, num);
-            });
-        } else {
-            setGamesNumber(0);
-            setGames([]);
-        }
-    };
-
-    // Handle changes for individual game inputs (hometeam, awayteam, etc.)
-    const handleGameInputChange = (
-        index: number,
-        field: keyof GameInput,
-        value: string
-    ) => {
-        setGames(prevGames => {
-            const newGames = [...prevGames];
-            newGames[index] = {
-                ...newGames[index],
-                [field]: value
-            };
-            return newGames;
-        });
     };
 
     // Handle form submission
@@ -97,11 +50,6 @@ export default function PostXForm() {
             setIsError(true);
             return;
         }
-        if (gamesNumber > 0 && games.some(game => !game.hometeam || !game.awayteam || !game.selection || !game.odd)) {
-            setMessage('Please fill in all game details.');
-            setIsError(true);
-            return;
-        }
 
         const dataToSend: PostXData = {
             db: selectedDbs,
@@ -110,8 +58,6 @@ export default function PostXForm() {
             totalOdd: parseFloat(totalOdd || '0'),
             expectedBalance: parseFloat(expectedBalance || '0'),
             code: code,
-            gamesNumber: gamesNumber,
-            games: games,
         };
 
         try {
@@ -132,8 +78,6 @@ export default function PostXForm() {
             setTotalOdd('');
             setExpectedBalance('');
             setCode('');
-            setGamesNumber(0);
-            setGames([]);
         } catch (error) {
             console.error('Error sending data:', error);
             setMessage('Failed to send data. Please try again.');
@@ -141,48 +85,6 @@ export default function PostXForm() {
         }
     };
 
-    // Generate game input fields dynamically
-    const renderGameInputs = () => {
-        return Array.from({ length: gamesNumber }).map((_, index) => (
-            <div key={index} className="border p-4 rounded-md bg-gray-50 shadow-sm mb-4">
-                <h3 className="text-lg font-semibold text-gray-700 mb-3">Game {index + 1} Details</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input
-                        type="text"
-                        placeholder="Home Team"
-                        className="form-input"
-                        value={games[index]?.hometeam || ''}
-                        onChange={(e) => handleGameInputChange(index, 'hometeam', e.target.value)}
-                        required
-                    />
-                    <input
-                        type="text"
-                        placeholder="Away Team"
-                        className="form-input"
-                        value={games[index]?.awayteam || ''}
-                        onChange={(e) => handleGameInputChange(index, 'awayteam', e.target.value)}
-                        required
-                    />
-                    <input
-                        type="text"
-                        placeholder="Selection (e.g., Home Win, Over 2.5)"
-                        className="form-input"
-                        value={games[index]?.selection || ''}
-                        onChange={(e) => handleGameInputChange(index, 'selection', e.target.value)}
-                        required
-                    />
-                    <input
-                        type="text"
-                        placeholder="Odd (e.g., 1.85)"
-                        className="form-input"
-                        value={games[index]?.odd || ''}
-                        onChange={(e) => handleGameInputChange(index, 'odd', e.target.value)}
-                        required
-                    />
-                </div>
-            </div>
-        ));
-    };
     return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
         <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl border border-gray-200">
@@ -228,7 +130,7 @@ export default function PostXForm() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="todayStake" className="form-label">{`Today's`} Stake</label>
+                        <label htmlFor="todayStake" className="form-label">Stake</label>
                         <input
                             type="number"
                             id="todayStake"
@@ -278,24 +180,6 @@ export default function PostXForm() {
                         required
                     />
                 </div>
-
-                {/* Games Number Input */}
-                <div>
-                    <label htmlFor="gamesNumber" className="form-label">Number of Games</label>
-                    <input
-                        type="number"
-                        id="gamesNumber"
-                        className="form-input"
-                        min="0"
-                        value={gamesNumber}
-                        onChange={handleGamesNumberChange}
-                        placeholder="e.g., 3"
-                        required
-                    />
-                </div>
-
-                {/* Dynamic Game Inputs */}
-                {renderGameInputs()}
 
                 {/* Submission Message */}
                 {message && (

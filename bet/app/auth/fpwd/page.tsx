@@ -233,9 +233,9 @@ function ForgotPasswordPage() { // Renamed component for clarity
 
       try {
         const authHeader = btoa(`${email}:${newPassword}`); // Encode credentials
-        const response = await axios.post('/api/pwdreset', {
+        const response = await axios.post('/api/resetpwd', {
           token,
-          emailpwd: authHeader, // Use the encoded string directly
+          auth_header: authHeader,
         });
 
         setMessage(response.data.message || 'Password reset successfully!');

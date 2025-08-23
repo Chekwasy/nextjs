@@ -11,14 +11,6 @@ import { StoreState } from '../tools/s_interface';
 import { isDateInPast } from '../tools/dateitems';
 import { monthL, weekL, getCalender } from '../tools/lists_dict';
 
-// Define the interface for a single game within a three2winpro entry
-interface Game {
-    hometeam: string;
-    awayteam: string;
-    selection: string;
-    odd: string;
-}
-
 // Define the interface for a single three2winpro entry
 interface Three2WinProEntry {
     time: string;
@@ -28,7 +20,6 @@ interface Three2WinProEntry {
     Ebal: string;
     status: string;
     code: string;
-    games: Game[];
 }
 
 export default function Three2WinPro() {
@@ -43,7 +34,6 @@ export default function Three2WinPro() {
         Ebal: '0',
         status: '',
         code: '',
-        games: [{ hometeam: '', awayteam: '', selection: '', odd: '0' }]
     }]);
 
     // State for calendar and date selection
@@ -219,27 +209,6 @@ export default function Three2WinPro() {
                                     </div>
                                 </div>
 
-                                {/* Game Details */}
-                                {entry.games.map((item, index) => (
-                                    <div key={index} className="flex flex-col space-y-2 mb-6 border-b-2 border-gray-300 pb-4 last:border-b-0">
-                                        <div className="flex justify-between bg-purple-50 rounded-lg p-3">
-                                            <span className="font-bold text-gray-800">Home Team:</span>
-                                            <span className="text-lg font-medium text-purple-800">{item.hometeam}</span>
-                                        </div>
-                                        <div className="flex justify-between bg-purple-50 rounded-lg p-3">
-                                            <span className="font-bold text-gray-800">Away Team:</span>
-                                            <span className="text-lg font-medium text-purple-800">{item.awayteam}</span>
-                                        </div>
-                                        <div className="flex justify-between bg-purple-50 rounded-lg p-3">
-                                            <span className="font-bold text-gray-800">Selection:</span>
-                                            <span className="text-lg font-medium text-purple-800">{item.selection}</span>
-                                        </div>
-                                        <div className="flex justify-between bg-purple-50 rounded-lg p-3">
-                                            <span className="font-bold text-gray-800">Odd:</span>
-                                            <span className="text-lg font-medium text-purple-800">{item.odd}</span>
-                                        </div>
-                                    </div>
-                                ))}
                             </div>
                         ))
                     ) : (

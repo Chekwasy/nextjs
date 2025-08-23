@@ -15,15 +15,16 @@ export async function POST(request) {
         const Todd = saved.totalOdd;
         const Ebal = saved.expectedBalance;
         const code = saved.code;
-        const games = saved.games;
         const date = getCurrentDateString();
         const time = getCurrentTimeString();
-        console.log('ss');
-        if (!tok || !db || !Sbal || !Tstake || !Todd || !Ebal || !code || !games) { return NextResponse.json('error', {status: 400});}
+        if (!tok || !db || !Sbal || !Tstake || !Todd || !Ebal || !code) { return NextResponse.json('error', {status: 400});}
         const usr_id = await redisClient.get(`auth_${tok}`);
         if (!usr_id) {
             return  NextResponse.json('error', {status: 401});
         }
+        const usr = await dbClient.client.db().collection('users')
+    	.findOne({ "userID": usr_id });
+    	if (!usr || usr?.email !== 'richardchekwas@gmail.com') { return  NextResponse.json('error', {status: 401});}
         if (db[0] === 'two2win') {
             const g = await dbClient.client.db().collection('two2win')
             .findOne({ "date": date });
