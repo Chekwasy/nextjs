@@ -228,6 +228,12 @@ function LoginPage() { // Renamed from 'Page' to 'LoginPage' for clarity
             Sign Up
           </Link>
         </p>
+        <p className="text-center text-gray-600 text-sm mt-6">
+          Forgot Password ?{' '}
+          <Link href={'/auth/fpwd'} className="text-green-600 hover:text-green-800 font-semibold transition-colors duration-200">
+            Reset Password
+          </Link>
+        </p>
       </div>
 
       <Popup
