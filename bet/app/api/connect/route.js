@@ -25,12 +25,23 @@ export async function POST(request) {
 	}
 	const user = await dbClient.client.db().collection('users')
 	.findOne({ "email": email });
+	const tok = await redisClient.get(email);
+	if (tok && parseInt(tok) > 5) {
+		return  NextResponse.json('error', {status: 400});
+	}
 	if (user && (user.password === pwd)) {
+		redisClient.del(email);
 		const auth_token = makeID();
-		redisClient.set(`auth_${auth_token}`, user.userID, 7 * 24 * 60 * 60);
+		redisClient.set(`auth_${auth_token}`, user.userID, 24 * 60 * 60);
 		return NextResponse.json({token: auth_token, message: "Login Successful"}, {status: 201});
 	} else {
-		return NextResponse.json({message: 'Email or Password Incorrect'}, {status: 400});
+		if (!tok) {
+			redisClient.set(email, '1', 24 * 60 * 60);
+			return NextResponse.json({message: 'Email or Password Incorrect'}, {status: 400});	
+		}
+		redisClient.del(email);
+		redisClient.set(email, (parseInt(tok) + 1).toString(), 24 * 60 * 60);
+		return NextResponse.json({message: 'Email or Password Incorrect. You all be blocked for several hours after 5 failed trials'}, {status: 400});
     }
     } catch {
 	return NextResponse.json({message: 'error processing signin'}, {status: 400});
