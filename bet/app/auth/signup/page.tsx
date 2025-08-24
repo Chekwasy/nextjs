@@ -171,6 +171,11 @@ function SignupPage() { // Renamed from 'Page' to 'SignupPage' for clarity
 
       setMessage(response.data.message || 'Signup successful! You can now log in.');
       setIsPopupOpen(true);
+      setFirstname('');
+      setLastname('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
       // Optionally redirect to login page after successful signup
       // router.push("/auth/login");
     } catch (error) {

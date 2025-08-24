@@ -14,7 +14,7 @@ export async function GET(request) {
         const gm = await (await dbClient.client.db().collection('savedgames'))
 	.findOne({ "userID": usr_id });
 	if (!gm) {
-		return NextResponse.json('error', {status: 404});
+		return  NextResponse.json({savedgames: null, savedbuttons: null}, {status: 201});
 	}
         return  NextResponse.json({savedgames: gm.savedgames, savedbuttons: gm.savedbuttons}, {status: 201});
     } catch {

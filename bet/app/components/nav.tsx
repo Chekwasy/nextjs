@@ -94,9 +94,9 @@ export default function Nav() {
 
         dispatch(mainStateReducer({
           logged: userResponse.data.logged,
-          played: savedGamesResponse.data.savedgames,
+          played: savedGamesResponse.data.savedgames || [],
           me: userResponse.data.me,
-          buttonState: savedGamesResponse.data.savedbuttons
+          buttonState: savedGamesResponse.data.savedbuttons || {'': false}
         }));
       } catch (error) {
         console.error("Failed to load user or saved game data:", error);
