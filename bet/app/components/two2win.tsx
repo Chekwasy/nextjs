@@ -159,7 +159,7 @@ export default function Two2Win() {
                                     <div className={`w-full sm:w-1/3 p-2 text-center rounded-lg font-bold text-white
                                         ${entry.status === 'Won' ? 'bg-green-600' :
                                         entry.status === 'Lost' ? 'bg-red-600' :
-                                        'bg-green-600'}`}
+                                        'bg-blue-600'}`}
                                     >
                                         {entry.status}
                                     </div>
