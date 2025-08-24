@@ -179,9 +179,18 @@ function SignupPage() { // Renamed from 'Page' to 'SignupPage' for clarity
       // Optionally redirect to login page after successful signup
       // router.push("/auth/login");
     } catch (error) {
-      const errorMessage = `An unexpected error occurred. Please try again. ${error}`;
-      setMessage(errorMessage);
-      setIsPopupOpen(true);
+      // Use a type guard to ensure 'error' is an AxiosError
+      if (axios.isAxiosError(error)) {
+        // Access the message from the backend response data
+        const errorMessage = error.response?.data?.message || 'An unexpected error occurred. Please try again.';
+        setMessage(errorMessage);
+        setIsPopupOpen(true);
+      } else {
+        // Handle non-Axios errors
+        const errorMessage = 'An unexpected error occurred. Please try again.';
+        setMessage(errorMessage);
+        setIsPopupOpen(true);
+      }
     }
   }, [
     firstname, lastname, email, password, confirmPassword,
