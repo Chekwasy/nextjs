@@ -152,7 +152,7 @@ export default function Three2WinPro() {
                             alt="Three2Win"
                             width={24}
                             height={24}
-                            className="mr-3"
+                            className="mr-1.5"
                         />
                         <h2 className="ml-2 text-xl font-semibold text-green-950">
                             Three2WinPRO

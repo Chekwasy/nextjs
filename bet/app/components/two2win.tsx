@@ -152,7 +152,7 @@ export default function Two2Win() {
                             alt="Two2Win"
                             width={24}
                             height={24}
-                            className="mr-3"
+                            className="mr-1.5"
                         />
                         <h2 className="ml-2 text-xl font-semibold text-green-950">
                             Two2Win
