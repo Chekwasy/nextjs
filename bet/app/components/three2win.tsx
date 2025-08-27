@@ -148,7 +148,7 @@ export default function Three2Win() {
                 <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 mb-6">
                     <div className="flex items-center rounded-lg bg-white p-4 shadow-md">
                         <Image
-                            src="/icons/three2win.svg"
+                            src="/icons/3winb.svg"
                             alt="Three2Win"
                             width={24}
                             height={24}

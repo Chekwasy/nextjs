@@ -148,7 +148,7 @@ export default function Two2Win() {
                 <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 mb-6">
                     <div className="flex items-center rounded-lg bg-white p-4 shadow-md">
                         <Image
-                            src="/icons/2odds.svg"
+                            src="/icons/2winb.svg"
                             alt="Two2Win"
                             width={24}
                             height={24}
