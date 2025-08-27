@@ -274,32 +274,31 @@ export default function Three2Win() {
                         </h2>
                         <div className="text-lg md:text-xl text-gray-700 leading-relaxed space-y-6">
                             <p>
-                                <strong>Introduction to Our Betting System:</strong> We initiate our betting system with a Principal amount (Starting Capital) of ₦8,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns.
+                            <strong>Introduction to Our Betting System:</strong> Our betting system operates with a principal (starting capital) of ₦8,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns. For instance, a ₦4,000 principal would use a minimum stake of ₦10, and a ₦40,000 principal would use a ₦100 minimum stake.
                             </p>
-                            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md">
-                                <h3 className="font-bold text-yellow-700 mb-2">💡 Tips for Success:</h3>
-                                <ul className="list-disc list-inside text-yellow-800 space-y-1">
-                                    <li>Start with a capital of ₦8,000.</li>
-                                    <li>Once your earnings reach 30% of this initial capital, you have the option to withdraw ₦2,400, leaving you with a balance of ₦8,000.</li>
-                                    <li>Continue playing with this ₦8,000 balance until it reaches ₦16,000, at which point you should double your stake on the site.</li>
-                                    <li>If your balance further increases to ₦24,000, you can triple your stake, and so on.</li>
-                                    <li>You are free to manage your withdrawals as you see fit.</li>
-                                    <li>Access to this feature requires a subscription of ₦250 weekly or ₦800 monthly. A 7-day free trial applies.</li>
-                                </ul>
+                            <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-md">
+                            <h3 className="font-bold text-green-700 mb-2">💡 Tips for Success:</h3>
+                            <ul className="list-disc list-inside text-green-800 space-y-1">
+                            <li>Start with a capital of ₦8,000 or a proportional amount of your choosing.</li>
+                            <li>You can apply a multiplier to your principal. For example, with our starting capital of ₦8,000, you can multiply it by 2, 3, or 4. Ensure you also multiply the stake we post by the same value.</li>
+                            <li>Once your earnings reach a 30% return on your initial capital, you can withdraw a portion of your profits. For a ₦8,000 principal, this means you can withdraw ₦2,400, leaving you with your initial ₦8,000 balance to continue playing.</li>
+                            <li>Continue playing with this ₦8,000 balance until it reaches ₦16,000, at which point you should double your stake on the betting platform.</li>
+                            <li>If your balance increases to ₦24,000, you have the option to triple your stake or withdraw a portion of your capital, and so on.</li>
+                            <li>You are free to manage your withdrawals as you see fit.</li>
+                            <li>Access to this feature requires a subscription of ₦250 weekly or ₦800 monthly. A 7-day free trial is also included.</li>
+                            </ul>
                             </div>
                             <p>
-                                <strong>Key Terms and Definitions:</strong>
-                                <ul className="list-disc list-inside space-y-2 mt-2">
-                                    <li><strong>Opening Balance:</strong> The account balance at the start of the time indicated.</li>
-                                    <li><strong>Stake:</strong> The amount allocated for staking on a particular time.</li>
-                                    <li><strong>Odd:</strong> The total odd for the said time, reflected accurately from the betting platform at the time of update.</li>
-                                    <li><strong>Expected Balance:</strong> The anticipated amount if the prediction results in a win.</li>
-                                    <li><strong>Closing Balance:</strong> The account balance after event status update.</li>
-                                    <li><strong>Current ROI:</strong> The percentage return on investment (ROI) from the principal amount to current.</li>
-                                </ul>
-                            </p>
-                            <p>
-                                <strong>Match Structure and Odds:</strong> A schedule comprises 3 matches, with a minimum total odd of 3.
+                            <strong>Key Terms and Definitions:</strong>
+                            <ul className="list-disc list-inside space-y-2 mt-2">
+                            <li><strong>Principal:</strong> The initial capital used to start the system.</li>
+                            <li><strong>Opening Balance:</strong> The account balance at the start of a new betting period. For example, if your closing balance was ₦9,500 in the previous game and you stake ₦20 in the current game, your opening balance will be ₦9,480.</li>
+                            <li><strong>Stake:</strong> The amount allocated for a particular bet. You must adhere to this amount to stay on track for winnings. You can only multiply it if you have used a different principal. For instance, with a ₦40,000 principal (2x our principal), you must multiply all stakes by 2.</li>
+                            <li><strong>Odd:</strong> The total odd for the said time, accurately reflected from the betting platform at the time of the update.</li>
+                            <li><strong>Expected Balance:</strong> The anticipated amount if the prediction results in a win.</li>
+                            <li><strong>Closing Balance:</strong> The account balance after the event status has been updated. This amount will remain the same as the opening balance if a loss occurs or will increase from the opening balance if there is a win.</li>
+                            <li><strong>Current ROI:</strong> The percentage return on investment (ROI) from the principal amount to your current opening balance.</li>
+                            </ul>
                             </p>
                             <p>
                                 <strong>Recommendations for Getting Started:</strong> For optimal results, we advise commencing with a modest investment:
