@@ -2,6 +2,7 @@
 
 import { useState, useEffect, MouseEvent } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
@@ -145,6 +146,18 @@ export default function Three2WinPro() {
             {/* Date Selection and Betting Data Display */}
             {!showGuide && (
                 <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <div className="flex items-center rounded-lg bg-white p-4 shadow-md">
+                        <Image
+                            src="/icons/threepro.svg"
+                            alt="Three2Win"
+                            width={24}
+                            height={24}
+                            className="filter brightness-0 invert mr-3"
+                        />
+                        <h2 className="ml-2 text-xl font-semibold text-green-950">
+                            Three2WinPRO
+                        </h2>
+                    </div>
                     <div
                         className="flex justify-center items-center p-4 mb-6 cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition duration-300 ease-in-out"
                         onClick={() => setIsCalendarOpen(true)}

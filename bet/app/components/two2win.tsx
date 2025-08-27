@@ -4,6 +4,7 @@ import { useState, useEffect, MouseEvent } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
+import Image from 'next/image';
 import Cookies from 'js-cookie';
 
 // Local imports for types and utilities
@@ -145,6 +146,18 @@ export default function Two2Win() {
             {/* Date Selection and Betting Data Display */}
             {!showGuide && (
                 <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <div className="flex items-center rounded-lg bg-white p-4 shadow-md">
+                        <Image
+                            src="/icons/2odds.svg"
+                            alt="Two2Win"
+                            width={24}
+                            height={24}
+                            className="filter brightness-0 invert mr-3"
+                        />
+                        <h2 className="ml-2 text-xl font-semibold text-green-950">
+                            Two2Win
+                        </h2>
+                    </div>
                     <div
                         className="flex justify-center items-center p-4 mb-6 cursor-pointer bg-gradient-to-r from-green-500 to-indigo-600 text-white font-bold rounded-lg shadow-md hover:from-green-600 hover:to-indigo-700 transition duration-300 ease-in-out"
                         onClick={() => setIsCalendarOpen(true)}
