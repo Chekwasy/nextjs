@@ -28,6 +28,14 @@ export async function POST(request) {
         if (db[0] === 'two2win') {
             const g = await dbClient.client.db().collection('two2win')
             .findOne({ "date": date });
+            //create worker to send notification
+		    const notifyQueue = new Queue('Notify');
+		    await notifyQueue.add({"option": 'Two2Win', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
+                "odd": Todd.toString(), 
+                "Ebal": Ebal.toString(),
+                "status": 'Pending',
+                "code": code, 
+            });
             if (!g) {
                 const r = await dbClient.client.db().collection('two2win')
                 .insertOne({ 
@@ -72,6 +80,14 @@ export async function POST(request) {
         if (db[0] === 'three2win') {
             const g = await dbClient.client.db().collection('three2win')
             .findOne({ "date": date });
+            //create worker to send notification
+		    const notifyQueue = new Queue('Notify');
+		    await notifyQueue.add({"option": 'Three2Win', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
+                "odd": Todd.toString(), 
+                "Ebal": Ebal.toString(),
+                "status": 'Pending',
+                "code": code, 
+            });
             if (!g) {
                 const r = await dbClient.client.db().collection('three2win')
                 .insertOne({ 
@@ -116,6 +132,14 @@ export async function POST(request) {
         if (db[0] === 'threepro') {
             const g = await dbClient.client.db().collection('three2winpro')
             .findOne({ "date": date });
+            //create worker to send notification
+		    const notifyQueue = new Queue('Notify');
+		    await notifyQueue.add({"option": 'Three2WinPRO', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
+                "odd": Todd.toString(), 
+                "Ebal": Ebal.toString(),
+                "status": 'Pending',
+                "code": code, 
+            });
             if (!g) {
                 const r = await dbClient.client.db().collection('three2winpro')
                 .insertOne({ 
