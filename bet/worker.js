@@ -235,7 +235,7 @@ notifyQueue.process(async (job, done) => {
         const subs = usr[i].subs;
         const chk = isDateInPast(subs.slice(-8));
         
-        if (!chk) {
+        if (!chk && subs.slice(0, 4) !== 'free') {
             //Data of email to be sent
             let mailOptions = {
                 from: 'info@trybet.com.ng',
