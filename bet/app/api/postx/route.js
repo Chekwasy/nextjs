@@ -1,3 +1,4 @@
+import Queue from 'bull/lib/queue';
 import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import redisClient from '../../../redis';
