@@ -25,13 +25,15 @@ export async function POST(request) {
         }
         const usr = await dbClient.client.db().collection('users')
     	.findOne({ "userID": usr_id });
+        const usrAll = await dbClient.client.db().collection('users')
+        .find({}).toArray();
     	if (!usr || usr?.email !== 'richardchekwas@gmail.com') { return  NextResponse.json('error', {status: 401});}
         if (db[0] === 'two2win') {
             const g = await dbClient.client.db().collection('two2win')
             .findOne({ "date": date });
             //create worker to send notification
 		    const notifyQueue = new Queue('Notify');
-		    await notifyQueue.add({"option": 'Two2Win', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
+		    await notifyQueue.add({"usr": [...usrAll], "option": 'Two2Win', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
                 "odd": Todd.toString(), 
                 "Ebal": Ebal.toString(),
                 "status": 'Pending',

@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import Queue from 'bull/lib/queue.js';
 import nodemailer from 'nodemailer';
-import dbClient from './db';
 import { isDateInPast } from './app/tools/dateitems';
 
 
@@ -219,16 +218,15 @@ notifyQueue.process(async (job, done) => {
     const Ebal = job.data.Ebal;
     const status = job.data.status;
     const code = job.data.code;
+    const usr = job.data.usr;
 
-	if (!option || !time || !Sbal  || !stake || !odd  || !Ebal  || !status || !code) {
+	if (!option || !time || !Sbal  || !stake || !odd  || !Ebal  || !status || !code || !usr) {
 		throw new Error("Missing information");
 	}
     if (secretKey === '') {
 		throw new Error("Missing key");
 	}
 
-    const usr = await dbClient.client.db().collection('users')
-        .find({}).toArray();
     const len = usr.length;
     for (let i = 0; i < len; i++) {
         const email = usr[i].email;
