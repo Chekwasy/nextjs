@@ -85,7 +85,7 @@ export async function POST(request) {
             .findOne({ "date": date });
             //create worker to send notification
 		    const notifyQueue = new Queue('Notify');
-		    await notifyQueue.add({"option": 'Three2Win', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
+		    await notifyQueue.add({"usr": [...usrAll], "option": 'Three2Win', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
                 "odd": Todd.toString(), 
                 "Ebal": Ebal.toString(),
                 "status": 'Pending',
@@ -137,7 +137,7 @@ export async function POST(request) {
             .findOne({ "date": date });
             //create worker to send notification
 		    const notifyQueue = new Queue('Notify');
-		    await notifyQueue.add({"option": 'Three2WinPRO', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
+		    await notifyQueue.add({"usr": [...usrAll], "option": 'Three2WinPRO', "time": time, "Sbal": Sbal.toString(), "stake": Tstake.toString(), 
                 "odd": Todd.toString(), 
                 "Ebal": Ebal.toString(),
                 "status": 'Pending',

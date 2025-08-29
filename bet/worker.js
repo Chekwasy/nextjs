@@ -1,11 +1,24 @@
 import 'dotenv/config';
 import Queue from 'bull/lib/queue.js';
 import nodemailer from 'nodemailer';
-import { isDateInPast } from './app/tools/dateitems';
 
 
 //pass: 'ucblaybosshvkvwt'
 //dobhplzccqrsxfco
+
+const isDateInPast = (dateString) => {
+  const dateParts = dateString.match(/(\d{2})(\d{2})(\d{4})/);
+  if (!dateParts) return false;
+
+  const day = parseInt(dateParts[1]);
+  const month = parseInt(dateParts[2]) - 1; // Months are 0-based
+  const year = parseInt(dateParts[3]);
+
+  const inputDate = new Date(year, month, day);
+  const currentDate = new Date();
+
+  return inputDate.getTime() < currentDate.getTime();
+};
 
 
 const secretKey = process.env.MSK || '';
@@ -235,6 +248,7 @@ notifyQueue.process(async (job, done) => {
         
         if (!chk && subs.slice(0, 4) !== 'free') {
             //Data of email to be sent
+            console.log(`notify email: ${email}`);
             let mailOptions = {
                 from: 'info@trybet.com.ng',
                 to: email,
