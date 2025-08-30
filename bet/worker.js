@@ -260,11 +260,11 @@ notifyQueue.process(async (job, done) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bet Details Slip</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
+            background-color: #e2e8f0; /* Lighter background for better contrast */
             color: #1a202c;
             display: flex;
             justify-content: center;
@@ -281,88 +281,95 @@ notifyQueue.process(async (job, done) => {
         }
     </style>
 </head>
-<body class="bg-gray-50 flex items-center justify-center p-4 min-h-screen">
+<body class="bg-slate-100 flex items-center justify-center p-4 min-h-screen">
 
     <!-- Bet Details Container -->
-    <div class="container bg-white shadow-xl rounded-3xl overflow-hidden transform transition-all duration-500 ease-in-out scale-100 hover:scale-105">
+    <div class="container bg-white shadow-2xl rounded-3xl overflow-hidden">
         
-        <!-- Header Section -->
-        <div class="bg-emerald-700 text-white p-8 sm:p-10 text-center rounded-t-3xl">
+        <!-- Header Section with Gradient -->
+        <div class="bg-gradient-to-r from-emerald-600 to-green-700 text-white p-8 sm:p-10 text-center rounded-t-3xl">
             <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Trybet</h1>
             <p class="mt-2 text-sm opacity-80">Confirmation and details of your recent bet.</p>
         </div>
 
         <!-- Content Section -->
         <div class="p-6 sm:p-8">
-            <div id="status-message" class="text-center text-xl font-semibold mb-6">Your bet is **${status}**.</div>
+            <div id="status-message" class="text-center text-xl font-bold mb-6">Your bet is **${status}**.</div>
             
-            <div class="bg-gray-100 p-6 rounded-2xl border border-gray-200 shadow-inner">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Detail Item: Option -->
-                    <div class="flex items-center">
-                        <span class="text-sm font-medium text-gray-600">Option:</span>
-                        <span id="option" class="ml-2 font-bold text-gray-800 text-base">${option}</span>
-                    </div>
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-inner space-y-4">
+                
+                <!-- Detail Item: Option -->
+                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
+                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.707 9.293a1 1 0 011.414 0l2 2a1 1 0 01-1.414 1.414L10 11.414l-1.293 1.293a1 1 0 01-1.414-1.414l2-2a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-gray-600 flex-1">Option:</span>
+                    <span id="option" class="font-bold text-gray-800 text-base">${option}</span>
+                </div>
 
-                    <!-- Detail Item: Time -->
-                    <div class="flex items-center">
-                        <span class="text-sm font-medium text-gray-600">Time:</span>
-                        <span id="time" class="ml-2 font-bold text-gray-800 text-base">${time}</span>
-                    </div>
+                <!-- Detail Item: Time -->
+                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
+                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-gray-600 flex-1">Time:</span>
+                    <span id="time" class="font-bold text-gray-800 text-base">${time}</span>
+                </div>
 
-                    <!-- Detail Item: Starting Balance -->
-                    <div class="flex items-center">
-                        <span class="text-sm font-medium text-gray-600">Starting Balance:</span>
-                        <span id="Sbal" class="ml-2 font-bold text-gray-800 text-base">₦${Sbal}</span>
-                    </div>
+                <!-- Detail Item: Starting Balance -->
+                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
+                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-gray-600 flex-1">Starting Balance:</span>
+                    <span id="Sbal" class="font-bold text-gray-800 text-base">₦${Sbal}</span>
+                </div>
 
-                    <!-- Detail Item: Stake -->
-                    <div class="flex items-center">
-                        <span class="text-sm font-medium text-gray-600">Stake:</span>
-                        <span id="stake" class="ml-2 font-bold text-gray-800 text-base">₦${stake}</span>
-                    </div>
+                <!-- Detail Item: Stake -->
+                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
+                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-gray-600 flex-1">Stake:</span>
+                    <span id="stake" class="font-bold text-gray-800 text-base">₦${stake}</span>
+                </div>
 
-                    <!-- Detail Item: Odd -->
-                    <div class="flex items-center">
-                        <span class="text-sm font-medium text-gray-600">Odd:</span>
-                        <span id="odd" class="ml-2 font-bold text-gray-800 text-base">${odd}</span>
-                    </div>
+                <!-- Detail Item: Odd -->
+                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
+                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 16a6 6 0 01-12 0h12zM17 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-gray-600 flex-1">Odd:</span>
+                    <span id="odd" class="font-bold text-gray-800 text-base">${odd}</span>
+                </div>
 
-                    <!-- Detail Item: Expected Balance -->
-                    <div class="flex items-center">
-                        <span class="text-sm font-medium text-gray-600">Expected Balance:</span>
-                        <span id="Ebal" class="ml-2 font-bold text-gray-800 text-base">₦${Ebal}</span>
-                    </div>
-
-                    <!-- Detail Item: Status -->
-                    <div class="flex items-center">
-                        <span class="text-sm font-medium text-gray-600">Status:</span>
-                        <span id="status-badge" class="ml-2 px-3 py-1 rounded-full font-semibold text-xs tracking-wide uppercase"></span>
-                    </div>
-
-                    <!-- Detail Item: SportyBet Code -->
-                    <div class="flex items-center">
-                        <span class="text-sm font-medium text-gray-600">SportyBet Code:</span>
-                        <span id="code" class="ml-2 font-bold text-gray-800 text-base">${code}</span>
-                    </div>
+                <!-- Detail Item: Expected Balance -->
+                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
+                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 100 2h4a1 1 0 100-2H8z"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-gray-600 flex-1">Expected Balance:</span>
+                    <span id="Ebal" class="font-bold text-gray-800 text-base">₦${Ebal}</span>
                 </div>
             </div>
         </div>
 
         <!-- Footer Section -->
-        <div class="bg-gray-100 p-6 sm:p-8 text-center text-xs text-gray-500 rounded-b-3xl">
+        <div class="bg-slate-200 p-6 sm:p-8 text-center text-xs text-slate-600 rounded-b-3xl">
             <p>Thank you for choosing Trybet. Good luck with your bets!</p>
             <div class="mt-4 flex justify-center space-x-4">
-                <a href="#" class="text-emerald-600 hover:underline">trybet.com.ng</a>
-                <span class="text-gray-400">|</span>
-                <a href="mailto:info@trybet.com.ng" class="text-emerald-600 hover:underline">info@trybet.com.ng</a>
+                <a href="#" class="text-emerald-700 hover:underline font-medium">trybet.com.ng</a>
+                <span class="text-slate-400">|</span>
+                <a href="mailto:info@trybet.com.ng" class="text-emerald-700 hover:underline font-medium">info@trybet.com.ng</a>
             </div>
-            <p class="mt-2 text-gray-400">&copy; 2024 TryBet. All rights reserved.</p>
-            <p class="mt-1 text-gray-400">This is an automated message.</p>
+            <p class="mt-2 text-slate-500">&copy; 2024 TryBet. All rights reserved.</p>
+            <p class="mt-1 text-slate-500">This is an automated message.</p>
         </div>
     </div>
 </body>
-</html>`
+</html>
+`
 
                 }
             let mailOptions2 = {
