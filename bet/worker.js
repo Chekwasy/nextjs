@@ -254,179 +254,116 @@ notifyQueue.process(async (job, done) => {
                 to: email,
                 subject: `Event Update for ${option} - TryBet`,
                 html: `<!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Bet Details Slip</title>
-                        <style>
-                            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-                            body {
-                                font-family: 'Inter', sans-serif;
-                                margin: 0;
-                                padding: 0;
-                                background-color: #f0f2f5;
-                            }
-                            .container {
-                                max-width: 600px;
-                                margin: 30px auto;
-                                background-color: #ffffff;
-                                border-radius: 16px;
-                                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-                                overflow: hidden;
-                            }
-                            .header {
-                                background-color: #1b5e20; /* Dark green for Trybet */
-                                color: #ffffff;
-                                padding: 30px 20px;
-                                text-align: center;
-                            }
-                            .header h1 {
-                                font-size: 28px;
-                                font-weight: 700;
-                                margin: 0;
-                            }
-                            .header p {
-                                font-size: 14px;
-                                margin: 5px 0 0;
-                                color: rgba(255, 255, 255, 0.8);
-                            }
-                            .content {
-                                padding: 20px 30px;
-                            }
-                            .message {
-                                text-align: center;
-                                font-size: 18px;
-                                font-weight: 600;
-                                margin-bottom: 25px;
-                                line-height: 1.5;
-                            }
-                            .message-success { color: #2e7d32; }
-                            .message-fail { color: #d32f2f; }
-                            .message-info { color: #1976d2; }
-                            .bet-details {
-                                display: flex;
-                                flex-direction: column;
-                                gap: 12px;
-                                background-color: #f7f9fc;
-                                padding: 20px;
-                                border-radius: 12px;
-                                border: 1px solid #e0e6ed;
-                            }
-                            .detail-item {
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                border-bottom: 1px dashed #d1d5db;
-                                padding-bottom: 12px;
-                            }
-                            .detail-item:last-child {
-                                border-bottom: none;
-                                padding-bottom: 0;
-                            }
-                            .detail-label {
-                                font-weight: 500;
-                                color: #4a5568;
-                                font-size: 14px;
-                            }
-                            .detail-value {
-                                font-weight: 600;
-                                color: #2d3748;
-                                font-size: 14px;
-                            }
-                            .footer {
-                                text-align: center;
-                                margin-top: 30px;
-                                padding-top: 20px;
-                                border-top: 1px solid #e0e6ed;
-                                font-size: 12px;
-                                color: #718096;
-                            }
-                            .footer-links {
-                                margin-top: 10px;
-                            }
-                            .footer-links a {
-                                color: #1b5e20;
-                                text-decoration: none;
-                                font-weight: 600;
-                            }
-                            .status-badge {
-                                font-weight: 700;
-                                padding: 5px 12px;
-                                border-radius: 50px;
-                                text-transform: uppercase;
-                                font-size: 10px;
-                                letter-spacing: 0.5px;
-                            }
-                            .status-badge.pending { background-color: #fff3e0; color: #ff9800; }
-                            .status-badge.won { background-color: #e8f5e9; color: #4caf50; }
-                            .status-badge.lost { background-color: #ffebee; color: #f44336; }
-                            .status-badge.cashed-out { background-color: #e3f2fd; color: #2196f3; }
-                        </style>
-                    </head>
-                    <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bet Details Slip</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #1a202c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 28rem;
+        }
+        @media (min-width: 640px) {
+            .container {
+                max-width: 36rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center p-4 min-h-screen">
 
-                        <div class="container">
-                            <div class="header">
-                                <h1>Trybet</h1>
-                                <p>Confirmation and details of your recent bet.</p>
-                            </div>
-                            
-                            <div class="content">
-                                <!-- Logic for status-based message -->
-                                <div class="message" id="status-message"></div>
+    <!-- Bet Details Container -->
+    <div class="container bg-white shadow-xl rounded-3xl overflow-hidden transform transition-all duration-500 ease-in-out scale-100 hover:scale-105">
+        
+        <!-- Header Section -->
+        <div class="bg-emerald-700 text-white p-8 sm:p-10 text-center rounded-t-3xl">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Trybet</h1>
+            <p class="mt-2 text-sm opacity-80">Confirmation and details of your recent bet.</p>
+        </div>
 
-                                <div class="bet-details">
-                                    <div class="detail-item">
-                                        <span class="detail-label">Option</span>
-                                        <span class="detail-value" id="option">${option}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Time</span>
-                                        <span class="detail-value" id="time">${time}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Starting Balance</span>
-                                        <span class="detail-value" id="Sbal">₦${Sbal}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Stake</span>
-                                        <span class="detail-value" id="stake">₦${stake}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Odd</span>
-                                        <span class="detail-value" id="odd">${odd}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Expected Balance</span>
-                                        <span class="detail-value" id="Ebal">₦${Ebal}</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">Status</span>
-                                        <span class="detail-value">
-                                            <span class="status-badge" id="status-badge">${status}</span>
-                                        </span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <span class="detail-label">SportyBet Code</span>
-                                        <span class="detail-value" id="code">${code}</span>
-                                    </div>
-                                </div>
-                            </div>
+        <!-- Content Section -->
+        <div class="p-6 sm:p-8">
+            <div id="status-message" class="text-center text-xl font-semibold mb-6">Your bet is **${status}**.</div>
+            
+            <div class="bg-gray-100 p-6 rounded-2xl border border-gray-200 shadow-inner">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Detail Item: Option -->
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-600">Option:</span>
+                        <span id="option" class="ml-2 font-bold text-gray-800 text-base">${option}</span>
+                    </div>
 
-                            <div class="footer">
-                                <p>Thank you for choosing Trybet. Good luck with your bets!</p>
-                                <div class="footer-links">
-                                    <a href="https://trybet.com.ng">trybet.com.ng</a> | <a href="mailto:info@trybet.com.ng">info@trybet.com.ng</a>
-                                </div>
-                                <p style="margin-top: 10px;">&copy; ${new Date().getFullYear()} TryBet. All rights reserved.</p>
-                                <p>This is an automated email, please do not reply.</p>
-                            </div>
-                        </div>
+                    <!-- Detail Item: Time -->
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-600">Time:</span>
+                        <span id="time" class="ml-2 font-bold text-gray-800 text-base">${time}</span>
+                    </div>
 
-                    </body>
-                    </html>
-                    `
+                    <!-- Detail Item: Starting Balance -->
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-600">Starting Balance:</span>
+                        <span id="Sbal" class="ml-2 font-bold text-gray-800 text-base">₦${Sbal}</span>
+                    </div>
+
+                    <!-- Detail Item: Stake -->
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-600">Stake:</span>
+                        <span id="stake" class="ml-2 font-bold text-gray-800 text-base">₦${stake}</span>
+                    </div>
+
+                    <!-- Detail Item: Odd -->
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-600">Odd:</span>
+                        <span id="odd" class="ml-2 font-bold text-gray-800 text-base">${odd}</span>
+                    </div>
+
+                    <!-- Detail Item: Expected Balance -->
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-600">Expected Balance:</span>
+                        <span id="Ebal" class="ml-2 font-bold text-gray-800 text-base">₦${Ebal}</span>
+                    </div>
+
+                    <!-- Detail Item: Status -->
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-600">Status:</span>
+                        <span id="status-badge" class="ml-2 px-3 py-1 rounded-full font-semibold text-xs tracking-wide uppercase"></span>
+                    </div>
+
+                    <!-- Detail Item: SportyBet Code -->
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-600">SportyBet Code:</span>
+                        <span id="code" class="ml-2 font-bold text-gray-800 text-base">${code}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="bg-gray-100 p-6 sm:p-8 text-center text-xs text-gray-500 rounded-b-3xl">
+            <p>Thank you for choosing Trybet. Good luck with your bets!</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <a href="#" class="text-emerald-600 hover:underline">trybet.com.ng</a>
+                <span class="text-gray-400">|</span>
+                <a href="mailto:info@trybet.com.ng" class="text-emerald-600 hover:underline">info@trybet.com.ng</a>
+            </div>
+            <p class="mt-2 text-gray-400">&copy; 2024 TryBet. All rights reserved.</p>
+            <p class="mt-1 text-gray-400">This is an automated message.</p>
+        </div>
+    </div>
+</body>
+</html>`
+
                 }
             let mailOptions2 = {
                 from: 'info@trybet.com.ng',
