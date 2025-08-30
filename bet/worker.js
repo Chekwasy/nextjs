@@ -243,7 +243,7 @@ notifyQueue.process(async (job, done) => {
     const len = usr.length;
     for (let i = 0; i < len; i++) {
         const email = usr[i].email;
-        const subs = usr[i].subs;
+        const subs = usr[i].sub;
         const chk = isDateInPast(subs.slice(-8));
         
         if (!chk && subs.slice(0, 4) !== 'free') {
