@@ -250,6 +250,7 @@ notifyQueue.process(async (job, done) => {
             //Data of email to be sent
             console.log(`notify email: ${email}`);
             let mailOptions = {
+                'Content-Type': 'text/html',
                 from: 'info@trybet.com.ng',
                 to: email,
                 subject: `Event Update for ${option} - TryBet`,
@@ -259,112 +260,240 @@ notifyQueue.process(async (job, done) => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bet Details Slip</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --color-primary: #059669;
+            --color-secondary: #047857;
+            --color-background: #f1f5f9;
+            --color-card-bg: #ffffff;
+            --color-border: #e2e8f0;
+            --color-text-dark: #1a202c;
+            --color-text-medium: #64748b;
+            --color-text-light: #94a3b8;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #e2e8f0; /* Lighter background for better contrast */
-            color: #1a202c;
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 1rem;
+            margin: 0;
         }
+
         .container {
             max-width: 28rem;
+            width: 100%;
+            background-color: var(--color-card-bg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-radius: 1.5rem;
+            overflow: hidden;
         }
+        
         @media (min-width: 640px) {
             .container {
                 max-width: 36rem;
             }
         }
+
+        .header {
+            background-image: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+            color: #fff;
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: 1.5rem 1.5rem 0 0;
+        }
+
+        .header-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .content {
+            padding: 1.5rem;
+        }
+
+        .status-message {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .details-card {
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--color-border);
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+        }
+        
+        .detail-item-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background-color: var(--color-card-bg);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #9ca3af;
+            margin-right: 0.75rem;
+        }
+
+        .detail-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #4b5563;
+            flex: 1;
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: #1a202c;
+            font-size: 1rem;
+        }
+
+        .footer {
+            background-color: #e2e8f0;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--color-text-medium);
+            border-radius: 0 0 1.5rem 1.5rem;
+        }
+        
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .footer-link {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-separator {
+            color: #cbd5e1;
+            margin: 0 0.5rem;
+        }
+
+        .footer-copyright {
+            margin-top: 0.5rem;
+            color: var(--color-text-light);
+        }
     </style>
 </head>
-<body class="bg-slate-100 flex items-center justify-center p-4 min-h-screen">
+<body>
 
     <!-- Bet Details Container -->
-    <div class="container bg-white shadow-2xl rounded-3xl overflow-hidden">
+    <div class="container">
         
-        <!-- Header Section with Gradient -->
-        <div class="bg-gradient-to-r from-emerald-600 to-green-700 text-white p-8 sm:p-10 text-center rounded-t-3xl">
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Trybet</h1>
-            <p class="mt-2 text-sm opacity-80">Confirmation and details of your recent bet.</p>
+        <!-- Header Section -->
+        <div class="header">
+            <h1 class="header-title">Trybet</h1>
+            <p class="header-subtitle">Confirmation and details of your recent bet.</p>
         </div>
 
         <!-- Content Section -->
-        <div class="p-6 sm:p-8">
-            <div id="status-message" class="text-center text-xl font-bold mb-6">Your bet is **${status}**.</div>
+        <div class="content">
+            <div id="status-message" class="status-message">Your bet is **${status}**.</div>
             
-            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-inner space-y-4">
-                
-                <!-- Detail Item: Option -->
-                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
-                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.707 9.293a1 1 0 011.414 0l2 2a1 1 0 01-1.414 1.414L10 11.414l-1.293 1.293a1 1 0 01-1.414-1.414l2-2a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-sm font-medium text-gray-600 flex-1">Option:</span>
-                    <span id="option" class="font-bold text-gray-800 text-base">${option}</span>
-                </div>
+            <div class="details-card">
+                <div class="detail-item-group">
+                    
+                    <!-- Detail Item: Option -->
+                    <div class="detail-item">
+                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.707 9.293a1 1 0 011.414 0l2 2a1 1 0 01-1.414 1.414L10 11.414l-1.293 1.293a1 1 0 01-1.414-1.414l2-2a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="detail-label">Option:</span>
+                        <span id="option" class="detail-value">${option}</span>
+                    </div>
 
-                <!-- Detail Item: Time -->
-                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
-                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-sm font-medium text-gray-600 flex-1">Time:</span>
-                    <span id="time" class="font-bold text-gray-800 text-base">${time}</span>
-                </div>
+                    <!-- Detail Item: Time -->
+                    <div class="detail-item">
+                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="detail-label">Time:</span>
+                        <span id="time" class="detail-value">${time}</span>
+                    </div>
 
-                <!-- Detail Item: Starting Balance -->
-                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
-                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z"></path>
-                    </svg>
-                    <span class="text-sm font-medium text-gray-600 flex-1">Starting Balance:</span>
-                    <span id="Sbal" class="font-bold text-gray-800 text-base">₦${Sbal}</span>
-                </div>
+                    <!-- Detail Item: Starting Balance -->
+                    <div class="detail-item">
+                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z"></path>
+                        </svg>
+                        <span class="detail-label">Starting Balance:</span>
+                        <span id="Sbal" class="detail-value">₦${Sbal}</span>
+                    </div>
 
-                <!-- Detail Item: Stake -->
-                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
-                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-sm font-medium text-gray-600 flex-1">Stake:</span>
-                    <span id="stake" class="font-bold text-gray-800 text-base">₦${stake}</span>
-                </div>
+                    <!-- Detail Item: Stake -->
+                    <div class="detail-item">
+                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="detail-label">Stake:</span>
+                        <span id="stake" class="detail-value">₦${stake}</span>
+                    </div>
 
-                <!-- Detail Item: Odd -->
-                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
-                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 16a6 6 0 01-12 0h12zM17 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    <span class="text-sm font-medium text-gray-600 flex-1">Odd:</span>
-                    <span id="odd" class="font-bold text-gray-800 text-base">${odd}</span>
-                </div>
+                    <!-- Detail Item: Odd -->
+                    <div class="detail-item">
+                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 16a6 6 0 01-12 0h12zM17 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="detail-label">Odd:</span>
+                        <span id="odd" class="detail-value">${odd}</span>
+                    </div>
 
-                <!-- Detail Item: Expected Balance -->
-                <div class="flex items-center p-3 rounded-lg bg-white shadow-sm">
-                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 100 2h4a1 1 0 100-2H8z"></path>
-                    </svg>
-                    <span class="text-sm font-medium text-gray-600 flex-1">Expected Balance:</span>
-                    <span id="Ebal" class="font-bold text-gray-800 text-base">₦${Ebal}</span>
+                    <!-- Detail Item: Expected Balance -->
+                    <div class="detail-item">
+                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 100 2h4a1 1 0 100-2H8z"></path>
+                        </svg>
+                        <span class="detail-label">Expected Balance:</span>
+                        <span id="Ebal" class="detail-value">₦${Ebal}</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Footer Section -->
-        <div class="bg-slate-200 p-6 sm:p-8 text-center text-xs text-slate-600 rounded-b-3xl">
+        <div class="footer">
             <p>Thank you for choosing Trybet. Good luck with your bets!</p>
-            <div class="mt-4 flex justify-center space-x-4">
-                <a href="#" class="text-emerald-700 hover:underline font-medium">trybet.com.ng</a>
-                <span class="text-slate-400">|</span>
-                <a href="mailto:info@trybet.com.ng" class="text-emerald-700 hover:underline font-medium">info@trybet.com.ng</a>
+            <div class="footer-links">
+                <a href="#" class="footer-link">trybet.com.ng</a>
+                <span class="footer-separator">|</span>
+                <a href="mailto:info@trybet.com.ng" class="footer-link">info@trybet.com.ng</a>
             </div>
-            <p class="mt-2 text-slate-500">&copy; 2024 TryBet. All rights reserved.</p>
-            <p class="mt-1 text-slate-500">This is an automated message.</p>
+            <p class="footer-copyright">&copy; 2024 TryBet. All rights reserved.</p>
+            <p class="footer-copyright">This is an automated message.</p>
         </div>
     </div>
 </body>
