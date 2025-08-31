@@ -274,7 +274,7 @@ export default function Three2WinPro() {
                         </h2>
                         <div className="text-lg md:text-xl text-gray-700 leading-relaxed space-y-6">
                             <p>
-                            <strong>Introduction to Our Betting System:</strong> Our betting system operates with a principal (starting capital) of ₦8,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns. For instance, a ₦4,000 principal would use a minimum stake of ₦10, and a ₦40,000 principal would use a ₦100 minimum stake.
+                            <strong>Introduction to Our Betting System:</strong> Our betting system operates with a principal (starting capital) of ₦8,000 and a minimum stake of ₦10 for each game. This foundational amount can be adjusted proportionally to achieve varying returns. For instance, a ₦40,000 principal would use a minimum stake of ₦50 for each game, and a ₦80,000 principal would use a ₦100 minimum stake for each game.
                             </p>
                             <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-md">
                             <h3 className="font-bold text-green-700 mb-2">💡 Tips for Success:</h3>
@@ -293,8 +293,8 @@ export default function Three2WinPro() {
                             <ul className="list-disc list-inside space-y-2 mt-2">
                             <li><strong>Principal:</strong> The initial capital used to start the system.</li>
                             <li><strong>Opening Balance:</strong> The account balance at the start of a new betting period. For example, if your closing balance was ₦9,500 in the previous game and you stake ₦20 in the current game, your opening balance will be ₦9,480.</li>
-                            <li><strong>Stake:</strong> The amount allocated for a particular bet. You must adhere to this amount to stay on track for winnings. You can only multiply it if you have used a different principal. For instance, with a ₦40,000 principal (2x our principal), you must multiply all stakes by 2.</li>
-                            <li><strong>Odd:</strong> The total odd for the said time, accurately reflected from the betting platform at the time of the update.</li>
+                            <li><strong>Stake:</strong> The amount allocated for a particular bet. PLEASE NOTE THAT THE AMOUNT HERE HAS TO BE SPLIT INTO 2 AND EACH GAME PALYED WITH EACH OF THE SPLIT AMOUNT. AS WE POST 2 GAMES. You must adhere to this amount to stay on track for winnings. You can only multiply it if you have used a different principal. For instance, with a ₦40,000 principal (2x our principal), you must multiply all stakes by 2.</li>
+                            <li><strong>Odd:</strong> The total odd for the said time, accurately reflected from the betting platform at the time of the update. MINIMUM WILL ALWAYS BE 3 ODD</li>
                             <li><strong>Expected Balance:</strong> The anticipated amount if the prediction results in a win.</li>
                             <li><strong>Closing Balance:</strong> The account balance after the event status has been updated. This amount will remain the same as the opening balance if a loss occurs or will increase from the opening balance if there is a win.</li>
                             <li><strong>Current ROI:</strong> The percentage return on investment (ROI) from the principal amount to your current opening balance.</li>
@@ -303,7 +303,6 @@ export default function Three2WinPro() {
                             <p>
                                 <strong>Recommendations for Getting Started:</strong> For optimal results, we advise commencing with a modest investment:
                                 <ul className="list-disc list-inside space-y-2 mt-2">
-                                    <li>₦4,000 with a ₦10 minimum stake</li>
                                     <li>₦8,000 with a ₦20 minimum stake</li>
                                     <li>₦40,000 with a ₦100 minimum stake</li>
                                     <li>₦400,000 with a ₦1,000 minimum stake</li>
