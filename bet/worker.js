@@ -272,7 +272,7 @@ notifyQueue.process(async (job, done) => {
                     <tr>
                         <td align="center">
                             <!-- Header Section -->
-                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-image: linear-gradient(to right, #059669, #047857); color: #fff; padding: 2.5rem; text-align: center; border-radius: 1.5rem 1.5rem 0 0;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-image: linear-gradient(to right, #059669, #047857); background-color: #047857; color: #fff; padding: 2.5rem; text-align: center; border-radius: 1.5rem 1.5rem 0 0;">
                                 <tr>
                                     <td style="padding: 2.5rem; border-radius: 1.5rem 1.5rem 0 0;">
                                         <h1 style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; margin: 0;">Trybet</h1>
