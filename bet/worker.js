@@ -441,7 +441,7 @@ notifyQueue.process(async (job, done) => {
                                             <span style="color: #cbd5e1; margin: 0 0.5rem;">|</span>
                                             <a href="mailto:info@trybet.com.ng" style="color: #059669; text-decoration: none; font-weight: 500;">info@trybet.com.ng</a>
                                         </div>
-                                        <p style="margin-top: 0.5rem; color: #94a3b8; margin-bottom: 0;">&copy; 2024 TryBet. All rights reserved.</p>
+                                        <p style="margin-top: 0.5rem; color: #94a3b8; margin-bottom: 0;">&copy; 2025 TryBet. All rights reserved.</p>
                                         <p style="color: #94a3b8; margin-top: 0.5rem; margin-bottom: 0;">This is an automated message.</p>
                                     </td>
                                 </tr>
