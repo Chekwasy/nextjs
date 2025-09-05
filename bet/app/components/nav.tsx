@@ -101,6 +101,7 @@ export default function Nav() {
           buttonState: savedGamesResponse.data.savedbuttons || {'': false}
         }));
       } catch (error) {
+        router.push("/auth/login");
         console.error("Failed to load user or saved game data:", error);
         // Optionally, dispatch a state to reflect a non-logged in status or show an error message
         dispatch(mainStateReducer({
