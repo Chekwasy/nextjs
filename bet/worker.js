@@ -306,7 +306,7 @@ notifyQueue.process(async (job, done) => {
                                                                                 <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.707 9.293a1 1 0 011.414 0l2 2a1 1 0 01-1.414 1.414L10 11.414l-1.293 1.293a1 1 0 01-1.414-1.414l2-2a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                                                             </svg>
                                                                         </td>
-                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Option:{'   '}</td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Option:   </td>
                                                                         <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">${option}</td>
                                                                     </tr>
                                                                 </table>
@@ -324,7 +324,7 @@ notifyQueue.process(async (job, done) => {
                                                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"></path>
                                                                             </svg>
                                                                         </td>
-                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Time: {'   '}</td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Time:    </td>
                                                                         <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">${time}</td>
                                                                     </tr>
                                                                 </table>
@@ -342,7 +342,7 @@ notifyQueue.process(async (job, done) => {
                                                                                 <path d="M4 4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z"></path>
                                                                             </svg>
                                                                         </td>
-                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Starting Balance:{'   '}</td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Starting Balance:    </td>
                                                                         <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">₦${Sbal}</td>
                                                                     </tr>
                                                                 </table>
@@ -361,7 +361,7 @@ notifyQueue.process(async (job, done) => {
                                                                                 <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
                                                                             </svg>
                                                                         </td>
-                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Stake:{'   '}</td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Stake:    </td>
                                                                         <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">₦${stake}</td>
                                                                     </tr>
                                                                 </table>
@@ -379,7 +379,7 @@ notifyQueue.process(async (job, done) => {
                                                                                 <path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 16a6 6 0 01-12 0h12zM17 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                                             </svg>
                                                                         </td>
-                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Odd:{'   '}</td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Odd:    </td>
                                                                         <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">${odd}</td>
                                                                     </tr>
                                                                 </table>
@@ -397,7 +397,7 @@ notifyQueue.process(async (job, done) => {
                                                                                 <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 100 2h4a1 1 0 100-2H8z"></path>
                                                                             </svg>
                                                                         </td>
-                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Expected Balance:{'   '}</td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Expected Balance:    </td>
                                                                         <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">₦${Ebal}</td>
                                                                     </tr>
                                                                 </table>
@@ -413,8 +413,8 @@ notifyQueue.process(async (job, done) => {
                                                                                 <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 100 2h4a1 1 0 100-2H8z"></path>
                                                                             </svg>
                                                                         </td>
-                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">SportyBet Code: {'   '}</td>
-                                                                        <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">₦${code}</td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">SportyBet Code:    </td>
+                                                                        <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">${code}</td>
                                                                     </tr>
                                                                 </table>
                                                             </td>

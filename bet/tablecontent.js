@@ -6,7 +6,7 @@ import puppeteer from 'puppeteer';
 
     try {
         // Navigate to the story's main page
-        await page.goto('https://www.wattpad.com/story/385211174-paul-and-veronica', {
+        await page.goto('https://www.wattpad.com/story/271288977-mafia-arranged-marriage', {
             waitUntil: 'networkidle2', // Wait until all network connections have settled
             timeout: 60000
         });
