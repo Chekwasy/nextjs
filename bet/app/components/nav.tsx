@@ -110,7 +110,6 @@ export default function Nav() {
           me: { currency: 'N', accbal: '0' }, // Reset user data
           buttonState: {}
         }));
-        router.push("/auth/login");
       }
     };
 
@@ -342,9 +341,9 @@ export default function Nav() {
             />
           </li>
           <li className="mb-6 text-center">
-            {storeItems.mainSlice.logged ? (
+            {storeItems?.mainSlice.logged ? (
               <div className="text-white font-bold text-lg">
-                {`${storeItems.mainSlice.me.currency || ''} ${new Intl.NumberFormat().format(parseFloat(storeItems.mainSlice.me.accbal || '0'))}`}
+                {`${storeItems?.mainSlice.me.currency || ''} ${new Intl.NumberFormat().format(parseFloat(storeItems?.mainSlice.me.accbal || '0'))}`}
               </div>
             ) : (
               <span className="text-gray-300 text-sm">Not Logged In</span>

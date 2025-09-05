@@ -130,7 +130,7 @@ export default function Three2WinPro() {
         });
     }, []);
 
-    const hasSubscriptionExpired = isDateInPast(storeItems.mainSlice?.me.sub.slice(-8));
+    const hasSubscriptionExpired = storeItems.mainSlice?.me?.sub?.length >= 8 ? isDateInPast(storeItems.mainSlice.me.sub.slice(-8)) : false;
 
     return (
         <div className="flex flex-col items-center mt-16 min-h-screen bg-gray-100 py-8 px-4">

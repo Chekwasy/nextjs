@@ -30,8 +30,7 @@ export default function Profile() {
         </div>
         <div className="bg-gray-200 rounded-lg p-1 flex gap-4">
           <div className=" w-1/2">Subscription Expires On </div>
-          <div className=" w-1/2 font-bold text-end">{`${storeItems?.mainSlice.me.sub.slice(-8).substring(0, 2)} - ${storeItems?.mainSlice.me.sub.slice(-8).substring(2, 4)} - ${storeItems?.mainSlice.me.sub.slice(-8).substring(4, 8)}`}</div>
-        </div>
+          <div className=" w-1/2 font-bold text-end">{storeItems?.mainSlice?.me?.sub?.length >= 8 ? `${storeItems.mainSlice.me.sub.slice(-8).substring(0, 2)} - ${storeItems.mainSlice.me.sub.slice(-8).substring(2, 4)} - ${storeItems.mainSlice.me.sub.slice(-8).substring(4, 8)}` : null}</div>        </div>
       </div>
     </div>
       </div>
