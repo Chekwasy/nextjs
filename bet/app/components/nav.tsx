@@ -5,11 +5,13 @@ import Image from 'next/image';
 import { useState, useEffect, ChangeEvent, MouseEvent, useCallback } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { mainStateReducer } from '@/store/slices/mainslice';
 import { StoreState } from '../tools/s_interface';
 
 export default function Nav() {
+  const router = useRouter();
   // Redux Hooks
   const dispatch = useDispatch();
   const storeItems: StoreState = useSelector((state) => state) as StoreState;
@@ -75,7 +77,7 @@ export default function Nav() {
       setIsMessageOpen(true);
     }
   }, [dispatch, storeItems.mainSlice]);
-
+ 
   // Initial data fetch on component mount
   useEffect(() => {
     const fetchUserData = async () => {
@@ -107,6 +109,7 @@ export default function Nav() {
           me: { currency: 'N', accbal: '0' }, // Reset user data
           buttonState: {}
         }));
+        router.push("/auth/login");
       }
     };
 

@@ -261,244 +261,184 @@ notifyQueue.process(async (job, done) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bet Details Slip</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-primary: #059669;
-            --color-secondary: #047857;
-            --color-background: #f1f5f9;
-            --color-card-bg: #ffffff;
-            --color-border: #e2e8f0;
-            --color-text-dark: #1a202c;
-            --color-text-medium: #64748b;
-            --color-text-light: #94a3b8;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-background);
-            color: var(--color-text-dark);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-            margin: 0;
-        }
-
-        .container {
-            max-width: 28rem;
-            width: 100%;
-            background-color: var(--color-card-bg);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border-radius: 1.5rem;
-            overflow: hidden;
-        }
-        
-        @media (min-width: 640px) {
-            .container {
-                max-width: 36rem;
-            }
-        }
-
-        .header {
-            background-image: linear-gradient(to right, var(--color-primary), var(--color-secondary));
-            color: #fff;
-            padding: 2.5rem;
-            text-align: center;
-            border-radius: 1.5rem 1.5rem 0 0;
-        }
-
-        .header-title {
-            font-size: 2.25rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            margin: 0;
-        }
-
-        .header-subtitle {
-            margin-top: 0.5rem;
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        .content {
-            padding: 1.5rem;
-        }
-
-        .status-message {
-            text-align: center;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .details-card {
-            background-color: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            border: 1px solid var(--color-border);
-            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
-        }
-        
-        .detail-item-group {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            background-color: var(--color-card-bg);
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        .detail-icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            color: #9ca3af;
-            margin-right: 0.75rem;
-        }
-
-        .detail-label {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #4b5563;
-            flex: 1;
-        }
-
-        .detail-value {
-            font-weight: 700;
-            color: #1a202c;
-            font-size: 1rem;
-        }
-
-        .footer {
-            background-color: #e2e8f0;
-            padding: 1.5rem;
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--color-text-medium);
-            border-radius: 0 0 1.5rem 1.5rem;
-        }
-        
-        .footer-links {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .footer-link {
-            color: var(--color-primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .footer-separator {
-            color: #cbd5e1;
-            margin: 0 0.5rem;
-        }
-
-        .footer-copyright {
-            margin-top: 0.5rem;
-            color: var(--color-text-light);
-        }
-    </style>
 </head>
-<body>
+<body style="font-family: 'Inter', sans-serif; background-color: #f1f5f9; margin: 0; padding: 0;">
 
-    <!-- Bet Details Container -->
-    <div class="container">
-        
-        <!-- Header Section -->
-        <div class="header">
-            <h1 class="header-title">Trybet</h1>
-            <p class="header-subtitle">Confirmation and details of your recent bet.</p>
-        </div>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="min-height: 100vh; padding: 1rem;">
+        <tr>
+            <td align="center" style="padding: 1rem;">
+                <!-- Main Container -->
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 28rem; width: 100%; background-color: #ffffff; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                    <tr>
+                        <td align="center">
+                            <!-- Header Section -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-image: linear-gradient(to right, #059669, #047857); color: #fff; padding: 2.5rem; text-align: center; border-radius: 1.5rem 1.5rem 0 0;">
+                                <tr>
+                                    <td style="padding: 2.5rem; border-radius: 1.5rem 1.5rem 0 0;">
+                                        <h1 style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; margin: 0;">Trybet</h1>
+                                        <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.8;">Confirmation and details of your recent bet.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-        <!-- Content Section -->
-        <div class="content">
-            <div id="status-message" class="status-message">Your bet is **${status}**.</div>
-            
-            <div class="details-card">
-                <div class="detail-item-group">
-                    
-                    <!-- Detail Item: Option -->
-                    <div class="detail-item">
-                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.707 9.293a1 1 0 011.414 0l2 2a1 1 0 01-1.414 1.414L10 11.414l-1.293 1.293a1 1 0 01-1.414-1.414l2-2a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="detail-label">Option:</span>
-                        <span id="option" class="detail-value">${option}</span>
-                    </div>
+                    <tr>
+                        <td align="center">
+                            <!-- Content Section -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="padding: 1.5rem;">
+                                <tr>
+                                    <td style="padding: 1.5rem;">
+                                        <p style="text-align: center; font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #1a202c;">Your bet is **${status}**.</p>
+                                        
+                                        <!-- Details Card -->
+                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8fafc; padding: 1.5rem; border-radius: 1rem; border: 1px solid #e2e8f0; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);">
+                                            <tr>
+                                                <td style="padding: 1.5rem;">
+                                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                        <!-- Detail Item: Option -->
+                                                        <tr>
+                                                            <td style="padding: 0.75rem; border-radius: 0.5rem; background-color: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); margin-bottom: 1rem;">
+                                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                    <tr>
+                                                                        <td style="width: 1.25rem; height: 1.25rem; color: #9ca3af; padding-right: 0.75rem; vertical-align: middle;">
+                                                                            <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height: 1.25rem; vertical-align: middle;">
+                                                                                <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.707 9.293a1 1 0 011.414 0l2 2a1 1 0 01-1.414 1.414L10 11.414l-1.293 1.293a1 1 0 01-1.414-1.414l2-2a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                                            </svg>
+                                                                        </td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Option:</td>
+                                                                        <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">${option}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr><td height="1rem" style="font-size: 1rem; line-height: 1rem;">&nbsp;</td></tr>
 
-                    <!-- Detail Item: Time -->
-                    <div class="detail-item">
-                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="detail-label">Time:</span>
-                        <span id="time" class="detail-value">${time}</span>
-                    </div>
+                                                        <!-- Detail Item: Time -->
+                                                        <tr>
+                                                            <td style="padding: 0.75rem; border-radius: 0.5rem; background-color: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); margin-bottom: 1rem;">
+                                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                    <tr>
+                                                                        <td style="width: 1.25rem; height: 1.25rem; color: #9ca3af; padding-right: 0.75rem; vertical-align: middle;">
+                                                                            <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height: 1.25rem; vertical-align: middle;">
+                                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"></path>
+                                                                            </svg>
+                                                                        </td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Time:</td>
+                                                                        <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">${time}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr><td height="1rem" style="font-size: 1rem; line-height: 1rem;">&nbsp;</td></tr>
 
-                    <!-- Detail Item: Starting Balance -->
-                    <div class="detail-item">
-                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z"></path>
-                        </svg>
-                        <span class="detail-label">Starting Balance:</span>
-                        <span id="Sbal" class="detail-value">₦${Sbal}</span>
-                    </div>
+                                                        <!-- Detail Item: Starting Balance -->
+                                                        <tr>
+                                                            <td style="padding: 0.75rem; border-radius: 0.5rem; background-color: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); margin-bottom: 1rem;">
+                                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                    <tr>
+                                                                        <td style="width: 1.25rem; height: 1.25rem; color: #9ca3af; padding-right: 0.75rem; vertical-align: middle;">
+                                                                            <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height: 1.25rem; vertical-align: middle;">
+                                                                                <path d="M4 4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z"></path>
+                                                                            </svg>
+                                                                        </td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Starting Balance:</td>
+                                                                        <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">₦${Sbal}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr><td height="1rem" style="font-size: 1rem; line-height: 1rem;">&nbsp;</td></tr>
 
-                    <!-- Detail Item: Stake -->
-                    <div class="detail-item">
-                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="detail-label">Stake:</span>
-                        <span id="stake" class="detail-value">₦${stake}</span>
-                    </div>
+                                                        <!-- Detail Item: Stake -->
+                                                        <tr>
+                                                            <td style="padding: 0.75rem; border-radius: 0.5rem; background-color: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); margin-bottom: 1rem;">
+                                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                    <tr>
+                                                                        <td style="width: 1.25rem; height: 1.25rem; color: #9ca3af; padding-right: 0.75rem; vertical-align: middle;">
+                                                                            <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height: 1.25rem; vertical-align: middle;">
+                                                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                                                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                                                                            </svg>
+                                                                        </td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Stake:</td>
+                                                                        <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">₦${stake}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr><td height="1rem" style="font-size: 1rem; line-height: 1rem;">&nbsp;</td></tr>
+                                                        
+                                                        <!-- Detail Item: Odd -->
+                                                        <tr>
+                                                            <td style="padding: 0.75rem; border-radius: 0.5rem; background-color: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); margin-bottom: 1rem;">
+                                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                    <tr>
+                                                                        <td style="width: 1.25rem; height: 1.25rem; color: #9ca3af; padding-right: 0.75rem; vertical-align: middle;">
+                                                                            <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height: 1.25rem; vertical-align: middle;">
+                                                                                <path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 16a6 6 0 01-12 0h12zM17 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                                            </svg>
+                                                                        </td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Odd:</td>
+                                                                        <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">${odd}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr><td height="1rem" style="font-size: 1rem; line-height: 1rem;">&nbsp;</td></tr>
 
-                    <!-- Detail Item: Odd -->
-                    <div class="detail-item">
-                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11 6a3 3 0 11-6 0 3 3 0 016 0zM14 17a6 6 0 00-12 0h12zM13 16a6 6 0 01-12 0h12zM17 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        <span class="detail-label">Odd:</span>
-                        <span id="odd" class="detail-value">${odd}</span>
-                    </div>
+                                                        <!-- Detail Item: Expected Balance -->
+                                                        <tr>
+                                                            <td style="padding: 0.75rem; border-radius: 0.5rem; background-color: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); margin-bottom: 1rem;">
+                                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                                                    <tr>
+                                                                        <td style="width: 1.25rem; height: 1.25rem; color: #9ca3af; padding-right: 0.75rem; vertical-align: middle;">
+                                                                            <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height: 1.25rem; vertical-align: middle;">
+                                                                                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 100 2h4a1 1 0 100-2H8z"></path>
+                                                                            </svg>
+                                                                        </td>
+                                                                        <td style="font-size: 0.875rem; font-weight: 500; color: #4b5563; vertical-align: middle;">Expected Balance:</td>
+                                                                        <td style="font-weight: 700; color: #1a202c; font-size: 1rem; text-align: right; vertical-align: middle;">₦${Ebal}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                    <!-- Detail Item: Expected Balance -->
-                    <div class="detail-item">
-                        <svg class="detail-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 9a1 1 0 100 2h4a1 1 0 100-2H8z"></path>
-                        </svg>
-                        <span class="detail-label">Expected Balance:</span>
-                        <span id="Ebal" class="detail-value">₦${Ebal}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer Section -->
-        <div class="footer">
-            <p>Thank you for choosing Trybet. Good luck with your bets!</p>
-            <div class="footer-links">
-                <a href="#" class="footer-link">trybet.com.ng</a>
-                <span class="footer-separator">|</span>
-                <a href="mailto:info@trybet.com.ng" class="footer-link">info@trybet.com.ng</a>
-            </div>
-            <p class="footer-copyright">&copy; 2024 TryBet. All rights reserved.</p>
-            <p class="footer-copyright">This is an automated message.</p>
-        </div>
-    </div>
+                    <tr>
+                        <td align="center">
+                            <!-- Footer Section -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #e2e8f0; padding: 1.5rem; text-align: center; font-size: 0.75rem; color: #64748b; border-radius: 0 0 1.5rem 1.5rem;">
+                                <tr>
+                                    <td style="padding: 1.5rem; text-align: center;">
+                                        <p style="margin: 0;">Thank you for choosing Trybet. Good luck with your bets!</p>
+                                        <div style="margin-top: 1rem; text-align: center;">
+                                            <a href="#" style="color: #059669; text-decoration: none; font-weight: 500;">trybet.com.ng</a>
+                                            <span style="color: #cbd5e1; margin: 0 0.5rem;">|</span>
+                                            <a href="mailto:info@trybet.com.ng" style="color: #059669; text-decoration: none; font-weight: 500;">info@trybet.com.ng</a>
+                                        </div>
+                                        <p style="margin-top: 0.5rem; color: #94a3b8; margin-bottom: 0;">&copy; 2024 TryBet. All rights reserved.</p>
+                                        <p style="color: #94a3b8; margin-top: 0.5rem; margin-bottom: 0;">This is an automated message.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
-</html>
-`
+</html>`
+
 
                 }
             let mailOptions2 = {
