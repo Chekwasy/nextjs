@@ -2,7 +2,7 @@ import dbClient from '../../../db';
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { makeID, checkpwd } from '../../tools/func';
-import { getDateTimeString, getSeventhDay } from '../../tools/dateitems'
+import { getDateTimeString, getThirtiethDay } from '../../tools/dateitems'
 
 
 
@@ -52,7 +52,7 @@ export async function POST(request) {
 	}
 
 	const jdate = getDateTimeString();
-	const sevth = getSeventhDay(jdate);
+	const sevth = `mont_${getThirtiethDay(curDay)}`;
 	//adds user to db
 	const result = await dbClient.client.db().collection('users')
 	.insertOne({userID: userID, email: email, password: password, fname: firstname, lname: lastname, mobile: "", accbal: '10000', currency: "N", rating: '', sub: `free_${sevth}`, TGames: '', TWon: '', TLost: '', nickname: '', jdate: jdate,});
