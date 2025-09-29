@@ -7,14 +7,14 @@ import fs from 'fs/promises';
         
     try {
         // Start from the first URL
-        let url = 'https://www.wattpad.com/1562390149-paul-and-veronica-chapter-31-paul-i-knew';
+        let url = 'https://www.wattpad.com/story/385211174-paul-and-veronica';
 
         while (url) {
 
             // Navigate to the current page and wait for the DOM to be ready
             await page.goto(url, {
                 waitUntil: 'domcontentloaded',
-                timeout: 60000 // Set a generous timeout
+                timeout: 160000 // Set a generous timeout
             });
             
             // Get the text content from the chapter heading
@@ -28,7 +28,7 @@ import fs from 'fs/promises';
             
             // Append the heading to the file if it exists
             if (headingText) {
-                await fs.appendFile('book.txt', `\n\n--- ${headingText} ---\n\n`);
+                await fs.appendFile('bookP.txt', `\n\n--- ${headingText} ---\n\n`);
                 console.log(`Wrote heading: ${headingText}`);
             }
 
@@ -44,12 +44,12 @@ import fs from 'fs/promises';
                         }
                         lastScrollHeight = newScrollHeight;
                         window.scrollTo(0, lastScrollHeight);
-                    }, 500); // Check and scroll every 500ms
+                    }, 5000); // Check and scroll every 500ms
                 });
             });
 
             // Wait for at least one <pre> tag to appear
-            await page.waitForSelector('pre', { timeout: 30000 });
+            await page.waitForSelector('pre', { timeout: 90000 });
 
             // Get the text content from all <p> tags inside <pre> tags on the current page
             const allPText = await page.evaluate(() => {
