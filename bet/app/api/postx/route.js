@@ -132,7 +132,7 @@ export async function POST(request) {
                         game: {
                             time: time,
                             Sbal: Sbal.toString(),
-                            stake: Tstake.toString(),
+                            stake: stake.toString(),
                             odd: Todd.toString(),
                             Ebal: Ebal.toString(),
                             status: "Pending",
