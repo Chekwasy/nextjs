@@ -134,7 +134,7 @@ function LoginPage() { // Renamed from 'Page' to 'LoginPage' for clarity
       Cookies.set('trybet_tok', response.data.token, { expires: 7, path: '/' });
       setMessage(response.data.message || 'Login successful!');
       setIsPopupOpen(true);
-      router.push("/");
+      router.back();
     } catch (error) {
       // Use a type guard to ensure 'error' is an AxiosError
       if (axios.isAxiosError(error)) {
