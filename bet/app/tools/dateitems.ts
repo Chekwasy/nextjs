@@ -74,6 +74,29 @@ export const getCurrentDateString = () => {
   return `${day}${monthAbbr}${monthNum}${year}`;
 };
 
+export const getYesterdayDateString = () => {
+  const now = new Date();
+
+  // Subtract 1 day
+  now.setDate(now.getDate() - 1);
+
+  // Get the day of the month (DD)
+  const day = String(now.getDate()).padStart(2, "0");
+
+  // Get the month abbreviation (Mon)
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthAbbr = monthNames[now.getMonth()];
+
+  // Get the month number (MM), padded with a leading zero if needed
+  const monthNum = String(now.getMonth() + 1).padStart(2, "0");
+
+  // Get the full year (YYYY)
+  const year = now.getFullYear();
+
+  return `${day}${monthAbbr}${monthNum}${year}`;
+};
+
+
 export const getCurrentTimeString = () => {
   const now = new Date();
 

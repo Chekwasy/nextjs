@@ -184,7 +184,7 @@ export default function Two2Win() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Principal / Starting Capital:</span>
-                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(20000)}</span>
+                                        <span className="font-bold text-gray-900">{new Intl.NumberFormat().format(10000)}</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3">
                                         <span className="text-gray-700">Opening Balance:</span>
@@ -214,7 +214,7 @@ export default function Two2Win() {
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">Current ROI:</span>
-                                        <span className="font-bold text-lg text-green-700">{(((parseFloat(entry.Sbal) / 20000) * 100) - 100).toFixed(2)} %</span>
+                                        <span className="font-bold text-lg text-green-700">{(((parseFloat(entry.Sbal) / 10000) * 100) - 100).toFixed(2)} %</span>
                                     </div>
                                     <div className="flex justify-between bg-lime-50 rounded-lg p-3 col-span-full">
                                         <span className="text-gray-700">SportyBet Code:</span>
@@ -274,26 +274,26 @@ export default function Two2Win() {
                         </h2>
                         <div className="text-lg md:text-xl text-gray-700 leading-relaxed space-y-6">
                             <p>
-                            <strong>Introduction to Our Betting System:</strong> Our betting system operates with a principal (starting capital) of ₦20,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns. For instance, a ₦10,000 principal would use a minimum stake of ₦10, and a ₦100,000 principal would use a ₦100 minimum stake.
+                            <strong>Introduction to This Betting System:</strong> This betting system operates with a principal (starting capital) of ₦10,000 and a minimum stake of ₦20. This foundational amount can be adjusted proportionally to achieve varying returns. For instance, a ₦5,000 principal would use a minimum stake of ₦10, and a ₦50,000 principal would use a ₦100 minimum stake.
                             </p>
                             <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-md">
                             <h3 className="font-bold text-green-700 mb-2">💡 Tips for Success:</h3>
                             <ul className="list-disc list-inside text-green-800 space-y-1">
-                            <li>Start with a capital of ₦20,000 or a proportional amount of your choosing.</li>
-                            <li>You can apply a multiplier to your principal. For example, with our starting capital of ₦20,000, you can multiply it by 2, 3, or 4. Ensure you also multiply the stake we post by the same value.</li>
-                            <li>Once your earnings reach a 15% return on your initial capital, you can withdraw a portion of your profits. For a ₦20,000 principal, this means you can withdraw ₦3,000, leaving you with your initial ₦20,000 balance to continue playing.</li>
-                            <li>Continue playing with this ₦20,000 balance until it reaches ₦40,000, at which point you should double your stake on the betting platform.</li>
-                            <li>If your balance increases to ₦60,000, you have the option to triple your stake or withdraw a portion of your capital, and so on.</li>
+                            <li>Start with a capital of ₦10,000 or a proportional amount of your choosing.</li>
+                            <li>You can apply a multiplier to your principal. For example, with our starting capital of ₦10,000, you can multiply it by 2, 3, or 4. Ensure you also multiply the stake we post by the same value.</li>
+                            <li>Once your earnings reach a 30% return on your initial capital, you can withdraw a portion of your profits. For a ₦10,000 principal, this means you can withdraw ₦3,000, leaving you with your initial ₦10,000 balance to continue playing.</li>
+                            <li>Continue playing with this ₦10,000 balance until it reaches ₦20,000, at which point you should double your stake on the betting platform.</li>
+                            <li>If your balance increases to ₦30,000, you have the option to triple your stake or withdraw a portion of your capital, and so on.</li>
                             <li>You are free to manage your withdrawals as you see fit.</li>
-                            <li>Access to this feature requires a subscription of ₦250 weekly or ₦800 monthly. A 7-day free trial is also included.</li>
+                            <li>A one month free trial applies to this feature. Continous access to this feature requires a subscription of ₦250 weekly or ₦800 monthly.</li>
                             </ul>
                             </div>
                             <p>
                             <strong>Key Terms and Definitions:</strong>
                             <ul className="list-disc list-inside space-y-2 mt-2">
                             <li><strong>Principal:</strong> The initial capital used to start the system.</li>
-                            <li><strong>Opening Balance:</strong> The account balance at the start of a new betting period. For example, if your closing balance was ₦9,500 in the previous game and you stake ₦20 in the current game, your opening balance will be ₦9,480.</li>
-                            <li><strong>Stake:</strong> The amount allocated for a particular bet. You must adhere to this amount to stay on track for winnings. You can only multiply it if you have used a different principal. For instance, with a ₦40,000 principal (2x our principal), you must multiply all stakes by 2.</li>
+                            <li><strong>Opening Balance:</strong> The account balance at the start of a new betting period. For example, if your closing balance was ₦19,500 in the previous game and you stake ₦20 in the current game, your opening balance will be ₦19,480.</li>
+                            <li><strong>Stake:</strong> The amount allocated for a particular bet. You must adhere to this amount to stay on track for winnings. You can only multiply it if you have used a different principal. For instance, with a ₦20,000 principal (2x our principal), you must multiply all stakes by 2.</li>
                             <li><strong>Odd:</strong> The total odd for the said time, accurately reflected from the betting platform at the time of the update.</li>
                             <li><strong>Expected Balance:</strong> The anticipated amount if the prediction results in a win.</li>
                             <li><strong>Closing Balance:</strong> The account balance after the event status has been updated. This amount will remain the same as the opening balance if a loss occurs or will increase from the opening balance if there is a win.</li>
@@ -306,21 +306,24 @@ export default function Two2Win() {
                             <p>
                                 <strong>Recommendations for Getting Started:</strong> For optimal results, we advise commencing with a modest investment:
                                 <ul className="list-disc list-inside space-y-2 mt-2">
-                                    <li>₦10,000 with a ₦10 minimum stake</li>
-                                    <li>₦20,000 with a ₦20 minimum stake</li>
-                                    <li>₦100,000 with a ₦100 minimum stake</li>
-                                    <li>₦1,000,000 with a ₦1,000 minimum stake</li>
+                                    <li>₦5,000 with a ₦10 minimum stake</li>
+                                    <li>₦10,000 with a ₦20 minimum stake</li>
+                                    <li>₦50,000 with a ₦100 minimum stake</li>
+                                    <li>₦500,000 with a ₦1,000 minimum stake</li>
                                 </ul>
                             </p>
                             <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
                                 <h3 className="font-bold text-red-700 mb-2">⚠️ Performance Expectations and Risk Management:</h3>
                                 <p className="text-red-800">
-                                    Our strategy aims to deliver a minimum monthly percentage return of 15%. However, please note that this comes with a <strong>100% risk ratio</strong>, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
+                                    Our strategy aims to deliver a minimum monthly percentage return of 30%. However, please note that this comes with a <strong>100% risk ratio</strong>, meaning that losses can be substantial. To mitigate this risk, we strongly advise starting with an amount you can comfortably afford to lose.
                                 </p>
                             </div>
                             <p className="text-center text-gray-600">
                             <p className="text-center text-gray-600">
                             For more information, reach out to us via Email at <a href="mailto:info@trybet.com.ng" className="text-green-500 hover:underline">info@trybet.com.ng</a>.
+                            </p>
+                            <p className="text-center text-gray-600">
+                                For Acount Management, reach out to us via <a href="https://t.me/+vqGvargvyENlNDZk" className="text-yellow-500 hover:underline">Telegram</a>.
                             </p>
                             </p>
                         </div>

@@ -301,6 +301,9 @@ export default function Point5Pro() {
                             </ul>
                             </p>
                             <p>
+                            <strong>Match Structure and Odds:</strong> This schedule comprises one match, with a minimum total odd of 1.5.
+                            </p>
+                            <p>
                                 <strong>Recommendations for Getting Started:</strong> For optimal results, we advise commencing with a modest investment:
                                 <ul className="list-disc list-inside space-y-2 mt-2">
                                     <li>₦1,800 with a ₦10 minimum stake</li>

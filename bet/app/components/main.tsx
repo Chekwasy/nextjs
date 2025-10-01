@@ -626,7 +626,7 @@ export default function Main() {
                 <li><strong>Bets</strong>: Displays a comprehensive record of played games, including both open and closed bets.</li>
                 <li><strong>Profile</strong>: Directs the user to their personal dashboard.</li>
                 <li>
-                  <strong>Two2Win</strong>: Provides access to our 2-odds strategy, which offers projected monthly returns of 15%. Users can access this option for a complimentary 30-days trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies.
+                  <strong>Two2Win</strong>: Provides access to our 2-odds strategy, which offers projected monthly returns of 30%. Users can access this option for a complimentary 30-days trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies.
                 </li>
                 <li>
                   <strong>Point5 and Point5Pro</strong>: Provides access to our 1.5-odds strategy, which offers projected monthly returns of 30% each. Users can access this option for a complimentary 30-day trial. Following the trial, a subscription fee of N250 (weekly) or N800 (monthly) applies. (A single subscription grants access to both the Two2Win, Point5 and Point5Pro categories.)
@@ -636,7 +636,7 @@ export default function Main() {
                 <li><strong>Reload/Reset</strong>: Resets the virtual balance to N10,000 if it falls below this amount.</li>
               </ul>
               <p className="mt-6">
-                <strong>Conclusion</strong>: Our <strong>Two2Win</strong> option demonstrates a 100% confidence rate over a two-months period, while our <strong>Point5</strong> and <strong>Point5Pro</strong> option boasts a 90% confidence rate. We are committed to carefully curating daily game selections for our Two2Win, Point5 and Point5Pro options. We have option to manage user funds to bet on their behalf for only games placed on our categories. We welcome and are open to collaborations with potential investors.
+                <strong>Conclusion</strong>: Our <strong>Two2Win</strong> option demonstrates a 100% confidence rate over a two-months period, while our <strong>Point5</strong> and <strong>Point5Pro</strong> option boasts a 90% confidence rate over a 1 month period. We are committed to carefully curating daily game selections for our Two2Win, Point5 and Point5Pro options. We have option to manage user funds to bet on their behalf for only games placed on our categories. We welcome and are open to collaborations with potential investors.
               </p>
             </div>
             <button
