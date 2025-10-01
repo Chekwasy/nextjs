@@ -44,24 +44,24 @@ export async function POST(request) {
         if (db[0] === 'two2win') {
 
             const g = await dbClient.client.db().collection('two2win')
-            .findOne({ "date": date }).toArray();
+            .findOne({ "date": date });
             const yg = await dbClient.client.db().collection('two2win')
-            .findOne({ "date": yest }).toArray();
+            .findOne({ "date": yest });
 
 
 
-            if (g.length === 0) {
-                if (yg.length === 0) {
+            if (!g) {
+                if (!yg) {
                     Sbal = '9980';
                     stake = '20';
                     Ebal = (parseFloat(Sbal) + (parseFloat(Todd) * parseFloat(stake)));
                 }
 
-                if (yg.length > 0) {
-                    const preSbal = yg[0].game[(yg[0].game.length - 1)].Sbal;
-                    const preEbal = yg[0].game[(yg[0].game.length - 1)].Ebal;
-                    const preStake = yg[0].game[(yg[0].game.length - 1)].stake;
-                    const preStatus = yg[0].game[(yg[0].game.length - 1)].status;
+                if (yg) {
+                    const preSbal = yg.game[(yg.game.length - 1)].Sbal;
+                    const preEbal = yg.game[(yg.game.length - 1)].Ebal;
+                    const preStake = yg.game[(yg.game.length - 1)].stake;
+                    const preStatus = yg.game[(yg.game.length - 1)].status;
                     if (preStatus === 'Pending') {
                         return  NextResponse.json('error not done', {status: 401});    
                     }
@@ -107,10 +107,10 @@ export async function POST(request) {
                 return  NextResponse.json({message: "Success" }, {status: 201});
             }
             //if today data is present
-            const preSbal = g[0].game[(g[0].game.length - 1)].Sbal;
-            const preEbal = g[0].game[(g[0].game.length - 1)].Ebal;
-            const preStake = g[0].game[(g[0].game.length - 1)].stake;
-            const preStatus = g[0].game[(g[0].game.length - 1)].status;
+            const preSbal = g.game[(g.game.length - 1)].Sbal;
+            const preEbal = g.game[(g.game.length - 1)].Ebal;
+            const preStake = g.game[(g.game.length - 1)].stake;
+            const preStatus = g.game[(g.game.length - 1)].status;
             if (preStatus === 'Pending') {
                 return  NextResponse.json('error not done', {status: 401});
             }
@@ -153,26 +153,26 @@ export async function POST(request) {
         //Ponit5
         if (db[0] === 'point5') {
             const g = await dbClient.client.db().collection('point5')
-            .findOne({ "date": date }).toArray();
+            .findOne({ "date": date });
             const yg = await dbClient.client.db().collection('point5')
-            .findOne({ "date": yest }).toArray();
+            .findOne({ "date": yest });
 
 
             
-            if (g.length === 0) {
+            if (!g) {
 
 
-                if (yg.length === 0) {
+                if (!yg) {
                     Sbal = '17900';
                     stake = '100';
                     Ebal = (parseFloat(Sbal) + (parseFloat(Todd) * parseFloat(stake)));
                 }
 
-                if (yg.length > 0) {
-                    const preSbal = yg[0].game[(yg[0].game.length - 1)].Sbal;
-                    const preEbal = yg[0].game[(yg[0].game.length - 1)].Ebal;
-                    const preStake = yg[0].game[(yg[0].game.length - 1)].stake;
-                    const preStatus = yg[0].game[(yg[0].game.length - 1)].status;
+                if (yg) {
+                    const preSbal = yg.game[(yg.game.length - 1)].Sbal;
+                    const preEbal = yg.game[(yg.game.length - 1)].Ebal;
+                    const preStake = yg.game[(yg.game.length - 1)].stake;
+                    const preStatus = yg.game[(yg.game.length - 1)].status;
                     if (preStatus === 'Pending') {
                         return  NextResponse.json('error not done', {status: 401});    
                     }
@@ -217,10 +217,10 @@ export async function POST(request) {
             }
 
             //if today data is present
-            const preSbal = g[0].game[(g[0].game.length - 1)].Sbal;
-            const preEbal = g[0].game[(g[0].game.length - 1)].Ebal;
-            const preStake = g[0].game[(g[0].game.length - 1)].stake;
-            const preStatus = g[0].game[(g[0].game.length - 1)].status;
+            const preSbal = g.game[(g.game.length - 1)].Sbal;
+            const preEbal = g.game[(g.game.length - 1)].Ebal;
+            const preStake = g.game[(g.game.length - 1)].stake;
+            const preStatus = g.game[(g.game.length - 1)].status;
             if (preStatus === 'Pending') {
                 return  NextResponse.json('error not done', {status: 401});
             }
@@ -269,25 +269,25 @@ export async function POST(request) {
         //Point5PRO
         if (db[0] === 'point5pro') {
             const g = await dbClient.client.db().collection('point5pro')
-            .findOne({ "date": date }).toArray();
+            .findOne({ "date": date });
             const yg = await dbClient.client.db().collection('point5pro')
-            .findOne({ "date": yest }).toArray();
+            .findOne({ "date": yest });
             
             
             
-            if (g.length === 0) {
+            if (!g) {
 
-                if (yg.length === 0) {
+                if (!yg) {
                     Sbal = '17900';
                     stake = '100';
                     Ebal = (parseFloat(Sbal) + (parseFloat(Todd) * parseFloat(stake)));
                 }
 
-                if (yg.length > 0) {
-                    const preSbal = yg[0].game[(yg[0].game.length - 1)].Sbal;
-                    const preEbal = yg[0].game[(yg[0].game.length - 1)].Ebal;
-                    const preStake = yg[0].game[(yg[0].game.length - 1)].stake;
-                    const preStatus = yg[0].game[(yg[0].game.length - 1)].status;
+                if (yg) {
+                    const preSbal = yg.game[(yg.game.length - 1)].Sbal;
+                    const preEbal = yg.game[(yg.game.length - 1)].Ebal;
+                    const preStake = yg.game[(yg.game.length - 1)].stake;
+                    const preStatus = yg.game[(yg.game.length - 1)].status;
                     if (preStatus === 'Pending') {
                         return  NextResponse.json('error not done', {status: 401});    
                     }
@@ -331,10 +331,10 @@ export async function POST(request) {
             }
 
             //if today data is present
-            const preSbal = g[0].game[(g[0].game.length - 1)].Sbal;
-            const preEbal = g[0].game[(g[0].game.length - 1)].Ebal;
-            const preStake = g[0].game[(g[0].game.length - 1)].stake;
-            const preStatus = g[0].game[(g[0].game.length - 1)].status;
+            const preSbal = g.game[(g.game.length - 1)].Sbal;
+            const preEbal = g.game[(g.game.length - 1)].Ebal;
+            const preStake = g.game[(g.game.length - 1)].stake;
+            const preStatus = g.game[(g.game.length - 1)].status;
             if (preStatus === 'Pending') {
                 return  NextResponse.json('error not done', {status: 401});
             }
