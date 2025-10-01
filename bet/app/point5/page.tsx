@@ -1,6 +1,6 @@
 "use client"
 import Nav from '@/app/components/nav';
-import Three2Win from '@/app/components/three2win';
+import Point5 from '@/app/components/point5';
 import { Provider } from 'react-redux';
 import store from '@/store/store';
 
@@ -10,7 +10,7 @@ export default function Home() {
       >
       <Provider store={store}>
         <Nav/>
-        <Three2Win/>
+        <Point5/>
       </Provider>
       <div className="text-center text-gray-400 p-2">
         &copy; 2025 Chekwasy Businesses. All rights reserved.

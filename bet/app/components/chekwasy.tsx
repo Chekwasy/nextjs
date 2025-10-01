@@ -9,26 +9,19 @@ import Cookies from 'js-cookie';
 // Define the structure of the data to be sent
 interface PostXData {
     db: string[]; // Array of selected checkbox values
-    openBalance: number;
-    todayStake: number;
     totalOdd: number;
-    expectedBalance: number;
     code: string;
-
 }
 
 export default function PostXForm() {
 
     const [selectedDbs, setSelectedDbs] = useState<string[]>([]);
-    const [openBalance, setOpenBalance] = useState<string>('');
-    const [todayStake, setTodayStake] = useState<string>('');
     const [totalOdd, setTotalOdd] = useState<string>('');
-    const [expectedBalance, setExpectedBalance] = useState<string>('');
     const [code, setCode] = useState<string>('');
     const [message, setMessage] = useState<string | null>(null);
     const [isError, setIsError] = useState<boolean>(false);
 
-    const dbOptions = ['two2win', 'three2win', 'threepro', 'sevenpro'];
+    const dbOptions = ['two2win', 'point5', 'point5pro'];
 
     // Handle checkbox change
     const handleDbChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,10 +46,7 @@ export default function PostXForm() {
 
         const dataToSend: PostXData = {
             db: selectedDbs,
-            openBalance: parseFloat(openBalance || '0'),
-            todayStake: parseFloat(todayStake || '0'),
             totalOdd: parseFloat(totalOdd || '0'),
-            expectedBalance: parseFloat(expectedBalance || '0'),
             code: code,
         };
 
@@ -73,10 +63,7 @@ export default function PostXForm() {
             console.log('Success:', response.data);
             // Optionally clear form fields after successful submission
             setSelectedDbs([]);
-            setOpenBalance('');
-            setTodayStake('');
             setTotalOdd('');
-            setExpectedBalance('');
             setCode('');
         } catch (error) {
             console.error('Error sending data:', error);
@@ -88,8 +75,8 @@ export default function PostXForm() {
     return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
         <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl border border-gray-200">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
-                Enter Bet Data
+            <h2 className="text-2xl font-extrabold text-red-500 mb-8 text-center">
+                Enter Bet Data (MAKE UPDATE OF LAST GAME!!!!!!!!!!)
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* DB Checkboxes */}
@@ -118,31 +105,7 @@ export default function PostXForm() {
                 {/* General Bet Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label htmlFor="openBalance" className="form-label">Open Balance</label>
-                        <input
-                            type="number"
-                            id="openBalance"
-                            className="form-input"
-                            value={openBalance}
-                            onChange={(e) => setOpenBalance(e.target.value)}
-                            placeholder="e.g., 10000"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="todayStake" className="form-label">Stake</label>
-                        <input
-                            type="number"
-                            id="todayStake"
-                            className="form-input"
-                            value={todayStake}
-                            onChange={(e) => setTodayStake(e.target.value)}
-                            placeholder="e.g., 500"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="totalOdd" className="form-label">Total Odd</label>
+                        <label htmlFor="totalOdd" className="form-label mr-3">Total Odd</label>
                         <input
                             type="number"
                             id="totalOdd"
@@ -155,30 +118,17 @@ export default function PostXForm() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="expectedBalance" className="form-label">Expected Balance</label>
+                        <label htmlFor="code" className="form-label mr-3">Bet Code</label>
                         <input
-                            type="number"
-                            id="expectedBalance"
+                            type="text"
+                            id="code"
                             className="form-input"
-                            value={expectedBalance}
-                            onChange={(e) => setExpectedBalance(e.target.value)}
-                            placeholder="e.g., 12500"
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                            placeholder="e.g., AZX12345"
                             required
                         />
                     </div>
-                </div>
-
-                <div>
-                    <label htmlFor="code" className="form-label">Bet Code</label>
-                    <input
-                        type="text"
-                        id="code"
-                        className="form-input"
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                        placeholder="e.g., AZX12345"
-                        required
-                    />
                 </div>
 
                 {/* Submission Message */}
