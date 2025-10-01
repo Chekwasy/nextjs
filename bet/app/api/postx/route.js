@@ -7,7 +7,7 @@ import { getCurrentDateString, getYesterdayDateString, getCurrentTimeString } fr
 
 export async function POST(request) {
 	const dd = await request;
-	try {
+	// try {
         const saved = JSON.parse(dd.headers.get('saved'));
         const tok = dd.headers.get('tok');
         const db = saved.db;
@@ -381,8 +381,8 @@ export async function POST(request) {
         //if (db[0] === 'sevenpro') {
             
         //}
-        return  NextResponse.json('error', {status: 400});
-    } catch {
-        return  NextResponse.json('error', {status: 400});
-    }
+    //     return  NextResponse.json('error', {status: 400});
+    // } catch {
+    //     return  NextResponse.json('error', {status: 400});
+    // }
 };
