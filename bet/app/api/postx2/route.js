@@ -11,7 +11,7 @@ export async function POST(request) {
         const db = saved.option;
         const result = saved.result;
         const day = saved.day;
-        const index = saved.index;
+        const index = saved.index.toString();
         let date = '';
 
         if (day === 'yest') {
