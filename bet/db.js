@@ -1,39 +1,46 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient } from "mongodb";
 
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  throw new Error("Please define MONGODB_URI in env");
+}
+
+let client;
+let clientPromise;
+
+// Reuse connection across hot reloads (important on Vercel)
+if (!global._mongoClientPromise) {
+  client = new MongoClient(uri);
+  global._mongoClientPromise = client.connect();
+}
+
+clientPromise = global._mongoClientPromise;
 
 class DBClient {
-  constructor() {
-    const host = process.env.DB_HOST || '127.0.0.1';
-    const port = process.env.DB_PORT || 27017;
-    const database = process.env.DB_DATABASE || 'trybet';
-    const dbURL = `mongodb://${host}:${port}/${database}`;
-    this.client = new MongoClient(dbURL, { useUnifiedTopology: true });
-
-    this.isAliv = false; // added property to track connection status
-    this.connect(); // call connect method to establish the connection
-  }
-
-  async connect() {
+  async isAlive() {
     try {
-      await this.client.connect();
-      this.isAliv = true; // set isAlive property to true after successful connection
-    } catch (error) {
-      console.error('Failed to connect to MongoDB:', error);
+      const client = await clientPromise;
+      return client.topology?.isConnected?.() ?? true;
+    } catch {
+      return false;
     }
   }
 
-  isAlive() {
-    return this.isAliv;
+  async db() {
+    const client = await clientPromise;
+    return client.db();
   }
 
   async nbUsers() {
-    return this.client.db().collection('users').estimatedDocumentCount();
+    const db = await this.db();
+    return db.collection("users").estimatedDocumentCount();
   }
 
   async nbDates() {
-    return this.client.db().collection('dates').estimatedDocumentCount();
+    const db = await this.db();
+    return db.collection("dates").estimatedDocumentCount();
   }
-
 }
 
 const dbClient = new DBClient();
