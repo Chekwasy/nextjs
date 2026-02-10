@@ -1,49 +1,30 @@
-import { createClient } from 'redis';
-const client = createClient({
-  socket: {
-    port: 6379,
-    host: 'localhost',
-  },
-});
+import { Redis } from "@upstash/redis";
 
 class RedisClient {
-        constructor() {
-                this.client = this.connects();
-        }
+  constructor() {
+    this.client = Redis.fromEnv();
+    this.clientConnected = true; 
+  }
 
-        isAlive() {
-                return this.clientConnected;
-        }
+  isAlive() {
+    return this.clientConnected;
+  }
 
-        async connects() {
-                try {
-                        await client.connect();
-                        await client.ping();
-                        this.clientConnected = true;
-                        return client;
-                } catch (err) {
-			console.log(err.message);
-                        this.clientConnected =false;
-                        return cli;
-                }
-        }
+  async get(key) {
+    return await this.client.get(key);
+  }
 
-        async get(key) {
-		return await client.get(key);
-	}
+  async set(key, value, duration) {
+    await this.client.set(key, value, {
+      ex: duration,
+      nx: true,
+    });
+  }
 
-        async set(key, value, duration) {
-		await client.set(key, value, {
-  			EX: duration,
-  			NX: true
-		});
-	}
-
-        async del(key) {
-		await client.del(key);
-	}
+  async del(key) {
+    await this.client.del(key);
+  }
 }
 
 const redisClient = new RedisClient();
-
 export default redisClient;
