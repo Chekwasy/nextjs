@@ -32,8 +32,11 @@ export async function POST(request) {
 		if (mainstr !== token.toString()) {
 			return  NextResponse.json('error', {status: 400});
 		}
-		const user = await dbClient.client.db().collection('users')
-		.findOne({ "email": email});
+		const user = await dbClient.db()
+  .then(db =>
+    db.collection("users").findOne({ email })
+  );
+
 		if (!user) {
 			return  NextResponse.json('error', {status: 400});
 		}
