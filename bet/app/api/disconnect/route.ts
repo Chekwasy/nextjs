@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { NextResponse } from "next/server";
 import redisClient from "../../../redis";
 
@@ -24,8 +26,8 @@ export async function GET(request: Request): Promise<NextResponse> {
       { message: "Logged Out Successfully" },
       { status: 200 },
     );
-  } catch (error: unknown) {
-    console.error(error); // important for Vercel logs
+  } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { message: "Error processing logout" },
       { status: 500 },
