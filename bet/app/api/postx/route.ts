@@ -1,7 +1,7 @@
 export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
-import Queue from "bull";
+import { Queue } from "bullmq";
 import dbClient from "../../../db";
 import redisClient from "../../../redis";
 import {
@@ -36,6 +36,12 @@ interface Game {
 
 type CollectionName = "two2win" | "point5" | "point5pro";
 
+// BullMQ connection options
+const connection = {
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
+};
+
 export async function POST(request: Request): Promise<NextResponse> {
   try {
     const savedHeader = request.headers.get("saved");
@@ -66,7 +72,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
-    // --- Use typed Db instance ---
     const dbConn: Db = await dbClient.db();
 
     const user: User | null = await dbConn
@@ -83,7 +88,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       .collection<User>("users")
       .find({})
       .toArray();
-
     if (user.email !== "richardchekwas@gmail.com") {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
@@ -107,11 +111,10 @@ export async function POST(request: Request): Promise<NextResponse> {
       const coll = dbConn.collection<{ date: string; game: Game[] }>(
         collectionName,
       );
-
       const g = await coll.findOne({ date });
       const yg = await coll.findOne({ date: yest });
 
-      // Compute balances
+      // Calculate balances
       if (!g) {
         if (!yg) {
           Sbal = collectionName === "two2win" ? "9980" : "17900";
@@ -153,77 +156,55 @@ export async function POST(request: Request): Promise<NextResponse> {
             { time, Sbal, stake, odd: Todd, Ebal, status: "Pending", code },
           ],
         });
-
         if (!r.acknowledged)
           return NextResponse.json("error not done", { status: 401 });
+      } else {
+        const last = g.game[g.game.length - 1];
+        if (last.status === "Pending")
+          return NextResponse.json("error not done", { status: 401 });
 
-        const notifyQueue = new Queue("Notify");
-        await notifyQueue.add({
-          usr: [...usrAll],
-          option:
-            collectionName === "two2win"
-              ? "Two2Win"
-              : collectionName === "point5"
-                ? "Point5"
-                : "Point5PRO",
-          time,
-          Sbal,
-          stake,
-          odd: Todd,
-          Ebal,
-          status: "Pending",
-          code,
-        });
+        if (last.status === "Won") {
+          stake = presetArray[0];
+          Sbal = (parseFloat(last.Ebal) - parseFloat(stake)).toString();
+          Ebal = (
+            parseFloat(Sbal) +
+            parseFloat(stake) * parseFloat(Todd)
+          ).toString();
+        }
 
-        return NextResponse.json({ message: "Success" }, { status: 201 });
-      }
+        if (last.status === "Lost") {
+          const idx = presetArray.indexOf(last.stake);
+          stake = presetArray[idx + 1];
+          Sbal = (parseFloat(last.Sbal) - parseFloat(stake)).toString();
+          Ebal = (
+            parseFloat(Sbal) +
+            parseFloat(stake) * parseFloat(Todd)
+          ).toString();
+        }
 
-      // If today's data exists
-      const last = g.game[g.game.length - 1];
-      if (last.status === "Pending")
-        return NextResponse.json("error not done", { status: 401 });
-
-      if (last.status === "Won") {
-        stake = presetArray[0];
-        Sbal = (parseFloat(last.Ebal) - parseFloat(stake)).toString();
-        Ebal = (
-          parseFloat(Sbal) +
-          parseFloat(stake) * parseFloat(Todd)
-        ).toString();
-      }
-
-      if (last.status === "Lost") {
-        const idx = presetArray.indexOf(last.stake);
-        stake = presetArray[idx + 1];
-        Sbal = (parseFloat(last.Sbal) - parseFloat(stake)).toString();
-        Ebal = (
-          parseFloat(Sbal) +
-          parseFloat(stake) * parseFloat(Todd)
-        ).toString();
-      }
-
-      const r = await coll.updateOne(
-        { date },
-        {
-          $push: {
-            game: {
-              time,
-              Sbal,
-              stake,
-              odd: Todd,
-              Ebal,
-              status: "Pending",
-              code,
+        const r = await coll.updateOne(
+          { date },
+          {
+            $push: {
+              game: {
+                time,
+                Sbal,
+                stake,
+                odd: Todd,
+                Ebal,
+                status: "Pending",
+                code,
+              },
             },
           },
-        },
-      );
+        );
+        if (!r.acknowledged)
+          return NextResponse.json("error not done", { status: 401 });
+      }
 
-      if (!r.acknowledged)
-        return NextResponse.json("error not done", { status: 401 });
-
-      const notifyQueue = new Queue("Notify");
-      await notifyQueue.add({
+      // --- BullMQ Queue ---
+      const notifyQueue = new Queue("Notify", { connection });
+      await notifyQueue.add("notify-job", {
         usr: [...usrAll],
         option:
           collectionName === "two2win"

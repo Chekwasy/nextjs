@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import dbClient from "../../../db";
 import redisClient from "../../../redis";
 import { checkpwd } from "../../tools/func";
-import Queue from "bull";
+import { Queue } from "bullmq";
 import { Db } from "mongodb";
 
 interface User {
@@ -20,6 +20,12 @@ interface TokenPayload {
   count: number;
 }
 
+// BullMQ Redis connection options
+const connection = {
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
+};
+
 export async function POST(request: Request): Promise<NextResponse> {
   try {
     const dd = await request.json();
@@ -29,7 +35,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       return NextResponse.json("error", { status: 400 });
     }
 
-    // --- Use typed Db instance ---
+    // --- Typed MongoDB instance ---
     const db: Db = await dbClient.db();
     const user: User | null = await db
       .collection<User>("users")
@@ -46,12 +52,13 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // Store token in Redis for 10 minutes
     await redisClient.del(email);
-    await redisClient.set(email, `${token}1`, { EX: 10 * 60 }); // using EX in seconds
+    await redisClient.set(email, `${token}1`, { EX: 10 * 60 }); // EX = seconds
 
-    // Create Bull queue to send email token
-    const tokenQueue = new Queue("Send Trybet Token");
+    // --- BullMQ Queue to send email token ---
+    const tokenQueue = new Queue("Send Trybet Token", { connection });
     const payload: TokenPayload = { token: token.toString(), count: 0 };
-    await tokenQueue.add({ email, token: payload });
+
+    await tokenQueue.add("send-token-job", { email, token: payload });
 
     return NextResponse.json({ email: user.email }, { status: 201 });
   } catch (err) {
