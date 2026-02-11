@@ -1,16 +1,18 @@
+export const runtime = "nodejs";
+
 import dbClient from "../../../db";
 import { NextResponse } from "next/server";
 import redisClient from "../../../redis";
 import { makeID, checkpwd } from "../../tools/func";
 import crypto from "crypto";
-import { Db } from "mongodb";
+import { Db, ObjectId } from "mongodb";
 
 interface LoginRequestBody {
   auth_header: string;
 }
 
 interface User {
-  _id?: string;
+  _id?: ObjectId;
   email: string;
   password: string;
   userID: string;
@@ -28,8 +30,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
-    // Validate Basic format
-    const parts: string[] = auth_header.split(" ");
+    const parts = auth_header.split(" ");
     if (parts.length !== 2 || parts[0] !== "Basic") {
       return NextResponse.json(
         { message: "Invalid auth format" },
@@ -37,55 +38,36 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
-    const encodedUsrStr: string = parts[1];
-    const decodedUsrStr: string = Buffer.from(encodedUsrStr, "base64").toString(
-      "utf-8",
-    );
+    const decoded = Buffer.from(parts[1], "base64").toString("utf-8");
+    const [email, plainPwd] = decoded.split(":");
 
-    const usrDetails: string[] = decodedUsrStr.split(":");
-
-    if (usrDetails.length !== 2) {
+    if (!email || !plainPwd) {
       return NextResponse.json(
         { message: "Invalid credentials format" },
         { status: 400 },
       );
     }
 
-    const email: string = usrDetails[0];
-    const plainPwd: string = usrDetails[1];
-
-    // Validate password format
-    if (!checkpwd(plainPwd)) {
+    if (!checkpwd(plainPwd) || !checkpwd(email)) {
       return NextResponse.json(
-        { message: "Invalid password format" },
+        { message: "Invalid credentials format" },
         { status: 401 },
       );
     }
 
-    // Validate email format
-    if (!checkpwd(email)) {
-      return NextResponse.json(
-        { message: "Invalid email format" },
-        { status: 401 },
-      );
-    }
-
-    const hashedPwd: string = crypto
+    const hashedPwd = crypto
       .createHash("sha256")
       .update(plainPwd)
       .digest("hex");
 
-    // MongoDB
     const db: Db = await dbClient.db();
-    const user: User | null = await db
-      .collection<User>("users")
-      .findOne({ email });
+    const user = await db.collection<User>("users").findOne({ email });
 
-    const tok: string | null = await redisClient.get(email);
+    const tok = await redisClient.get(email);
 
     if (tok && parseInt(tok) > 5) {
       return NextResponse.json(
-        { message: "Too many failed attempts. Try again later." },
+        { message: "Too many failed attempts" },
         { status: 429 },
       );
     }
@@ -93,32 +75,24 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (user && user.password === hashedPwd) {
       await redisClient.del(email);
 
-      const authToken: string = makeID();
+      const authToken = makeID();
 
       await redisClient.set(`auth_${authToken}`, user.userID, {
-        EX: 24 * 60 * 60,
+        ex: 24 * 60 * 60,
       });
 
-      return NextResponse.json(
-        { token: authToken, message: "Login Successful" },
-        { status: 200 },
-      );
+      return NextResponse.json({ token: authToken }, { status: 200 });
     }
 
-    // Failed login
-    if (!tok) {
-      await redisClient.set(email, "1", { EX: 24 * 60 * 60 });
-    } else {
-      await redisClient.set(email, (parseInt(tok) + 1).toString(), {
-        EX: 24 * 60 * 60,
-      });
-    }
+    await redisClient.set(email, tok ? (parseInt(tok) + 1).toString() : "1", {
+      ex: 24 * 60 * 60,
+    });
 
     return NextResponse.json(
       { message: "Email or Password Incorrect" },
       { status: 400 },
     );
-  } catch (error: unknown) {
+  } catch (error) {
     console.error(error);
     return NextResponse.json(
       { message: "Error processing signin" },
