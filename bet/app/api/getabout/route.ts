@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import dbClient from "../../../db";
 import { NextResponse } from "next/server";
 import { Db, ObjectId } from "mongodb";
