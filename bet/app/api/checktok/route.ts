@@ -3,7 +3,7 @@ import redisClient from "../../../redis";
 import { NextResponse } from "next/server";
 import { checknumber, checkpwd } from "../../tools/func";
 
-export const runtime = "nodejs"; // REQUIRED for MongoDB
+export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   try {

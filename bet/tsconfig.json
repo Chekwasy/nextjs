@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/api/getdate/route.js",
+    "app/api/getdate/route.ts",
     ".next/dev/types/**/*.ts"
 , "db.js"  ],
   "exclude": [
