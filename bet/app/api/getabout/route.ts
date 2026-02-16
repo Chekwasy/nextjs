@@ -1,9 +1,9 @@
 import dbClient from "../../../db";
 import { NextResponse } from "next/server";
-import { Db } from "mongodb";
+import { Db, ObjectId } from "mongodb";
 
 interface AboutDocument {
-  _id?: string;
+  _id?: ObjectId;
   data: string;
   about: string;
 }
@@ -12,7 +12,7 @@ export async function GET(): Promise<NextResponse> {
   try {
     const db: Db = await dbClient.db();
 
-    const aboutDoc: AboutDocument | null = await db
+    const aboutDoc = await db
       .collection<AboutDocument>("about")
       .findOne({ data: "myabout" });
 
@@ -30,7 +30,7 @@ export async function GET(): Promise<NextResponse> {
       },
       { status: 200 },
     );
-  } catch (error: unknown) {
+  } catch (error) {
     console.error(error);
     return NextResponse.json(
       { message: "Error fetching about content" },
