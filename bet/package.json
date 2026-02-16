@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@types/js-cookie": "^3.0.6",
     "@upstash/redis": "^1.36.2",
+    "@vercel/functions": "^3.4.2",
     "axios": "^1.9.0",
     "bull": "^4.16.5",
     "bullmq": "^5.68.0",

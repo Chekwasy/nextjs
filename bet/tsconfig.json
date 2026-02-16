@@ -35,7 +35,7 @@
     ".next/types/**/*.ts",
     "app/api/getdate/route.js",
     ".next/dev/types/**/*.ts"
-  ],
+, "db.js"  ],
   "exclude": [
     "node_modules"
   ]
