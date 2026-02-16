@@ -31,7 +31,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     }
 
     const parts = auth_header.split(" ");
-    if (parts.length !== 2 || parts[0] !== "encoded") {
+    if (parts.length !== 2 || parts[0] !== "Basic") {
       return NextResponse.json(
         { message: "Invalid auth format" },
         { status: 400 },
