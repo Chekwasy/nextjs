@@ -7,7 +7,7 @@ declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.crudappDB_MONGODB_URI;
 
 if (!uri) {
   throw new Error("Please define MONGODB_URI in env");
