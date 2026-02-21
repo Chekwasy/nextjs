@@ -50,18 +50,18 @@ export async function POST(request: Request): Promise<NextResponse> {
       .update(rawPassword)
       .digest("hex");
 
+    // MongoDB Atlas (await db properly)
+    const db = await dbClient.db();
+    const usersCollection = db.collection("users");
+
+    const user = await usersCollection.findOne({ email });
+
     if (auth_header) {
       return NextResponse.json(
         { message: "Error jjjjjjjjjjjj" },
         { status: 400 },
       );
     }
-
-    // MongoDB Atlas (await db properly)
-    const db = await dbClient.db();
-    const usersCollection = db.collection("users");
-
-    const user = await usersCollection.findOne({ email });
 
     if (!user || user.password !== hashedPassword) {
       return NextResponse.json(
