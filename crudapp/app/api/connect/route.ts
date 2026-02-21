@@ -52,7 +52,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // MongoDB Atlas (await db properly)
     const db = await dbClient.db();
-    const usersCollection = db.collection<User>("users");
+    const usersCollection = db.collection("users");
 
     const user = await usersCollection.findOne({ email });
 
