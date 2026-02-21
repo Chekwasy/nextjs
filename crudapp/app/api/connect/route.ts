@@ -24,13 +24,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
-    if (auth_header) {
-      return NextResponse.json(
-        { message: "Error jjjjjjjjjjjj" },
-        { status: 400 },
-      );
-    }
-
     // Expecting: "Basic base64string"
     const encoded_usr_str = auth_header.split(" ")[1];
     if (!encoded_usr_str) {
