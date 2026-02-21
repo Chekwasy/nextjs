@@ -33,17 +33,17 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
+    const decoded_usr_str = Buffer.from(encoded_usr_str, "base64").toString(
+      "utf-8",
+    );
+    const [email, rawPassword] = decoded_usr_str.split(":");
+
     if (auth_header) {
       return NextResponse.json(
         { message: "Error jjjjjjjjjjjj" },
         { status: 400 },
       );
     }
-
-    const decoded_usr_str = Buffer.from(encoded_usr_str, "base64").toString(
-      "utf-8",
-    );
-    const [email, rawPassword] = decoded_usr_str.split(":");
 
     if (!email || !rawPassword) {
       return NextResponse.json(
