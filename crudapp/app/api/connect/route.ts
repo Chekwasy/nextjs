@@ -26,7 +26,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     if (auth_header) {
       return NextResponse.json(
-        { message: "Error processing request" },
+        { message: "Error jjjjjjjjjjjj" },
         { status: 400 },
       );
     }
