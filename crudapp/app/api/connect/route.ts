@@ -6,10 +6,6 @@ import redisClient from "../../../redis";
 import { v4 as uuidv4 } from "uuid";
 import crypto from "crypto";
 
-interface LoginRequestBody {
-  auth_header: string;
-}
-
 interface User {
   userID: string;
   email: string;
@@ -18,7 +14,7 @@ interface User {
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
-    const body: LoginRequestBody = await request.json();
+    const body = await request.json();
     const { auth_header } = body;
 
     if (!auth_header) {
