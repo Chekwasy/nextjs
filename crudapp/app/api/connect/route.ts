@@ -38,13 +38,6 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
     const [email, rawPassword] = decoded_usr_str.split(":");
 
-    if (auth_header) {
-      return NextResponse.json(
-        { message: "Error jjjjjjjjjjjj" },
-        { status: 400 },
-      );
-    }
-
     if (!email || !rawPassword) {
       return NextResponse.json(
         { message: "Invalid credentials" },
@@ -56,6 +49,13 @@ export async function POST(request: Request): Promise<NextResponse> {
       .createHash("sha256")
       .update(rawPassword)
       .digest("hex");
+
+    if (auth_header) {
+      return NextResponse.json(
+        { message: "Error jjjjjjjjjjjj" },
+        { status: 400 },
+      );
+    }
 
     // MongoDB Atlas (await db properly)
     const db = await dbClient.db();
