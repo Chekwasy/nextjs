@@ -33,6 +33,13 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
+    if (auth_header) {
+      return NextResponse.json(
+        { message: "Error jjjjjjjjjjjj" },
+        { status: 400 },
+      );
+    }
+
     const decoded_usr_str = Buffer.from(encoded_usr_str, "base64").toString(
       "utf-8",
     );
