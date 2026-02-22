@@ -5,6 +5,7 @@ import dbClient from "../../../db";
 import redisClient from "../../../redis";
 import { v4 as uuidv4 } from "uuid";
 import crypto from "crypto";
+import { Db } from "mongodb";
 
 interface User {
   userID: string;
@@ -51,7 +52,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       .digest("hex");
 
     // MongoDB Atlas (await db properly)
-    const db = await dbClient.db();
+    const db: Db = await dbClient.db();
     const user = await db.collection("users").findOne({ email });
 
     if (!user || user.password !== hashedPassword) {
