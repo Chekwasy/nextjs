@@ -74,9 +74,6 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ token: auth_token }, { status: 201 });
   } catch (err) {
     console.error("Login error:", err);
-    return NextResponse.json(
-      { message: "Error processing request" },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: String(err) }, { status: 500 });
   }
 }
