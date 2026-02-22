@@ -67,6 +67,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         {
           message: email,
           user: JSON.stringify(user),
+          h: hashedPassword,
         },
         { status: 401 },
       );
