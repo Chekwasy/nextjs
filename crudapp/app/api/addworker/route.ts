@@ -51,7 +51,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       return NextResponse.json({ message: "Token required" }, { status: 400 });
     }
 
-    const usr_id = await redisClient.get(`auth_${tok}`);
+    const usr_id = await redisClient.get(`crud_auth_${tok}`);
     if (!usr_id) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }

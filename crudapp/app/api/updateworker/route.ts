@@ -26,7 +26,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
     }
 
     // Check Redis auth
-    const usr_id = await redisClient.get(`auth_${tok}`);
+    const usr_id = await redisClient.get(`crud_auth_${tok}`);
     if (!usr_id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

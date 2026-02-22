@@ -37,7 +37,7 @@ function Page() {
         auth_header: `Basic ${encodestr}`,
       })
       .then(async (response) => {
-        await Cookies.set("tok", response.data.token, {
+        Cookies.set("tok", response.data.token, {
           expires: 7,
           path: "/",
         });

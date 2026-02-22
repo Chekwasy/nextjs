@@ -33,7 +33,7 @@ export async function DELETE(request: Request): Promise<NextResponse> {
     }
 
     // Check auth token in Upstash
-    const usr_id = await redisClient.get(`auth_${tok}`);
+    const usr_id = await redisClient.get(`crud_auth_${tok}`);
     if (!usr_id) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }

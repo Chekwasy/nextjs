@@ -31,7 +31,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error: "Image missing" }, { status: 400 });
 
     // Validate Redis auth
-    const usr_id = await redisClient.get(`auth_${tok}`);
+    const usr_id = await redisClient.get(`crud_auth_${tok}`);
     if (!usr_id)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 

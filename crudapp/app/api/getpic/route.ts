@@ -33,7 +33,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     }
 
     // Check Redis session
-    const userID = await redisClient.get(`auth_${tok}`);
+    const userID = await redisClient.get(`crud_auth_${tok}`);
 
     if (!userID) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
