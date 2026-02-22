@@ -76,16 +76,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
-    if (1) {
-      return NextResponse.json(
-        {
-          message: email,
-          h: hashedPassword,
-        },
-        { status: 401 },
-      );
-    }
-
     // Generate auth token
     const auth_token = uuidv4();
 
