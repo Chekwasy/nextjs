@@ -54,7 +54,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const userID = uuidv4();
 
     // MongoDB Atlas correct usage
-    const db = await dbClient.db();
+    const db = await dbClient.db("crud");
     const usersCollection = db.collection<User>("users");
 
     // Check if user exists

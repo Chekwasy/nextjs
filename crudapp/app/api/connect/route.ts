@@ -52,7 +52,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       .digest("hex");
 
     // MongoDB Atlas (await db properly)
-    const db: Db = await dbClient.db();
+    const db: Db = await dbClient.db("crud");
     const user = await db.collection("users").findOne({ email });
 
     if (!user || user.password !== hashedPassword) {
