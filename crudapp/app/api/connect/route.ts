@@ -11,6 +11,9 @@ interface User {
   userID: string;
   email: string;
   password: string;
+  firstname?: string;
+  lastname?: string;
+  createdAt: Date;
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -53,7 +56,8 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // MongoDB Atlas (await db properly)
     const db: Db = await dbClient.db("crud");
-    const user = await db.collection("users").findOne({ email });
+    const usersCollection = db.collection<User>("users");
+    const user = await usersCollection.findOne({ email });
 
     if (!user || user.password !== hashedPassword) {
       return NextResponse.json(
