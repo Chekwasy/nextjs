@@ -6,6 +6,7 @@ import redisClient from "../../../redis";
 import { v4 as uuidv4 } from "uuid";
 import crypto from "crypto";
 import { Db } from "mongodb";
+import { stringify } from "querystring";
 
 interface User {
   userID: string;
@@ -59,11 +60,17 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const usersCollection = db.collection<User>("users");
 
-    if (1) {
-      return NextResponse.json({ message: email }, { status: 401 });
-    }
-
     const user = await usersCollection.findOne({ email });
+
+    if (1) {
+      return NextResponse.json(
+        {
+          message: email,
+          user: JSON.stringify(user),
+        },
+        { status: 401 },
+      );
+    }
 
     if (!user || user.password !== hashedPassword) {
       return NextResponse.json(
