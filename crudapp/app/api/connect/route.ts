@@ -62,20 +62,20 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const user = await usersCollection.findOne({ email });
 
-    if (!user || user.password !== hashedPassword) {
-      return NextResponse.json(
-        { message: "Invalid email or password" },
-        { status: 401 },
-      );
-    }
-
     if (1) {
       return NextResponse.json(
         {
           message: email,
-          user: JSON.stringify(user),
+          user: user?.password,
           h: hashedPassword,
         },
+        { status: 401 },
+      );
+    }
+
+    if (!user || user.password !== hashedPassword) {
+      return NextResponse.json(
+        { message: "Invalid email or password" },
         { status: 401 },
       );
     }
