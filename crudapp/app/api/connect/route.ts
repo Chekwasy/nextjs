@@ -79,9 +79,19 @@ export async function POST(request: Request): Promise<NextResponse> {
     // Generate auth token
     const auth_token = uuidv4();
 
+    if (1) {
+      return NextResponse.json(
+        {
+          message: email,
+          h: hashedPassword,
+        },
+        { status: 401 },
+      );
+    }
+
     // Upstash Redis (EX seconds for expiry)
     await redisClient.set(
-      `auth_${auth_token}`,
+      `crud_auth_${auth_token}`,
       user.userID,
       { ex: 7 * 24 * 60 * 60 }, // 7 days
     );
