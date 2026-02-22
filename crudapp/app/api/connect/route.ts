@@ -57,11 +57,12 @@ export async function POST(request: Request): Promise<NextResponse> {
     // MongoDB Atlas (await db properly)
     const db: Db = await dbClient.db("crud");
 
+    const usersCollection = db.collection<User>("users");
+
     if (1) {
       return NextResponse.json({ message: email }, { status: 401 });
     }
 
-    const usersCollection = db.collection<User>("users");
     const user = await usersCollection.findOne({ email });
 
     if (!user || user.password !== hashedPassword) {
