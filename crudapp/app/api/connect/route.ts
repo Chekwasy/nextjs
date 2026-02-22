@@ -69,19 +69,19 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
+    if (user.password !== hashedPassword) {
+      return NextResponse.json(
+        { message: "Invalid email or password" },
+        { status: 401 },
+      );
+    }
+
     if (1) {
       return NextResponse.json(
         {
           message: email,
           h: hashedPassword,
         },
-        { status: 401 },
-      );
-    }
-
-    if (user.password !== hashedPassword) {
-      return NextResponse.json(
-        { message: "Invalid email or password" },
         { status: 401 },
       );
     }
