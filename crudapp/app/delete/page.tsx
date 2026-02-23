@@ -1,76 +1,40 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Image from "next/image";
 
 const Page = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const [userData, setUserData] = useState({
     firstname: "",
     lastname: "",
     email: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-
   const [logged, setLogged] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-
   const [pageLoading, setPageLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [profilePicUrl, setProfilePicUrl] = useState<string | null>(null);
-  const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    if (!event.target.files || event.target.files.length === 0) return;
 
-    const file = event.target.files[0];
+  const [profilePicUrl, setProfilePicUrl] = useState("/default-profile.jpg");
+  const [uploading, setUploading] = useState(false);
 
-    if (!file.type.startsWith("image/")) return;
+  const [message, setMessage] = useState<null | {
+    type: "success" | "error";
+    text: string;
+  }>(null);
 
-    const reader = new FileReader();
-
-    reader.onload = async (e) => {
-      const result = e.target?.result as string;
-      const base64 = result.split(",")[1];
-
-      try {
-        await axios.post("/api/picpush", {
-          tok: Cookies.get("tok"),
-          image: base64,
-          type: file.type,
-          name: "profilepic",
-        });
-
-        setProfilePicUrl(result);
-      } catch {
-        console.log("Upload failed");
-      }
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  // Universal change handler
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Check Login
+  /* ================= CHECK LOGIN ================= */
   useEffect(() => {
     const checkLogged = async () => {
       try {
-        const response = await axios.get("/api/getme", {
+        const res = await axios.get("/api/getme", {
           headers: { tok: Cookies.get("tok") },
         });
 
-        setUserEmail(response.data.email);
+        setUserEmail(res.data.email);
         setLogged(true);
       } catch {
         setLogged(false);
@@ -82,19 +46,28 @@ const Page = () => {
     checkLogged();
   }, []);
 
+  /* ================= FETCH PROFILE PIC ================= */
   useEffect(() => {
-    const fetchProfile = async () => {
-      const res = await axios.get("/api/getpic", {
-        headers: { tok: Cookies.get("tok") },
-      });
+    if (!logged) return;
 
-      setProfilePicUrl(res.data.url);
+    const fetchProfile = async () => {
+      try {
+        const res = await axios.get("/api/getpic", {
+          headers: { tok: Cookies.get("tok") },
+        });
+
+        if (res.data?.url) {
+          setProfilePicUrl(res.data.url);
+        }
+      } catch {
+        setProfilePicUrl("/default-profile.jpg");
+      }
     };
 
     fetchProfile();
-  }, []);
+  }, [logged]);
 
-  // Logout
+  /* ================= LOGOUT ================= */
   const handleLogout = async () => {
     try {
       await axios.get("/api/disconnect", {
@@ -103,17 +76,65 @@ const Page = () => {
 
       setLogged(false);
       setUserEmail("");
+      setMessage({ type: "success", text: "Logged out successfully" });
     } catch {
-      console.log("Logout failed");
+      setMessage({ type: "error", text: "Logout failed" });
     }
+
+    setTimeout(() => setMessage(null), 2500);
   };
 
-  // Delete Submit
+  /* ================= IMAGE UPLOAD ================= */
+  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files?.length) return;
+
+    const file = event.target.files[0];
+
+    if (!file.type.startsWith("image/")) {
+      setMessage({ type: "error", text: "Invalid image file" });
+      return;
+    }
+
+    if (file.size > 1024 * 1024) {
+      setMessage({ type: "error", text: "Image must be less than 1MB" });
+      return;
+    }
+
+    setUploading(true);
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const base64 = (e.target?.result as string).split(",")[1];
+
+      try {
+        await axios.post("/api/picpush", {
+          tok: Cookies.get("tok"),
+          image: base64,
+          type: file.type,
+          name: "profilepic",
+        });
+
+        const res = await axios.get("/api/getpic", {
+          headers: { tok: Cookies.get("tok") },
+        });
+
+        setProfilePicUrl(res.data.url);
+        setMessage({ type: "success", text: "Profile updated!" });
+      } catch {
+        setMessage({ type: "error", text: "Upload failed" });
+      } finally {
+        setUploading(false);
+        setTimeout(() => setMessage(null), 2500);
+      }
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  /* ================= DELETE SUBMIT ================= */
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDeleteLoading(true);
-    setErrorMessage("");
-    setSuccessMessage("");
 
     try {
       await axios.delete("/api/deleteworker", {
@@ -125,191 +146,118 @@ const Page = () => {
         },
       });
 
-      setSuccessMessage("Worker Successfully Deleted");
+      setMessage({ type: "success", text: "Worker Successfully Deleted" });
       setUserData({ firstname: "", lastname: "", email: "" });
     } catch {
-      setErrorMessage("Delete Unsuccessful");
+      setMessage({ type: "error", text: "Delete Unsuccessful" });
     } finally {
       setDeleteLoading(false);
+      setTimeout(() => setMessage(null), 2500);
     }
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
-    <div>
-      {/* NAVBAR */}
+    <div className="min-h-screen bg-gray-50">
+      {/* ================= NAVBAR ================= */}
       <nav className="bg-gray-800 py-4 fixed top-0 left-0 w-full z-10">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          {/* Logo */}
-          <Link href="/">
-            <div className="text-lg font-bold text-white cursor-pointer">
-              CrudApp
-            </div>
+          <Link href="/" className="text-lg font-bold text-white">
+            CrudApp
           </Link>
 
-          {/* Navbar Skeleton While Checking Login */}
           {pageLoading ? (
-            <div className="flex space-x-6 items-center animate-pulse">
-              <div className="h-6 w-16 bg-gray-600 rounded"></div>
-              <div className="h-6 w-16 bg-gray-600 rounded"></div>
-              <div className="h-6 w-16 bg-gray-600 rounded"></div>
-              <div className="h-6 w-16 bg-gray-600 rounded"></div>
-              <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
+            <div className="flex space-x-4 animate-pulse">
+              <div className="h-6 w-16 bg-gray-600 rounded" />
+              <div className="h-6 w-16 bg-gray-600 rounded" />
+              <div className="h-6 w-16 bg-gray-600 rounded" />
+              <div className="w-10 h-10 bg-gray-600 rounded-full" />
             </div>
           ) : (
             <>
-              {/* Desktop Nav Links */}
-              <ul className="md:flex hidden items-center space-x-6">
+              <ul className="hidden md:flex items-center space-x-6 text-gray-300">
                 <li>
-                  <Link
-                    href="/create"
-                    className="text-gray-300 hover:text-white"
-                  >
-                    Create
-                  </Link>
+                  <Link href="/create">Create</Link>
                 </li>
                 <li>
-                  <Link href="/read" className="text-gray-300 hover:text-white">
-                    Read
-                  </Link>
+                  <Link href="/read">Read</Link>
                 </li>
                 <li>
-                  <Link
-                    href="/update"
-                    className="text-gray-300 hover:text-white"
-                  >
-                    Update
-                  </Link>
+                  <Link href="/update">Update</Link>
                 </li>
                 <li>
-                  <Link
-                    href="/delete"
-                    className="text-gray-300 hover:text-white"
-                  >
-                    Delete
-                  </Link>
+                  <Link href="/delete">Delete</Link>
                 </li>
-
                 {logged && (
                   <li
                     onClick={handleLogout}
-                    className="text-gray-300 hover:text-red-500 cursor-pointer"
+                    className="cursor-pointer hover:text-red-400"
                   >
                     Logout
                   </li>
                 )}
               </ul>
 
-              {/* Right Side (Email + Profile) */}
               {logged && (
                 <div className="flex items-center space-x-4">
-                  <div className="text-gray-300 hidden md:block">
+                  <span className="text-gray-300 hidden md:block">
                     {userEmail}
-                  </div>
+                  </span>
 
-                  {/* Hidden File Input */}
                   <input
                     type="file"
                     accept="image/*"
-                    className="hidden"
                     id="profileUpload"
+                    className="hidden"
                     onChange={handleImageUpload}
                   />
 
-                  {/* Profile Circle Clickable */}
                   <label
                     htmlFor="profileUpload"
-                    className="w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
+                    className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
                   >
                     <Image
-                      src={profilePicUrl || "/default-profile.jpg"}
-                      width={40}
-                      height={40}
+                      src={profilePicUrl}
+                      fill
                       alt="Profile"
+                      className="object-cover"
                     />
+                    {uploading && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      </div>
+                    )}
                   </label>
                 </div>
-              )}
-
-              {/* Mobile Menu Button */}
-              {!menuOpen && (
-                <button
-                  className="md:hidden text-gray-200"
-                  onClick={() => setMenuOpen(true)}
-                >
-                  Menu
-                </button>
-              )}
-
-              {menuOpen && (
-                <ul className="md:hidden absolute top-full right-0 bg-gray-700 text-white w-48 py-3 space-y-2">
-                  <li>
-                    <button
-                      className="w-full text-left px-4"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      X
-                    </button>
-                  </li>
-
-                  <li>
-                    <Link href="/create" className="block px-4">
-                      Create
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/read" className="block px-4">
-                      Read
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/update" className="block px-4">
-                      Update
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/delete" className="block px-4">
-                      Delete
-                    </Link>
-                  </li>
-
-                  {logged && (
-                    <li
-                      onClick={handleLogout}
-                      className="px-4 cursor-pointer text-red-400"
-                    >
-                      Logout
-                    </li>
-                  )}
-                </ul>
               )}
             </>
           )}
         </div>
       </nav>
 
-      {/* PAGE SKELETON */}
-      {pageLoading ? (
-        <div className="max-w-md mx-auto mt-24 space-y-4 animate-pulse">
-          <div className="h-6 bg-gray-300 rounded w-1/2"></div>
-          <div className="h-10 bg-gray-200 rounded"></div>
-          <div className="h-10 bg-gray-200 rounded"></div>
-          <div className="h-10 bg-gray-200 rounded"></div>
+      {/* ================= TOAST ================= */}
+      {message && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+          <div
+            className={`px-6 py-3 rounded shadow-lg text-white ${
+              message.type === "success" ? "bg-green-500" : "bg-red-500"
+            }`}
+          >
+            {message.text}
+          </div>
         </div>
-      ) : (
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 mt-24">
-          <h2 className="text-lg font-bold mb-4">Delete User</h2>
+      )}
 
-          {errorMessage && (
-            <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-3">
-              {errorMessage}
-            </div>
-          )}
-
-          {successMessage && (
-            <div className="bg-green-100 text-green-700 px-4 py-2 rounded mb-3">
-              {successMessage}
-            </div>
-          )}
+      {/* ================= DELETE FORM ================= */}
+      <div className="max-w-md mx-auto pt-28 px-4 pb-16">
+        <div className="bg-white rounded-2xl shadow-lg p-8">
+          <h2 className="text-2xl font-semibold mb-6 text-red-600">
+            Delete User
+          </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
@@ -318,8 +266,8 @@ const Page = () => {
               placeholder="First Name"
               value={userData.firstname}
               onChange={handleChange}
-              className="w-full bg-gray-200 rounded py-2 px-3"
               required
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3"
             />
 
             <input
@@ -328,8 +276,8 @@ const Page = () => {
               placeholder="Last Name"
               value={userData.lastname}
               onChange={handleChange}
-              className="w-full bg-gray-200 rounded py-2 px-3"
               required
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3"
             />
 
             <input
@@ -338,17 +286,17 @@ const Page = () => {
               placeholder="Email"
               value={userData.email}
               onChange={handleChange}
-              className="w-full bg-gray-200 rounded py-2 px-3"
               required
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3"
             />
 
             <button
               type="submit"
               disabled={deleteLoading}
-              className={`w-full py-2 px-4 rounded font-bold text-white ${
+              className={`w-full py-3 rounded-lg font-semibold text-white transition ${
                 deleteLoading
                   ? "bg-red-300 cursor-not-allowed"
-                  : "bg-red-500 hover:bg-red-700"
+                  : "bg-red-600 hover:bg-red-700"
               }`}
             >
               {deleteLoading ? (
@@ -362,7 +310,7 @@ const Page = () => {
             </button>
           </form>
         </div>
-      )}
+      </div>
     </div>
   );
 };
