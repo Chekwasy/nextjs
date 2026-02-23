@@ -21,27 +21,30 @@ export async function GET(request: Request): Promise<NextResponse> {
     const headerToken = request.headers.get("tok");
     const tok = cookieToken || headerToken;
 
-    if (!tok)
+    if (!tok) {
       return NextResponse.json({ error: "Token missing" }, { status: 400 });
+    }
 
     const userID = await redisClient.get(`crud_auth_${tok}`);
-    if (!userID)
+    if (!userID) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const db = await dbClient.db();
     const filesCollection = db.collection<FileDoc>("files");
 
     const file = await filesCollection.findOne({ userID });
 
-    // If user has no profile image → redirect to default image
+    // No profile image found
     if (!file?.localPath) {
-      return NextResponse.json({
-        url: "/default-profile.jpg",
-      });
+      return NextResponse.json(
+        { error: "Profile image not found" },
+        { status: 404 },
+      );
     }
 
-    // Redirect directly to Blob CDN URL
-    return NextResponse.json({ url: file.localPath });
+    // Return blob URL
+    return NextResponse.json({ url: file.localPath }, { status: 200 });
   } catch (error) {
     console.error("Profile image error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

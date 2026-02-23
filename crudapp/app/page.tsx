@@ -11,7 +11,7 @@ export default function Home() {
   const [logged, setLogged] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [profilePicUrl, setProfilePicUrl] = useState<string>(
-    "/default-profile.jpg",
+    "/default-profile.jpeg",
   );
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState<null | {
@@ -49,11 +49,10 @@ export default function Home() {
           headers: { tok: Cookies.get("tok") },
         });
 
-        if (res.data?.url) {
-          setProfilePicUrl(res.data.url);
-        }
+        setProfilePicUrl(res.data.url);
       } catch {
-        setProfilePicUrl("/default-profile.jpg");
+        // Fallback to asset image
+        setProfilePicUrl("/images/default-profile.jpeg");
       }
     };
 

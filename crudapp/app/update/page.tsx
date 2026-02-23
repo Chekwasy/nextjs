@@ -23,7 +23,7 @@ const Page = () => {
   const [pageLoading, setPageLoading] = useState(true);
   const [formLoading, setFormLoading] = useState(false);
 
-  const [profilePicUrl, setProfilePicUrl] = useState("/default-profile.jpg");
+  const [profilePicUrl, setProfilePicUrl] = useState("/default-profile.jpeg");
   const [uploading, setUploading] = useState(false);
 
   const [message, setMessage] = useState<null | {
@@ -61,11 +61,10 @@ const Page = () => {
           headers: { tok: Cookies.get("tok") },
         });
 
-        if (res.data?.url) {
-          setProfilePicUrl(res.data.url);
-        }
+        setProfilePicUrl(res.data.url);
       } catch {
-        setProfilePicUrl("/default-profile.jpg");
+        // Fallback to asset image
+        setProfilePicUrl("/images/default-profile.jpeg");
       }
     };
 
