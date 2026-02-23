@@ -11,7 +11,7 @@ export default function Home() {
   const [logged, setLogged] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [profilePicUrl, setProfilePicUrl] = useState<string>(
-    "/images/default-profile.jpeg",
+    "/default-profile.jpeg",
   );
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState<null | {
