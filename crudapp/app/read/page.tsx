@@ -13,7 +13,9 @@ const Page = () => {
   const [userEmail, setUserEmail] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
   const [workersLoading, setWorkersLoading] = useState(true);
-  const [profilePicUrl, setProfilePicUrl] = useState("/default-profile.jpeg");
+  const [profilePicUrl, setProfilePicUrl] = useState(
+    "/images/default-profile.jpeg",
+  );
   const [uploading, setUploading] = useState(false);
 
   const [message, setMessage] = useState<null | {
@@ -215,6 +217,7 @@ const Page = () => {
                     className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
                   >
                     <Image
+                      key={profilePicUrl}
                       src={profilePicUrl}
                       fill
                       alt="Profile"

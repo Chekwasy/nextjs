@@ -11,7 +11,7 @@ export default function Home() {
   const [logged, setLogged] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [profilePicUrl, setProfilePicUrl] = useState<string>(
-    "/default-profile.jpeg",
+    "/images/default-profile.jpeg",
   );
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState<null | {
@@ -53,6 +53,7 @@ export default function Home() {
       } catch {
         // Fallback to asset image
         setProfilePicUrl("/images/default-profile.jpeg");
+        console.log(profilePicUrl);
       }
     };
 
@@ -188,6 +189,7 @@ export default function Home() {
                     className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
                   >
                     <Image
+                      key={profilePicUrl}
                       src={profilePicUrl}
                       fill
                       alt="Profile"
