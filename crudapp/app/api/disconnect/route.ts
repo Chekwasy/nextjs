@@ -19,7 +19,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     }
 
     // Delete token (logout)
-    await redisClient.del(`auth_${tok}`);
+    await redisClient.del(`crud_auth_${tok}`);
 
     return NextResponse.json(
       { message: "Logged out successfully" },

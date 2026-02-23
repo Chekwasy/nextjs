@@ -7,7 +7,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [logged, setLogged] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
