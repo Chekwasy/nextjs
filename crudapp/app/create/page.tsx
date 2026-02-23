@@ -97,6 +97,17 @@ const Page = () => {
   useEffect(() => {
     checkLogged();
   }, []);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const res = await axios.get("/api/getpic", {
+        headers: { tok: Cookies.get("tok") },
+      });
+
+      setProfilePicUrl(res.data.url);
+    };
+
+    fetchProfile();
+  }, []);
   async function delayedCode() {
     await new Promise((resolve) => setTimeout(resolve, 10000));
     setErrorMessage("");
@@ -226,11 +237,10 @@ const Page = () => {
                     className="w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
                   >
                     <Image
-                      src={profilePicUrl || "/images/landing-background.svg"}
-                      alt="Profile"
+                      src={profilePicUrl || "/default-profile.jpg"}
                       width={40}
                       height={40}
-                      className="object-cover"
+                      alt="Profile"
                     />
                   </label>
                 </div>

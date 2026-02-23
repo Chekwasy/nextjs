@@ -35,13 +35,13 @@ export async function GET(request: Request): Promise<NextResponse> {
 
     // If user has no profile image → redirect to default image
     if (!file?.localPath) {
-      return NextResponse.redirect(
-        new URL("/default-profile.jpg", request.url),
-      );
+      return NextResponse.json({
+        url: "/default-profile.jpg",
+      });
     }
 
     // Redirect directly to Blob CDN URL
-    return NextResponse.redirect(file.localPath);
+    return NextResponse.json({ url: file.localPath });
   } catch (error) {
     console.error("Profile image error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

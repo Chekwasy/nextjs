@@ -115,6 +115,17 @@ const Page = () => {
 
     init();
   }, []);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const res = await axios.get("/api/getpic", {
+        headers: { tok: Cookies.get("tok") },
+      });
+
+      setProfilePicUrl(res.data.url);
+    };
+
+    fetchProfile();
+  }, []);
   const handlePrevious = () => {
     if (pg !== 1) {
       setPg(pg - 1);
@@ -223,7 +234,7 @@ const Page = () => {
                     {userEmail}
                   </div>
 
-                  {/* 🔥 Hidden File Input */}
+                  {/* Hidden File Input */}
                   <input
                     type="file"
                     accept="image/*"
@@ -238,11 +249,10 @@ const Page = () => {
                     className="w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
                   >
                     <Image
-                      src={profilePicUrl || "/images/landing-background.svg"}
-                      alt="Profile"
+                      src={profilePicUrl || "/default-profile.jpg"}
                       width={40}
                       height={40}
-                      className="object-cover"
+                      alt="Profile"
                     />
                   </label>
                 </div>

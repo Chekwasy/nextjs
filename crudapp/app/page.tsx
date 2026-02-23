@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, ChangeEvent } from "react";
@@ -9,314 +10,241 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [logged, setLogged] = useState(false);
-  const [loggedMsg, setLoggedMsg] = useState(false);
-  const [successMsg, setSuccessMsg] = useState(false);
-  const [failMsg, setFailMsg] = useState(false);
-  const [picUpdated, setPicUpdated] = useState(Date.now());
-  const checkLogged = () => {
-    axios
-      .get("/api/getme", {
-        headers: {
-          tok: Cookies.get("tok"),
-        },
-      })
-      .then(async (response) => {
-        const dd = response;
-        setUserEmail(dd.data.email);
-        setLogged(true);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-  async function delayedCode() {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    setLoggedMsg(false);
-    setSuccessMsg(false);
-    setFailMsg(false);
-  }
-  const handleLogout = () => {
-    axios
-      .get("/api/disconnect", {
-        headers: {
-          tok: Cookies.get("tok"),
-        },
-      })
-      .then(async (response) => {
-        console.log(response.data);
-        setUserEmail("");
-        setLogged(false);
-        setLoggedMsg(true);
-        delayedCode();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+  const [pageLoading, setPageLoading] = useState(true);
+  const [profilePicUrl, setProfilePicUrl] = useState<string>(
+    "/default-profile.jpg",
+  );
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState<null | {
+    type: "success" | "error";
+    text: string;
+  }>(null);
+
+  /* -------------------- CHECK LOGIN -------------------- */
   useEffect(() => {
+    const checkLogged = async () => {
+      try {
+        const res = await axios.get("/api/getme", {
+          headers: { tok: Cookies.get("tok") },
+        });
+
+        setUserEmail(res.data.email);
+        setLogged(true);
+      } catch {
+        setLogged(false);
+      } finally {
+        setPageLoading(false);
+      }
+    };
+
     checkLogged();
   }, []);
 
-  //upload part
-  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    setPicUpdated(Date.now());
-    if (event.target.files !== null && event.target.files.length !== 0) {
-      const imageFile = event.target.files[0];
+  /* -------------------- FETCH PROFILE PIC -------------------- */
+  useEffect(() => {
+    if (!logged) return;
 
-      // Check if the selected file is an image
-      if (!imageFile.type.startsWith("image/")) {
-        setFailMsg(true);
-        delayedCode();
-        return;
-      }
+    const fetchProfile = async () => {
+      try {
+        const res = await axios.get("/api/getpic", {
+          headers: { tok: Cookies.get("tok") },
+        });
 
-      const name = "profilepic";
-      const tok = Cookies.get("tok") || "";
-      const type = imageFile.type; // Get the image type from the file object
-
-      // Read the file as a data URL
-      const fileReader = new FileReader();
-      fileReader.onload = async (e: ProgressEvent<FileReader>) => {
-        let base64EncodedImage;
-        if ((e.target as FileReader).result !== null) {
-          const imageDataUrl = (e.target as FileReader).result as string;
-          base64EncodedImage = imageDataUrl.split(",")[1];
+        if (res.data?.url) {
+          setProfilePicUrl(res.data.url);
         }
+      } catch {
+        setProfilePicUrl("/default-profile.jpg");
+      }
+    };
 
-        // Send the image data to the backend
-        await axios
-          .post("/api/picpush", {
-            image: base64EncodedImage,
-            name,
-            tok,
-            type, // Send the image type to the backend
-          })
-          .then((response) => {
-            console.log(response.data);
-            setSuccessMsg(true);
-            delayedCode();
-          })
-          .catch((error) => {
-            console.log(error.message);
-            setFailMsg(true);
-            delayedCode();
-          });
-      };
-      fileReader.readAsDataURL(imageFile);
+    fetchProfile();
+  }, [logged]);
+
+  /* -------------------- LOGOUT -------------------- */
+  const handleLogout = async () => {
+    try {
+      await axios.get("/api/disconnect", {
+        headers: { tok: Cookies.get("tok") },
+      });
+
+      setLogged(false);
+      setUserEmail("");
+      setMessage({ type: "success", text: "Logged out successfully" });
+    } catch {
+      setMessage({ type: "error", text: "Logout failed" });
     }
+
+    setTimeout(() => setMessage(null), 2500);
+  };
+
+  /* -------------------- IMAGE UPLOAD -------------------- */
+  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files?.length) return;
+
+    const file = event.target.files[0];
+
+    if (!file.type.startsWith("image/")) {
+      setMessage({ type: "error", text: "Invalid image file" });
+      return;
+    }
+
+    if (file.size > 1024 * 1024) {
+      setMessage({ type: "error", text: "Image must be less than 1MB" });
+      return;
+    }
+
+    setUploading(true);
+
+    const reader = new FileReader();
+
+    reader.onload = async (e) => {
+      const base64 = (e.target?.result as string).split(",")[1];
+
+      try {
+        await axios.post("/api/picpush", {
+          tok: Cookies.get("tok"),
+          image: base64,
+          type: file.type,
+          name: "profilepic",
+        });
+
+        // Refresh profile picture
+        const res = await axios.get("/api/getpic", {
+          headers: { tok: Cookies.get("tok") },
+        });
+
+        setProfilePicUrl(res.data.url);
+        setMessage({ type: "success", text: "Profile updated!" });
+      } catch {
+        setMessage({ type: "error", text: "Upload failed" });
+      } finally {
+        setUploading(false);
+        setTimeout(() => setMessage(null), 2500);
+      }
+    };
+
+    reader.readAsDataURL(file);
   };
 
   return (
     <div
-      className="bg-cover bg-center h-screen w-screen"
-      style={{
-        backgroundImage: "url(/images/landing-background.svg)",
-      }}
+      className="bg-cover bg-center min-h-screen"
+      style={{ backgroundImage: "url(/images/landing-background.svg)" }}
     >
+      {/* ================= NAVBAR ================= */}
       <nav className="bg-gray-800 py-4 fixed top-0 left-0 w-full z-10">
-        <div className="container mx-auto px-4 flex justify-between">
-          <Link href={"/"} className="md:flex-shrink-0 flex items-top">
-            <div className="text-lg font-bold text-white">CrudApp</div>
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <Link href="/" className="text-lg font-bold text-white">
+            CrudApp
           </Link>
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => {
-                const imgUpload = document.getElementById("image-upload");
-                if (imgUpload) {
-                  imgUpload.click();
-                }
-              }}
-              className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
-            >
-              <Image
-                src="/api/getpic"
-                alt="Upload Image"
-                layout="fixed"
-                width={40}
-                height={40}
-                objectFit="cover"
-                className="rounded-full"
-                key={picUpdated}
-              />
-            </button>
-          </div>
-          <input
-            id="image-upload"
-            type="file"
-            onChange={handleImageUpload}
-            accept="image/*"
-            style={{ display: "none" }}
-          />
-          {logged && (
-            <div className="flex items-center space-x-4">
-              <div className="text-gray-300">{userEmail}</div>
-            </div>
-          )}
-          <ul className="md:flex hidden items-center space-x-4">
-            <li>
-              <Link href={"/create"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Create
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/read"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Read
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/update"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Update
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/delete"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Delete
-                </div>
-              </Link>
-            </li>
-            {logged && (
-              <li>
-                <div
-                  onClick={() => handleLogout()}
-                  className="text-gray-300 hover:text-red-700 cursor-pointer flex items-center"
-                >
-                  Logout
-                </div>
-              </li>
-            )}
-          </ul>
 
-          {!menuOpen && (
-            <button
-              className="md:hidden text-gray-200 flex items-center justify-center w-8 h-8 hover:text-white"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              Menu
-            </button>
-          )}
-          {menuOpen && (
-            <ul className="md:hidden flex flex-col items-center justify-center bg-gray-400 text-gray-300 absolute top-full right-0 w-48 py-2 border border-gray-700 z-20">
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <button
-                  className="md:hidden flex items-center justify-center w-8 h-8 hover:text-white"
-                  onClick={() => setMenuOpen(!menuOpen)}
-                >
-                  X
-                </button>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/create"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Create
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/read"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Read
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/update"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Update
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/delete"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Delete
-                  </div>
-                </Link>
-              </li>
-              {logged && (
+          {pageLoading ? (
+            <div className="flex space-x-4 animate-pulse">
+              <div className="h-6 w-16 bg-gray-600 rounded" />
+              <div className="h-6 w-16 bg-gray-600 rounded" />
+              <div className="h-6 w-16 bg-gray-600 rounded" />
+              <div className="w-10 h-10 bg-gray-600 rounded-full" />
+            </div>
+          ) : (
+            <>
+              <ul className="hidden md:flex items-center space-x-6 text-gray-300">
                 <li>
-                  <div
-                    onClick={() => handleLogout()}
-                    className="text-gray-100 hover:text-red-700 cursor-pointer flex items-center"
+                  <Link href="/create">Create</Link>
+                </li>
+                <li>
+                  <Link href="/read">Read</Link>
+                </li>
+                <li>
+                  <Link href="/update">Update</Link>
+                </li>
+                <li>
+                  <Link href="/delete">Delete</Link>
+                </li>
+                {logged && (
+                  <li
+                    onClick={handleLogout}
+                    className="cursor-pointer hover:text-red-400"
                   >
                     Logout
-                  </div>
-                </li>
+                  </li>
+                )}
+              </ul>
+
+              {logged && (
+                <div className="flex items-center space-x-4">
+                  <span className="text-gray-300 hidden md:block">
+                    {userEmail}
+                  </span>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="profileUpload"
+                    className="hidden"
+                    onChange={handleImageUpload}
+                  />
+
+                  <label
+                    htmlFor="profileUpload"
+                    className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
+                  >
+                    <Image
+                      src={profilePicUrl}
+                      fill
+                      alt="Profile"
+                      className="object-cover"
+                    />
+                    {uploading && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      </div>
+                    )}
+                  </label>
+                </div>
               )}
-            </ul>
+            </>
           )}
         </div>
       </nav>
-      {loggedMsg && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
-          <div className="bg-gray-300 rounded-lg shadow-lg p-8 w-1/2 text-center">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">
-              Logged Out Successfully!
-            </h1>
-            <p className="text-gray-700 text-lg mb-4">
-              You have been logged out of the system.
-            </p>
+
+      {/* ================= MESSAGE TOAST ================= */}
+      {message && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+          <div
+            className={`px-6 py-3 rounded shadow-lg text-white ${
+              message.type === "success" ? "bg-green-500" : "bg-red-500"
+            }`}
+          >
+            {message.text}
           </div>
         </div>
       )}
-      {successMsg && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
-          <div className="bg-green-200 rounded-lg shadow-lg p-8 w-1/2 text-center">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">
-              Upload Successful!
-            </h1>
-          </div>
-        </div>
-      )}
-      {failMsg && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
-          <div className="bg-red-200 rounded-lg shadow-lg p-8 w-1/2 text-center">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">
-              Upload Unsuccessful!
-            </h1>
-            <p className="text-gray-700 text-lg mb-4">
-              Use Image less than 1MB
-            </p>
-          </div>
-        </div>
-      )}
-      <div className="flex flex-col justify-start h-screen">
-        <div className="bg-gray-100 rounded-lg shadow-lg p-8 w-1/2 ml-4 mt-30">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            Add Worker Details
-          </h1>
-          <p className="text-gray-700 text-lg mb-4">
-            {`Welcome to our worker management system. To get started, please click on the create button top right or via the menu.`}
+
+      {/* ================= HERO SECTION ================= */}
+      <div className="flex items-center justify-start pt-28 px-6">
+        <div className="bg-white rounded-xl shadow-lg p-8 max-w-xl">
+          <h1 className="text-3xl font-bold mb-4">Worker Management System</h1>
+
+          <p className="text-gray-700 mb-4">
+            Manage workers efficiently. Create, update, view and delete records
+            easily.
           </p>
-          <p className="text-gray-700 text-lg mb-4">
-            {`If you already have an account, please login to access our system. If not, please signup to create a new account.`}
-          </p>
+
           {!logged && (
-            <div className="mt-4">
-              <p className="text-gray-700 text-sm">
-                Already have an account?{" "}
-                <Link
-                  className="text-blue-500 hover:text-blue-700"
-                  href="/auth/login"
-                >
-                  Login
-                </Link>
-              </p>
-              <p className="text-gray-700 text-sm">
-                Dont have an account?{" "}
-                <Link
-                  className="text-blue-500 hover:text-blue-700"
-                  href="/auth/signup"
-                >
-                  Signup
-                </Link>
-              </p>
+            <div className="space-y-2">
+              <Link
+                href="/auth/login"
+                className="block text-blue-600 hover:underline"
+              >
+                Login
+              </Link>
+              <Link
+                href="/auth/signup"
+                className="block text-blue-600 hover:underline"
+              >
+                Signup
+              </Link>
             </div>
           )}
         </div>

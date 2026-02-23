@@ -82,6 +82,18 @@ const Page = () => {
     checkLogged();
   }, []);
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const res = await axios.get("/api/getpic", {
+        headers: { tok: Cookies.get("tok") },
+      });
+
+      setProfilePicUrl(res.data.url);
+    };
+
+    fetchProfile();
+  }, []);
+
   // Logout
   const handleLogout = async () => {
     try {
@@ -209,11 +221,10 @@ const Page = () => {
                     className="w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
                   >
                     <Image
-                      src={profilePicUrl || "/images/landing-background.svg"}
-                      alt="Profile"
+                      src={profilePicUrl || "/default-profile.jpg"}
                       width={40}
                       height={40}
-                      className="object-cover"
+                      alt="Profile"
                     />
                   </label>
                 </div>
