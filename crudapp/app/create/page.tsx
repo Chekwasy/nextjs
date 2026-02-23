@@ -25,7 +25,7 @@ const Page = () => {
   const [pageLoading, setPageLoading] = useState(true);
   const [formLoading, setFormLoading] = useState(false);
   const [profilePicUrl, setProfilePicUrl] = useState<string>(
-    "/images/default-profile.jpeg",
+    "/default-profile.jpeg",
   );
   const [uploading, setUploading] = useState(false);
 
