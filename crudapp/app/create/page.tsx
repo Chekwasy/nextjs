@@ -26,6 +26,38 @@ const Page = () => {
   const [loggedMsg, setLoggedMsg] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [formLoading, setFormLoading] = useState(false);
+  const [profilePicUrl, setProfilePicUrl] = useState<string | null>(null);
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+
+    const file = event.target.files[0];
+
+    if (!file.type.startsWith("image/")) return;
+
+    const reader = new FileReader();
+
+    reader.onload = async (e) => {
+      const result = e.target?.result as string;
+      const base64 = result.split(",")[1];
+
+      try {
+        await axios.post("/api/picpush", {
+          tok: Cookies.get("tok"),
+          image: base64,
+          type: file.type,
+          name: "profilepic",
+        });
+
+        setProfilePicUrl(result);
+      } catch {
+        console.log("Upload failed");
+      }
+    };
+
+    reader.readAsDataURL(file);
+  };
   const checkLogged = async () => {
     try {
       const response = await axios.get("/api/getme", {
@@ -111,127 +143,152 @@ const Page = () => {
   return (
     <div>
       <nav className="bg-gray-800 py-4 fixed top-0 left-0 w-full z-10">
-        <div className="container mx-auto px-4 flex justify-between">
-          <Link href={"/"} className="md:flex-shrink-0 flex items-top">
-            <div className="text-lg font-bold text-white">CrudApp</div>
-          </Link>
-          {logged && (
-            <div className="flex items-center space-x-4">
-              <div className="text-gray-300">{userEmail}</div>
-              <div
-                onClick={() => checkLogged()}
-                className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
-              >
-                <Image
-                  src={"/images/landing-background.svg"}
-                  alt="Profile Picture"
-                  layout="fixed"
-                  width={40}
-                  height={40}
-                  objectFit="cover"
-                  className="rounded-full"
-                />
-              </div>
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          {/* Logo */}
+          <Link href="/">
+            <div className="text-lg font-bold text-white cursor-pointer">
+              CrudApp
             </div>
-          )}
-          <ul className="md:flex hidden items-center space-x-4">
-            <li>
-              <Link href={"/create"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Create
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/read"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Read
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/update"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Update
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/delete"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Delete
-                </div>
-              </Link>
-            </li>
-            {logged && (
-              <li>
-                <div
-                  onClick={() => handleLogout()}
-                  className="text-gray-300 hover:text-red-700 cursor-pointer flex items-center"
-                >
-                  Logout
-                </div>
-              </li>
-            )}
-          </ul>
+          </Link>
 
-          {!menuOpen && (
-            <button
-              className="md:hidden text-gray-200 flex items-center justify-center w-8 h-8 hover:text-white"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              Menu
-            </button>
-          )}
-          {menuOpen && (
-            <ul className="md:hidden flex flex-col items-center justify-center bg-gray-400 text-gray-300 absolute top-full right-0 w-48 py-2 border border-gray-700 z-20">
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <button
-                  className="md:hidden flex items-center justify-center w-8 h-8 hover:text-white"
-                  onClick={() => setMenuOpen(!menuOpen)}
-                >
-                  X
-                </button>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/create"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Create
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/read"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Read
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/update"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Update
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/delete"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Delete
-                  </div>
-                </Link>
-              </li>
-              {logged && (
+          {/* Navbar Skeleton While Checking Login */}
+          {pageLoading ? (
+            <div className="flex space-x-6 items-center animate-pulse">
+              <div className="h-6 w-16 bg-gray-600 rounded"></div>
+              <div className="h-6 w-16 bg-gray-600 rounded"></div>
+              <div className="h-6 w-16 bg-gray-600 rounded"></div>
+              <div className="h-6 w-16 bg-gray-600 rounded"></div>
+              <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
+            </div>
+          ) : (
+            <>
+              {/* Desktop Nav Links */}
+              <ul className="md:flex hidden items-center space-x-6">
                 <li>
-                  <div
-                    onClick={() => handleLogout()}
-                    className="text-gray-100 hover:text-red-700 cursor-pointer flex items-center"
+                  <Link
+                    href="/create"
+                    className="text-gray-300 hover:text-white"
+                  >
+                    Create
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/read" className="text-gray-300 hover:text-white">
+                    Read
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/update"
+                    className="text-gray-300 hover:text-white"
+                  >
+                    Update
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/delete"
+                    className="text-gray-300 hover:text-white"
+                  >
+                    Delete
+                  </Link>
+                </li>
+
+                {logged && (
+                  <li
+                    onClick={handleLogout}
+                    className="text-gray-300 hover:text-red-500 cursor-pointer"
                   >
                     Logout
+                  </li>
+                )}
+              </ul>
+
+              {/* Right Side (Email + Profile) */}
+              {logged && (
+                <div className="flex items-center space-x-4">
+                  <div className="text-gray-300 hidden md:block">
+                    {userEmail}
                   </div>
-                </li>
+
+                  {/* Hidden File Input */}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    id="profileUpload"
+                    onChange={handleImageUpload}
+                  />
+
+                  {/* Profile Circle Clickable */}
+                  <label
+                    htmlFor="profileUpload"
+                    className="w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
+                  >
+                    <Image
+                      src={profilePicUrl || "/images/landing-background.svg"}
+                      alt="Profile"
+                      width={40}
+                      height={40}
+                      className="object-cover"
+                    />
+                  </label>
+                </div>
               )}
-            </ul>
+
+              {/* Mobile Menu Button */}
+              {!menuOpen && (
+                <button
+                  className="md:hidden text-gray-200"
+                  onClick={() => setMenuOpen(true)}
+                >
+                  Menu
+                </button>
+              )}
+
+              {menuOpen && (
+                <ul className="md:hidden absolute top-full right-0 bg-gray-700 text-white w-48 py-3 space-y-2">
+                  <li>
+                    <button
+                      className="w-full text-left px-4"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      X
+                    </button>
+                  </li>
+
+                  <li>
+                    <Link href="/create" className="block px-4">
+                      Create
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/read" className="block px-4">
+                      Read
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/update" className="block px-4">
+                      Update
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/delete" className="block px-4">
+                      Delete
+                    </Link>
+                  </li>
+
+                  {logged && (
+                    <li
+                      onClick={handleLogout}
+                      className="px-4 cursor-pointer text-red-400"
+                    >
+                      Logout
+                    </li>
+                  )}
+                </ul>
+              )}
+            </>
           )}
         </div>
       </nav>
@@ -247,194 +304,204 @@ const Page = () => {
           </div>
         </div>
       )}
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-4 mt-16">
-        <h2 className="text-lg font-bold mb-4">Create New User</h2>
-        {errorMessage.length !== 0 && (
-          <div
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <span className="block sm:inline">{errorMessage}</span>
-          </div>
-        )}
-        {successMessage.length !== 0 && (
-          <div
-            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <span className="block sm:inline">{successMessage}</span>
-          </div>
-        )}
+      <div className="max-w-4xl mx-auto mt-24 px-4">
         {pageLoading ? (
-          <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 mt-20 animate-pulse space-y-4">
-            <div className="h-6 bg-gray-300 rounded w-1/2"></div>
-            <div className="h-10 bg-gray-200 rounded"></div>
-            <div className="h-10 bg-gray-200 rounded"></div>
-            <div className="h-10 bg-gray-200 rounded"></div>
-            <div className="h-10 bg-gray-200 rounded"></div>
-            <div className="h-10 bg-gray-200 rounded"></div>
-            <div className="h-10 bg-gray-200 rounded"></div>
+          <div className="bg-white rounded-2xl shadow-lg p-8 animate-pulse space-y-6">
+            <div className="h-6 w-1/3 bg-gray-300 rounded"></div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="space-y-2">
+                  <div className="h-4 w-1/3 bg-gray-300 rounded"></div>
+                  <div className="h-12 bg-gray-200 rounded-lg"></div>
+                </div>
+              ))}
+            </div>
+
+            <div className="h-12 bg-gray-300 rounded-lg w-full"></div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="firstname"
-                >
-                  First Name
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="firstname"
-                  type="text"
-                  name="firstname"
-                  value={userData.firstname}
-                  onChange={handleChange}
-                />
+          <div className="bg-white rounded-2xl shadow-lg p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+              Create New User
+            </h2>
+
+            {errorMessage && (
+              <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
+                {errorMessage}
               </div>
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="lastname"
-                >
-                  Last Name
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="lastname"
-                  type="text"
-                  name="lastname"
-                  value={userData.lastname}
-                  onChange={handleChange}
-                />
+            )}
+
+            {successMessage && (
+              <div className="mb-4 bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg">
+                {successMessage}
               </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="age"
-                >
-                  Age
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="age"
-                  type="number"
-                  name="age"
-                  value={userData.age}
-                  onChange={handleChange}
-                />
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    name="firstname"
+                    value={userData.firstname}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    name="lastname"
+                    value={userData.lastname}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                  />
+                </div>
               </div>
-              <select
-                name="department"
-                value={userData.department}
-                onChange={handleChange}
-                className="block w-full bg-gray-200 rounded py-3 px-4"
-              >
-                <option value="">Select Department</option>
-                <option value="HR">HR</option>
-                <option value="IT">IT</option>
-                <option value="Finance">Finance</option>
-                <option value="Operations">Operations</option>
-              </select>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="address"
-                >
-                  Address
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="address"
-                  type="text"
-                  name="address"
-                  value={userData.address}
-                  onChange={handleChange}
-                />
+
+              {/* Age + Department */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Age
+                  </label>
+                  <input
+                    type="number"
+                    name="age"
+                    value={userData.age}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Department
+                  </label>
+                  <select
+                    name="department"
+                    value={userData.department}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                  >
+                    <option value="">Select Department</option>
+                    <option value="HR">HR</option>
+                    <option value="IT">IT</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Operations">Operations</option>
+                  </select>
+                </div>
               </div>
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="mobile"
-                >
-                  Mobile
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="mobile"
-                  type="text"
-                  name="mobile"
-                  value={userData.mobile}
-                  onChange={handleChange}
-                />
+
+              {/* Address + Mobile */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    name="address"
+                    value={userData.address}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Mobile
+                  </label>
+                  <input
+                    type="text"
+                    name="mobile"
+                    value={userData.mobile}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <select
-                name="sex"
-                value={userData.sex}
-                onChange={handleChange}
-                className="block w-full bg-gray-200 rounded py-3 px-4"
-              >
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-              <select
-                name="nationality"
-                value={userData.nationality}
-                onChange={handleChange}
-                className="block w-full bg-gray-200 rounded py-3 px-4"
-              >
-                <option value="">Select Nationality</option>
-                <option value="Nigerian">Nigerian</option>
-                <option value="Ghanaian">Ghanaian</option>
-                <option value="Kenyan">Kenyan</option>
-              </select>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-2">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="email"
-                >
+
+              {/* Sex + Nationality */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Sex
+                  </label>
+                  <select
+                    name="sex"
+                    value={userData.sex}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                  >
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Nationality
+                  </label>
+                  <select
+                    name="nationality"
+                    value={userData.nationality}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                  >
+                    <option value="">Select Nationality</option>
+                    <option value="Nigerian">Nigerian</option>
+                    <option value="Ghanaian">Ghanaian</option>
+                    <option value="Kenyan">Kenyan</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
                   Email
                 </label>
                 <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="email"
-                  type="text"
+                  type="email"
                   name="email"
                   value={userData.email}
                   onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
                 />
               </div>
-            </div>
-            <button
-              disabled={formLoading}
-              className={`w-full py-2 px-4 rounded font-bold text-white ${
-                formLoading
-                  ? "bg-blue-300 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-700"
-              }`}
-              type="submit"
-            >
-              {formLoading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                  Saving...
-                </span>
-              ) : (
-                "Submit"
-              )}
-            </button>
-          </form>
+
+              {/* Submit */}
+              <button
+                disabled={formLoading}
+                className={`w-full py-3 rounded-lg font-semibold text-white transition ${
+                  formLoading
+                    ? "bg-blue-300 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                }`}
+                type="submit"
+              >
+                {formLoading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    Saving...
+                  </span>
+                ) : (
+                  "Create User"
+                )}
+              </button>
+            </form>
+          </div>
         )}
       </div>
     </div>

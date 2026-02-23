@@ -28,6 +28,38 @@ const Page = () => {
   const [userEmail, setUserEmail] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
   const [workersLoading, setWorkersLoading] = useState(true);
+  const [profilePicUrl, setProfilePicUrl] = useState<string | null>(null);
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+
+    const file = event.target.files[0];
+
+    if (!file.type.startsWith("image/")) return;
+
+    const reader = new FileReader();
+
+    reader.onload = async (e) => {
+      const result = e.target?.result as string;
+      const base64 = result.split(",")[1];
+
+      try {
+        await axios.post("/api/picpush", {
+          tok: Cookies.get("tok"),
+          image: base64,
+          type: file.type,
+          name: "profilepic",
+        });
+
+        setProfilePicUrl(result);
+      } catch {
+        console.log("Upload failed");
+      }
+    };
+
+    reader.readAsDataURL(file);
+  };
   const checkLogged = () => {
     axios
       .get("/api/getme", {
@@ -123,127 +155,152 @@ const Page = () => {
   return (
     <div>
       <nav className="bg-gray-800 py-4 fixed top-0 left-0 w-full z-10">
-        <div className="container mx-auto px-4 flex justify-between">
-          <Link href={"/"} className="md:flex-shrink-0 flex items-top">
-            <div className="text-lg font-bold text-white">CrudApp</div>
-          </Link>
-          {logged && (
-            <div className="flex items-center space-x-4">
-              <div className="text-gray-300">{userEmail}</div>
-              <div
-                onClick={() => checkLogged()}
-                className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden"
-              >
-                <Image
-                  src={"/images/landing-background.svg"}
-                  alt="Profile Picture"
-                  layout="fixed"
-                  width={40}
-                  height={40}
-                  objectFit="cover"
-                  className="rounded-full"
-                />
-              </div>
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          {/* Logo */}
+          <Link href="/">
+            <div className="text-lg font-bold text-white cursor-pointer">
+              CrudApp
             </div>
-          )}
-          <ul className="md:flex hidden items-center space-x-4">
-            <li>
-              <Link href={"/create"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Create
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/read"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Read
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/update"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Update
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link href={"/delete"}>
-                <div className="text-gray-300 hover:text-white flex items-center">
-                  Delete
-                </div>
-              </Link>
-            </li>
-            {logged && (
-              <li>
-                <div
-                  onClick={() => handleLogout()}
-                  className="text-gray-300 hover:text-red-700 cursor-pointer flex items-center"
-                >
-                  Logout
-                </div>
-              </li>
-            )}
-          </ul>
+          </Link>
 
-          {!menuOpen && (
-            <button
-              className="md:hidden text-gray-200 flex items-center justify-center w-8 h-8 hover:text-white"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              Menu
-            </button>
-          )}
-          {menuOpen && (
-            <ul className="md:hidden flex flex-col items-center justify-center bg-gray-400 text-gray-300 absolute top-full right-0 w-48 py-2 border border-gray-700 z-20">
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <button
-                  className="md:hidden flex items-center justify-center w-8 h-8 hover:text-white"
-                  onClick={() => setMenuOpen(!menuOpen)}
-                >
-                  X
-                </button>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/create"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Create
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/read"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Read
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/update"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Update
-                  </div>
-                </Link>
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-700">
-                <Link href={"/delete"}>
-                  <div className="text-gray-100 hover:text-white flex items-center">
-                    Delete
-                  </div>
-                </Link>
-              </li>
-              {logged && (
+          {/* Navbar Skeleton While Checking Login */}
+          {pageLoading ? (
+            <div className="flex space-x-6 items-center animate-pulse">
+              <div className="h-6 w-16 bg-gray-600 rounded"></div>
+              <div className="h-6 w-16 bg-gray-600 rounded"></div>
+              <div className="h-6 w-16 bg-gray-600 rounded"></div>
+              <div className="h-6 w-16 bg-gray-600 rounded"></div>
+              <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
+            </div>
+          ) : (
+            <>
+              {/* Desktop Nav Links */}
+              <ul className="md:flex hidden items-center space-x-6">
                 <li>
-                  <div
-                    onClick={() => handleLogout()}
-                    className="text-gray-100 hover:text-red-700 cursor-pointer flex items-center"
+                  <Link
+                    href="/create"
+                    className="text-gray-300 hover:text-white"
+                  >
+                    Create
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/read" className="text-gray-300 hover:text-white">
+                    Read
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/update"
+                    className="text-gray-300 hover:text-white"
+                  >
+                    Update
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/delete"
+                    className="text-gray-300 hover:text-white"
+                  >
+                    Delete
+                  </Link>
+                </li>
+
+                {logged && (
+                  <li
+                    onClick={handleLogout}
+                    className="text-gray-300 hover:text-red-500 cursor-pointer"
                   >
                     Logout
+                  </li>
+                )}
+              </ul>
+
+              {/* Right Side (Email + Profile) */}
+              {logged && (
+                <div className="flex items-center space-x-4">
+                  <div className="text-gray-300 hidden md:block">
+                    {userEmail}
                   </div>
-                </li>
+
+                  {/* 🔥 Hidden File Input */}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    id="profileUpload"
+                    onChange={handleImageUpload}
+                  />
+
+                  {/* Profile Circle Clickable */}
+                  <label
+                    htmlFor="profileUpload"
+                    className="w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
+                  >
+                    <Image
+                      src={profilePicUrl || "/images/landing-background.svg"}
+                      alt="Profile"
+                      width={40}
+                      height={40}
+                      className="object-cover"
+                    />
+                  </label>
+                </div>
               )}
-            </ul>
+
+              {/* Mobile Menu Button */}
+              {!menuOpen && (
+                <button
+                  className="md:hidden text-gray-200"
+                  onClick={() => setMenuOpen(true)}
+                >
+                  Menu
+                </button>
+              )}
+
+              {menuOpen && (
+                <ul className="md:hidden absolute top-full right-0 bg-gray-700 text-white w-48 py-3 space-y-2">
+                  <li>
+                    <button
+                      className="w-full text-left px-4"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      X
+                    </button>
+                  </li>
+
+                  <li>
+                    <Link href="/create" className="block px-4">
+                      Create
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/read" className="block px-4">
+                      Read
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/update" className="block px-4">
+                      Update
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/delete" className="block px-4">
+                      Delete
+                    </Link>
+                  </li>
+
+                  {logged && (
+                    <li
+                      onClick={handleLogout}
+                      className="px-4 cursor-pointer text-red-400"
+                    >
+                      Logout
+                    </li>
+                  )}
+                </ul>
+              )}
+            </>
           )}
         </div>
       </nav>
@@ -259,108 +316,102 @@ const Page = () => {
           </div>
         </div>
       )}
-      {workersLoading ? (
-        <div className="max-w-4xl mx-auto mt-20 space-y-6 animate-pulse">
-          {[1, 2].map((i) => (
-            <div
-              key={i}
-              className="bg-white rounded-xl shadow-md p-6 space-y-4"
-            >
-              <div className="h-6 bg-gray-300 rounded w-1/3"></div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((j) => (
-                  <div key={j} className="h-12 bg-gray-200 rounded"></div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        items.map((item) => (
-          <div
-            key={item.email}
-            className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-4 mt-16"
-          >
-            <h2 className="text-xl font-bold mb-4">{`${item.firstname} ${item.lastname} User Data`}</h2>
-            <div className="flex flex-wrap justify-center">
-              <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">First Name:</span>
-                  <span className="ml-2 text-black">{item.firstname}</span>
-                </div>
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Last Name:</span>
-                  <span className="ml-2 text-black">{item.lastname}</span>
-                </div>
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Age:</span>
-                  <span className="ml-2 text-black">{item.age}</span>
-                </div>
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Department:</span>
-                  <span className="ml-2 text-black">{item.department}</span>
-                </div>
-              </div>
-              <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Address:</span>
-                  <span className="ml-2 text-black">{item.address}</span>
-                </div>
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Mobile Number:</span>
-                  <span className="ml-2 text-black">{item.mobile}</span>
-                </div>
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Sex:</span>
-                  <span className="ml-2 text-black">{item.sex}</span>
-                </div>
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Nationality:</span>
-                  <span className="ml-2 text-black">{item.nationality}</span>
-                </div>
-              </div>
-              <div className="w-full lg:w-1/2 xl:w-1/3 p-4">
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Email:</span>
-                  <span className="ml-2 text-black">{item.email}</span>
-                </div>
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Date Added:</span>
-                  <span className="ml-2 text-black">{item.dateadded}</span>
-                </div>
-                <div className="bg-gray-100 rounded p-4 mb-4">
-                  <span className="font-bold text-black">Last Update:</span>
-                  <span className="ml-2 text-black">{item.lastupdate}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))
-      )}
-      <div className="flex justify-center mb-6 gap-2">
-        <button
-          disabled={workersLoading || pg === 1}
-          onClick={handlePrevious}
-          className={`py-2 px-4 rounded ${
-            workersLoading || pg === 1
-              ? "bg-gray-200 cursor-not-allowed"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-        >
-          Previous
-        </button>
+      <div className="max-w-6xl mx-auto mt-24 px-4">
+        {workersLoading ? (
+          <div className="space-y-8 animate-pulse">
+            {[1, 2].map((i) => (
+              <div key={i} className="bg-white rounded-2xl shadow-lg p-8">
+                <div className="h-6 w-1/3 bg-gray-300 rounded mb-6"></div>
 
-        <button
-          disabled={workersLoading}
-          onClick={handleNext}
-          className={`py-2 px-4 rounded ${
-            workersLoading
-              ? "bg-gray-200 cursor-not-allowed"
-              : "bg-gray-300 hover:bg-gray-400"
-          }`}
-        >
-          {workersLoading ? "Loading..." : "Next"}
-        </button>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {Array.from({ length: 9 }).map((_, j) => (
+                    <div key={j} className="space-y-2">
+                      <div className="h-4 w-1/3 bg-gray-300 rounded"></div>
+                      <div className="h-10 bg-gray-200 rounded-lg"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-10">
+            {items.map((item) => (
+              <div
+                key={item.email}
+                className="bg-white rounded-2xl shadow-lg p-8 transition hover:shadow-xl"
+              >
+                {/* Header */}
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-semibold text-gray-800">
+                    {item.firstname} {item.lastname}
+                  </h2>
+                  <span className="text-sm text-gray-500">
+                    User Information
+                  </span>
+                </div>
+
+                {/* Data Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[
+                    { label: "First Name", value: item.firstname },
+                    { label: "Last Name", value: item.lastname },
+                    { label: "Age", value: item.age },
+                    { label: "Department", value: item.department },
+                    { label: "Address", value: item.address },
+                    { label: "Mobile", value: item.mobile },
+                    { label: "Sex", value: item.sex },
+                    { label: "Nationality", value: item.nationality },
+                    { label: "Email", value: item.email },
+                    { label: "Date Added", value: item.dateadded },
+                    { label: "Last Update", value: item.lastupdate },
+                  ].map((field, index) => (
+                    <div
+                      key={index}
+                      className="bg-gray-50 rounded-xl p-4 border border-gray-100"
+                    >
+                      <div className="text-xs text-gray-500 uppercase tracking-wide">
+                        {field.label}
+                      </div>
+                      <div className="text-gray-800 font-medium mt-1">
+                        {field.value || "-"}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        <div className="flex justify-center items-center mt-10 gap-4">
+          <button
+            disabled={workersLoading || pg === 1}
+            onClick={handlePrevious}
+            className={`px-6 py-2 rounded-lg font-medium transition ${
+              workersLoading || pg === 1
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-gray-300 hover:bg-gray-400 text-gray-800"
+            }`}
+          >
+            Previous
+          </button>
+
+          <div className="text-gray-600 font-medium">Page {pg}</div>
+
+          <button
+            disabled={workersLoading}
+            onClick={handleNext}
+            className={`px-6 py-2 rounded-lg font-medium transition ${
+              workersLoading
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-gray-300 hover:bg-gray-400 text-gray-800"
+            }`}
+          >
+            {workersLoading ? "Loading..." : "Next"}
+          </button>
+        </div>
       </div>
     </div>
   );
