@@ -271,7 +271,147 @@ const Page = () => {
           <h2 className="text-2xl font-semibold mb-6">Create New User</h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* (your existing form layout stays the same) */}
+            {/* Name Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  name="firstname"
+                  value={userData.firstname}
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  name="lastname"
+                  value={userData.lastname}
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                />
+              </div>
+            </div>
+
+            {/* Age + Department */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Age
+                </label>
+                <input
+                  type="number"
+                  name="age"
+                  value={userData.age}
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Department
+                </label>
+                <select
+                  name="department"
+                  value={userData.department}
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                >
+                  <option value="">Select Department</option>
+                  <option value="HR">HR</option>
+                  <option value="IT">IT</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Operations">Operations</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Address + Mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Address
+                </label>
+                <input
+                  type="text"
+                  name="address"
+                  value={userData.address}
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Mobile
+                </label>
+                <input
+                  type="text"
+                  name="mobile"
+                  value={userData.mobile}
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+            </div>
+
+            {/* Sex + Nationality */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Sex
+                </label>
+                <select
+                  name="sex"
+                  value={userData.sex}
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                >
+                  <option value="">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Nationality
+                </label>
+                <select
+                  name="nationality"
+                  value={userData.nationality}
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+                >
+                  <option value="">Select Nationality</option>
+                  <option value="Nigerian">Nigerian</option>
+                  <option value="Ghanaian">Ghanaian</option>
+                  <option value="Kenyan">Kenyan</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={userData.email}
+                onChange={handleChange}
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
 
             <button
               disabled={formLoading}
