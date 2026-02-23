@@ -2,187 +2,179 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Page() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function delayedCode() {
-    await new Promise((resolve) => setTimeout(resolve, 20000));
-    setErrorMessage("");
-    setSuccessMessage("");
-  }
-
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-  const handleFirstnameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFirstname(e.target.value);
-  };
-  const handleLastnameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLastname(e.target.value);
-  };
-  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-  };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (password === confirmPassword) {
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
       const encodestr = btoa(email + ":" + password);
-      axios
-        .post("/api/puser", {
-          emailpwd: `Basic ${encodestr}`,
-          firstname: firstname,
-          lastname: lastname,
-        })
-        .then(async (response) => {
-          console.log(response.data);
-          setSuccessMessage("Signup Successful");
-          delayedCode();
-        })
-        .catch((error) => {
-          console.log(error.message);
-          setErrorMessage("Signup Unsuccessful");
-          delayedCode();
-        });
-    } else {
-      setErrorMessage("Password not match");
-      delayedCode();
+
+      await axios.post("/api/puser", {
+        emailpwd: `Basic ${encodestr}`,
+        firstname,
+        lastname,
+      });
+
+      setSuccessMessage("Signup Successful 🎉 Redirecting...");
+
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 2000);
+    } catch (error: any) {
+      setErrorMessage(error?.response?.data?.message || "Signup Unsuccessful");
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <div>
       <div
-        className="bg-cover bg-center h-screen w-screen flex justify-center items-center"
+        className="bg-cover bg-center min-h-screen w-screen flex justify-center items-center"
         style={{
           backgroundImage: "url(/images/landing-background.svg)",
         }}
       >
-        <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-1/3">
-          <h2 className="text-3xl font-bold text-blue-500 mb-4">Signup</h2>
-          <div>
-            {errorMessage.length !== 0 && (
-              <div
-                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                role="alert"
-              >
-                <span className="block sm:inline">{errorMessage}</span>
-              </div>
-            )}
-          </div>
-          {successMessage.length !== 0 && (
-            <div
-              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
-              role="alert"
-            >
-              <span className="block sm:inline">{successMessage}</span>
+        <div className="bg-gray-500 rounded-lg shadow-lg p-8 w-full max-w-md">
+          <h2 className="text-3xl font-bold text-blue-500 mb-4 text-center">
+            Signup
+          </h2>
+
+          {/* Alerts */}
+          {errorMessage && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-3">
+              {errorMessage}
             </div>
           )}
+
+          {successMessage && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-3">
+              {successMessage}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="firstname"
-              >
+            <div className="mb-3">
+              <label className="block text-gray-700 text-sm font-bold mb-1">
                 Firstname
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="firstname"
                 type="text"
-                placeholder="Firstname"
-                name="firstname"
                 value={firstname}
-                onChange={handleFirstnameChange}
+                onChange={(e) => setFirstname(e.target.value)}
+                required
+                className="w-full bg-gray-200 rounded py-2 px-3 focus:outline-none focus:bg-white"
               />
             </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="lastname"
-              >
+
+            <div className="mb-3">
+              <label className="block text-gray-700 text-sm font-bold mb-1">
                 Lastname
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="lastname"
                 type="text"
-                placeholder="Lastname"
-                name="lastname"
                 value={lastname}
-                onChange={handleLastnameChange}
+                onChange={(e) => setLastname(e.target.value)}
+                required
+                className="w-full bg-gray-200 rounded py-2 px-3 focus:outline-none focus:bg-white"
               />
             </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="email"
-              >
+
+            <div className="mb-3">
+              <label className="block text-gray-700 text-sm font-bold mb-1">
                 Email
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="email"
                 type="email"
-                placeholder="Email"
-                name="email"
                 value={email}
-                onChange={handleEmailChange}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full bg-gray-200 rounded py-2 px-3 focus:outline-none focus:bg-white"
               />
             </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="password"
-              >
+
+            <div className="mb-3">
+              <label className="block text-gray-700 text-sm font-bold mb-1">
                 Password
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="password"
                 type="password"
-                placeholder="Password"
-                name="password"
                 value={password}
-                onChange={handlePasswordChange}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full bg-gray-200 rounded py-2 px-3 focus:outline-none focus:bg-white"
               />
             </div>
+
             <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="confirmPassword"
-              >
+              <label className="block text-gray-700 text-sm font-bold mb-1">
                 Confirm Password
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="confirmPassword"
                 type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
                 value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className="w-full bg-gray-200 rounded py-2 px-3 focus:outline-none focus:bg-white"
               />
             </div>
-            <Link href={"/auth/login"}>
-              <div className="text-gray-300 hover:text-white flex items-center">
+
+            {/* Buttons */}
+            <div className="flex justify-between items-center mb-3">
+              <Link href="/" className="text-sm text-gray-200 hover:text-white">
+                ← Home
+              </Link>
+
+              <Link
+                href="/auth/login"
+                className="text-sm text-gray-200 hover:text-white"
+              >
                 Login
-              </div>
-            </Link>
+              </Link>
+            </div>
+
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
               type="submit"
+              disabled={isLoading}
+              className={`w-full py-2 px-4 rounded text-white font-bold transition duration-200 ${
+                isLoading
+                  ? "bg-blue-300 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-700"
+              }`}
             >
-              Signup
+              {isLoading ? (
+                <span className="flex justify-center items-center gap-2">
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  Creating Account...
+                </span>
+              ) : (
+                "Signup"
+              )}
             </button>
           </form>
         </div>
