@@ -40,7 +40,7 @@ class DBClient {
 
   async db(dbName?: string) {
     const client = await clientPromise;
-    return client.db(dbName); // optional db name support
+    return client.db(dbName);
   }
 
   async nbUsers(): Promise<number> {

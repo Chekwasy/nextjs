@@ -180,7 +180,7 @@ function LoginPage() {
         });
         setMessage(response.data.message || "Login successful!");
         setIsPopupOpen(true);
-        router.back();
+        router.push('/');
       } catch (error) {
         // Use a type guard to ensure 'error' is an AxiosError
         if (axios.isAxiosError(error)) {
