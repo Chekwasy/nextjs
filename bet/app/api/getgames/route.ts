@@ -53,7 +53,7 @@ export async function GET(request: Request) {
     const date_ = dateLst[2] + dateLst[0] + dateLst[1];
     const sGames = await dbClient
       .db()
-      .then((db) => db.collection("dates").findOne({ date: date_ }));
+      .then((db) => db.collection("dates_games").findOne({ date: date_ }));
 
     const oddLst: StageGames[] = [];
     if (!sGames) {
@@ -224,7 +224,7 @@ export async function GET(request: Request) {
       }
       //Save data to db
       await dbClient.db().then((db) =>
-        db.collection("dates").insertOne({
+        db.collection("dates_games").insertOne({
           date: date_,
           games: oddLst,
         }),
