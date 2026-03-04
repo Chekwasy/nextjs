@@ -22,6 +22,7 @@ const Page = () => {
   const [userEmail, setUserEmail] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
   const [formLoading, setFormLoading] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const [profilePicUrl, setProfilePicUrl] = useState("/default-profile.jpeg");
   const [uploading, setUploading] = useState(false);
@@ -210,6 +211,13 @@ const Page = () => {
                 )}
               </ul>
 
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="md:hidden text-gray-300 focus:outline-none"
+              >
+                {menuOpen ? "✕" : "☰"}
+              </button>
+
               {logged && (
                 <div className="flex items-center space-x-4">
                   <span className="text-gray-300 hidden md:block">
@@ -244,6 +252,33 @@ const Page = () => {
                 </div>
               )}
             </>
+          )}
+          {menuOpen && (
+            <div className="md:hidden bg-gray-800 px-4 pb-4">
+              <ul className="flex flex-col space-y-4 text-gray-300">
+                <li>
+                  <Link href="/create">Create</Link>
+                </li>
+                <li>
+                  <Link href="/read">Read</Link>
+                </li>
+                <li>
+                  <Link href="/update">Update</Link>
+                </li>
+                <li>
+                  <Link href="/delete">Delete</Link>
+                </li>
+
+                {logged && (
+                  <li
+                    onClick={handleLogout}
+                    className="cursor-pointer hover:text-red-400"
+                  >
+                    Logout
+                  </li>
+                )}
+              </ul>
+            </div>
           )}
         </div>
       </nav>
