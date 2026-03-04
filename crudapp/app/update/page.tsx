@@ -174,6 +174,7 @@ const Page = () => {
     <div className="min-h-screen bg-gray-50">
       {/* ================= NAVBAR ================= */}
       <nav className="bg-gray-800 py-4 fixed top-0 left-0 w-full z-10">
+        {/* TOP NAV BAR */}
         <div className="container mx-auto px-4 flex justify-between items-center">
           <Link href="/" className="text-lg font-bold text-white">
             CrudApp
@@ -188,6 +189,7 @@ const Page = () => {
             </div>
           ) : (
             <>
+              {/* DESKTOP NAV */}
               <ul className="hidden md:flex items-center space-x-6 text-gray-300">
                 <li>
                   <Link href="/create">Create</Link>
@@ -201,6 +203,7 @@ const Page = () => {
                 <li>
                   <Link href="/delete">Delete</Link>
                 </li>
+
                 {logged && (
                   <li
                     onClick={handleLogout}
@@ -211,76 +214,83 @@ const Page = () => {
                 )}
               </ul>
 
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="md:hidden text-gray-300 focus:outline-none"
-              >
-                {menuOpen ? "✕" : "☰"}
-              </button>
+              {/* RIGHT SIDE */}
+              <div className="flex items-center space-x-4">
+                {/* MOBILE MENU BUTTON */}
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="md:hidden text-gray-300"
+                >
+                  {menuOpen ? "✕" : "☰"}
+                </button>
 
-              {logged && (
-                <div className="flex items-center space-x-4">
-                  <span className="text-gray-300 hidden md:block">
-                    {userEmail}
-                  </span>
+                {logged && (
+                  <>
+                    <span className="text-gray-300 hidden md:block">
+                      {userEmail}
+                    </span>
 
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="profileUpload"
-                    className="hidden"
-                    onChange={handleImageUpload}
-                  />
-
-                  <label
-                    htmlFor="profileUpload"
-                    className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
-                  >
-                    <Image
-                      key={profilePicUrl}
-                      src={profilePicUrl}
-                      fill
-                      alt="Profile"
-                      className="object-cover"
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="profileUpload"
+                      className="hidden"
+                      onChange={handleImageUpload}
                     />
-                    {uploading && (
-                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      </div>
-                    )}
-                  </label>
-                </div>
-              )}
+
+                    <label
+                      htmlFor="profileUpload"
+                      className="relative w-10 h-10 rounded-full overflow-hidden cursor-pointer border-2 border-gray-400 hover:border-white transition"
+                    >
+                      <Image
+                        key={profilePicUrl}
+                        src={profilePicUrl}
+                        fill
+                        alt="Profile"
+                        className="object-cover"
+                      />
+
+                      {uploading && (
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        </div>
+                      )}
+                    </label>
+                  </>
+                )}
+              </div>
             </>
           )}
-          {menuOpen && (
-            <div className="md:hidden bg-gray-800 px-4 pb-4">
-              <ul className="flex flex-col space-y-4 text-gray-300">
-                <li>
-                  <Link href="/create">Create</Link>
-                </li>
-                <li>
-                  <Link href="/read">Read</Link>
-                </li>
-                <li>
-                  <Link href="/update">Update</Link>
-                </li>
-                <li>
-                  <Link href="/delete">Delete</Link>
-                </li>
-
-                {logged && (
-                  <li
-                    onClick={handleLogout}
-                    className="cursor-pointer hover:text-red-400"
-                  >
-                    Logout
-                  </li>
-                )}
-              </ul>
-            </div>
-          )}
         </div>
+
+        {/* MOBILE MENU */}
+        {menuOpen && (
+          <div className="md:hidden bg-gray-800 border-t border-gray-700">
+            <ul className="flex flex-col px-6 py-4 space-y-4 text-gray-300">
+              <li>
+                <Link href="/create">Create</Link>
+              </li>
+              <li>
+                <Link href="/read">Read</Link>
+              </li>
+              <li>
+                <Link href="/update">Update</Link>
+              </li>
+              <li>
+                <Link href="/delete">Delete</Link>
+              </li>
+
+              {logged && (
+                <li
+                  onClick={handleLogout}
+                  className="cursor-pointer hover:text-red-400"
+                >
+                  Logout
+                </li>
+              )}
+            </ul>
+          </div>
+        )}
       </nav>
 
       {/* ================= TOAST ================= */}
